@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/05 16:10:44 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/05 19:22:49 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,17 +14,9 @@
 #ifndef DOOM_H
 # define DOOM_H
 # include "../libft/libft.h"
+# include "defines.h"
 # include <math.h>
 # include <SDL2/SDL.h>
-# define WIN_W 1500
-# define WIN_H 1000
-# define PIXFOR SDL_PIXELFORMAT_RGBA8888
-# define SDL_BUTTON_LEFT 1
-# define SDL_BUTTON_MIDDLE 2
-# define SDL_BUTTON_RIGHT 3
-# define SDL_BUTTON_X1 4
-# define SDL_BUTTON_X2 5
-# define WHITE 0xFFFFFFFF
 
 typedef struct		s_point
 {
@@ -39,8 +31,15 @@ typedef struct		s_lis
 	struct s_lis	*next;
 }					t_lis;
 
+typedef struct		s_sec
+{
+	t_lis			*vert;
+	struct s_sec	*next;
+}					t_sec;
+
 typedef struct		s_input
 {
+	SDL_Event		event;
 	SDL_bool		key[SDL_NUM_SCANCODES];
 	SDL_bool		quit;
 	int				x;
@@ -58,33 +57,40 @@ typedef struct		s_sdl
 	SDL_Renderer	*ren;
 	Uint32			*pix;
 	SDL_PixelFormat	*form;
-	int				color;
 }					t_sdl;
 
 typedef struct		s_edit
 {
+	t_lis			*vert;
 	t_sdl			sdl;
 	int				err;
+	t_lis			*oldvert;
 }					t_edit;
 
 
 /* event */
 void				update_event(t_input *in);
-void				check_event(t_input *in, t_lis **vert);
+void				check_event(t_input *in, t_edit *edit);
 
 /*sdl*/
 
 int					free_sdl(t_sdl *sdl, int flag);
 int					sdl_init(t_sdl *sdl);
 int					display_frame(SDL_Renderer *ren, Uint32 *pix);
+void				clear_tab(t_sdl *sdl);
 
-/*trace*/
-void				ft_bresen(t_point a, t_point b, t_sdl *sdl);
-int					ft_value_e(int dx, int dy);
-void				ft_dx_zero(int x1, int y1, int y2, t_sdl *sdl);
-void				ft_dy_zero(int x1, int y1, int x2, t_sdl *sdl);
-void				ft_pixel(int x, int y, t_sdl *sdl);
+/*bresen*/
+void				bresen(t_lis a, t_lis b, t_sdl *sdl);
 
-/*printf*/
+/*vertex*/
+t_lis				*create_vert(int x, int y);
+void				add_vert(int x, int y, t_edit *edit);
+void				draw_vert(t_lis *tmp, t_edit *edit);
+void				put_vert(t_edit *edit);
+
+/*print*/
 void				print_lis(t_lis **vert);
+
+/*HUD*/
+void				hud(t_edit *edit);
 #endif

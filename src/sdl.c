@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:40:34 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/04 19:44:32 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/05 17:58:01 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,7 +51,7 @@ int				display_frame(SDL_Renderer *ren, Uint32 *pix)
 {
 	SDL_Texture *tex;
 
-	SDL_SetRenderDrawColor(ren, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_SetRenderDrawColor(ren, 0x00, 0x00, 0x00, 0x00);
 	SDL_RenderClear(ren);
 	tex = SDL_CreateTexture(ren, PIXFOR,
 		SDL_TEXTUREACCESS_STREAMING, WIN_W, WIN_H);
@@ -65,3 +65,20 @@ int				display_frame(SDL_Renderer *ren, Uint32 *pix)
 	return (1);
 }
 
+void			clear_tab(t_sdl *sdl)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (y < WIN_H)
+	{
+		x = 0;
+		while (x < WIN_W)
+		{
+			sdl->pix[y * WIN_W + x] = 0x000000FF;
+			x++;
+		}
+		y++;
+	}
+}
