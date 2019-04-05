@@ -6,7 +6,7 @@
 /*   By: jfeve <jfeve@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/05 17:18:44 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/05 17:22:39 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -269,6 +269,14 @@ void			level_editor(void)
 			{
 				bresen(*tmp, *tmp->next, &edit.sdl);
 			}
+			//if (tmp->next == NULL)
+//			{
+//				t_lis point;
+//
+//				point.x = in.x;
+//				point.y = in.y;
+//				bresen(*tmp, point, &edit.sdl);
+//			}
 			tmp = tmp->next;
 		}
 		if (display_frame(edit.sdl.ren, edit.sdl.pix) == 0)
