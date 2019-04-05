@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/04 21:34:26 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/05 16:13:44 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,8 +50,8 @@ t_lis			*create_vert(int x, int y)
 
 	if (!(vert = (t_lis*)malloc(sizeof(t_lis))))
 		return (NULL);
-	vert->x = x;
-	vert->y = y;
+	vert->x = x - (x % 10);
+	vert->y = y - (y % 10);
 	vert->next = NULL;
 	return (vert);
 }
@@ -63,7 +63,7 @@ int				parse_data(int x, int y, t_lis **vert)
 	tmp = *vert;
 	while(tmp != NULL)
 	{
-		if (tmp->x == x && tmp->y == y)
+		if (tmp->x == x - (x % 10) && tmp->y == y - (y % 10))
 			return (0);
 		tmp = tmp->next;
 	}
@@ -82,8 +82,8 @@ void			add_vert(int x, int y, t_lis **vert)
 	}
 	if (!(point = (t_lis*)malloc(sizeof(t_lis))))
 		return ;
-	point->x = x;
-	point->y = y;
+	point->x = x - (x % 10);
+	point->y = y - (y % 10);
 	point->next = NULL;
 	tmp = *vert;
 	while (tmp->next != NULL)
