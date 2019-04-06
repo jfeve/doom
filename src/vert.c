@@ -6,12 +6,19 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:21:04 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/05 19:16:40 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/06 16:36:11 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+int				arr(int x)
+{
+	if (x % UNIT >= UNIT / 2)
+		x += UNIT / 2 + 1;
+	return (x / UNIT);
+}
 
 t_lis			*create_vert(int x, int y)
 {
@@ -19,8 +26,9 @@ t_lis			*create_vert(int x, int y)
 
 	if (!(vert = (t_lis*)malloc(sizeof(t_lis))))
 		return (NULL);
-	vert->x = x - (x % 10);
-	vert->y = y - (y % 10);
+	vert->x = arr(x);
+	vert->y = arr(y);
+	vert->col = RED;
 	vert->next = NULL;
 	return (vert);
 }
@@ -30,14 +38,10 @@ int				parse_data(int x, int y, t_edit *edit)
 	t_lis		*tmp;
 
 	tmp = edit->vert;
-	while(tmp != NULL)
+	if (tmp->x == arr(x) && tmp->y == arr(y))
 	{
-		if (tmp->x == x - (x % 10) && tmp->y == y - (y % 10))
-		{
-			edit->oldvert = tmp;
-			return (0);
-		}
-		tmp = tmp->next;
+		edit->oldvert = tmp;
+		return (0);
 	}
 	edit->oldvert = NULL;
 	return (1);
@@ -52,8 +56,9 @@ void			add_vert(int x, int y, t_edit *edit)
 		return ;
 	if (!(point = (t_lis*)malloc(sizeof(t_lis))))
 		return ;
-	point->x = x - (x % 10);
-	point->y = y - (y % 10);
+	point->x = arr(x);
+	point->y = arr(y);
+	point->col = WHITE;
 	point->next = NULL;
 	tmp = edit->vert;
 	while (tmp->next != NULL)
@@ -66,21 +71,21 @@ void			draw_vert(t_lis *tmp, t_edit *edit)
 	int x;
 	int y;
 
-	x = tmp->x - 4;
-	y = tmp->y - 4;
-	while (x <= tmp->x + 4)
+	x = (tmp->x * UNIT) - 4;
+	y = (tmp->y * UNIT) - 4;
+	while (x <= (tmp->x * UNIT) + 4)
 	{
-		edit->sdl.pix[y * WIN_W + x] = WHITE;
-		edit->sdl.pix[(y + 8) * WIN_W + x] = WHITE;
+		edit->sdl.pix[y * WIN_W + x] = tmp->col;
+		edit->sdl.pix[(y + 8) * WIN_W + x] = tmp->col;
 		x++;
 	}
-	while (y <= tmp->y + 4)
+	while (y <= (tmp->y * UNIT) + 4)
 	{
-		edit->sdl.pix[y * WIN_W + x] = WHITE;
-		edit->sdl.pix[y * WIN_W + (x - 9)] = WHITE;
+		edit->sdl.pix[y * WIN_W + x] = tmp->col;
+		edit->sdl.pix[y * WIN_W + (x - 9)] = tmp->col;
 		y++;
 	}
-	edit->sdl.pix[tmp->y * WIN_W + tmp->x] = WHITE;
+	edit->sdl.pix[tmp->y * UNIT * WIN_W + (tmp->x * UNIT)] = tmp->col;
 }
 
 void			put_vert(t_edit *edit)

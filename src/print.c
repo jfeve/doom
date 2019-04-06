@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 21:32:10 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/04 21:46:40 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/06 15:59:25 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,4 +25,18 @@ void			print_lis(t_lis **vert)
 		tmp = tmp->next;
 	}
 	dprintf(1, "\n--------LIS END--------\n");
+}
+
+void			print_sec(t_sec *sec)
+{
+	t_sec		*tmp;
+
+	tmp = sec;
+	dprintf(1, "\n||||||||SEC||||||||\n");
+	while (tmp != NULL)
+	{
+		dprintf(1, "vert = %p\n", tmp->vert);
+		tmp = tmp->next;
+	}
+	dprintf(1, "\n||||||SEC END||||||\n");
 }

@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/05 19:22:49 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/06 16:29:27 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,6 +28,7 @@ typedef struct		s_lis
 {
 	int				x;
 	int				y;
+	int				col;
 	struct s_lis	*next;
 }					t_lis;
 
@@ -62,6 +63,7 @@ typedef struct		s_sdl
 typedef struct		s_edit
 {
 	t_lis			*vert;
+	t_sec			*sect;
 	t_sdl			sdl;
 	int				err;
 	t_lis			*oldvert;
@@ -83,13 +85,20 @@ void				clear_tab(t_sdl *sdl);
 void				bresen(t_lis a, t_lis b, t_sdl *sdl);
 
 /*vertex*/
+t_lis				mult_unit(t_lis vert);
+int					arr(int x);
 t_lis				*create_vert(int x, int y);
 void				add_vert(int x, int y, t_edit *edit);
 void				draw_vert(t_lis *tmp, t_edit *edit);
 void				put_vert(t_edit *edit);
 
+/*sec*/
+void				set_sect(t_edit *edit);
+void				draw_sec(t_edit *edit);
+
 /*print*/
 void				print_lis(t_lis **vert);
+void				print_sec(t_sec *sec);
 
 /*HUD*/
 void				hud(t_edit *edit);

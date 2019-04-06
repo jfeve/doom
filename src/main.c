@@ -6,7 +6,7 @@
 /*   By: jfeve <jfeve@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/05 19:22:42 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/06 17:18:57 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,6 +25,7 @@ int				init_edit(t_edit *edit)
 		return (0);
 	edit->err = 0;
 	edit->vert = NULL;
+	edit->sect = NULL;
 	return (1);
 }
 
@@ -39,12 +40,23 @@ void			set_grid(t_edit *edit)
 		x = 0;
 		while (x < WIN_W)
 		{
-			if (y % 10 == 0 || x % 10 == 0)
-				edit->sdl.pix[y * WIN_W + x] = 0x00A200FF;
+			if (y % UNIT == 0 || x % UNIT == 0)
+			{
+				edit->sdl.pix[y * WIN_W + x] = CYAN;
+			}
 			x++;
 		}
 		y++;
 	}
+}
+
+t_lis			mult_unit(t_lis vert)
+{
+	t_lis	a;
+	a.x = vert.x * UNIT;
+	a.y = vert.y * UNIT;
+	a.col = vert.col;
+	return (a);
 }
 
 void			draw_vec(t_edit *edit, t_input in)
@@ -57,18 +69,20 @@ void			draw_vec(t_edit *edit, t_input in)
 	tmp = edit->vert;
 	while (tmp->next != NULL)
 	{
-		bresen(*tmp, *tmp->next, &edit->sdl);
+		bresen(mult_unit(*tmp), mult_unit(*tmp->next), &edit->sdl);
 		tmp =tmp->next;
 	}
 	if (edit->oldvert != NULL)
 	{
-		bresen(*tmp, *edit->oldvert, &edit->sdl);
+		bresen(mult_unit(*tmp), mult_unit(*edit->oldvert), &edit->sdl);
+		set_sect(edit);
 	}
 	else
 	{
-		point.x = in.x;
-		point.y = in.y;
-		bresen(*tmp, point, &edit->sdl);
+		point.x = arr(in.x);
+		point.y = arr(in.y);
+		point.col = WHITE;
+		bresen(mult_unit(*tmp), mult_unit(point), &edit->sdl);
 	}
 }
 
@@ -90,6 +104,7 @@ void			level_editor(void)
 		hud(&edit);
 		put_vert(&edit);
 		draw_vec(&edit, in);
+		draw_sec(&edit);
 		if (display_frame(edit.sdl.ren, edit.sdl.pix) == 0)
 		{
 			free_sdl(&edit.sdl, 5);
