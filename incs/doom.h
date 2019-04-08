@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   doom.h                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/06 16:29:27 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/08 15:43:10 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,6 +17,7 @@
 # include "defines.h"
 # include <math.h>
 # include <SDL2/SDL.h>
+# include <stdio.h>
 
 typedef struct		s_point
 {
@@ -72,7 +73,7 @@ typedef struct		s_edit
 
 /* event */
 void				update_event(t_input *in);
-void				check_event(t_input *in, t_edit *edit);
+void				check_event(char *mapname, t_input *in, t_edit *edit);
 
 /*sdl*/
 
@@ -102,4 +103,9 @@ void				print_sec(t_sec *sec);
 
 /*HUD*/
 void				hud(t_edit *edit);
+
+/*MapEdit*/
+int					map_writer(char *mapname, t_edit *edit);
+int					save_map(char *mapname, t_edit *edit);
+
 #endif

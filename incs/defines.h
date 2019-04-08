@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   defines.h                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/06 16:49:51 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/08 11:18:13 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,4 +26,5 @@
 # define WHITE 0xFFFFFFFF
 # define RED 0xFF0000FF
 # define CYAN 0x20B2AAFF
+# define MAP_PATH "./data/maps/"
 #endif

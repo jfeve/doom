@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   event.c                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/06 17:08:13 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/08 15:24:59 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,10 +64,16 @@ void			cancel_last(t_edit*edit)
 	}
 }
 
-void			check_event(t_input *in, t_edit *edit)
+void			check_event(char *mapname, t_input *in, t_edit *edit)
 {
 	if (in->key[SDL_SCANCODE_ESCAPE])
 		in->quit = SDL_TRUE;
+	if (in->key[SDL_SCANCODE_S])
+	{
+		if(save_map(mapname, edit))
+			write(1, "\n-------Map sauver-------\n", 27);
+		in->key[SDL_SCANCODE_S] = SDL_FALSE;
+	}
 	if (in->key[SDL_SCANCODE_R])
 	{
 		edit->vert = NULL;
