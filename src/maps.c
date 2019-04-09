@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 15:20:51 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 15:22:45 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,6 +62,6 @@ int        map_writer(char *mapname, t_edit *edit)
 int		save_map(char *mapname, t_edit *edit)
 {
 	if (!map_writer(mapname, edit))
-		return (0);
+
 	return (1);
 }
