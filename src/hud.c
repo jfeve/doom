@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:29:02 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 05:21:27 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 12:08:45 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,18 +22,18 @@ void			hud_hl(t_edit *edit)
 	y = 880;
 	while (x < 350)
 	{
-		edit->sdl.pix[y * WIN_W + x] = RED;
+		edit->sdl.pix[y * WIN_W + x] = 0xFF0000FF;
 		x++;
 		y++;
 	}
 	while (x >= 250)
 	{
-		edit->sdl.pix[y * WIN_W + x] = RED;
+		edit->sdl.pix[y * WIN_W + x] = 0xFF0000FF;
 		x--;
 	}
 	while (y > 880)
 	{
-		edit->sdl.pix[y * WIN_W + x] = RED;
+		edit->sdl.pix[y * WIN_W + x] = 0xFF0000FF;
 		y--;
 	}
 }

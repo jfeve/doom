@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 06:33:36 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 12:07:25 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -114,4 +114,19 @@ void			check_event(t_input *in, t_edit *edit)
 		tmp->col = GREEN;
 		in->key[SDL_SCANCODE_O] = SDL_FALSE;
 	}
+	if (in->key[SDL_SCANCODE_E] && edit->hl_sec)
+	{
+		if (edit->hl_sec->enem == NULL)
+			edit->hl_sec->enem = create_vert(in->x, in->y);
+		else
+			add_vert(in->x, in->y, edit, edit->hl_sec->enem);
+		t_lis *tmp;
+
+		tmp = edit->hl_sec->enem;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->col = RED;
+		in->key[SDL_SCANCODE_E] = SDL_FALSE;
+	}
+
 }
