@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 15:18:51 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 15:20:51 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,12 +15,12 @@
 
 int        map_writer(char *mapname, t_edit *edit)
 {
-    t_sec    *tmp;
-    t_lis    *temp;
-    int        fd;
-    char    *map_path;
-    int        i;
-    int        sect_num;
+    t_sec		*tmp;
+    t_lis		*temp;
+    int			fd;
+    char		*map_path;
+    int			i;
+    int			sect_num;
 
     tmp = edit->sect;
     map_path = (char*)malloc(sizeof(char) * (int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
@@ -58,20 +58,6 @@ int        map_writer(char *mapname, t_edit *edit)
         return 0;
     }
 }
-// int			vertex_writer()
-// {
-
-
-// }
-// int			map_checker()
-// {
-// 	return (0);
-// }
-
-// int			map_parser(int mode, char *mapname)
-// {
-// 	return (0);
-// }
 
 int		save_map(char *mapname, t_edit *edit)
 {

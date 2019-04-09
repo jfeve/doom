@@ -6,11 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-<<<<<<< HEAD
-/*   Updated: 2019/04/08 15:25:41 by nzenzela    ###    #+. /#+    ###.fr     */
-=======
-/*   Updated: 2019/04/09 13:03:10 by jfeve       ###    #+. /#+    ###.fr     */
->>>>>>> 5f3343b781ebae2b9b2062e5f0964f23ed7cca13
+/*   Updated: 2019/04/09 15:20:09 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -167,8 +163,6 @@ void			level_editor(char *mapname)
 
 int				main(int argc, char **argv)
 {
-	// if (argc == 3 && strcmp(argv[1], "test") == 0 && ft_strlen(argv[2]) > 2)
-		// map_writer(argv[2]);
 	if (argc == 3 && strcmp(argv[1], "edit") == 0)
 		level_editor(argv[2]);
 	else
