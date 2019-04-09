@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   highlight.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 04:44:01 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 13:12:08 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 17:34:55 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@ void			clear_hl(t_edit *edit)
 	t_lis		*temp;
 
 	tmp = edit->sect;
-	while (tmp->vert->col !=(int)RED && tmp)
+	while (tmp && tmp->vert->col !=(int)RED)
 		tmp = tmp->next;
 	if (tmp)
 	{
@@ -58,8 +58,8 @@ void			hl_mode(t_input *in, t_edit *edit)
 		edit->hud_flag = 2;
 		if (in->key[SDL_SCANCODE_RIGHT])
 		{
-			clear_hl(edit);
 			in->key[SDL_SCANCODE_RIGHT] = SDL_FALSE;
+			clear_hl(edit);
 			if (edit->sec != edit->nbsect - 1)
 				edit->sec++;
 			else
@@ -67,8 +67,8 @@ void			hl_mode(t_input *in, t_edit *edit)
 		}
 		else if (in->key[SDL_SCANCODE_LEFT])
 		{
-			clear_hl(edit);
 			in->key[SDL_SCANCODE_LEFT] = SDL_FALSE;
+			clear_hl(edit);
 			if (edit->sec != 0)
 				edit->sec--;
 			else

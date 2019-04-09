@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   hud.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:29:02 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 12:08:45 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 17:56:28 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -91,7 +91,7 @@ void			hud(t_edit *edit)
 		x = 0;
 		while (x < WIN_W)
 		{
-			edit->sdl.pix[y * WIN_W + x] = 0x656565FF;
+			edit->sdl.pix[y * WIN_W + x] = 0x626965FF;
 			x++;
 		}
 		y++;
