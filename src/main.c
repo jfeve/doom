@@ -6,7 +6,11 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
+<<<<<<< HEAD
 /*   Updated: 2019/04/08 15:25:41 by nzenzela    ###    #+. /#+    ###.fr     */
+=======
+/*   Updated: 2019/04/09 13:03:10 by jfeve       ###    #+. /#+    ###.fr     */
+>>>>>>> 5f3343b781ebae2b9b2062e5f0964f23ed7cca13
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +25,11 @@ int				usage(void)
 
 int				init_edit(t_edit *edit)
 {
+	edit->hud_flag = 0;
+	edit->hl_sec = NULL;
+	edit->nbsect = 0;
+	edit->hl = 0;
+	edit->sect = 0;
 	if (sdl_init(&edit->sdl) == 0)
 		return (0);
 	edit->err = 0;
@@ -72,7 +81,7 @@ void			draw_vec(t_edit *edit, t_input in)
 	}
 	if (edit->oldvert != NULL)
 	{
-		bresen(mult_unit(*tmp), mult_unit(*edit->oldvert), &edit->sdl);
+		bresen(mult_unit(*edit->oldvert), mult_unit(*tmp), &edit->sdl);
 		set_sect(edit);
 	}
 	else
@@ -103,6 +112,22 @@ int				check_mapname(char *mapname)
 		return (0);
 	return (1);
 }
+void			draw_obj_enem(t_edit *edit)
+{
+	t_sec		*temp;
+
+	if (edit->sect == NULL)
+		return ;
+	temp = edit->sect;
+	while (temp)
+	{
+		if (temp->obj)
+			put_vert(edit, temp->obj);
+		if (temp->enem)
+			put_vert(edit, temp->enem);
+		temp = temp->next;
+	}
+}
 
 void			level_editor(char *mapname)
 {
@@ -122,7 +147,12 @@ void			level_editor(char *mapname)
 		check_event(mapname, &in, &edit);
 		set_grid(&edit);
 		hud(&edit);
-		put_vert(&edit);
+		put_vert(&edit, edit.vert);
+		draw_obj_enem(&edit);
+		if (edit.hl_sec && edit.hl_sec->obj)
+			put_vert(&edit, edit.hl_sec->obj);
+		if (edit.hl_sec && edit.hl_sec->enem)
+			put_vert(&edit, edit.hl_sec->enem);
 		draw_vec(&edit, in);
 		draw_sec(&edit);
 		if (display_frame(edit.sdl.ren, edit.sdl.pix) == 0)

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/08 11:18:13 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 15:18:18 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,8 @@
 # define SDL_BUTTON_X1 4
 # define SDL_BUTTON_X2 5
 # define WHITE 0xFFFFFFFF
-# define RED 0xFF0000FF
-# define CYAN 0x20B2AAFF
 # define MAP_PATH "./data/maps/"
+# define RED 0xF04967FF
+# define CYAN 0x4863B5FF
+# define GREEN 0x00A800FF
 #endif

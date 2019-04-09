@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/08 15:24:59 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 15:18:34 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -66,6 +66,7 @@ void			cancel_last(t_edit*edit)
 
 void			check_event(char *mapname, t_input *in, t_edit *edit)
 {
+	hl_mode(in, edit);
 	if (in->key[SDL_SCANCODE_ESCAPE])
 		in->quit = SDL_TRUE;
 	if (in->key[SDL_SCANCODE_S])
@@ -76,6 +77,10 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 	}
 	if (in->key[SDL_SCANCODE_R])
 	{
+		edit->hl_sec = NULL;
+		edit->nbsect = 0;
+		edit->sec = 0;
+		edit->hl = 0;
 		edit->vert = NULL;
 		edit->sect = NULL;
 	}
@@ -84,12 +89,49 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 		cancel_last(edit);
 		in->key[SDL_SCANCODE_Z] = SDL_FALSE;
 	}
-	if (in->mouse[SDL_BUTTON_LEFT] && in->y <= 850)
+	if (in->mouse[SDL_BUTTON_RIGHT])
 	{
+		if (check_on_vec(edit, in) == 1)
+		{
+			dprintf(1, "2\n");
+		}
+		in->mouse[SDL_BUTTON_RIGHT] = SDL_FALSE;
+	}
+	if (in->mouse[SDL_BUTTON_LEFT] && in->y < HUD_BEGIN && edit->hl == 0)
+	{
+		edit->hud_flag = 1;
 		if (edit->vert == NULL)
 			edit->vert = create_vert(in->x, in->y);
 		else
-			add_vert(in->x, in->y, edit);
+			add_vert(in->x, in->y, edit, edit->vert);
 		in->mouse[SDL_BUTTON_LEFT] = SDL_FALSE;
+	}
+	if (in->key[SDL_SCANCODE_O] && edit->hl_sec)
+	{
+		if (edit->hl_sec->obj == NULL)
+			edit->hl_sec->obj = create_vert(in->x, in->y);
+		else
+			add_vert(in->x, in->y, edit, edit->hl_sec->obj);
+		t_lis *tmp;
+
+		tmp = edit->hl_sec->obj;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->col = GREEN;
+		in->key[SDL_SCANCODE_O] = SDL_FALSE;
+	}
+	if (in->key[SDL_SCANCODE_E] && edit->hl_sec)
+	{
+		if (edit->hl_sec->enem == NULL)
+			edit->hl_sec->enem = create_vert(in->x, in->y);
+		else
+			add_vert(in->x, in->y, edit, edit->hl_sec->enem);
+		t_lis *tmp;
+
+		tmp = edit->hl_sec->enem;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->col = RED;
+		in->key[SDL_SCANCODE_E] = SDL_FALSE;
 	}
 }
