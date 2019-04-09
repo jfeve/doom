@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 15:47:11 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 00:53:31 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,7 @@
 # include "../libft/libft.h"
 # include "defines.h"
 # include <math.h>
-# include <SDL2/SDL.h>
+# include "/tmp/sdl2-win64/include/SDL2/SDL.h"
 # include <stdio.h>
 
 typedef struct		s_point

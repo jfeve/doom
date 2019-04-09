@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   ft_itoa.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 19:31:53 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/12 19:31:53 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 00:52:34 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,14 +47,10 @@ char			*ft_itoa(int n)
 {
 	long	i;
 	int		j;
-	int		k;
-	char	a;
 	char	*str;
 
 	i = n;
 	j = 0;
-	k = 0;
-	a = '0';
 	if (n == 0 || n == -0)
 		return (ft_strdup("0"));
 	j = ft_lennbr(i);
@@ -66,6 +62,5 @@ char			*ft_itoa(int n)
 		str[0] = '-';
 		i = -i;
 	}
-	k = j - 1;
 	return (ft_fillstr(str, i, j));
 }

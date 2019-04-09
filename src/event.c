@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 17:53:57 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 00:54:16 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -94,7 +94,7 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 	if (in->mouse[SDL_BUTTON_RIGHT])
 	{
 		if (check_on_vec(edit, in) == 1)
-			dprintf(1, "2\n");
+			printf("2\n");
 		in->mouse[SDL_BUTTON_RIGHT] = SDL_FALSE;
 	}
 	if (in->mouse[SDL_BUTTON_LEFT] && in->y < HUD_BEGIN && edit->hl == 0)

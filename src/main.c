@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 15:20:09 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 00:55:28 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -167,4 +167,5 @@ int				main(int argc, char **argv)
 		level_editor(argv[2]);
 	else
 		return(usage());
+	return (0);
 }

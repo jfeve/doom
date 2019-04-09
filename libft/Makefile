@@ -1,15 +1,15 @@
 # **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jfeve <marvin@42.fr>                       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/11/06 21:20:39 by jfeve             #+#    #+#              #
-#    Updated: 2018/01/24 04:33:19 by jfeve       ###    #+. /#+    ###.fr      #
-#                                                                              #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2017/11/06 21:20:39 by jfeve        #+#   ##    ##    #+#        #
+#    Updated: 2019/04/10 00:48:06 by nzenzela    ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
 # **************************************************************************** #
-
 .PHONY = clean fclean re
 
 NAME = libft.a
@@ -36,10 +36,10 @@ OBJ = $(FILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@ar rcs $(NAME) $(OBJ)
+	@x86_64-w64-mingw32-ar rcs $(NAME) $(OBJ)
 
 %.o: $(SRCS)%.c
-	@gcc $(FLAGS) -c $(SRCS)$*.c
+	@x86_64-w64-mingw32-gcc $(FLAGS) -c $(SRCS)$*.c
 
 clean:
 	@/bin/rm -f $(OBJ)

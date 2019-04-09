@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   vec.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 00:57:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 13:14:08 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 00:56:31 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,7 +76,7 @@ int				vec_here(t_lis *tmp, t_lis *vert, t_input *in)
 		m2 = ((float)in->y - ((float)tmp->y * UNIT)) / ((float)in->x - ((float)tmp->x * UNIT));
 		mmin = m - 0.3f;
 		mmax = m + 0.3f;
-		dprintf(1, "m = %f, m2 = %f\n", m, m2);
+		printf("m = %f, m2 = %f\n", m, m2);
 		if (m2 >= mmin && m2 <= mmax)
 			return (1);
 	}

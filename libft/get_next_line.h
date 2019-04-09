@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   get_next_line.h                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 19:23:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/18 15:35:01 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 00:51:49 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,8 +18,9 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <fcntl.h>
-# include <sys/uio.h>
-
+# ifdef HAVE_SYS_UIO_H
+#  include <sys/uio.h>
+# endif
 typedef struct	s_gnl
 {
 	char		*str;

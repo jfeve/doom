@@ -6,7 +6,7 @@
 #    By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/18 21:26:38 by jfeve        #+#   ##    ##    #+#        #
-#    Updated: 2019/04/09 20:13:39 by nzenzela    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/04/10 01:01:00 by nzenzela    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -15,9 +15,9 @@
 #-----------------------------------GCC----------------------------------------#
 #******************************************************************************#
 
-CC = gcc
+CC = x86_64-w64-mingw32-gcc
 CC_FLAGS = -Wall -Wextra -Werror -g3 -O3
-SDL_FLAGS = -F /Library/Frameworks -framework SDL2
+SDL_FLAGS = -I/tmp/sdl2-win64/include/SDL2 -L/tmp/sdl2-win64/lib -lmingw32 -lSDL2main -lSDL2 -mwindows
 
 #******************************************************************************#
 #----------------------------------LIBFT---------------------------------------#
@@ -48,8 +48,8 @@ INC_DOOM = $(addprefix $(PATH_INC_DOOM), doom.h)
 all: $(NAME)
 
 $(NAME): $(PATH_LIB)$(NAME_LIB) $(PATH_OBJ_DOOM) $(OBJ_DOOM)
-	@$(CC) $(CC_FLAGS) $(SDL_FLAGS) $(OBJ_DOOM) $(PATH_LIB)$(NAME_LIB)\
-		-o $(NAME)
+	@$(CC) $(CC_FLAGS) $(OBJ_DOOM) $(PATH_LIB)$(NAME_LIB) $(SDL_FLAGS)\
+		-o $(NAME).exe
 	@echo "*******\nexecutable doom-nukem cree.\n*******\n"
 
 $(PATH_OBJ_DOOM):

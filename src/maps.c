@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 17:21:59 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 00:54:54 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -73,7 +73,7 @@ static	int				putinfo_sector(int fd, t_edit *edit, unsigned short count_sect)
 		temp = tmp->vert;
 		while (temp != NULL)
 		{
-			dprintf(1, "Sector %d || Vertex %d : x = %d , y = %d\n", i,sect, temp->x, temp->y);
+			printf( "Sector %d || Vertex %d : x = %d , y = %d\n", i,sect, temp->x, temp->y);
 			temp = temp->next;
 			i += 1;
 		}
@@ -81,7 +81,7 @@ static	int				putinfo_sector(int fd, t_edit *edit, unsigned short count_sect)
 		sect += 1;
 		tmp = tmp->next;
 	}
-	dprintf(1, "\n -- List of Sectors : %d\n", count_sect);
+	printf("\n -- List of Sectors : %d\n", count_sect);
 	return (1);
 }
 
@@ -95,7 +95,6 @@ int						map_writer(char *mapname, t_edit *edit)
 	ft_strcat(ft_strcat(ft_strcat(map_path, MAP_PATH), mapname), ".mapf");
 	if((fd = open(map_path, O_TRUNC| O_RDWR | O_CREAT , 0644)) != -1)
 	{
-		write(fd, "MAPF", 4);
 		if ((sect_num = count_sector(edit)) != 0)
 		{
 			putinfo_head(fd, edit, sect_num);
