@@ -6,7 +6,7 @@
 /*   By: jfeve <jfeve@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/06 19:23:32 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 06:30:04 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +21,11 @@ int				usage(void)
 
 int				init_edit(t_edit *edit)
 {
+	edit->hud_flag = 0;
+	edit->hl_sec = NULL;
+	edit->nbsect = 0;
+	edit->hl = 0;
+	edit->sect = 0;
 	if (sdl_init(&edit->sdl) == 0)
 		return (0);
 	edit->err = 0;
@@ -74,7 +79,7 @@ void			draw_vec(t_edit *edit, t_input in)
 	}
 	if (edit->oldvert != NULL)
 	{
-		bresen(mult_unit(*tmp), mult_unit(*edit->oldvert), &edit->sdl);
+		bresen(mult_unit(*edit->oldvert), mult_unit(*tmp), &edit->sdl);
 		set_sect(edit);
 	}
 	else
@@ -102,7 +107,9 @@ void			level_editor(void)
 		check_event(&in, &edit);
 		set_grid(&edit);
 		hud(&edit);
-		put_vert(&edit);
+		put_vert(&edit, edit.vert);
+		if (edit.hl_sec && edit.hl_sec->obj)
+			put_vert(&edit, edit.hl_sec->obj);
 		draw_vec(&edit, in);
 		draw_sec(&edit);
 		if (display_frame(edit.sdl.ren, edit.sdl.pix) == 0)

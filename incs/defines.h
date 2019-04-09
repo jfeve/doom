@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/06 16:49:51 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 06:22:20 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,6 +24,7 @@
 # define SDL_BUTTON_X1 4
 # define SDL_BUTTON_X2 5
 # define WHITE 0xFFFFFFFF
-# define RED 0xFF0000FF
-# define CYAN 0x20B2AAFF
+# define RED 0xF04967FF
+# define CYAN 0x4863B5FF
+#define GREEN 0x00A800FF
 #endif

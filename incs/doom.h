@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/06 19:25:29 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 06:29:27 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,6 +35,11 @@ typedef struct		s_lis
 typedef struct		s_sec
 {
 	t_lis			*vert;
+	int				text;
+	int				floor;
+	int				ceil;
+	t_lis			*enem;
+	t_lis			*obj;
 	struct s_sec	*next;
 }					t_sec;
 
@@ -62,6 +67,11 @@ typedef struct		s_sdl
 
 typedef struct		s_edit
 {
+	int				hud_flag;
+	t_sec			*hl_sec;
+	int				nbsect;
+	int				hl;
+	int				sec;
 	t_lis			*vert;
 	t_sec			*sect;
 	t_sdl			sdl;
@@ -87,10 +97,17 @@ void				bresen(t_lis a, t_lis b, t_sdl *sdl);
 /*vertex*/
 t_lis				mult_unit(t_lis vert);
 int					arr(int x);
+float				arr_float(float x);
 t_lis				*create_vert(int x, int y);
-void				add_vert(int x, int y, t_edit *edit);
+void				add_vert(int x, int y, t_edit *edit, t_lis *vert);
 void				draw_vert(t_lis *tmp, t_edit *edit);
-void				put_vert(t_edit *edit);
+void				put_vert(t_edit *edit, t_lis *vert);
+
+/*vectors*/
+int					check_on_vec(t_edit *edit, t_input *in);
+
+/*highlight*/
+void				hl_mode(t_input *in, t_edit *edit);
 
 /*sec*/
 void				set_sect(t_edit *edit);

@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/06 19:25:31 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 06:33:36 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,50 +64,17 @@ void			cancel_last(t_edit*edit)
 	}
 }
 
-/*
- *int				vec_here(t_lis *tmp, t_lis *vert, t_input *in)
- *{
- *    float		m;
- *    float		p;
- *
- *    //y = mx + p;
- *    m = ((float)tmp->y - (float)tmp->next->y) / ((float)tmp->y - (float)tmp->next->y);
- *    p = (float)tmp->y - m * (float)tmp->x;
- *
- *    return (0);
- *}
- */
-
-/*
- *int				check_on_vec(t_edit *edit, t_input *in)
- *{
- *    t_lis		*tmp;
- *    t_sec		*sec;
- *
- *    if (edit->sect == NULL)
- *        return (0);
- *    sec = edit->sect;
- *    while (sec)
- *    {
- *        tmp = sec->vert;
- *        while (tmp->next)
- *        {
- *            if (vec_here(tmp, tmp->next, in) == 1)
- *                return (1);
- *            tmp = tmp->next;
- *        }
- *        sec = sec->next;
- *    }
- *    return (0);
- *}
- */
-
 void			check_event(t_input *in, t_edit *edit)
 {
+	hl_mode(in, edit);
 	if (in->key[SDL_SCANCODE_ESCAPE])
 		in->quit = SDL_TRUE;
 	if (in->key[SDL_SCANCODE_R])
 	{
+		edit->hl_sec = NULL;
+		edit->nbsect = 0;
+		edit->sec = 0;
+		edit->hl = 0;
 		edit->vert = NULL;
 		edit->sect = NULL;
 	}
@@ -116,23 +83,35 @@ void			check_event(t_input *in, t_edit *edit)
 		cancel_last(edit);
 		in->key[SDL_SCANCODE_Z] = SDL_FALSE;
 	}
-	/*
-	 *if (in->mouse[SDL_BUTTON_RIGHT])
-	 *{
-	 *    if (check_on_vec(edit, in) == 1)
-	 *    {
-	 *        dprintf(1, "suce\n");
-	 *        get_portal_coord();
-	 *        get_neighbor();
-	 *    }
-	 *}
-	 */
-	if (in->mouse[SDL_BUTTON_LEFT] && in->y <= 850)
+	if (in->mouse[SDL_BUTTON_RIGHT])
 	{
+		if (check_on_vec(edit, in) == 1)
+		{
+			dprintf(1, "2\n");
+		}
+		in->mouse[SDL_BUTTON_RIGHT] = SDL_FALSE;
+	}
+	if (in->mouse[SDL_BUTTON_LEFT] && in->y < HUD_BEGIN && edit->hl == 0)
+	{
+		edit->hud_flag = 1;
 		if (edit->vert == NULL)
 			edit->vert = create_vert(in->x, in->y);
 		else
-			add_vert(in->x, in->y, edit);
+			add_vert(in->x, in->y, edit, edit->vert);
 		in->mouse[SDL_BUTTON_LEFT] = SDL_FALSE;
+	}
+	if (in->key[SDL_SCANCODE_O] && edit->hl_sec)
+	{
+		if (edit->hl_sec->obj == NULL)
+			edit->hl_sec->obj = create_vert(in->x, in->y);
+		else
+			add_vert(in->x, in->y, edit, edit->hl_sec->obj);
+		t_lis *tmp;
+
+		tmp = edit->hl_sec->obj;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->col = GREEN;
+		in->key[SDL_SCANCODE_O] = SDL_FALSE;
 	}
 }

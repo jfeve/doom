@@ -6,12 +6,19 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:21:04 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/06 16:36:11 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/09 06:29:29 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+float			arr_float(float x)
+{
+	if ((int)x % UNIT >= UNIT / 2)
+		x += UNIT / 2 + 1;
+	return (x / UNIT);
+}
 
 int				arr(int x)
 {
@@ -33,11 +40,11 @@ t_lis			*create_vert(int x, int y)
 	return (vert);
 }
 
-int				parse_data(int x, int y, t_edit *edit)
+int				parse_data(int x, int y, t_edit *edit, t_lis *vert)
 {
 	t_lis		*tmp;
 
-	tmp = edit->vert;
+	tmp = vert;
 	if (tmp->x == arr(x) && tmp->y == arr(y))
 	{
 		edit->oldvert = tmp;
@@ -47,12 +54,12 @@ int				parse_data(int x, int y, t_edit *edit)
 	return (1);
 }
 
-void			add_vert(int x, int y, t_edit *edit)
+void			add_vert(int x, int y, t_edit *edit, t_lis *vert)
 {
 	t_lis		*point;
 	t_lis		*tmp;
 
-	if (parse_data(x, y, edit) == 0)
+	if (parse_data(x, y, edit, vert) == 0)
 		return ;
 	if (!(point = (t_lis*)malloc(sizeof(t_lis))))
 		return ;
@@ -60,7 +67,7 @@ void			add_vert(int x, int y, t_edit *edit)
 	point->y = arr(y);
 	point->col = WHITE;
 	point->next = NULL;
-	tmp = edit->vert;
+	tmp = vert;
 	while (tmp->next != NULL)
 		tmp = tmp->next;
 	tmp->next = point;
@@ -88,11 +95,11 @@ void			draw_vert(t_lis *tmp, t_edit *edit)
 	edit->sdl.pix[tmp->y * UNIT * WIN_W + (tmp->x * UNIT)] = tmp->col;
 }
 
-void			put_vert(t_edit *edit)
+void			put_vert(t_edit *edit, t_lis *vert)
 {
 	t_lis		*tmp;
 
-	tmp = edit->vert;
+	tmp = vert;
 	while (tmp != NULL)
 	{
 		draw_vert(tmp, edit);
