@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 16:23:58 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 18:49:38 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,17 +71,16 @@ int						map_writer(char *mapname, t_edit *edit)
 {
 	int					fd;
 	char				*mapfile;
-	unsigned short		sect_num;
 
-	mapfile = (char*)malloc(sizeof(char) * (int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
+	mapfile = (char*)malloc(sizeof(char) * 
+		(int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
 	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
 	if((fd = open(mapfile, O_TRUNC | O_CREAT | O_WRONLY, S_IRWXU)) != -1)
 	{
-		sect_num = count_sector(edit);
-		if (sect_num != 0)
+		if (edit->nbsect != 0)
 		{
-			putinfo_head(fd, edit, sect_num);
-			putinfo_sector(fd, edit, sect_num);
+			putinfo_head(fd, edit, edit->nbsect);
+			putinfo_sector(fd, edit, edit->nbsect);
 			close(fd);
 			return (1);
 		}
