@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 16:11:25 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 19:34:08 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,6 +70,7 @@ typedef struct		s_edit
 {
 	int				hud_flag;
 	t_sec			*hl_sec;
+	t_lis			*hl_vert;
 	int				nbsect;
 	int				hl;
 	int				sec;
@@ -105,7 +106,7 @@ void				draw_vert(t_lis *tmp, t_edit *edit);
 void				put_vert(t_edit *edit, t_lis *vert);
 
 /*vectors*/
-int					check_on_vec(t_edit *edit, t_input *in);
+int					check_on_vec(t_point *in, t_sec *sec);
 
 /*highlight*/
 void				hl_mode(t_input *in, t_edit *edit);

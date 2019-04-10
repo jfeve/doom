@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 16:38:51 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 20:22:45 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,9 +64,59 @@ void			cancel_last(t_edit*edit)
 	}
 }
 
+void			clear_hl_vec(t_sec *sec)
+{
+	t_lis		*tmp;
+
+	tmp = sec->vert;
+	while (tmp)
+	{
+		if (tmp->col == (int)GREEN)
+			tmp->col = RED;
+		tmp = tmp->next;
+	}
+}
+
+void			portals(t_edit *edit, t_input *in)
+{
+	int			v;
+	t_lis		*tmp;
+
+	if (in->mouse[SDL_BUTTON_RIGHT] && edit->hl_sec)
+	{
+		t_point point;
+
+		point.x = in->x;
+		point.y = in->y;
+		if ((v = check_on_vec(&point, edit->hl_sec)) != 0)
+		{
+			clear_hl_vec(edit->hl_sec);
+			dprintf(1, "v = %d\n", v);
+			tmp = edit->hl_sec->vert;
+			while (v > 1 && tmp)
+			{
+				tmp = tmp->next;
+				v--;
+			}
+			if (tmp->next)
+			{
+				tmp->next->col = GREEN;
+				edit->hl_vert = tmp;
+			}
+			else
+			{
+				edit->hl_sec->vert->col = GREEN;
+				edit->hl_vert = tmp;
+			}
+		}
+		in->mouse[SDL_BUTTON_RIGHT] = SDL_FALSE;
+	}
+}
+
 void			check_event(char *mapname, t_input *in, t_edit *edit)
 {
 	hl_mode(in, edit);
+	portals(edit, in);
 	if (in->key[SDL_SCANCODE_ESCAPE])
 		in->quit = SDL_TRUE;
 	if (in->key[SDL_SCANCODE_S])
@@ -91,22 +141,6 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 	{
 		cancel_last(edit);
 		in->key[SDL_SCANCODE_Z] = SDL_FALSE;
-	}
-	if (in->mouse[SDL_BUTTON_RIGHT])
-	{
-		dprintf(1, "1\n");
-		if (check_on_vec(edit, in) == 1)
-			dprintf(1, "2\n");
-		in->mouse[SDL_BUTTON_RIGHT] = SDL_FALSE;
-	}
-	if (in->mouse[SDL_BUTTON_LEFT] && in->y < HUD_BEGIN && edit->hl == 0)
-	{
-		edit->hud_flag = 1;
-		if (edit->vert == NULL)
-			edit->vert = create_vert(in->x, in->y);
-		else
-			add_vert(in->x, in->y, edit, edit->vert);
-		in->mouse[SDL_BUTTON_LEFT] = SDL_FALSE;
 	}
 	if (in->key[SDL_SCANCODE_O] && edit->hl_sec)
 	{
@@ -135,5 +169,14 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 			tmp = tmp->next;
 		tmp->col = RED;
 		in->key[SDL_SCANCODE_E] = SDL_FALSE;
+	}
+	if (in->mouse[SDL_BUTTON_LEFT] && in->y < HUD_BEGIN && edit->hl == 0)
+	{
+		edit->hud_flag = 1;
+		if (edit->vert == NULL)
+			edit->vert = create_vert(in->x, in->y);
+		else
+			add_vert(in->x, in->y, edit, edit->vert);
+		in->mouse[SDL_BUTTON_LEFT] = SDL_FALSE;
 	}
 }

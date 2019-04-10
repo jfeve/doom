@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 17:53:08 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 19:04:08 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -147,13 +147,13 @@ void				draw_square(t_edit *edit, int x, int y)
 
 void			draw_1(t_edit *edit, int x, int y)
 {
-	char *str = "0001100\n0010100\n0000100\n0000100\n0001110\0";
+	char *str = "000022000\n002202200\n220000220\n000022000\n002200000\n222222222";
 	int i = 0;
 	int tmp = x;
 
 	while (str[i])
 	{
-		if (str[i] == '1')
+		if (str[i] == '2')
 		{
 			tmp += 6;
 			draw_square(edit, tmp ,y);
