@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 15:20:09 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 17:53:08 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -125,6 +125,50 @@ void			draw_obj_enem(t_edit *edit)
 	}
 }
 
+void				draw_square(t_edit *edit, int x, int y)
+{
+	int i;
+	int j;
+
+	i = x;
+	j = y;
+	while (j <= y + 8)
+	{
+		i = x;
+		while (i <= x + 6)
+		{
+			edit->sdl.pix[j * WIN_W + i] = RED;
+			i++;
+		}
+		j++;
+	}
+}
+
+
+void			draw_1(t_edit *edit, int x, int y)
+{
+	char *str = "0001100\n0010100\n0000100\n0000100\n0001110\0";
+	int i = 0;
+	int tmp = x;
+
+	while (str[i])
+	{
+		if (str[i] == '1')
+		{
+			tmp += 6;
+			draw_square(edit, tmp ,y);
+		}
+		if (str[i] == '0')
+			tmp += 6;
+		else if (str[i] == '\n')
+		{
+			tmp = x;
+			y += 8;
+		}
+		i++;
+	}
+}
+
 void			level_editor(char *mapname)
 {
 	t_edit		edit;
@@ -145,12 +189,9 @@ void			level_editor(char *mapname)
 		hud(&edit);
 		put_vert(&edit, edit.vert);
 		draw_obj_enem(&edit);
-		if (edit.hl_sec && edit.hl_sec->obj)
-			put_vert(&edit, edit.hl_sec->obj);
-		if (edit.hl_sec && edit.hl_sec->enem)
-			put_vert(&edit, edit.hl_sec->enem);
 		draw_vec(&edit, in);
 		draw_sec(&edit);
+		draw_1(&edit, 860, 900);
 		if (display_frame(edit.sdl.ren, edit.sdl.pix) == 0)
 		{
 			free_sdl(&edit.sdl, 5);
