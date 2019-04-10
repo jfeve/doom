@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 17:21:59 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 14:55:28 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -88,15 +88,15 @@ static	int				putinfo_sector(int fd, t_edit *edit, unsigned short count_sect)
 int						map_writer(char *mapname, t_edit *edit)
 {
 	int					fd;
-	char				*map_path;
+	char				*mapfile;
 	unsigned short		sect_num;
 
-	map_path = (char*)malloc(sizeof(char) * (int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
-	ft_strcat(ft_strcat(ft_strcat(map_path, MAP_PATH), mapname), ".mapf");
-	if((fd = open(map_path, O_TRUNC| O_RDWR | O_CREAT , 0644)) != -1)
+	mapfile = (char*)malloc(sizeof(char) * (int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
+	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
+	if((fd = open(mapfile, O_TRUNC | O_CREAT | O_WRONLY, S_IRWXU)) != -1)
 	{
-		write(fd, "MAPF", 4);
-		if ((sect_num = count_sector(edit)) != 0)
+		sect_num = count_sector(edit);
+		if (sect_num != 0)
 		{
 			putinfo_head(fd, edit, sect_num);
 			putinfo_sector(fd, edit, sect_num);
@@ -105,14 +105,15 @@ int						map_writer(char *mapname, t_edit *edit)
 		}
 		else
 		{
-			free(map_path);
+			free(mapfile);
 			close(fd);
 			return (0);
 		}
 	}
 	else
 	{
-		free(map_path);
+		dprintf(1,"We could not open the file");
+		free(mapfile);
 		close(fd);
 		return (0);
 	}

@@ -1,20 +1,21 @@
 # **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jfeve <marvin@42.fr>                       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/11/06 21:20:39 by jfeve             #+#    #+#              #
-#    Updated: 2018/01/24 04:33:19 by jfeve       ###    #+. /#+    ###.fr      #
-#                                                                              #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2017/11/06 21:20:39 by jfeve        #+#   ##    ##    #+#        #
+#    Updated: 2019/04/10 14:02:05 by nzenzela    ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
 # **************************************************************************** #
 
 .PHONY = clean fclean re
 
 NAME = libft.a
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g3 -O3
 
 HEADERS = libft.h
 
