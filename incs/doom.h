@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 20:05:19 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 20:41:52 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -79,6 +79,7 @@ typedef struct					s_edit
 	int							err;
 	t_lis						*oldvert;
 }								t_edit;
+
 typedef	struct					s_draw
 {
 	char						*input;
@@ -87,8 +88,6 @@ typedef	struct					s_draw
 	int							x_s;
 	int							y_s;
 	int 						i;
-	int 						j;
-	int							tmp;
 	unsigned	int				color;
 }								t_draw;
 

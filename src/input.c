@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 20:26:05 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 20:44:35 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,18 +52,18 @@ char						*check_num(int num)
 
 void						draw_square(t_edit *edit, t_draw *draw)
 {
-	draw->i = draw->x; 
-	draw->j = draw->y;
+	int i = draw->x;
+	int j = draw->y;
 
-	while (draw->j <= draw->y + draw->y_s)
+	while (j <= draw->y + draw->y_s)
 	{
-		draw->i = draw->x;
-		while (draw->i <= draw->x + draw->x_s)
+		i = draw->x;
+		while (i <= draw->x + draw->x_s)
 		{
-			edit->sdl.pix[draw->j * WIN_W + draw->i] = RED;
-			draw->i++;
+			edit->sdl.pix[j * WIN_W + i] = RED;
+			i++;
 		} 
-		draw->j++;
+		j++;
 	}
 }
 
@@ -75,22 +75,23 @@ void						draw_num(t_edit *edit,int x, int y, int num)
 	draw.y_s = 8;
 	draw.x_s = 6;
 	draw.i = 0;
-	draw.tmp = x;
+	draw.x = x;
+	draw.y = y;
 
 	while (draw.input[draw.i])
 	{
 		if (draw.input[draw.i] != '0' && (draw.input[draw.i] > '0' && draw.input[draw.i] <= '3'))
 		{
 			draw.color = check_color(draw.input[draw.i]);
-			draw.tmp += draw.x_s;
+			draw.x += draw.x_s;
 			draw_square(edit, &draw);
 		}
 		if (draw.input[draw.i] == '0')
-			draw.tmp += draw.x_s;
+			draw.x += draw.x_s;
 		else if (draw.input[draw.i] == '\n')
 		{
-			draw.tmp = x;
-			y += draw.y_s;
+			draw.x = x;
+			draw.y += draw.y_s;
 		}
 		draw.i++;
 	}
