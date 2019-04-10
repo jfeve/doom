@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 16:22:44 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 12:53:46 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 16:19:15 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -75,6 +75,8 @@ void			draw_sec(t_edit *edit)
 	while (tmp)
 	{
 		temp = tmp->vert;
+		if (temp->col == (int)RED)
+			put_vert(edit, temp);
 		while (temp->next)
 		{
 			bresen(mult_unit(*temp), mult_unit(*temp->next), &edit->sdl);

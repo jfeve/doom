@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 15:47:11 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 16:11:25 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,9 +36,9 @@ typedef struct		s_lis
 typedef struct		s_sec
 {
 	t_lis			*vert;
-	int				text;
-	int				floor;
-	int				ceil;
+	unsigned short				text;
+	unsigned short				floor;
+	unsigned short				ceil;
 	t_lis			*enem;
 	t_lis			*obj;
 	struct s_sec	*next;
