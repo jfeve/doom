@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 16:33:45 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 20:05:19 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -79,7 +79,18 @@ typedef struct					s_edit
 	int							err;
 	t_lis						*oldvert;
 }								t_edit;
-
+typedef	struct					s_draw
+{
+	char						*input;
+	int							x;
+	int							y;
+	int							x_s;
+	int							y_s;
+	int 						i;
+	int 						j;
+	int							tmp;
+	unsigned	int				color;
+}								t_draw;
 
 /* event */
 void							update_event(t_input *in);
@@ -125,5 +136,5 @@ void							hud(t_edit *edit);
 int								map_writer(char *mapname, t_edit *edit);
 int								save_map(char *mapname, t_edit *edit);
 /*Detection d'Input*/
-
+void							draw_num(t_edit *edit,int x, int y, int num);
 #endif
