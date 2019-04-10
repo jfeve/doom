@@ -6,30 +6,12 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 14:55:28 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 16:23:58 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
-
-static unsigned short	count_sector(t_edit *edit)
-{
-	t_sec				*tmp;
-	unsigned short		sect_num;
-
-	sect_num = 0;
-	tmp = edit->sect;
-	if (tmp != NULL)
-	{
-		while (tmp != NULL)
-		{
-			sect_num++;
-			tmp = tmp->next;
-		}
-	}
-	return (sect_num);
-}
 
 static	int				putinfo_head(int fd, t_edit *edit, unsigned short count_sect)
 {
