@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 15:59:37 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 16:38:51 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -79,6 +79,7 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 	}
 	if (in->key[SDL_SCANCODE_R])
 	{
+		edit->hud_flag = 0;
 		edit->hl_sec = NULL;
 		edit->nbsect = 0;
 		edit->sec = 0;
