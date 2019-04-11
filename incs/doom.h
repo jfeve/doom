@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 18:05:58 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 19:15:48 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -99,6 +99,7 @@ void				clear_tab(t_sdl *sdl);
 void				bresen(t_lis a, t_lis b, t_sdl *sdl);
 
 /*vertex*/
+void				cancel_last(t_lis **vert);
 t_lis				mult_unit(t_lis vert);
 int					arr(int x);
 float				arr_float(float x);
@@ -108,6 +109,9 @@ void				draw_vert(t_lis *tmp, t_edit *edit);
 void				put_vert(t_edit *edit, t_lis *vert);
 
 /*vectors*/
+void				portals(t_edit *edit, t_input *in);
+void				place_new_vert(t_sec *sec, t_input *in);
+int					vec_here(t_lis *tmp, t_lis*vert, t_point *in);
 int					check_coord_in(t_lis *tmp, t_lis *vert, t_point *in, int flag);
 void				clear_hl_vec(t_sec *sec);
 int					check_on_vec(t_point *in, t_sec *sec);
