@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 20:22:45 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 18:44:40 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,13 +42,13 @@ void			update_event(t_input *in)
 	}
 }
 
-void			cancel_last(t_edit*edit)
+void			cancel_last(t_lis **vert)
 {
 	t_lis		*tmp;
 	
-	if (edit->vert == NULL)
+	if (*vert == NULL)
 		return ;
-	tmp = edit->vert;
+	tmp = *vert;
 	if (tmp->next)
 		while(tmp->next->next)
 			tmp = tmp->next;
@@ -59,8 +59,8 @@ void			cancel_last(t_edit*edit)
 	}
 	else
 	{
-		free(edit->vert);
-		edit->vert = NULL;
+		free(*vert);
+		*vert = NULL;
 	}
 }
 
@@ -68,6 +68,8 @@ void			clear_hl_vec(t_sec *sec)
 {
 	t_lis		*tmp;
 
+	if (sec == NULL)
+		return ;
 	tmp = sec->vert;
 	while (tmp)
 	{
@@ -91,7 +93,6 @@ void			portals(t_edit *edit, t_input *in)
 		if ((v = check_on_vec(&point, edit->hl_sec)) != 0)
 		{
 			clear_hl_vec(edit->hl_sec);
-			dprintf(1, "v = %d\n", v);
 			tmp = edit->hl_sec->vert;
 			while (v > 1 && tmp)
 			{
@@ -111,6 +112,57 @@ void			portals(t_edit *edit, t_input *in)
 		}
 		in->mouse[SDL_BUTTON_RIGHT] = SDL_FALSE;
 	}
+}
+
+void			swap_datas(t_lis *vert, t_lis *last)
+{
+	t_lis *tmp;
+
+	if (!(tmp = (t_lis*)malloc(sizeof(t_lis))))
+		return ;
+	while (vert != last)
+	{
+		tmp->x = vert->x;
+		tmp->y = vert->y;
+		tmp->col = vert->col;
+		tmp->neigh = vert->neigh;
+		vert->x = last->x;
+		vert->y = last->y;
+		vert->col = last->col;
+		vert->neigh = last->neigh;
+		last->x = tmp->x;
+		last->y = tmp->y;
+		last->col = tmp->col;
+		last->neigh = tmp->neigh;
+		vert = vert->next;
+	}
+}
+
+void			place_new_vert(t_sec *sec, t_input *in)
+{
+	t_lis		*tmp;
+	t_lis		*last;
+	t_point		point;
+
+	point.x = in->x;
+	point.y = in->y;
+	tmp = sec->vert;
+	last = sec->vert;
+	while (last->next)
+		last = last->next;
+	while (tmp->next)
+	{
+		if (check_coord_in(tmp, tmp->next, &point, 3))
+		{
+			dprintf(1, "1\n");
+			swap_datas(tmp->next, last);
+			return ;
+		}
+		dprintf(1, "2\n");
+		tmp = tmp->next;
+	}
+	if (!(check_coord_in(tmp, tmp->next, &point, 3)))
+		cancel_last(&sec->vert);
 }
 
 void			check_event(char *mapname, t_input *in, t_edit *edit)
@@ -137,10 +189,26 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 		edit->vert = NULL;
 		edit->sect = NULL;
 	}
+	if (in->key[SDL_SCANCODE_A] && edit->hl_sec)
+	{
+		add_vert(in->x, in->y, edit, edit->hl_sec->vert);
+		place_new_vert(edit->hl_sec, in);
+		in->key[SDL_SCANCODE_A] = SDL_FALSE;
+	}
 	if (in->key[SDL_SCANCODE_Z])
 	{
-		cancel_last(edit);
+		if (edit->vert)
+			cancel_last(&edit->vert);
+		else if (edit->hl_sec)
+			if (edit->hl_sec->obj)
+				cancel_last(&edit->hl_sec->obj);
 		in->key[SDL_SCANCODE_Z] = SDL_FALSE;
+	}
+	if (in->key[SDL_SCANCODE_X])
+	{
+		if (edit->hl_sec)
+			if (edit->hl_sec->enem)
+				cancel_last(&edit->hl_sec->enem);
 	}
 	if (in->key[SDL_SCANCODE_O] && edit->hl_sec)
 	{

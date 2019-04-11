@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 16:22:44 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 19:47:48 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 16:12:02 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,7 +42,6 @@ void			set_sect(t_edit *edit)
 	t_sec		*tmp;
 
 	edit->hud_flag = 0;
-	edit->nbsect++;
 	if (edit->sect == NULL)
 		edit->sect = create_sec();
 	else
@@ -54,6 +53,7 @@ void			set_sect(t_edit *edit)
 			tmp = tmp->next;
 	}
 	tmp->vert = edit->vert;
+	tmp->id = edit->nbsect;
 	tmp->vert->col = WHITE;
 	tmp->text = 0;
 	tmp->floor = 0;
@@ -62,6 +62,7 @@ void			set_sect(t_edit *edit)
 	tmp->enem = NULL;
 	edit->vert = NULL;
 	edit->oldvert = NULL;
+	edit->nbsect++;
 }
 
 void			draw_sec(t_edit *edit)

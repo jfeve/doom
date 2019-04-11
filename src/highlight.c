@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 04:44:01 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 19:46:46 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 15:53:26 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,7 +50,9 @@ void			hl_mode(t_input *in, t_edit *edit)
 		{
 			edit->hud_flag = 0;
 			edit->sec = 0;
+			clear_hl_vec(edit->hl_sec);
 			edit->hl_sec = NULL;
+			edit->hl_vert = NULL;
 			clear_hl(edit);
 		}
 	}
