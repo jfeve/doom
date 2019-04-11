@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 19:34:08 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 18:05:58 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,15 +27,17 @@ typedef struct					s_point
 
 typedef struct					s_lis
 {
-	int							x;
-	int							y;
-	int							col;
-	struct s_lis				*next;
-}								t_lis;
+	int				x;
+	int				y;
+	int				col;
+	unsigned short	neigh;
+	struct s_lis	*next;
+}					t_lis;
 
 typedef struct					s_sec
 {
-	t_lis						*vert;
+	t_lis			*vert;
+	unsigned short				id;
 	unsigned short				text;
 	unsigned short				floor;
 	unsigned short				ceil;
@@ -117,6 +119,8 @@ void							draw_vert(t_lis *tmp, t_edit *edit);
 void							put_vert(t_edit *edit, t_lis *vert);
 
 /*vectors*/
+int					check_coord_in(t_lis *tmp, t_lis *vert, t_point *in, int flag);
+void				clear_hl_vec(t_sec *sec);
 int					check_on_vec(t_point *in, t_sec *sec);
 
 /*highlight*/
