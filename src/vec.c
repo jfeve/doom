@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 00:57:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 20:02:26 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 20:31:54 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,19 +56,33 @@ void			swap_datas(t_lis *vert, t_lis *last)
 		return ;
 	while (vert != last)
 	{
+		dprintf(1, "1\n");
 		tmp->x = vert->x;
+		dprintf(1, "2\n");
 		tmp->y = vert->y;
+		dprintf(1, "3\n");
 		tmp->col = vert->col;
+		dprintf(1, "4\n");
 		tmp->neigh = vert->neigh;
+		dprintf(1, "5\n");
 		vert->x = last->x;
+		dprintf(1, "6\n");
 		vert->y = last->y;
+		dprintf(1, "7\n");
 		vert->col = last->col;
+		dprintf(1, "8\n");
 		vert->neigh = last->neigh;
+		dprintf(1, "9\n");
 		last->x = tmp->x;
+		dprintf(1, "1\n");
 		last->y = tmp->y;
+		dprintf(1, "2\n");
 		last->col = tmp->col;
+		dprintf(1, "3\n");
 		last->neigh = tmp->neigh;
+		dprintf(1, "4\n");
 		vert = vert->next;
+		dprintf(1, "5\n");
 	}
 }
 

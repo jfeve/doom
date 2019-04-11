@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 20:20:03 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 20:40:08 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -107,11 +107,13 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 	{
 		t_lis *tmp;
 
-		tmp = edit->hl_sec->vert;
+		tmp = edit->hl_sec->vert
 		while (tmp)
 		{
-			if (parse_data(in->x, in->y, edit, tmp))
+			if (parse_data(in->x, in->y, edit, tmp) == 0)
+			{
 				break ;
+			}
 			tmp = tmp->next;
 		}
 		if (edit->oldvert == NULL)
