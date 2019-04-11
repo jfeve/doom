@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 18:41:51 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 20:26:57 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -132,26 +132,23 @@ void						draw_num(t_edit *edit,t_draw data, int num)
 
 void			draw_text(t_edit *edit)
 {
-	int x;
-	int y;
+	int 	x;
+	int 	y;
+	int		i;
+	int		nb;
 
-	x = TEXT_INPUT;
+	i = 0;
+	nb = 0;
+	x = 600;
 	y = HUD_BEGIN;
 	if (edit->input_flag == 1)
 	{
-		draw_num(edit, write_num(600, 900, 1), 0);
-		draw_num(edit, write_num(650, 900, 1), 1);
-		draw_num(edit, write_num(690, 900, 1), 2);
-		draw_num(edit, write_num(725, 900, 1), 3);
-		draw_num(edit, write_num(765, 900, 1), 4);
-		draw_num(edit, write_num(800, 900, 1), 5);
-		draw_num(edit, write_num(840, 900, 1), 6);
-		draw_num(edit, write_num(845, 900, 4), 10);
-		draw_num(edit, write_num(845, 880, 4), 11);
-		draw_num(edit, write_num(885, 880, 4), 12);
-		draw_num(edit, write_num(880, 900, 1), 7);
-		draw_num(edit, write_num(920, 900, 1), 8);
-		draw_num(edit, write_num(970, 900, 1), 9);
+		while (edit->input_list[i] && edit->input_list[i] != ' ')
+		{
+			nb = edit->input_list[i] - 48;
+			draw_num(edit, write_num(x += 20, 900, 1), nb);
+			i++;
+		}
 	}
 }
 
@@ -159,47 +156,30 @@ void			input_mode(t_input *in, t_edit *edit)
 {
 	int		minkey;
 	int		maxkey;
+	int		i;
+	int		j;
+	int		k;
 
-	maxkey = 98;
+	k = 0;
 	minkey = 89;
-	if (in->key[SDL_SCANCODE_T])
+	maxkey = 98;
+	i = minkey;
+	j = 0;
+	i = 0;
+	while (i != maxkey)
 	{
-		edit->input_flag = 1;
-		in->key[SDL_SCANCODE_T] = SDL_FALSE;
+		if (in->key[i])
+		{
+			edit->input_flag = 1;
+		// 	if (edit->input_list[edit->input_cursor] != '\0' && edit->input_cursor != 9)
+		// 	{
+		// 		edit->input_list[edit->input_cursor] = (j + '0');
+		// 		edit->input_cursor++;
+		// 	}
+		// 	in->key[i] = SDL_FALSE;
+		// 	j = 0;
+		}
+		j++;
+		i++;
 	}
-	// if (in->key[SDL_SCANCODE_KP_1])
-	// {
-	// 	edit->input_flag = 1;
-	// 	in->key[SDL_SCANCODE_KP_1] = SDL_FALSE;
-	// }
-	// if (in->key[SDL_SCANCODE_KP_2])
-	// {
-	// 	edit->input_flag = 1;
-	// 	in->key[SDL_SCANCODE_KP_2] = SDL_FALSE;
-	// }
-	// if (in->key[SDL_SCANCODE_KP_3])
-	// {
-	// 	edit->input_flag = 1;
-	// 	in->key[SDL_SCANCODE_KP_3] = SDL_FALSE;
-	// }
-	// if (in->key[SDL_SCANCODE_KP_9])
-	// {
-	// 	edit->input_flag = 1;
-	// 	in->key[SDL_SCANCODE_KP_4] = SDL_FALSE;
-	// }
-	// if (in->key[SDL_SCANCODE_KP_4])
-	// {
-	// 	edit->input_flag = 1;
-	// 	in->key[SDL_SCANCODE_KP_5] = SDL_FALSE;
-	// }
-	// if (in->key[SDL_SCANCODE_KP_5])
-	// {
-	// 	edit->input_flag = 1;
-	// 	in->key[SDL_SCANCODE_KP_9] = SDL_FALSE;
-	// }
-	// if (in->key[SDL_SCANCODE_KP_9])
-	// {
-	// 	edit->input_flag = 1;
-	// 	in->key[SDL_SCANCODE_KP_9] = SDL_FALSE;
-	// }
 }

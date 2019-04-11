@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 17:19:26 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 20:21:48 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,11 +22,19 @@ int				usage(void)
 int				init_edit(t_edit *edit)
 {
 	edit->hud_flag = 0;
+	edit->input_flag = 0;
+	edit->input_cursor = 0;
 	edit->hl_sec = NULL;
 	edit->hl_vert = NULL;
 	edit->nbsect = 0;
 	edit->hl = 0;
 	edit->sect = 0;
+	while (edit->input_list[edit->input_cursor])
+	{
+		dprintf(1, "%c",edit->input_list[edit->input_cursor++]);
+		edit->input_list[edit->input_cursor++] = ' ';
+	}
+	edit->input_cursor = 0;
 	if (sdl_init(&edit->sdl) == 0)
 		return (0);
 	edit->err = 0;
