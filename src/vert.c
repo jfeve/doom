@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:21:04 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 06:29:29 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 20:25:59 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,11 +98,22 @@ void			draw_vert(t_lis *tmp, t_edit *edit)
 void			put_vert(t_edit *edit, t_lis *vert)
 {
 	t_lis		*tmp;
+	int			ch;
+	int			co;
 
+	ch = 0;
 	tmp = vert;
 	while (tmp != NULL)
 	{
-		draw_vert(tmp, edit);
+		if (tmp == edit->hl_vert)
+		{
+			co = tmp->col;
+			tmp->col = GREEN;
+			draw_vert(tmp, edit);
+			tmp->col = co;
+		}
+		else
+			draw_vert(tmp, edit);
 		tmp = tmp->next;
 	}
 }

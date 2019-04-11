@@ -6,14 +6,14 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 00:57:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 13:14:08 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/10 20:22:32 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-int				check_coord_in(t_lis *tmp, t_lis *vert, t_input *in, int flag)
+int				check_coord_in(t_lis *tmp, t_lis *vert, t_point *in, int flag)
 {
 	float		x;
 	float		y;
@@ -43,7 +43,7 @@ int				check_coord_in(t_lis *tmp, t_lis *vert, t_input *in, int flag)
 	return (1);
 }
 
-int				vec_here(t_lis *tmp, t_lis *vert, t_input *in)
+int				vec_here(t_lis *tmp, t_lis *vert, t_point *in)
 {
 	float		m;
 	float		mmin;
@@ -76,33 +76,29 @@ int				vec_here(t_lis *tmp, t_lis *vert, t_input *in)
 		m2 = ((float)in->y - ((float)tmp->y * UNIT)) / ((float)in->x - ((float)tmp->x * UNIT));
 		mmin = m - 0.3f;
 		mmax = m + 0.3f;
-		dprintf(1, "m = %f, m2 = %f\n", m, m2);
 		if (m2 >= mmin && m2 <= mmax)
 			return (1);
 	}
 	return (0);
 }
 
-int				check_on_vec(t_edit *edit, t_input *in)
+int				check_on_vec(t_point *in, t_sec *sec)
 {
 	t_lis		*tmp;
-	t_sec		*sec;
+	int			i;
 
-	if (edit->sect == NULL)
+	i = 1;
+	if (sec == NULL)
 		return (0);
-	sec = edit->sect;
-	while (sec)
+	tmp = sec->vert;
+	while (tmp->next)
 	{
-		tmp = sec->vert;
-		while (tmp->next)
-		{
-			if (vec_here(tmp, tmp->next, in) == 1)
-				return (1);
-			tmp = tmp->next;
-		}
-		if (vec_here(tmp, sec->vert, in) == 1)
-			return(1);
-		sec = sec->next;
+		if (vec_here(tmp, tmp->next, in) == 1)
+			return (i);
+		tmp = tmp->next;
+		i++;
 	}
+	if (vec_here(tmp, sec->vert, in) == 1)
+		return(i);
 	return (0);
 }
