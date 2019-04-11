@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 18:44:40 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 18:56:31 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -161,8 +161,10 @@ void			place_new_vert(t_sec *sec, t_input *in)
 		dprintf(1, "2\n");
 		tmp = tmp->next;
 	}
-	if (!(check_coord_in(tmp, tmp->next, &point, 3)))
+	if (!(check_coord_in(tmp, sec->vert, &point, 3)))
+	{
 		cancel_last(&sec->vert);
+	}
 }
 
 void			check_event(char *mapname, t_input *in, t_edit *edit)
