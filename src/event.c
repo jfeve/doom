@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 18:56:31 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 19:16:27 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,94 +76,6 @@ void			clear_hl_vec(t_sec *sec)
 		if (tmp->col == (int)GREEN)
 			tmp->col = RED;
 		tmp = tmp->next;
-	}
-}
-
-void			portals(t_edit *edit, t_input *in)
-{
-	int			v;
-	t_lis		*tmp;
-
-	if (in->mouse[SDL_BUTTON_RIGHT] && edit->hl_sec)
-	{
-		t_point point;
-
-		point.x = in->x;
-		point.y = in->y;
-		if ((v = check_on_vec(&point, edit->hl_sec)) != 0)
-		{
-			clear_hl_vec(edit->hl_sec);
-			tmp = edit->hl_sec->vert;
-			while (v > 1 && tmp)
-			{
-				tmp = tmp->next;
-				v--;
-			}
-			if (tmp->next)
-			{
-				tmp->next->col = GREEN;
-				edit->hl_vert = tmp;
-			}
-			else
-			{
-				edit->hl_sec->vert->col = GREEN;
-				edit->hl_vert = tmp;
-			}
-		}
-		in->mouse[SDL_BUTTON_RIGHT] = SDL_FALSE;
-	}
-}
-
-void			swap_datas(t_lis *vert, t_lis *last)
-{
-	t_lis *tmp;
-
-	if (!(tmp = (t_lis*)malloc(sizeof(t_lis))))
-		return ;
-	while (vert != last)
-	{
-		tmp->x = vert->x;
-		tmp->y = vert->y;
-		tmp->col = vert->col;
-		tmp->neigh = vert->neigh;
-		vert->x = last->x;
-		vert->y = last->y;
-		vert->col = last->col;
-		vert->neigh = last->neigh;
-		last->x = tmp->x;
-		last->y = tmp->y;
-		last->col = tmp->col;
-		last->neigh = tmp->neigh;
-		vert = vert->next;
-	}
-}
-
-void			place_new_vert(t_sec *sec, t_input *in)
-{
-	t_lis		*tmp;
-	t_lis		*last;
-	t_point		point;
-
-	point.x = in->x;
-	point.y = in->y;
-	tmp = sec->vert;
-	last = sec->vert;
-	while (last->next)
-		last = last->next;
-	while (tmp->next)
-	{
-		if (check_coord_in(tmp, tmp->next, &point, 3))
-		{
-			dprintf(1, "1\n");
-			swap_datas(tmp->next, last);
-			return ;
-		}
-		dprintf(1, "2\n");
-		tmp = tmp->next;
-	}
-	if (!(check_coord_in(tmp, sec->vert, &point, 3)))
-	{
-		cancel_last(&sec->vert);
 	}
 }
 
