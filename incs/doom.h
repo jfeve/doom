@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 19:15:48 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 20:19:04 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -99,12 +99,13 @@ void				clear_tab(t_sdl *sdl);
 void				bresen(t_lis a, t_lis b, t_sdl *sdl);
 
 /*vertex*/
+int					parse_data(int x, int y, t_edit *edit, t_lis *vert);
 void				cancel_last(t_lis **vert);
 t_lis				mult_unit(t_lis vert);
 int					arr(int x);
 float				arr_float(float x);
 t_lis				*create_vert(int x, int y);
-void				add_vert(int x, int y, t_edit *edit, t_lis *vert);
+int					add_vert(int x, int y, t_edit *edit, t_lis *vert);
 void				draw_vert(t_lis *tmp, t_edit *edit);
 void				put_vert(t_edit *edit, t_lis *vert);
 

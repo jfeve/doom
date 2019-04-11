@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:21:04 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 20:25:59 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 20:06:22 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,15 +54,15 @@ int				parse_data(int x, int y, t_edit *edit, t_lis *vert)
 	return (1);
 }
 
-void			add_vert(int x, int y, t_edit *edit, t_lis *vert)
+int				add_vert(int x, int y, t_edit *edit, t_lis *vert)
 {
 	t_lis		*point;
 	t_lis		*tmp;
 
 	if (parse_data(x, y, edit, vert) == 0)
-		return ;
+		return (0);
 	if (!(point = (t_lis*)malloc(sizeof(t_lis))))
-		return ;
+		return (0);
 	point->x = arr(x);
 	point->y = arr(y);
 	point->col = WHITE;
@@ -71,6 +71,7 @@ void			add_vert(int x, int y, t_edit *edit, t_lis *vert)
 	while (tmp->next != NULL)
 		tmp = tmp->next;
 	tmp->next = point;
+	return (1);
 }
 
 void			draw_vert(t_lis *tmp, t_edit *edit)

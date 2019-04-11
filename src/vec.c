@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 00:57:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 19:16:30 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/11 20:02:26 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,6 +72,24 @@ void			swap_datas(t_lis *vert, t_lis *last)
 	}
 }
 
+t_lis			*check_other_verts(t_lis *vert, t_point *point, t_lis *base)
+{
+	t_lis		*tmp;
+	t_lis		*res;
+
+	res = vert;
+	tmp = vert->next;
+	while (tmp->next)
+	{
+		if (vec_here(tmp, tmp->next, point))
+			res = tmp;
+		tmp = tmp->next;
+	}
+	if (vec_here(tmp, base, point))
+		res = tmp;
+	return (res);
+}
+
 void			place_new_vert(t_sec *sec, t_input *in)
 {
 	t_lis		*tmp;
@@ -87,13 +105,15 @@ void			place_new_vert(t_sec *sec, t_input *in)
 	last->col = RED;
 	while (tmp->next)
 	{
+		dprintf(1, "enter test\n");
 		if (vec_here(tmp, tmp->next, &point))
 		{
-			dprintf(1, "1\n");
+			dprintf(1, "%p\n", tmp);
+			tmp = check_other_verts(tmp, &point, sec->vert);
+			dprintf(1, "%p\n", tmp);
 			swap_datas(tmp->next, last);
 			return ;
 		}
-		dprintf(1, "2\n");
 		tmp = tmp->next;
 	}
 	if (!(vec_here(tmp, sec->vert, &point)))
