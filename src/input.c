@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 16:36:05 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 18:59:57 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -162,14 +162,21 @@ void			input_mode(t_input *in, t_edit *edit)
 
 	k = 0;
 	minkey = 89;
-	maxkey = 99;
+	maxkey = 98;
 	i = minkey;
 	j = 0;
-	if (in->key[SDL_SCANCODE_RETURN])
+	if (in->key[SDL_SCANCODE_T])
+	{
+		edit->input_flag = 1;
+		edit->input_trigger = 1;
+		draw_num(edit, write_num(615, 900, 4), 10);
+		in->key[SDL_SCANCODE_T] = SDL_FALSE;
+	}
+	if (in->key[SDL_SCANCODE_KP_ENTER])
 	{
 		edit->input_trigger = 0;
 		dprintf(1, "\n\n------ Nombre ecrit : %d \n\n", ft_atoi(edit->input_list));
-		in->key[SDL_SCANCODE_RETURN] = SDL_FALSE;
+		in->key[SDL_SCANCODE_KP_ENTER] = SDL_FALSE;
 	}
 	if (in->key[SDL_SCANCODE_BACKSPACE])
 	{
