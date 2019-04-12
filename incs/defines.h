@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 16:08:21 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 16:17:18 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,5 +27,6 @@
 # define MAP_PATH "./data/maps/"
 # define RED 0xF04967FF
 # define CYAN 0x4863B5FF
+# define PURPLE 0x8820E8FF
 # define GREEN 0x00A800FF
 #endif

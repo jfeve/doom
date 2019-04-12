@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 20:19:04 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 17:00:03 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,17 +30,18 @@ typedef struct		s_lis
 	int				x;
 	int				y;
 	int				col;
-	unsigned short	neigh;
+	int				port;
+	int				neigh;
 	struct s_lis	*next;
 }					t_lis;
 
 typedef struct		s_sec
 {
 	t_lis			*vert;
-	unsigned short				id;
-	unsigned short				text;
-	unsigned short				floor;
-	unsigned short				ceil;
+	unsigned short	id;
+	unsigned short	text;
+	unsigned short	floor;
+	unsigned short	ceil;
 	t_lis			*enem;
 	t_lis			*obj;
 	struct s_sec	*next;
@@ -111,7 +112,7 @@ void				put_vert(t_edit *edit, t_lis *vert);
 
 /*vectors*/
 void				portals(t_edit *edit, t_input *in);
-void				place_new_vert(t_sec *sec, t_input *in);
+void				put_new_vert(t_edit *edit, t_input *in);
 int					vec_here(t_lis *tmp, t_lis*vert, t_point *in);
 int					check_coord_in(t_lis *tmp, t_lis *vert, t_point *in, int flag);
 void				clear_hl_vec(t_sec *sec);
