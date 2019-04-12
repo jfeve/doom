@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 18:59:57 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 19:05:14 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -196,6 +196,10 @@ void			input_mode(t_input *in, t_edit *edit)
 	{
 		if (in->key[i])
 		{
+			if (i != 98)
+				j = i - 88;
+			else if (i == 98)
+				j = 0;
 			edit->input_flag = 1;
 			if (edit->input_cursor != 9)
 			{
@@ -205,7 +209,6 @@ void			input_mode(t_input *in, t_edit *edit)
 			in->key[i] = SDL_FALSE;
 			j = 0;
 		}
-		j++;
 		i++;
 	}
 }
