@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 04:44:01 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 15:53:26 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 16:43:32 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,14 +19,15 @@ void			clear_hl(t_edit *edit)
 	t_lis		*temp;
 
 	tmp = edit->sect;
-	while (tmp && tmp->vert->col !=(int)RED && tmp->vert->col != (int)GREEN)
+	while (tmp && tmp->vert->col == (int)WHITE)
 		tmp = tmp->next;
 	if (tmp)
 	{
 		temp = tmp->vert;
 		while (temp)
 		{
-			temp->col = WHITE;
+			if (temp->col != (int)PURPLE)
+				temp->col = WHITE;
 			temp = temp->next;
 		}
 	}
@@ -37,7 +38,7 @@ void			hl_mode(t_input *in, t_edit *edit)
 	t_sec		*tmp;
 	int			i;
 
-	if (in->key[SDL_SCANCODE_H])
+	if (in->key[SDL_SCANCODE_H] && edit->sect)
 	{
 		in->key[SDL_SCANCODE_H] = SDL_FALSE;
 		if (edit->hl == 0)
@@ -91,6 +92,7 @@ void			hl_mode(t_input *in, t_edit *edit)
 		temp = tmp->vert;
 		while (temp)
 		{
+			if (temp->col != (int)PURPLE)
 			temp->col = RED;
 			temp = temp->next;
 		}

@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:21:04 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 20:06:22 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 18:17:18 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,6 +35,7 @@ t_lis			*create_vert(int x, int y)
 		return (NULL);
 	vert->x = arr(x);
 	vert->y = arr(y);
+	vert->neigh = -1;
 	vert->col = RED;
 	vert->next = NULL;
 	return (vert);
@@ -64,6 +65,7 @@ int				add_vert(int x, int y, t_edit *edit, t_lis *vert)
 	if (!(point = (t_lis*)malloc(sizeof(t_lis))))
 		return (0);
 	point->x = arr(x);
+	point->neigh = -1;
 	point->y = arr(y);
 	point->col = WHITE;
 	point->next = NULL;
@@ -110,6 +112,13 @@ void			put_vert(t_edit *edit, t_lis *vert)
 		{
 			co = tmp->col;
 			tmp->col = GREEN;
+			draw_vert(tmp, edit);
+			tmp->col = co;
+		}
+		else if (tmp->port == 1)
+		{
+			co = tmp->col;
+			tmp->col = PURPLE;
 			draw_vert(tmp, edit);
 			tmp->col = co;
 		}

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 15:21:24 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 16:07:54 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -103,7 +103,7 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 		edit->vert = NULL;
 		edit->sect = NULL;
 	}
-	if (in->key[SDL_SCANCODE_A] && edit->hl_sec)
+	if (in->key[SDL_SCANCODE_A] && edit->hl_vert)
 	{
 		t_lis *tmp;
 
@@ -111,14 +111,13 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 		while (tmp)
 		{
 			if (parse_data(in->x, in->y, edit, tmp) == 0)
-			{
 				break ;
-			}
 			tmp = tmp->next;
 		}
-		if (edit->oldvert == NULL)
-			if (add_vert(in->x, in->y, edit, edit->hl_sec->vert))
-				place_new_vert(edit->hl_sec, in);
+		if (!tmp)
+			put_new_vert(edit, in);
+		else
+			edit->oldvert = NULL;
 		in->key[SDL_SCANCODE_A] = SDL_FALSE;
 	}
 	if (in->key[SDL_SCANCODE_Z])

@@ -6,12 +6,56 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 00:57:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 20:31:54 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 18:24:22 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+void			get_neighbor(t_edit *edit, t_lis **vert, t_lis **next)
+{
+	t_lis *tmp;
+	t_sec *temp;
+
+	temp = edit->sect;
+	while (temp)
+	{
+		tmp = temp->vert;
+		while (tmp->next && temp != edit->hl_sec)
+		{
+			if (tmp->x == (*vert)->x && tmp->y == (*vert)->y && tmp->next->x == (*next)->x && tmp->next->y == (*next)->y)
+			{
+				tmp->neigh = edit->hl_sec->id;
+				(*vert)->neigh = temp->id;
+				return ;
+			}
+			else if (tmp->x == (*next)->x && tmp->y == (*next)->y && tmp->next->x == (*vert)->x && tmp->next->y == (*vert)->y)
+			{
+				tmp->neigh = edit->hl_sec->id;
+				(*vert)->neigh = temp->id;
+				return ;
+			}
+			tmp = tmp->next;
+		}
+		if (temp != edit->hl_sec)
+		{
+			if (tmp->x == (*vert)->x && tmp->y == (*vert)->y && temp->vert->x == (*next)->x && temp->vert->y == (*next)->y)
+			{
+				tmp->neigh = edit->hl_sec->id;
+				(*vert)->neigh = temp->id;
+				return ;
+			}
+			else if (tmp->x == (*next)->x && tmp->y == (*next)->y && temp->vert->x == (*vert)->x && temp->vert->y == (*vert)->y)
+			{
+				tmp->neigh = edit->hl_sec->id;
+				(*vert)->neigh = temp->id;
+				return ;
+			}
+		}
+		temp = temp->next;
+	}
+}
 
 void			portals(t_edit *edit, t_input *in)
 {
@@ -46,6 +90,35 @@ void			portals(t_edit *edit, t_input *in)
 		}
 		in->mouse[SDL_BUTTON_RIGHT] = SDL_FALSE;
 	}
+	if (in->key[SDL_SCANCODE_P] && edit->hl_vert)
+	{
+		edit->hl_vert->port = 1;
+		if (edit->hl_vert->next)
+			edit->hl_vert->next->col = PURPLE;
+		else
+			edit->hl_sec->vert->col = PURPLE;
+		if (edit->hl_vert->next)
+			get_neighbor(edit, &edit->hl_vert, &edit->hl_vert->next);
+		else
+			get_neighbor(edit, &edit->hl_vert, &edit->hl_sec->vert);
+		edit->hl_vert->col = RED;
+		edit->hl_vert = NULL;
+		t_sec *temp;
+
+		temp = edit->sect;
+		while (temp)
+		{
+			dprintf(1, "------------------------------\n");
+			dprintf(1, "sec id = %d\n\n", temp->id);
+			tmp = temp->vert;
+			while (tmp)
+			{
+				dprintf(1, "neigh = %d\n", tmp->neigh);
+				tmp = tmp->next;
+			}
+			temp = temp->next;
+		}
+	}
 }
 
 void			swap_datas(t_lis *vert, t_lis *last)
@@ -54,86 +127,47 @@ void			swap_datas(t_lis *vert, t_lis *last)
 
 	if (!(tmp = (t_lis*)malloc(sizeof(t_lis))))
 		return ;
+	if (!vert)
+		return ;
 	while (vert != last)
 	{
-		dprintf(1, "1\n");
 		tmp->x = vert->x;
-		dprintf(1, "2\n");
 		tmp->y = vert->y;
-		dprintf(1, "3\n");
 		tmp->col = vert->col;
-		dprintf(1, "4\n");
 		tmp->neigh = vert->neigh;
-		dprintf(1, "5\n");
 		vert->x = last->x;
-		dprintf(1, "6\n");
 		vert->y = last->y;
-		dprintf(1, "7\n");
 		vert->col = last->col;
-		dprintf(1, "8\n");
 		vert->neigh = last->neigh;
-		dprintf(1, "9\n");
 		last->x = tmp->x;
-		dprintf(1, "1\n");
 		last->y = tmp->y;
-		dprintf(1, "2\n");
 		last->col = tmp->col;
-		dprintf(1, "3\n");
 		last->neigh = tmp->neigh;
-		dprintf(1, "4\n");
 		vert = vert->next;
-		dprintf(1, "5\n");
 	}
 }
 
-t_lis			*check_other_verts(t_lis *vert, t_point *point, t_lis *base)
-{
-	t_lis		*tmp;
-	t_lis		*res;
-
-	res = vert;
-	tmp = vert->next;
-	while (tmp->next)
-	{
-		if (vec_here(tmp, tmp->next, point))
-			res = tmp;
-		tmp = tmp->next;
-	}
-	if (vec_here(tmp, base, point))
-		res = tmp;
-	return (res);
-}
-
-void			place_new_vert(t_sec *sec, t_input *in)
+void			put_new_vert(t_edit *edit, t_input *in)
 {
 	t_lis		*tmp;
 	t_lis		*last;
-	t_point		point;
 
-	point.x = in->x;
-	point.y = in->y;
-	tmp = sec->vert;
-	last = sec->vert;
+	add_vert(in->x, in->y, edit, edit->hl_sec->vert);
+	last = edit->hl_sec->vert;
 	while (last->next)
 		last = last->next;
-	last->col = RED;
-	while (tmp->next)
-	{
-		dprintf(1, "enter test\n");
-		if (vec_here(tmp, tmp->next, &point))
-		{
-			dprintf(1, "%p\n", tmp);
-			tmp = check_other_verts(tmp, &point, sec->vert);
-			dprintf(1, "%p\n", tmp);
-			swap_datas(tmp->next, last);
-			return ;
-		}
-		tmp = tmp->next;
-	}
-	if (!(vec_here(tmp, sec->vert, &point)))
-	{
-		cancel_last(&sec->vert);
-	}
+	if (edit->hl_vert->next != last && edit->hl_vert->next)
+		tmp = edit->hl_vert->next;
+	else
+		tmp = edit->hl_sec->vert;
+	swap_datas(tmp, last);
+	edit->hl_vert->col = RED;
+	tmp->col = RED;
+	if (tmp->next)
+		tmp->next->col = GREEN;
+	else
+		edit->hl_sec->vert->col = GREEN;
+	edit->hl_vert = tmp;
 }
 
 int				check_coord_in(t_lis *tmp, t_lis *vert, t_point *in, int flag)

@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:26:28 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 05:00:57 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 16:34:05 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,7 +33,9 @@ void			bresen(t_lis a, t_lis b, t_sdl *sdl)
 				dy *= 2;
 				while (a.x != b.x)
 				{
-					if (sdl->pix[a.y * WIN_W + a.x] != RED)
+					if (sdl->pix[a.y * WIN_W + a.x] != RED &&
+							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
+							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
 						sdl->pix[a.y * WIN_W + a.x] = b.col;
 					e += dy;
 					if (e < 0)
@@ -51,7 +53,9 @@ void			bresen(t_lis a, t_lis b, t_sdl *sdl)
 				dy *= 2;
 				while (a.y != b.y)
 				{
-					if (sdl->pix[a.y * WIN_W + a.x] != RED)
+					if (sdl->pix[a.y * WIN_W + a.x] != RED &&
+							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
+							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
 						sdl->pix[a.y * WIN_W + a.x] = b.col;
 					e += dx;
 					if (e > 0)
@@ -72,7 +76,9 @@ void			bresen(t_lis a, t_lis b, t_sdl *sdl)
 				dy *= 2;
 				while (a.x != b.x)
 				{
-					if (sdl->pix[a.y * WIN_W + a.x] != RED)
+					if (sdl->pix[a.y * WIN_W + a.x] != RED &&
+							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
+							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
 						sdl->pix[a.y * WIN_W + a.x] = b.col;
 					e -= dy;
 					if (e < 0)
@@ -90,7 +96,9 @@ void			bresen(t_lis a, t_lis b, t_sdl *sdl)
 				dy *= 2;
 				while (a.y != b.y)
 				{
-					if (sdl->pix[a.y * WIN_W + a.x] != RED)
+					if (sdl->pix[a.y * WIN_W + a.x] != RED &&
+							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
+							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
 						sdl->pix[a.y * WIN_W + a.x] = b.col;
 					e -= dx;
 					if (e < 0)
@@ -106,7 +114,9 @@ void			bresen(t_lis a, t_lis b, t_sdl *sdl)
 		{
 			while (a.x != b.x)
 			{
-				if (sdl->pix[a.y * WIN_W + a.x] != RED)
+				if (sdl->pix[a.y * WIN_W + a.x] != RED &&
+							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
+							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
 					sdl->pix[a.y * WIN_W + a.x] = b.col;
 				a.x++;
 			}
@@ -118,7 +128,9 @@ void			bresen(t_lis a, t_lis b, t_sdl *sdl)
 		{
 			while (a.y != b.y)
 			{
-				if (sdl->pix[a.y * WIN_W + a.x] != RED)
+				if (sdl->pix[a.y * WIN_W + a.x] != RED &&
+							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
+							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
 					sdl->pix[a.y * WIN_W + a.x] = b.col;
 				a.y++;
 			}
@@ -127,7 +139,9 @@ void			bresen(t_lis a, t_lis b, t_sdl *sdl)
 		{
 			while (a.y != b.y)
 			{
-				if (sdl->pix[a.y * WIN_W + a.x] != RED)
+				if (sdl->pix[a.y * WIN_W + a.x] != RED &&
+							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
+							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
 					sdl->pix[a.y * WIN_W + a.x] = b.col;
 				a.y--;
 			}
