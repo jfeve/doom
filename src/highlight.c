@@ -60,6 +60,13 @@ void			hl_mode(t_input *in, t_edit *edit)
 	if (edit->hl % 2 != 0 && edit->sect)
 	{
 		edit->hud_flag = 2;
+		if (in->key[SDL_SCANCODE_T])
+		{
+			edit->input_flag = 1;
+			edit->input_trigger = 1;
+			draw_num(edit, write_num(615, 900, 4), 10);
+			in->key[SDL_SCANCODE_T] = SDL_FALSE;
+		}
 		if (in->key[SDL_SCANCODE_RIGHT])
 		{
 			in->key[SDL_SCANCODE_RIGHT] = SDL_FALSE;

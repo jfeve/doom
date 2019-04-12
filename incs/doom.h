@@ -19,13 +19,13 @@
 # include <SDL2/SDL.h>
 # include <stdio.h>
 
-typedef struct		s_point
+typedef struct					s_point
 {
-	int				x;
-	int				y;
-}					t_point;
+	int							x;
+	int							y;
+}								t_point;
 
-typedef struct		s_lis
+typedef struct					s_lis
 {
 	int				x;
 	int				y;
@@ -35,7 +35,7 @@ typedef struct		s_lis
 	struct s_lis	*next;
 }					t_lis;
 
-typedef struct		s_sec
+typedef struct					s_sec
 {
 	t_lis			*vert;
 	unsigned short	id;
@@ -47,57 +47,71 @@ typedef struct		s_sec
 	struct s_sec	*next;
 }					t_sec;
 
-typedef struct		s_input
+typedef struct					s_input
 {
-	SDL_Event		event;
-	SDL_bool		key[SDL_NUM_SCANCODES];
-	SDL_bool		quit;
-	int				x;
-	int				y;
-	int				xrel;
-	int				yrel;
-	int				xwheel;
-	int				ywheel;
-	SDL_bool		mouse[6];
-}					t_input;
+	SDL_Event					event;
+	SDL_bool					key[SDL_NUM_SCANCODES];
+	SDL_bool					quit;
+	int							x;
+	int							y;
+	int							xrel;
+	int							yrel;
+	int							xwheel;
+	int							ywheel;
+	SDL_bool					mouse[6];
+}								t_input;
 
-typedef struct		s_sdl
+typedef struct					s_sdl
 {
-	SDL_Window		*win;
-	SDL_Renderer	*ren;
-	Uint32			*pix;
-	SDL_PixelFormat	*form;
-}					t_sdl;
+	SDL_Window					*win;
+	SDL_Renderer				*ren;
+	Uint32						*pix;
+	SDL_PixelFormat				*form;
+}								t_sdl;
 
-typedef struct		s_edit
+typedef struct					s_edit
 {
-	int				hud_flag;
-	t_sec			*hl_sec;
-	t_lis			*hl_vert;
-	int				nbsect;
-	int				hl;
-	int				sec;
-	t_lis			*vert;
-	t_sec			*sect;
-	t_sdl			sdl;
-	int				err;
-	t_lis			*oldvert;
-}					t_edit;
+	int							input_flag;
+	int							input_trigger;
+	char						input_list[9];
+	int							input_cursor;
+	int							hud_flag;
+	t_sec						*hl_sec;
+	t_lis						*hl_vert;
+	int							nbsect;
+	int							hl;
+	int							sec;
+	t_lis						*vert;
+	t_sec						*sect;
+	t_sdl						sdl;
+	int							err;
+	t_lis						*oldvert;
+}								t_edit;
 
+typedef	struct					s_draw
+{
+	char						*input;
+	int							x;
+	int							y;
+	int							x_s;
+	int							y_s;
+	int 						i;
+	unsigned	int				color;
+}								t_draw;
 
 /* event */
-void				update_event(t_input *in);
-void				check_event(char *mapname, t_input *in, t_edit *edit);
+void							update_event(t_input *in);
+void							check_event(char *mapname, t_input *in, t_edit *edit);
 
 /*sdl*/
 
-int					free_sdl(t_sdl *sdl, int flag);
-int					sdl_init(t_sdl *sdl);
-int					display_frame(SDL_Renderer *ren, Uint32 *pix);
-void				clear_tab(t_sdl *sdl);
+int								free_sdl(t_sdl *sdl, int flag);
+int								sdl_init(t_sdl *sdl);
+int								display_frame(SDL_Renderer *ren, Uint32 *pix);
+void							clear_tab(t_sdl *sdl);
 
 /*bresen*/
-void				bresen(t_lis a, t_lis b, t_sdl *sdl);
+void							bresen(t_lis a, t_lis b, t_sdl *sdl);
 
 /*vertex*/
 int					parse_data(int x, int y, t_edit *edit, t_lis *vert);
@@ -119,20 +133,26 @@ void				clear_hl_vec(t_sec *sec);
 int					check_on_vec(t_point *in, t_sec *sec);
 
 /*highlight*/
-void				hl_mode(t_input *in, t_edit *edit);
+void							hl_mode(t_input *in, t_edit *edit);
 
 /*sec*/
-void				set_sect(t_edit *edit);
-void				draw_sec(t_edit *edit);
+void							set_sect(t_edit *edit);
+void							draw_sec(t_edit *edit);
 
 /*print*/
-void				print_lis(t_lis **vert);
-void				print_sec(t_sec *sec);
+void							print_lis(t_lis **vert);
+void							print_sec(t_sec *sec);
 
 /*HUD*/
-void				hud(t_edit *edit);
+void							hud(t_edit *edit);
 
 /*MapEdit*/
-int					map_writer(char *mapname, t_edit *edit);
-int					save_map(char *mapname, t_edit *edit);
+int								map_writer(char *mapname, t_edit *edit);
+int								save_map(t_input *in, char *mapname, t_edit *edit);
+/*Detection d'Input*/
+void							draw_num(t_edit *edit, t_draw data, int num);
+void							draw_(t_edit *edit, t_draw *draw);
+t_draw							write_num(int x, int y, int col);
+void							draw_text(t_edit *edit);
+void							input_mode(t_input *in, t_edit *edit);
 #endif

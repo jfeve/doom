@@ -3,7 +3,7 @@
 /*                                                              /             */
 /*   vec.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 00:57:32 by jfeve        #+#   ##    ##    #+#       */
 /*   Updated: 2019/04/12 18:24:22 by jfeve       ###    #+. /#+    ###.fr     */
