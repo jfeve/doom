@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 20:05:47 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 23:14:59 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -74,7 +74,7 @@ void			clear_hl_vec(t_sec *sec)
 	while (tmp)
 	{
 		if (tmp->col == (int)GREEN)
-			tmp->col = RED;
+			tmp->col = tmp->oldcol;
 		tmp = tmp->next;
 	}
 }

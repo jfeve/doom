@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 20:16:24 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 22:32:52 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -152,6 +152,22 @@ void			draw_text(t_edit *edit)
 	}
 }
 
+void			handle_res(t_edit *edit)
+{
+	t_lis		*tmp;
+
+	tmp = edit->hl_sec->vert;
+	if (edit->hl_sec->floor == -1)
+		edit->hl_sec->floor = edit->input_res;
+	else if (edit->hl_sec->ceil == -1)
+		edit->hl_sec->ceil = edit->input_res;
+	if (edit->hl_sec->ceil != -1)
+	{
+		edit->input_flag = 0;
+		edit->input_trigger = 0;
+	}
+}
+
 void			input_mode(t_input *in, t_edit *edit)
 {
 	int		minkey;
@@ -169,21 +185,13 @@ void			input_mode(t_input *in, t_edit *edit)
 	{
 		edit->input_cursor = 0;
 		edit->input_res = ft_atoi(edit->input_list);
-		if (edit->hl_sec->floor == -1)
-			edit->hl_sec->floor = edit->input_res;
-		else if (edit->hl_sec->ceil == -1)
-			edit->hl_sec->ceil = edit->input_res;
+		handle_res(edit);
 		while (k < 9)
 		{
 			edit->input_list[k] = 0;
 			k++;
 		}
 		k = 0;
-		if (edit->hl_sec->ceil != -1)
-		{
-			edit->input_flag = 0;
-			edit->input_trigger = 0;
-		}
 		in->key[SDL_SCANCODE_KP_ENTER] = SDL_FALSE;
 	}
 	if (in->key[SDL_SCANCODE_BACKSPACE])

@@ -6,14 +6,14 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 00:57:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 20:06:38 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 23:45:08 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			get_neighbor(t_edit *edit, t_lis **vert, t_lis **next)
+int				get_neighbor(t_edit *edit, t_lis **vert, t_lis **next)
 {
 	t_lis *tmp;
 	t_sec *temp;
@@ -26,15 +26,19 @@ void			get_neighbor(t_edit *edit, t_lis **vert, t_lis **next)
 		{
 			if (tmp->x == (*vert)->x && tmp->y == (*vert)->y && tmp->next->x == (*next)->x && tmp->next->y == (*next)->y)
 			{
+				tmp->port = 1;
+				tmp->col = PURPLE;
 				tmp->neigh = edit->hl_sec->id;
 				(*vert)->neigh = temp->id;
-				return ;
+				return (1);
 			}
 			else if (tmp->x == (*next)->x && tmp->y == (*next)->y && tmp->next->x == (*vert)->x && tmp->next->y == (*vert)->y)
 			{
+				tmp->port = 1;
+				tmp->next->col = PURPLE;
 				tmp->neigh = edit->hl_sec->id;
 				(*vert)->neigh = temp->id;
-				return ;
+				return (1);
 			}
 			tmp = tmp->next;
 		}
@@ -42,19 +46,24 @@ void			get_neighbor(t_edit *edit, t_lis **vert, t_lis **next)
 		{
 			if (tmp->x == (*vert)->x && tmp->y == (*vert)->y && temp->vert->x == (*next)->x && temp->vert->y == (*next)->y)
 			{
+				tmp->port = 1;
+				tmp->next->col = PURPLE;
 				tmp->neigh = edit->hl_sec->id;
 				(*vert)->neigh = temp->id;
-				return ;
+				return (1);
 			}
 			else if (tmp->x == (*next)->x && tmp->y == (*next)->y && temp->vert->x == (*vert)->x && temp->vert->y == (*vert)->y)
 			{
 				tmp->neigh = edit->hl_sec->id;
+				temp->vert->col = PURPLE;
+				tmp->port = 1;
 				(*vert)->neigh = temp->id;
-				return ;
+				return (1);
 			}
 		}
 		temp = temp->next;
 	}
+	return (0);
 }
 
 void			portals(t_edit *edit, t_input *in)
@@ -79,11 +88,13 @@ void			portals(t_edit *edit, t_input *in)
 			}
 			if (tmp->next)
 			{
+				tmp->next->oldcol = tmp->next->col;
 				tmp->next->col = GREEN;
 				edit->hl_vert = tmp;
 			}
 			else
 			{
+				edit->hl_sec->vert->oldcol = edit->hl_sec->vert->col;
 				edit->hl_sec->vert->col = GREEN;
 				edit->hl_vert = tmp;
 			}
@@ -92,16 +103,22 @@ void			portals(t_edit *edit, t_input *in)
 	}
 	if (in->key[SDL_SCANCODE_P] && edit->hl_vert)
 	{
-		edit->hl_vert->port = 1;
 		if (edit->hl_vert->next)
-			edit->hl_vert->next->col = PURPLE;
+		{
+			if (get_neighbor(edit, &edit->hl_vert, &edit->hl_vert->next))
+			{
+				edit->hl_vert->port = 1;
+				edit->hl_vert->next->col = PURPLE;
+				edit->hl_vert = NULL;
+			}
+		}
 		else
-			edit->hl_sec->vert->col = PURPLE;
-		if (edit->hl_vert->next)
-			get_neighbor(edit, &edit->hl_vert, &edit->hl_vert->next);
-		else
-			get_neighbor(edit, &edit->hl_vert, &edit->hl_sec->vert);
-		edit->hl_vert = NULL;
+			if (get_neighbor(edit, &edit->hl_vert, &edit->hl_sec->vert))
+			{
+				edit->hl_vert->port = 1;
+				edit->hl_sec->vert->col = PURPLE;
+				edit->hl_vert = NULL;
+			}
 	}
 }
 
@@ -129,6 +146,7 @@ void			swap_datas(t_lis *vert, t_lis *last)
 		last->neigh = tmp->neigh;
 		vert = vert->next;
 	}
+	free(tmp);
 }
 
 void			put_new_vert(t_edit *edit, t_input *in)
@@ -140,12 +158,14 @@ void			put_new_vert(t_edit *edit, t_input *in)
 	last = edit->hl_sec->vert;
 	while (last->next)
 		last = last->next;
+	last->col = RED;
 	if (edit->hl_vert->next != last && edit->hl_vert->next)
 		tmp = edit->hl_vert->next;
 	else
 		tmp = edit->hl_sec->vert;
 	swap_datas(tmp, last);
 	edit->hl_vert->col = RED;
+	edit->hl_vert->oldcol = RED;
 	tmp->col = RED;
 	if (tmp->next)
 		tmp->next->col = GREEN;

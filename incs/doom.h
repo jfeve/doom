@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 20:16:06 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 21:44:28 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,6 +30,7 @@ typedef struct					s_lis
 	int				x;
 	int				y;
 	int				col;
+	int				oldcol;
 	int				port;
 	short			text;
 	int				neigh;

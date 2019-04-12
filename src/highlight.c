@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 04:44:01 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 19:52:29 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 21:45:59 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@ void			clear_hl(t_edit *edit)
 	t_lis		*temp;
 
 	tmp = edit->sect;
-	while (tmp && tmp->vert->col == (int)WHITE)
+	while (tmp && (tmp->vert->col == (int)WHITE || (tmp->vert->col == (int)PURPLE && tmp->vert->next->col != (int)RED)))
 		tmp = tmp->next;
 	if (tmp)
 	{
