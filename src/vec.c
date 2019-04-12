@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 00:57:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 18:24:22 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 20:06:38 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,7 +62,7 @@ void			portals(t_edit *edit, t_input *in)
 	int			v;
 	t_lis		*tmp;
 
-	if (in->mouse[SDL_BUTTON_RIGHT] && edit->hl_sec)
+	if (in->mouse[SDL_BUTTON_RIGHT] && edit->hl_sec && edit->input_trigger != 1)
 	{
 		t_point point;
 
@@ -101,23 +101,7 @@ void			portals(t_edit *edit, t_input *in)
 			get_neighbor(edit, &edit->hl_vert, &edit->hl_vert->next);
 		else
 			get_neighbor(edit, &edit->hl_vert, &edit->hl_sec->vert);
-		edit->hl_vert->col = RED;
 		edit->hl_vert = NULL;
-		t_sec *temp;
-
-		temp = edit->sect;
-		while (temp)
-		{
-			dprintf(1, "------------------------------\n");
-			dprintf(1, "sec id = %d\n\n", temp->id);
-			tmp = temp->vert;
-			while (tmp)
-			{
-				dprintf(1, "neigh = %d\n", tmp->neigh);
-				tmp = tmp->next;
-			}
-			temp = temp->next;
-		}
 	}
 }
 

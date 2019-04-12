@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 15:52:27 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 19:14:06 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -139,7 +139,6 @@ void			level_editor(char *mapname)
 {
 	t_edit		edit;
 	t_input		in;
-
 
 	ft_bzero(&in, sizeof(t_input));
 	ft_bzero(&edit, sizeof(t_edit));

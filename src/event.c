@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 18:57:27 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 20:05:47 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -86,8 +86,20 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 	hl_mode(in, edit);
 	portals(edit, in);
 	save_map(in, mapname, edit);
+	if (in->key[SDL_SCANCODE_G])
+	{
+		print_sec(edit->sect);
+		in->key[SDL_SCANCODE_G] = SDL_FALSE;
+	}
 	if (in->key[SDL_SCANCODE_ESCAPE])
 		in->quit = SDL_TRUE;
+	if (in->key[SDL_SCANCODE_T] && edit->hl_sec)
+	{
+		edit->input_flag = 1;
+		edit->input_trigger = 1;
+		draw_num(edit, write_num(615, 900, 4), 10);
+		in->key[SDL_SCANCODE_T] = SDL_FALSE;
+	}
 	if (in->key[SDL_SCANCODE_R])
 	{
 		edit->hud_flag = 0;

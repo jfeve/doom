@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 17:00:03 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 20:16:06 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,6 +31,7 @@ typedef struct					s_lis
 	int				y;
 	int				col;
 	int				port;
+	short			text;
 	int				neigh;
 	struct s_lis	*next;
 }					t_lis;
@@ -39,9 +40,8 @@ typedef struct					s_sec
 {
 	t_lis			*vert;
 	unsigned short	id;
-	unsigned short	text;
-	unsigned short	floor;
-	unsigned short	ceil;
+	short	floor;
+	short	ceil;
 	t_lis			*enem;
 	t_lis			*obj;
 	struct s_sec	*next;
@@ -71,6 +71,7 @@ typedef struct					s_sdl
 
 typedef struct					s_edit
 {
+	int							input_res;
 	int							input_flag;
 	int							input_trigger;
 	char						input_list[9];

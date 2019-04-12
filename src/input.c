@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 19:05:14 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 20:16:24 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -165,17 +165,25 @@ void			input_mode(t_input *in, t_edit *edit)
 	maxkey = 98;
 	i = minkey;
 	j = 0;
-	if (in->key[SDL_SCANCODE_T])
+	if (in->key[SDL_SCANCODE_KP_ENTER] && edit->input_trigger == 1)
 	{
-		edit->input_flag = 1;
-		edit->input_trigger = 1;
-		draw_num(edit, write_num(615, 900, 4), 10);
-		in->key[SDL_SCANCODE_T] = SDL_FALSE;
-	}
-	if (in->key[SDL_SCANCODE_KP_ENTER])
-	{
-		edit->input_trigger = 0;
-		dprintf(1, "\n\n------ Nombre ecrit : %d \n\n", ft_atoi(edit->input_list));
+		edit->input_cursor = 0;
+		edit->input_res = ft_atoi(edit->input_list);
+		if (edit->hl_sec->floor == -1)
+			edit->hl_sec->floor = edit->input_res;
+		else if (edit->hl_sec->ceil == -1)
+			edit->hl_sec->ceil = edit->input_res;
+		while (k < 9)
+		{
+			edit->input_list[k] = 0;
+			k++;
+		}
+		k = 0;
+		if (edit->hl_sec->ceil != -1)
+		{
+			edit->input_flag = 0;
+			edit->input_trigger = 0;
+		}
 		in->key[SDL_SCANCODE_KP_ENTER] = SDL_FALSE;
 	}
 	if (in->key[SDL_SCANCODE_BACKSPACE])
