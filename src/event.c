@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 20:25:01 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 16:38:13 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -81,19 +81,13 @@ void			clear_hl_vec(t_sec *sec)
 
 void			check_event(char *mapname, t_input *in, t_edit *edit)
 {
+	draw_text(edit);
+	input_mode(in, edit);
 	hl_mode(in, edit);
 	portals(edit, in);
-	input_mode(in, edit);
+	save_map(in, mapname, edit);
 	if (in->key[SDL_SCANCODE_ESCAPE])
 		in->quit = SDL_TRUE;
-	if (in->key[SDL_SCANCODE_S])
-	{
-		if(save_map(mapname, edit))
-			write(1, "\n-------Map sauver-------\n", 27);
-		else
-			write(1, "\n--------Map not saved-------\n", 30);
-		in->key[SDL_SCANCODE_S] = SDL_FALSE;
-	}
 	if (in->key[SDL_SCANCODE_R])
 	{
 		edit->hud_flag = 0;

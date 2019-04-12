@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 20:26:57 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 16:36:05 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -82,7 +82,7 @@ void						draw_square(t_edit *edit, t_draw *draw)
 		{
 			edit->sdl.pix[j * WIN_W + i] = draw->color;
 			i++;
-		} 
+		}
 		j++;
 	}
 }
@@ -113,7 +113,7 @@ void						draw_(t_edit *edit, t_draw *draw)
 			draw->y += draw->y_s;
 		}
 		draw->i += 1;
-	}	
+	}
 }
 
 void						draw_num(t_edit *edit,t_draw data, int num)
@@ -128,7 +128,6 @@ void						draw_num(t_edit *edit,t_draw data, int num)
 	draw.color = check_color(data.color);
 	draw_(edit, &draw);
 }
-
 
 void			draw_text(t_edit *edit)
 {
@@ -149,6 +148,7 @@ void			draw_text(t_edit *edit)
 			draw_num(edit, write_num(x += 20, 900, 1), nb);
 			i++;
 		}
+		draw_num(edit, write_num(x += 15, 900, 4), 10);
 	}
 }
 
@@ -162,22 +162,41 @@ void			input_mode(t_input *in, t_edit *edit)
 
 	k = 0;
 	minkey = 89;
-	maxkey = 98;
+	maxkey = 99;
 	i = minkey;
 	j = 0;
-	i = 0;
-	while (i != maxkey)
+	if (in->key[SDL_SCANCODE_RETURN])
+	{
+		edit->input_trigger = 0;
+		dprintf(1, "\n\n------ Nombre ecrit : %d \n\n", ft_atoi(edit->input_list));
+		in->key[SDL_SCANCODE_RETURN] = SDL_FALSE;
+	}
+	if (in->key[SDL_SCANCODE_BACKSPACE])
+	{
+		edit->input_trigger = 0;
+		if (edit->input_cursor != 0)
+		{
+			if (edit->input_list[edit->input_cursor - 1] != ' ')
+			{
+				edit->input_list[edit->input_cursor - 1] = ' ';
+				edit->input_cursor--;
+			}
+		}
+		edit->input_trigger = 1;
+		in->key[SDL_SCANCODE_BACKSPACE] = SDL_FALSE;
+	}
+	while (i <= maxkey && edit->input_trigger == 1)
 	{
 		if (in->key[i])
 		{
 			edit->input_flag = 1;
-		// 	if (edit->input_list[edit->input_cursor] != '\0' && edit->input_cursor != 9)
-		// 	{
-		// 		edit->input_list[edit->input_cursor] = (j + '0');
-		// 		edit->input_cursor++;
-		// 	}
-		// 	in->key[i] = SDL_FALSE;
-		// 	j = 0;
+			if (edit->input_cursor != 9)
+			{
+				edit->input_list[edit->input_cursor] = (j + '0');
+				edit->input_cursor++;
+			}
+			in->key[i] = SDL_FALSE;
+			j = 0;
 		}
 		j++;
 		i++;

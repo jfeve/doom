@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 00:57:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 19:19:41 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 17:09:38 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,7 +54,7 @@ void			swap_datas(t_lis *vert, t_lis *last)
 
 	if (!(tmp = (t_lis*)malloc(sizeof(t_lis))))
 		return ;
-	while (vert != last)
+	while (vert && (vert != last))
 	{
 		tmp->x = vert->x;
 		tmp->y = vert->y;

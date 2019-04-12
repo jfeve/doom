@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 04:44:01 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 19:30:44 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 17:09:41 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,6 +59,13 @@ void			hl_mode(t_input *in, t_edit *edit)
 	if (edit->hl % 2 != 0 && edit->sect)
 	{
 		edit->hud_flag = 2;
+		if (in->key[SDL_SCANCODE_T])
+		{
+			edit->input_flag = 1;
+			edit->input_trigger = 1;
+			draw_num(edit, write_num(615, 900, 4), 10);
+			in->key[SDL_SCANCODE_T] = SDL_FALSE;
+		}
 		if (in->key[SDL_SCANCODE_RIGHT])
 		{
 			in->key[SDL_SCANCODE_RIGHT] = SDL_FALSE;

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 20:07:29 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/12 15:52:12 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,6 +71,7 @@ typedef struct					s_sdl
 typedef struct					s_edit
 {
 	int							input_flag;
+	int							input_trigger;
 	char						input_list[9];
 	int							input_cursor;
 	int							hud_flag;
@@ -145,7 +146,7 @@ void							hud(t_edit *edit);
 
 /*MapEdit*/
 int								map_writer(char *mapname, t_edit *edit);
-int								save_map(char *mapname, t_edit *edit);
+int								save_map(t_input *in, char *mapname, t_edit *edit);
 /*Detection d'Input*/
 void							draw_num(t_edit *edit, t_draw data, int num);
 void							draw_(t_edit *edit, t_draw *draw);
