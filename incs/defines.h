@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 17:42:52 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/13 20:09:21 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,6 +29,7 @@
 # define DARK 0x00000000
 # define RED 0xFF0058FF
 # define CYAN 0x4863B5FF
+# define SKYBLUE 0x73C2D1FF
 # define PURPLE 0x8820E8FF
 # define GREEN 0x00A800FF
 # define _0_ "311113\n211312\n2101212\n2101212\n2121012\n213112\n311113\0"

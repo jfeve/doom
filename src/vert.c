@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:21:04 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 19:00:38 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/13 19:41:04 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,7 +51,8 @@ int				parse_data(int x, int y, t_edit *edit, t_lis *vert)
 	tmp = vert;
 	if (tmp->x == arr(x) && tmp->y == arr(y))
 	{
-		edit->oldvert = tmp;
+		if (tmp->next)
+			edit->oldvert = tmp;
 		return (0);
 	}
 	edit->oldvert = NULL;

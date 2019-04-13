@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 18:42:03 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/13 20:02:30 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -85,6 +85,7 @@ typedef struct					s_edit
 	int							nbsect;
 	int							hl;
 	int							sec;
+	t_lis						*player;
 	t_lis						*vert;
 	t_sec						*sect;
 	t_sdl						sdl;

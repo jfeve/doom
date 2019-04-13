@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 16:39:00 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/13 20:07:11 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,6 +24,7 @@ int				init_edit(t_edit *edit)
 	edit->hud_flag = 0;
 	edit->input_flag = 0;
 	edit->input_cursor = 0;
+	edit->player = NULL;
 	edit->input_trigger = 0;
 	edit->hl_sec = NULL;
 	edit->hl_vert = NULL;
@@ -158,6 +159,8 @@ void			level_editor(char *mapname)
 		draw_obj_enem(&edit);
 		draw_vec(&edit, in);
 		draw_sec(&edit);
+		if (edit.player)
+			draw_vert(edit.player, &edit);
 		if (display_frame(edit.sdl.ren, edit.sdl.pix) == 0)
 		{
 			free_sdl(&edit.sdl, 5);
