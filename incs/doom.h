@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 21:44:28 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/13 18:42:03 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,9 @@
 # include "../libft/libft.h"
 # include "defines.h"
 # include <math.h>
-# include <SDL2/SDL.h>
+# include "../lib/SDL2.framework/Versions/Current/Headers/SDL.h"
+# include "../lib/SDL2_ttf.framework/Headers/SDL_ttf.h"
+# include "../lib/SDL2_mixer.framework/Headers/SDL_mixer.h"
 # include <stdio.h>
 
 typedef struct					s_point

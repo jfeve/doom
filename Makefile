@@ -6,7 +6,7 @@
 #    By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/18 21:26:38 by jfeve        #+#   ##    ##    #+#        #
-#    Updated: 2019/04/10 19:44:18 by nzenzela    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/04/13 19:25:31 by nzenzela    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -17,7 +17,7 @@
 
 CC = gcc
 CC_FLAGS = -Wall -Wextra -Werror -g3 -O3
-SDL_FLAGS = -F /Library/Frameworks -framework SDL2
+SDL_FLAGS = -lm -liconv -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal
 
 #******************************************************************************#
 #----------------------------------LIBFT---------------------------------------#
@@ -25,6 +25,16 @@ SDL_FLAGS = -F /Library/Frameworks -framework SDL2
 
 NAME_LIB = libft.a
 PATH_LIB = ./libft/
+
+#******************************************************************************#
+#----------------------------------SDL__---------------------------------------#
+#******************************************************************************#
+
+NAME_SDLLIB = libSDL2.a
+NAME_SDLTTFLIB = libSDL2_ttf.a
+NAME_SDLMIXERLIB = libSDL2_mixer.a
+PATH_SDLLIB = ./lib/
+
 
 #******************************************************************************#
 #-----------------------------------DOOM----------------------------------------#
@@ -48,7 +58,7 @@ INC_DOOM = $(addprefix $(PATH_INC_DOOM), doom.h)
 all: $(NAME)
 
 $(NAME): $(PATH_LIB)$(NAME_LIB) $(PATH_OBJ_DOOM) $(OBJ_DOOM)
-	@$(CC) $(CC_FLAGS) $(SDL_FLAGS) $(OBJ_DOOM) $(PATH_LIB)$(NAME_LIB)\
+	@$(CC) $(CC_FLAGS) $(SDL_FLAGS) $(OBJ_DOOM) $(PATH_LIB)$(NAME_LIB) $(PATH_SDLLIB)$(NAME_SDLLIB) $(PATH_SDLLIB)$(NAME_SDLTTFLIB) $(PATH_SDLLIB)$(NAME_SDLMIXERLIB)\
 		-o $(NAME)
 	@echo "*******\nexecutable doom-nukem cree.\n*******\n"
 
