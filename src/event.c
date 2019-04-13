@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 14:15:21 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/13 15:13:05 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,6 +76,38 @@ void			clear_hl_vec(t_sec *sec)
 		if (tmp->col == (int)GREEN)
 			tmp->col = tmp->oldcol;
 		tmp = tmp->next;
+	}
+}
+
+void			switch_highlight(t_input *in, t_edit *edit)
+{
+	if (in->mouse[SDL_BUTTON_LEFT] && in->y < HUD_BEGIN && edit->hl == 0)
+	{
+		edit->hud_flag = 1;
+		if (edit->vert == NULL)
+			edit->vert = create_vert(in->x, in->y);
+		else
+			add_vert(in->x, in->y, edit, edit->vert);
+		in->mouse[SDL_BUTTON_LEFT] = SDL_FALSE;
+	}
+}
+
+void			place_enemy(t_input *in, t_edit *edit)
+{
+	t_lis	*tmp;
+
+	if (in->key[SDL_SCANCODE_E] && edit->hl_sec)
+	{
+
+		if (edit->hl_sec->enem == NULL)
+			edit->hl_sec->enem = create_vert(in->x, in->y);
+		else
+			add_vert(in->x, in->y, edit, edit->hl_sec->enem);
+		tmp = edit->hl_sec->enem;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->col = RED;
+		in->key[SDL_SCANCODE_E] = SDL_FALSE;
 	}
 }
 
@@ -170,13 +202,6 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 		tmp->col = RED;
 		in->key[SDL_SCANCODE_E] = SDL_FALSE;
 	}
-	if (in->mouse[SDL_BUTTON_LEFT] && in->y < HUD_BEGIN && edit->hl == 0)
-	{
-		edit->hud_flag = 1;
-		if (edit->vert == NULL)
-			edit->vert = create_vert(in->x, in->y);
-		else
-			add_vert(in->x, in->y, edit, edit->vert);
-		in->mouse[SDL_BUTTON_LEFT] = SDL_FALSE;
-	}
+	switch_highlight(in, edit);
+	place_enemy(in, edit);
 }

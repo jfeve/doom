@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 00:57:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 23:45:08 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/13 15:26:20 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,8 @@ int				get_neighbor(t_edit *edit, t_lis **vert, t_lis **next)
 		tmp = temp->vert;
 		while (tmp->next && temp != edit->hl_sec)
 		{
-			if (tmp->x == (*vert)->x && tmp->y == (*vert)->y && tmp->next->x == (*next)->x && tmp->next->y == (*next)->y)
+			if (tmp->x == (*vert)->x && tmp->y == (*vert)->y
+				&& tmp->next->x == (*next)->x && tmp->next->y == (*next)->y)
 			{
 				tmp->port = 1;
 				tmp->col = PURPLE;
@@ -32,7 +33,8 @@ int				get_neighbor(t_edit *edit, t_lis **vert, t_lis **next)
 				(*vert)->neigh = temp->id;
 				return (1);
 			}
-			else if (tmp->x == (*next)->x && tmp->y == (*next)->y && tmp->next->x == (*vert)->x && tmp->next->y == (*vert)->y)
+			else if (tmp->x == (*next)->x && tmp->y == (*next)->y &&
+				tmp->next->x == (*vert)->x && tmp->next->y == (*vert)->y)
 			{
 				tmp->port = 1;
 				tmp->next->col = PURPLE;
@@ -44,15 +46,17 @@ int				get_neighbor(t_edit *edit, t_lis **vert, t_lis **next)
 		}
 		if (temp != edit->hl_sec)
 		{
-			if (tmp->x == (*vert)->x && tmp->y == (*vert)->y && temp->vert->x == (*next)->x && temp->vert->y == (*next)->y)
+			if (tmp->x == (*vert)->x && tmp->y == (*vert)->y && temp->vert->x
+				== (*next)->x && temp->vert->y == (*next)->y)
 			{
 				tmp->port = 1;
-				tmp->next->col = PURPLE;
+				temp->vert->col = PURPLE;
 				tmp->neigh = edit->hl_sec->id;
 				(*vert)->neigh = temp->id;
 				return (1);
 			}
-			else if (tmp->x == (*next)->x && tmp->y == (*next)->y && temp->vert->x == (*vert)->x && temp->vert->y == (*vert)->y)
+			else if (tmp->x == (*next)->x && tmp->y == (*next)->y &&
+				temp->vert->x == (*vert)->x && temp->vert->y == (*vert)->y)
 			{
 				tmp->neigh = edit->hl_sec->id;
 				temp->vert->col = PURPLE;
