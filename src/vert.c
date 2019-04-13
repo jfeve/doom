@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:21:04 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 20:42:40 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/13 16:25:56 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,6 +38,7 @@ t_lis			*create_vert(int x, int y)
 	vert->neigh = -1;
 	vert->port  = 0;
 	vert->col = RED;
+	vert->oldcol = RED;
 	vert->next = NULL;
 	return (vert);
 }
@@ -70,6 +71,7 @@ int				add_vert(int x, int y, t_edit *edit, t_lis *vert)
 	point->port  = 0;
 	point->y = arr(y);
 	point->col = WHITE;
+	point->oldcol = RED;
 	point->next = NULL;
 	tmp = vert;
 	while (tmp->next != NULL)

@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 21:32:10 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 20:47:25 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/13 16:13:08 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,8 +21,8 @@ void			print_lis(t_lis **vert)
 	dprintf(1, "\n----------LIS----------\n");
 	while (tmp != NULL)
 	{
-		dprintf(1, "x = %d\ty = %d\n", tmp->x, tmp->y);
-		dprintf(1, "col = %d\ttext = %d\n", tmp->col, tmp->text);
+		dprintf(1, "x = %d\ty = %d\taddr = %p\n", tmp->x, tmp->y, tmp);
+		dprintf(1, "col = %0x\toldcol = %0x\ttext = %d\n", tmp->col, tmp->oldcol, tmp->text);
 		dprintf(1, "port = %d\tneigh = %d\n", tmp->port, tmp->neigh);
 		tmp = tmp->next;
 	}

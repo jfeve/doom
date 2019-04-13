@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 00:57:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 15:26:20 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/13 16:05:49 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -140,14 +140,17 @@ void			swap_datas(t_lis *vert, t_lis *last)
 		tmp->y = vert->y;
 		tmp->col = vert->col;
 		tmp->neigh = vert->neigh;
+		tmp->port = vert->port;
 		vert->x = last->x;
 		vert->y = last->y;
 		vert->col = last->col;
+		vert->port = last->port;
 		vert->neigh = last->neigh;
 		last->x = tmp->x;
 		last->y = tmp->y;
 		last->col = tmp->col;
 		last->neigh = tmp->neigh;
+		last->port = tmp->port;
 		vert = vert->next;
 	}
 	free(tmp);
