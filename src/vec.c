@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 00:57:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 16:05:49 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/13 19:06:33 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -171,8 +171,6 @@ void			put_new_vert(t_edit *edit, t_input *in)
 	else
 		tmp = edit->hl_sec->vert;
 	swap_datas(tmp, last);
-	edit->hl_vert->col = RED;
-	edit->hl_vert->oldcol = RED;
 	tmp->col = RED;
 	if (tmp->next)
 		tmp->next->col = GREEN;

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 17:04:39 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/13 19:28:13 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -173,15 +173,21 @@ void			handle_res(t_edit *edit)
 		if (tmp->next)
 		{
 			edit->hl_vert = tmp->next;
-			edit->hl_vert->col = RED;
+			edit->hl_vert->col = edit->hl_vert->oldcol;
 			if (edit->hl_vert->next)
+			{
+				edit->hl_vert->next->oldcol = edit->hl_vert->next->col;
 				edit->hl_vert->next->col = GREEN;
+			}
 			else
+			{
+				edit->hl_sec->vert->oldcol = edit->hl_sec->vert->col;
 				edit->hl_sec->vert->col = GREEN;
+			}
 		}
 		else
 		{
-			edit->hl_sec->vert->col = RED;
+			edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
 			edit->hl_vert = NULL;
 			edit->input_flag = 0;
 			edit->input_trigger = 0;
