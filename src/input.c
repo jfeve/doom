@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 19:28:13 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/14 14:57:45 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -152,6 +152,17 @@ void			draw_text(t_edit *edit)
 	}
 }
 
+int				handle_obj(t_lis *vert)
+{
+	t_lis		*tmp;
+
+	tmp = vert;
+	while (tmp && tmp->text != -1)
+	{
+	}
+	return (1);
+}
+
 void			handle_res(t_edit *edit)
 {
 	t_lis		*tmp;
@@ -187,10 +198,33 @@ void			handle_res(t_edit *edit)
 		}
 		else
 		{
-			edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
-			edit->hl_vert = NULL;
-			edit->input_flag = 0;
-			edit->input_trigger = 0;
+			if (edit->hl_sec->obj)
+			{
+				if (handle_obj(edit->hl_sec->obj))
+				{
+					edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
+					edit->hl_vert = NULL;
+					edit->input_flag = 0;
+					edit->input_trigger = 0;
+				}
+			}
+			else if (edit->hl_sec->enem)
+			{
+				if (handle_obj(edit->hl_sec->enem))
+				{
+					edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
+					edit->hl_vert = NULL;
+					edit->input_flag = 0;
+					edit->input_trigger = 0;
+				}
+			}
+			else
+			{
+				edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
+				edit->hl_vert = NULL;
+				edit->input_flag = 0;
+				edit->input_trigger = 0;
+			}
 		}
 	}
 }
