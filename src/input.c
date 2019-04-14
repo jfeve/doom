@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/14 14:57:45 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/14 15:56:41 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -129,6 +129,18 @@ void						draw_num(t_edit *edit,t_draw data, int num)
 	draw_(edit, &draw);
 }
 
+int				check_lis_input(t_lis *vert)
+{
+	t_lis		*tmp;
+
+	tmp = vert;
+	while (tmp && tmp->text != -1)
+		tmp = tmp->next;
+	if (tmp == NULL)
+		return (0);
+	return (1);
+}
+
 void			draw_text(t_edit *edit)
 {
 	int 	x;
@@ -152,17 +164,6 @@ void			draw_text(t_edit *edit)
 	}
 }
 
-int				handle_obj(t_lis *vert)
-{
-	t_lis		*tmp;
-
-	tmp = vert;
-	while (tmp && tmp->text != -1)
-	{
-	}
-	return (1);
-}
-
 void			handle_res(t_edit *edit)
 {
 	t_lis		*tmp;
@@ -176,9 +177,9 @@ void			handle_res(t_edit *edit)
 		edit->hl_vert = edit->hl_sec->vert;
 		edit->hl_vert->next->col = GREEN;
 	}
-	else
+	else if (check_lis_input(tmp))
 	{
-		while (tmp && tmp->text != -1)
+		while (tmp->next && tmp->text != -1)
 			tmp = tmp->next;
 		tmp->text = edit->input_res;
 		if (tmp->next)
@@ -200,31 +201,52 @@ void			handle_res(t_edit *edit)
 		{
 			if (edit->hl_sec->obj)
 			{
-				if (handle_obj(edit->hl_sec->obj))
-				{
-					edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
-					edit->hl_vert = NULL;
-					edit->input_flag = 0;
-					edit->input_trigger = 0;
-				}
+				edit->hl_sec->obj->oldcol = edit->hl_sec->obj->col;
+				edit->hl_sec->obj->col = BROWN;
 			}
-			else if (edit->hl_sec->enem)
+			edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
+			edit->hl_vert = NULL;
+		}
+	}
+	else if (check_lis_input(edit->hl_sec->obj))
+	{
+		tmp = edit->hl_sec->obj;
+		while (tmp->next && tmp->text != -1)
+			tmp = tmp->next;
+		tmp->text = edit->input_res;
+		if (tmp->next)
+		{
+			tmp->next->oldcol = tmp->next->col;
+			tmp->next->col = tmp->col;
+			tmp->col = tmp->oldcol;
+		}
+		else
+		{
+			if (edit->hl_sec->enem)
 			{
-				if (handle_obj(edit->hl_sec->enem))
-				{
-					edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
-					edit->hl_vert = NULL;
-					edit->input_flag = 0;
-					edit->input_trigger = 0;
-				}
+				edit->hl_sec->enem->oldcol = edit->hl_sec->enem->col;
+				edit->hl_sec->enem->col = BROWN;
 			}
-			else
-			{
-				edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
-				edit->hl_vert = NULL;
-				edit->input_flag = 0;
-				edit->input_trigger = 0;
-			}
+			tmp->col = tmp->oldcol;
+		}
+	}
+	else if (check_lis_input(edit->hl_sec->enem))
+	{
+		tmp = edit->hl_sec->enem;
+		while (tmp->next && tmp->text != -1)
+			tmp = tmp->next;
+		tmp->text = edit->input_res;
+		if (tmp->next)
+		{
+			tmp->next->oldcol = tmp->next->col;
+			tmp->next->col = tmp->col;
+			tmp->col = tmp->oldcol;
+		}
+		else
+		{
+			tmp->col = tmp->oldcol;
+			edit->input_flag = 0;
+			edit->input_trigger = 0;
 		}
 	}
 }
