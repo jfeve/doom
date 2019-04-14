@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 20:12:50 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/14 14:03:47 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -127,10 +127,13 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 		in->quit = SDL_TRUE;
 	if (in->key[SDL_SCANCODE_T] && edit->hl_sec)
 	{
-		if (edit->hl_vert->next)
-			edit->hl_vert->next->col = edit->hl_vert->next->oldcol;
-		else
-			edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
+		if (edit->hl_vert)
+		{
+			if (edit->hl_vert->next)
+				edit->hl_vert->next->col = edit->hl_vert->next->oldcol;
+			else
+				edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
+		}
 		edit->hl_vert = NULL;
 		edit->input_flag = 1;
 		edit->input_trigger = 1;
