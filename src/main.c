@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 20:07:11 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/14 16:32:56 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -118,22 +118,6 @@ int				check_mapname(char *mapname)
 	else
 		return (0);
 	return (1);
-}
-void			draw_obj_enem(t_edit *edit)
-{
-	t_sec		*temp;
-
-	if (edit->sect == NULL)
-		return ;
-	temp = edit->sect;
-	while (temp)
-	{
-		if (temp->obj)
-			put_vert(edit, temp->obj);
-		if (temp->enem)
-			put_vert(edit, temp->enem);
-		temp = temp->next;
-	}
 }
 
 void			level_editor(char *mapname)

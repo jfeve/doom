@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/14 14:03:47 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/14 16:49:11 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -92,30 +92,12 @@ void			switch_highlight(t_input *in, t_edit *edit)
 	}
 }
 
-void			place_enemy(t_input *in, t_edit *edit)
-{
-	t_lis	*tmp;
-
-	if (in->key[SDL_SCANCODE_E] && edit->hl_sec)
-	{
-
-		if (edit->hl_sec->enem == NULL)
-			edit->hl_sec->enem = create_vert(in->x, in->y);
-		else
-			add_vert(in->x, in->y, edit, edit->hl_sec->enem);
-		tmp = edit->hl_sec->enem;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->col = RED;
-		in->key[SDL_SCANCODE_E] = SDL_FALSE;
-	}
-}
-
 void			check_event(char *mapname, t_input *in, t_edit *edit)
 {
 	draw_text(edit);
 	input_mode(in, edit);
 	hl_mode(in, edit);
+	hl_vec(edit, in);
 	portals(edit, in);
 	save_map(in, mapname, edit);
 	if (in->key[SDL_SCANCODE_G])
@@ -203,34 +185,7 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 			edit->player->text = edit->hl_sec->id;
 		}
 	}
-	if (in->key[SDL_SCANCODE_O] && edit->hl_sec)
-	{
-		if (edit->hl_sec->obj == NULL)
-			edit->hl_sec->obj = create_vert(in->x, in->y);
-		else
-			add_vert(in->x, in->y, edit, edit->hl_sec->obj);
-		t_lis *tmp;
-
-		tmp = edit->hl_sec->obj;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->col = GREEN;
-		in->key[SDL_SCANCODE_O] = SDL_FALSE;
-	}
-	if (in->key[SDL_SCANCODE_E] && edit->hl_sec)
-	{
-		if (edit->hl_sec->enem == NULL)
-			edit->hl_sec->enem = create_vert(in->x, in->y);
-		else
-			add_vert(in->x, in->y, edit, edit->hl_sec->enem);
-		t_lis *tmp;
-
-		tmp = edit->hl_sec->enem;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->col = RED;
-		in->key[SDL_SCANCODE_E] = SDL_FALSE;
-	}
+	enem(edit, in);
+	obj(edit, in);
 	switch_highlight(in, edit);
-	place_enemy(in, edit);
 }

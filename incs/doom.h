@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 20:02:30 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/14 16:49:00 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -138,6 +138,7 @@ void				clear_hl_vec(t_sec *sec);
 int					check_on_vec(t_point *in, t_sec *sec);
 
 /*highlight*/
+void							hl_vec(t_edit *edit, t_input *in);
 void							hl_mode(t_input *in, t_edit *edit);
 
 /*sec*/
@@ -150,6 +151,11 @@ void							print_sec(t_sec *sec);
 
 /*HUD*/
 void							hud(t_edit *edit);
+
+/*objs*/
+void							draw_obj_enem(t_edit *edit);
+void							obj(t_edit *edit, t_input *in);
+void							enem(t_edit *edit, t_input *in);
 
 /*MapEdit*/
 int								map_writer(char *mapname, t_edit *edit);
