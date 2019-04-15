@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/14 16:49:00 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/15 19:16:26 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -117,6 +117,10 @@ void							clear_tab(t_sdl *sdl);
 
 /*bresen*/
 void							bresen(t_lis a, t_lis b, t_sdl *sdl);
+void                            do_1(int dx, int dy, t_lis *a);
+void                            do_2(int dx, int dy, t_lis *a);
+void                            do_3(int dx, int dy, t_lis *a);
+void                            do_4(int dx, int dy, t_lis *a);
 
 /*vertex*/
 int					parse_data(int x, int y, t_edit *edit, t_lis *vert);
