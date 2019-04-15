@@ -6,25 +6,14 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/14 15:56:41 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/15 20:11:54 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-t_draw							write_num(int x, int y,int col)
-{
-	t_draw	data;
-
-	data.x = x;
-	data.y = y;
-	data.y_s = 2;
-	data.x_s = 1;
-	data.color = col;
-	return (data); 
-}
-int								check_color(int c)
+int		check_color(int c)
 {
 	if (c == 1)
 		return (RED);
@@ -38,51 +27,30 @@ int								check_color(int c)
 		return (WHITE);
 }
 
-char							*check_num(int num)
+t_draw							write_num(int x, int y,int col)
 {
-	if (num == 1)
-		return (_1_);
-	else if (num == 2)
-		return (_2_);
-	else if (num == 3)
-		return (_3_);
-	else if (num == 4)
-		return (_4_);
-	else if (num == 5)
-		return (_5_);
-	else if (num == 6)
-		return (_6_);
-	else if (num == 7)
-		return (_7_);
-	else if (num == 8)
-		return (_8_);
-	else if (num == 9)
-		return (_9_);
-	else if (num == 0)
-		return (_0_);
-	else if (num == 10)
-		return (_I_);
-	else if (num == 11)
-		return (_E_);
-	else if (num == 12)
-		return (_S_);
-	else
-		return (0);	
+	t_draw	data;
+
+	data.x = x;
+	data.y = y;
+	data.y_s = 2;
+	data.x_s = 1;
+	data.color = col;
+	return (data);
 }
 
-void						draw_square(t_edit *edit, t_draw *draw)
+void							draw_square(t_edit *edit, t_draw *draw)
 {
-	int i = draw->x;
-	int j = draw->y;
+	int i;
+	int j;
 
+	i = draw->x;
+	j = draw->y;
 	while (j <= draw->y + draw->y_s)
 	{
 		i = draw->x;
 		while (i <= draw->x + draw->x_s)
-		{
-			edit->sdl.pix[j * WIN_W + i] = draw->color;
-			i++;
-		}
+			edit->sdl.pix[j * WIN_W + i++] = draw->color;
 		j++;
 	}
 }
@@ -116,7 +84,7 @@ void						draw_(t_edit *edit, t_draw *draw)
 	}
 }
 
-void						draw_num(t_edit *edit,t_draw data, int num)
+void						draw_num(t_edit *edit, t_draw data, int num)
 {
 	t_draw	draw;
 
@@ -141,10 +109,10 @@ int				check_lis_input(t_lis *vert)
 	return (1);
 }
 
-void			draw_text(t_edit *edit)
+void						draw_text(t_edit *edit)
 {
-	int 	x;
-	int 	y;
+	int		x;
+	int		y;
 	int		i;
 	int		nb;
 
@@ -161,93 +129,6 @@ void			draw_text(t_edit *edit)
 			i++;
 		}
 		draw_num(edit, write_num(x += 15, 900, 4), 10);
-	}
-}
-
-void			handle_res(t_edit *edit)
-{
-	t_lis		*tmp;
-
-	tmp = edit->hl_sec->vert;
-	if (edit->hl_sec->floor == -1)
-		edit->hl_sec->floor = edit->input_res;
-	else if (edit->hl_sec->ceil == -1)
-	{
-		edit->hl_sec->ceil = edit->input_res;
-		edit->hl_vert = edit->hl_sec->vert;
-		edit->hl_vert->next->col = GREEN;
-	}
-	else if (check_lis_input(tmp))
-	{
-		while (tmp->next && tmp->text != -1)
-			tmp = tmp->next;
-		tmp->text = edit->input_res;
-		if (tmp->next)
-		{
-			edit->hl_vert = tmp->next;
-			edit->hl_vert->col = edit->hl_vert->oldcol;
-			if (edit->hl_vert->next)
-			{
-				edit->hl_vert->next->oldcol = edit->hl_vert->next->col;
-				edit->hl_vert->next->col = GREEN;
-			}
-			else
-			{
-				edit->hl_sec->vert->oldcol = edit->hl_sec->vert->col;
-				edit->hl_sec->vert->col = GREEN;
-			}
-		}
-		else
-		{
-			if (edit->hl_sec->obj)
-			{
-				edit->hl_sec->obj->oldcol = edit->hl_sec->obj->col;
-				edit->hl_sec->obj->col = BROWN;
-			}
-			edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
-			edit->hl_vert = NULL;
-		}
-	}
-	else if (check_lis_input(edit->hl_sec->obj))
-	{
-		tmp = edit->hl_sec->obj;
-		while (tmp->next && tmp->text != -1)
-			tmp = tmp->next;
-		tmp->text = edit->input_res;
-		if (tmp->next)
-		{
-			tmp->next->oldcol = tmp->next->col;
-			tmp->next->col = tmp->col;
-			tmp->col = tmp->oldcol;
-		}
-		else
-		{
-			if (edit->hl_sec->enem)
-			{
-				edit->hl_sec->enem->oldcol = edit->hl_sec->enem->col;
-				edit->hl_sec->enem->col = BROWN;
-			}
-			tmp->col = tmp->oldcol;
-		}
-	}
-	else if (check_lis_input(edit->hl_sec->enem))
-	{
-		tmp = edit->hl_sec->enem;
-		while (tmp->next && tmp->text != -1)
-			tmp = tmp->next;
-		tmp->text = edit->input_res;
-		if (tmp->next)
-		{
-			tmp->next->oldcol = tmp->next->col;
-			tmp->next->col = tmp->col;
-			tmp->col = tmp->oldcol;
-		}
-		else
-		{
-			tmp->col = tmp->oldcol;
-			edit->input_flag = 0;
-			edit->input_trigger = 0;
-		}
 	}
 }
 
