@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/15 19:16:26 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/16 15:29:20 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,6 +20,12 @@
 # include "../lib/SDL2_ttf.framework/Headers/SDL_ttf.h"
 # include "../lib/SDL2_mixer.framework/Headers/SDL_mixer.h"
 # include <stdio.h>
+
+typedef struct					s_float
+{
+	float						x;
+	float						y;
+}								t_float;
 
 typedef struct					s_point
 {
@@ -105,6 +111,9 @@ typedef	struct					s_draw
 }								t_draw;
 
 /* event */
+void							cancels(t_edit *edit, t_input *in);
+void							check_input(t_edit *edit, t_input *in);
+void							new_vert(t_edit *edit, t_input *in);
 void							update_event(t_input *in);
 void							check_event(char *mapname, t_input *in, t_edit *edit);
 
@@ -126,6 +135,7 @@ void                            do_4(int dx, int dy, t_lis *a);
 int					parse_data(int x, int y, t_edit *edit, t_lis *vert);
 void				cancel_last(t_lis **vert);
 t_lis				mult_unit(t_lis vert);
+t_lis				mult_unit(t_lis vert);
 int					arr(int x);
 float				arr_float(float x);
 t_lis				*create_vert(int x, int y);
@@ -134,6 +144,7 @@ void				draw_vert(t_lis *tmp, t_edit *edit);
 void				put_vert(t_edit *edit, t_lis *vert);
 
 /*vectors*/
+void				draw_vec(t_edit *edit, t_input in);
 void				portals(t_edit *edit, t_input *in);
 void				put_new_vert(t_edit *edit, t_input *in);
 int					vec_here(t_lis *tmp, t_lis*vert, t_point *in);
@@ -154,17 +165,23 @@ void							print_lis(t_lis **vert);
 void							print_sec(t_sec *sec);
 
 /*HUD*/
+void							set_grid(t_edit *edit);
 void							hud(t_edit *edit);
 
 /*objs*/
+void							handle_obj(t_edit *edit);
+void							handle_enem(t_edit *edit);
 void							draw_obj_enem(t_edit *edit);
 void							obj(t_edit *edit, t_input *in);
 void							enem(t_edit *edit, t_input *in);
 
 /*MapEdit*/
+int								check_mapname(char *mapname);
 int								map_writer(char *mapname, t_edit *edit);
 int								save_map(t_input *in, char *mapname, t_edit *edit);
 /*Detection d'Input*/
+void							put_zer_flag(t_edit *edit);
+void							handle_res(t_edit *edit);
 void							draw_num(t_edit *edit, t_draw data, int num);
 void							draw_(t_edit *edit, t_draw *draw);
 t_draw							write_num(int x, int y, int col);

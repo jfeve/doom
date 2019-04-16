@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 16:22:44 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 21:22:33 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/16 13:41:37 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -75,7 +75,9 @@ void			draw_sec(t_edit *edit)
 	while (tmp)
 	{
 		temp = tmp->vert;
-		if (temp->col == (int)RED || temp->col == (int)GREEN || (temp->col == (int)PURPLE && edit->hl > 0 && temp->next->col != (int)WHITE))
+		if (temp->col == (int)RED || temp->col == (int)GREEN || (temp->col ==
+					(int)PURPLE && edit->hl > 0 && temp->next->col !=
+					(int)WHITE))
 			put_vert(edit, temp);
 		while (temp->next)
 		{

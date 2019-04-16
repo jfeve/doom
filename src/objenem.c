@@ -6,12 +6,60 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/14 16:13:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/14 16:32:53 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/16 15:01:50 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+void			handle_obj(t_edit *edit)
+{
+	t_lis		*tmp;
+
+	tmp = edit->hl_sec->obj;
+	while (tmp->next && tmp->text != -1)
+		tmp = tmp->next;
+	tmp->text = edit->input_res;
+	if (tmp->next)
+	{
+		tmp->next->oldcol = tmp->next->col;
+		tmp->next->col = tmp->col;
+		tmp->col = tmp->oldcol;
+	}
+	else
+	{
+		if (edit->hl_sec->enem)
+		{
+			edit->hl_sec->enem->oldcol = edit->hl_sec->enem->col;
+			edit->hl_sec->enem->col = BROWN;
+		}
+		else
+			put_zer_flag(edit);
+		tmp->col = tmp->oldcol;
+	}
+}
+
+void			handle_enem(t_edit *edit)
+{
+	t_lis		*tmp;
+
+	tmp = edit->hl_sec->enem;
+	while (tmp->next && tmp->text != -1)
+		tmp = tmp->next;
+	tmp->text = edit->input_res;
+	if (tmp->next)
+	{
+		tmp->next->oldcol = tmp->next->col;
+		tmp->next->col = tmp->col;
+		tmp->col = tmp->oldcol;
+	}
+	else
+	{
+		put_zer_flag(edit);
+		tmp->col = tmp->oldcol;
+	}
+}
 
 void			draw_obj_enem(t_edit *edit)
 {

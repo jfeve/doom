@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/14 16:49:11 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/16 15:44:33 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,43 +42,6 @@ void			update_event(t_input *in)
 	}
 }
 
-void			cancel_last(t_lis **vert)
-{
-	t_lis		*tmp;
-	
-	if (*vert == NULL)
-		return ;
-	tmp = *vert;
-	if (tmp->next)
-		while(tmp->next->next)
-			tmp = tmp->next;
-	if (tmp->next)
-	{
-		free(tmp->next);
-		tmp->next = NULL;
-	}
-	else
-	{
-		free(*vert);
-		*vert = NULL;
-	}
-}
-
-void			clear_hl_vec(t_sec *sec)
-{
-	t_lis		*tmp;
-
-	if (sec == NULL)
-		return ;
-	tmp = sec->vert;
-	while (tmp)
-	{
-		if (tmp->col == (int)GREEN)
-			tmp->col = tmp->oldcol;
-		tmp = tmp->next;
-	}
-}
-
 void			switch_highlight(t_input *in, t_edit *edit)
 {
 	if (in->mouse[SDL_BUTTON_LEFT] && in->y < HUD_BEGIN && edit->hl == 0)
@@ -92,82 +55,8 @@ void			switch_highlight(t_input *in, t_edit *edit)
 	}
 }
 
-void			check_event(char *mapname, t_input *in, t_edit *edit)
+void			create_player(t_edit *edit, t_input *in)
 {
-	draw_text(edit);
-	input_mode(in, edit);
-	hl_mode(in, edit);
-	hl_vec(edit, in);
-	portals(edit, in);
-	save_map(in, mapname, edit);
-	if (in->key[SDL_SCANCODE_G])
-	{
-		print_sec(edit->sect);
-		in->key[SDL_SCANCODE_G] = SDL_FALSE;
-	}
-	if (in->key[SDL_SCANCODE_ESCAPE])
-		in->quit = SDL_TRUE;
-	if (in->key[SDL_SCANCODE_T] && edit->hl_sec)
-	{
-		if (edit->hl_vert)
-		{
-			if (edit->hl_vert->next)
-				edit->hl_vert->next->col = edit->hl_vert->next->oldcol;
-			else
-				edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
-		}
-		edit->hl_vert = NULL;
-		edit->input_flag = 1;
-		edit->input_trigger = 1;
-		in->key[SDL_SCANCODE_T] = SDL_FALSE;
-	}
-	if (in->key[SDL_SCANCODE_R])
-	{
-		edit->input_flag = 0;
-		edit->input_trigger = 0;
-		edit->input_cursor = 0;
-		edit->nbsect = 0;
-		edit->err = 0;
-		edit->hud_flag = 0;
-		edit->hl_sec = NULL;
-		edit->nbsect = 0;
-		edit->sec = 0;
-		edit->hl = 0;
-		edit->vert = NULL;
-		edit->sect = NULL;
-	}
-	if (in->key[SDL_SCANCODE_A] && edit->hl_vert && edit->hl_sec->floor == -1)
-	{
-		t_lis *tmp;
-
-		tmp = edit->hl_sec->vert;
-		while (tmp)
-		{
-			if (parse_data(in->x, in->y, edit, tmp) == 0)
-				break ;
-			tmp = tmp->next;
-		}
-		if (!tmp)
-			put_new_vert(edit, in);
-		else
-			edit->oldvert = NULL;
-		in->key[SDL_SCANCODE_A] = SDL_FALSE;
-	}
-	if (in->key[SDL_SCANCODE_Z])
-	{
-		if (edit->vert)
-			cancel_last(&edit->vert);
-		else if (edit->hl_sec)
-			if (edit->hl_sec->obj)
-				cancel_last(&edit->hl_sec->obj);
-		in->key[SDL_SCANCODE_Z] = SDL_FALSE;
-	}
-	if (in->key[SDL_SCANCODE_X])
-	{
-		if (edit->hl_sec)
-			if (edit->hl_sec->enem)
-				cancel_last(&edit->hl_sec->enem);
-	}
 	if (in->key[SDL_SCANCODE_J] && edit->hl_sec)
 	{
 		in->key[SDL_SCANCODE_J] = SDL_FALSE;
@@ -185,7 +74,43 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 			edit->player->text = edit->hl_sec->id;
 		}
 	}
+}
+
+void			settings_event(t_edit *edit, t_input *in)
+{
+	if (in->key[SDL_SCANCODE_R])
+	{
+		edit->input_flag = 0;
+		edit->input_trigger = 0;
+		edit->input_cursor = 0;
+		edit->nbsect = 0;
+		edit->err = 0;
+		edit->hud_flag = 0;
+		edit->hl_sec = NULL;
+		edit->nbsect = 0;
+		edit->sec = 0;
+		edit->hl = 0;
+		edit->vert = NULL;
+		edit->sect = NULL;
+	}
+	if (in->key[SDL_SCANCODE_ESCAPE])
+		in->quit = SDL_TRUE;
+}
+
+void			check_event(char *mapname, t_input *in, t_edit *edit)
+{
+	settings_event(edit, in);
+	cancels(edit, in);
+	switch_highlight(in, edit);
+	hl_mode(in, edit);
+	hl_vec(edit, in);
+	new_vert(edit, in);
+	portals(edit, in);
+	check_input(edit, in);
+	input_mode(in, edit);
+	draw_text(edit);
 	enem(edit, in);
 	obj(edit, in);
-	switch_highlight(in, edit);
+	create_player(edit, in);
+	save_map(in, mapname, edit);
 }

@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:26:28 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/12 16:34:05 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/16 15:30:21 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,10 +40,10 @@ void			bresen(t_lis a, t_lis b, t_sdl *sdl)
 					e += dy;
 					if (e < 0)
 					{
-						a.y -=1;
+						a.y -= 1;
 						e += dx;
 					}
-					a.x +=1;
+					a.x += 1;
 				}
 			}
 			else
@@ -60,10 +60,10 @@ void			bresen(t_lis a, t_lis b, t_sdl *sdl)
 					e += dx;
 					if (e > 0)
 					{
-						a.x +=1;
+						a.x += 1;
 						e += dy;
 					}
-					a.y -=1;
+					a.y -= 1;
 				}
 			}
 		}
@@ -83,10 +83,10 @@ void			bresen(t_lis a, t_lis b, t_sdl *sdl)
 					e -= dy;
 					if (e < 0)
 					{
-						a.y +=1;
+						a.y += 1;
 						e += dx;
 					}
-					a.x +=1;
+					a.x += 1;
 				}
 			}
 			else
@@ -103,10 +103,10 @@ void			bresen(t_lis a, t_lis b, t_sdl *sdl)
 					e -= dx;
 					if (e < 0)
 					{
-						a.x +=1;
+						a.x += 1;
 						e += dy;
 					}
-					a.y +=1;
+					a.y += 1;
 				}
 			}
 		}
