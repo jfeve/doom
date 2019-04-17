@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 22:09:33 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 23:25:21 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -121,18 +121,21 @@
  *    text->c_trigger = 0;
  *    text->content = NULL;
  *}
- *
- *void			check_input(t_edit *edit, t_input *in)
- *{
- *    t_text		text;
- *
- *    init_text(&text);
- *    if (in->key[SDL_SCANCODE_T] && edit->hl_sec)
- *    {
- *        edit->hl_vert = NULL;
- *        edit->input_flag = 1;
- *        edit->input_trigger = 1;
- *        in->key[SDL_SCANCODE_T] = SDL_FALSE;
- *    }
- *}
  */
+
+
+//cree un maillon content avec trigger = 1 si T appuyer 
+void			check_input(t_edit *edit, t_input *in)
+{
+	t_content		*tmp;
+
+	if (in->key[SDL_SCANCODE_T] && edit->hl_sec)
+	{
+		in->key[SDL_SCANCODE_T] = SDL_FALSE;
+		add_content(edit, "\0", "input mode", init_draw(600, 900, 1));
+		tmp = edit->con;
+			while (tmp->next)
+		tmp = tmp->next;
+		tmp->trigger = 1;
+	}
+}

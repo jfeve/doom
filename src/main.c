@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 23:04:41 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 23:25:29 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,6 +20,7 @@ int				usage(void)
 	return (0);
 }
 
+//init content
 void			init_content(t_edit *edit)
 {
 	edit->con = create_content();

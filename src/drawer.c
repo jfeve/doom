@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 18:21:59 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 22:42:08 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 23:23:44 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,6 +29,7 @@ void			draw_square(t_edit *edit, t_draw *draw)
 	}
 }
 
+//init une t_draw, sert pour remplir content actuellement
 t_draw			init_draw(int x, int y, int disp)
 {
 	t_draw		draw;
