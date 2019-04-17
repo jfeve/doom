@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 15:29:20 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 17:43:00 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,6 +15,7 @@
 # define DOOM_H
 # include "../libft/libft.h"
 # include "defines.h"
+# include "def_rend.h"
 # include <math.h>
 # include "../lib/SDL2.framework/Versions/Current/Headers/SDL.h"
 # include "../lib/SDL2_ttf.framework/Headers/SDL_ttf.h"
@@ -87,6 +88,7 @@ typedef struct					s_edit
 	int							input_cursor;
 	int							hud_flag;
 	t_sec						*hl_sec;
+	t_sec						*hl_sec_temp;
 	t_lis						*hl_vert;
 	int							nbsect;
 	int							hl;
@@ -187,4 +189,16 @@ void							draw_(t_edit *edit, t_draw *draw);
 t_draw							write_num(int x, int y, int col);
 void							draw_text(t_edit *edit);
 void							input_mode(t_input *in, t_edit *edit);
+
+/*rend*/
+int					min(int a, int b);
+int					max(int a, int b);
+int					clamp(int a, int mi, int ma);
+int					vxs(t_point a, t_point b);
+
+float				f_max(float a, float b);
+float				f_min(float a, float b);
+float				f_clamp(float a, float mi, float ma);
+float				f_vxs(t_float a, t_float b);
+
 #endif

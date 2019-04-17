@@ -6,12 +6,32 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:22:54 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 15:28:32 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 16:27:55 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+int				min(int a, int b)
+{
+	return ((a < b) ? a : b);
+}
+
+int				max(int a, int b)
+{
+	return ((a > b) ? a : b);
+}
+
+float			f_min(float a, float b)
+{
+	return ((a < b) ? a : b);
+}
+
+float			f_max(float a, float b)
+{
+	return ((a > b) ? a : b);
+}
 
 t_lis			mult_unit(t_lis vert)
 {

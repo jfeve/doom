@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 15:29:24 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 16:31:36 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -88,8 +88,10 @@ void			level_editor(char *mapname)
 
 int				main(int argc, char **argv)
 {
-	if (argc == 3 && strcmp(argv[1], "edit") == 0)
+	if (argc == 3 && ft_strcmp(argv[1], "edit") == 0)
 		level_editor(argv[2]);
+//	else if (argc == 2 && ft_strcmp(argv[1], "game") == 0)
+//		render();
 	else
 		return (usage());
 }
