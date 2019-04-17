@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 19:55:33 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 22:56:33 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -96,6 +96,12 @@ void			settings_event(t_edit *edit, t_input *in)
 
 void			check_event(char *mapname, t_input *in, t_edit *edit)
 {
+	print_info(edit, in);
+	if (in->key[SDL_SCANCODE_B])
+	{
+		add_content(edit, "content", "title", init_draw(WIN_W / 2, WIN_H / 2, 1));
+		in->key[SDL_SCANCODE_B] = SDL_FALSE;
+	}
 	settings_event(edit, in);
 	cancels(edit, in);
 	switch_highlight(in, edit);

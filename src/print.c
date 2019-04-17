@@ -6,17 +6,34 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 21:32:10 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 15:05:16 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 22:52:37 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
+void			print_content(t_edit *edit)
+{
+	t_content	*tmp;
+
+	tmp = edit->con;
+	dprintf(1, "==========CONTENT==========\n");
+	while (tmp)
+	{
+		dprintf(1, "cx = %d\tcy = %d\t addr = %p\n", tmp->x, tmp->y, tmp);
+		dprintf(1, "display = %d\tcursor = %d\t trigger = %d\n", tmp->display, tmp->cursor, tmp->trigger);
+		dprintf(1, "title = %s\tcontent = %s\n\n", tmp->c_title, tmp->c_content);
+		tmp = tmp->next;
+	}
+	dprintf(1, "========CONTENT END========");
+}
+
 void			print_info(t_edit *edit, t_input *in)
 {
 	if (in->key[SDL_SCANCODE_G])
 	{
+		print_content(edit);
 		print_sec(edit->sect);
 		in->key[SDL_SCANCODE_G] = SDL_FALSE;
 	}
@@ -37,6 +54,8 @@ void			print_lis(t_lis **vert)
 	}
 	dprintf(1, "\n--------LIS END--------\n");
 }
+
+
 
 void			print_sec(t_sec *sec)
 {

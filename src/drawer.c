@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 18:21:59 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 19:56:57 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 22:42:08 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,45 +29,62 @@ void			draw_square(t_edit *edit, t_draw *draw)
 	}
 }
 
-void			draw_content(t_edit *content, t_draw *draw)
+t_draw			init_draw(int x, int y, int disp)
 {
-	int		x;
-	int		y;
-	int		nb;
+	t_draw		draw;
 
-	draw->i = 0;
-	x = draw->x;
-	y = draw->y;
-	while (draw->input[draw->i])
-	{
-		nb = draw->input[draw->i] - 48;
-		if (draw->input[draw->i] == '1')
-		{
-			draw->x += draw->x_s;
-			draw_square(edit, draw);
-		}
-		if (draw->input[draw->i] != '1' && draw->input[draw->i] != '0')
-			draw->x += (draw->x_s * nb);
-		if (draw->input[draw->i] != '1' && draw->input[draw->i] == '0')
-			draw->x += draw->x_s;
-		else if (draw->input[draw->i] == '\n')
-		{
-			draw->x = x;
-			draw->y += draw->y_s;
-		}
-		draw->i += 1;
-	}
+	draw.x = x;
+	draw.y = y;
+	draw.x_s = 0;
+	draw.y_s = 0;
+	draw.i = disp;
+	draw.color = 0;
+	return (draw);
 }
 
-void		draw_num(t_edit *edit, t_draw data, int num)
-{
-	t_draw					draw;
+/*
+ *void			draw_content(t_draw *draw)
+ *{
+ *    int		x;
+ *    int		y;
+ *    int		nb;
+ *
+ *    draw->i = 0;
+ *    x = draw->x;
+ *    y = draw->y;
+ *    while (draw->input[draw->i])
+ *    {
+ *        nb = draw->input[draw->i] - 48;
+ *        if (draw->input[draw->i] == '1')
+ *        {
+ *            draw->x += draw->x_s;
+ *			draw_square(edit, draw);
+ *        }
+ *        if (draw->input[draw->i] != '1' && draw->input[draw->i] != '0')
+ *            draw->x += (draw->x_s * nb);
+ *        if (draw->input[draw->i] != '1' && draw->input[draw->i] == '0')
+ *            draw->x += draw->x_s;
+ *        else if (draw->input[draw->i] == '\n')
+ *        {
+ *            draw->x = x;
+ *            draw->y += draw->y_s;
+ *        }
+ *        draw->i += 1;
+ *    }
+ *}
+ */
 
-	draw.input = check_num(num);
-	draw.x = data.x;
-	draw.y = data.y;
-	draw.y_s = data.y_s;
-	draw.x_s = data.y_s;
-	draw.color = check_color(data.color);
-	draw_content(edit, &draw);
-}
+/*
+ *void		draw_num(t_edit *edit, t_draw data, int num)
+ *{
+ *    t_draw					draw;
+ *
+ *    draw.input = check_num(num);
+ *    draw.x = data.x;
+ *    draw.y = data.y;
+ *    draw.y_s = data.y_s;
+ *    draw.x_s = data.y_s;
+ *    draw.color = check_color(data.color);
+ *    draw_content(edit, &draw);
+ *}
+ */

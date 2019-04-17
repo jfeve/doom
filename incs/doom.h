@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 20:11:44 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 22:54:57 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -196,6 +196,8 @@ void							draw_sec(t_edit *edit);
 /*
 ** Print
 */
+void							print_info(t_edit *edit, t_input *in);
+void							print_content(t_edit *edit);
 void							print_lis(t_lis **vert);
 void							print_sec(t_sec *sec);
 
@@ -238,11 +240,10 @@ char							*check_alpha1(int num);
 char							*check_alpha2(int num);
 char							*check_alpha3(int num);
 
-void							tadd_title(t_text *content);
-void							tadd_content(t_text *content);
-void							tdisplay(t_edit *edit,
-										t_text *content, t_draw *draw);
-
+void							fill_str_content(int size, char *ret, char *str);
+t_draw							init_draw(int x, int y, int disp);
+t_content						*create_content(void);
+void							add_content(t_edit *edit, char *cont, char *title, t_draw draw);
 void							edit_input(t_edit *edit);
 
 /*

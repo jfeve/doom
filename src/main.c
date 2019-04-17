@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 20:24:15 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 23:04:41 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,14 @@ int				usage(void)
 
 void			init_content(t_edit *edit)
 {
-	edit->content = create_content();
+	edit->con = create_content();
+	edit->con->x = WIN_W / 2;
+	edit->con->y = 0;
+	edit->con->display = 1;
+	edit->con->cursor = 0;
+	edit->con->trigger = 0;
+	fill_str_content(2048, edit->con->c_content, "level editor");
+	fill_str_content(256, edit->con->c_title, "display");
 }
 
 int				init_edit(t_edit *edit)
