@@ -6,12 +6,31 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:29:02 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/11 17:15:26 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/16 15:29:22 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+void			set_grid(t_edit *edit)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (y < WIN_H)
+	{
+		x = 0;
+		while (x < WIN_W)
+		{
+			if (y % UNIT == 0 || x % UNIT == 0)
+				edit->sdl.pix[y * WIN_W + x] = CYAN;
+			x++;
+		}
+		y++;
+	}
+}
 
 void			hud_hl(t_edit *edit)
 {
@@ -52,7 +71,6 @@ void			hud_vert(t_edit *edit)
 		edit->sdl.pix[(y + 20) * WIN_W + x] = WHITE;
 		x++;
 	}
-	y = 920;
 	while (y < 940)
 	{
 		edit->sdl.pix[y * WIN_W + x] = WHITE;
@@ -68,12 +86,29 @@ void			hud_vert(t_edit *edit)
 	}
 }
 
+void			grey_hud(t_edit *edit)
+{
+	int			x;
+	int			y;
+
+	y = HUD_BEGIN + 10;
+	while (y < WIN_H)
+	{
+		x = 0;
+		while (x < WIN_W)
+		{
+			edit->sdl.pix[y * WIN_W + x] = 0x626965FF;
+			x++;
+		}
+		y++;
+	}
+}
+
 void			hud(t_edit *edit)
 {
 	int x;
 	int y;
 
-	x = 0;
 	y = HUD_BEGIN;
 	while (y < HUD_BEGIN + 10)
 	{
@@ -85,17 +120,7 @@ void			hud(t_edit *edit)
 		}
 		y++;
 	}
-	x = 0;
-	while (y < WIN_H)
-	{
-		x = 0;
-		while (x < WIN_W)
-		{
-			edit->sdl.pix[y * WIN_W + x] = 0x626965FF;
-			x++;
-		}
-		y++;
-	}
+	grey_hud(edit);
 	if (edit->hud_flag == 1)
 		hud_vert(edit);
 	if (edit->hud_flag == 2)

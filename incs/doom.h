@@ -21,6 +21,12 @@
 # include "../lib/SDL2_mixer.framework/Headers/SDL_mixer.h"
 # include <stdio.h>
 
+typedef struct					s_float
+{
+	float						x;
+	float						y;
+}								t_float;
+
 typedef struct					s_point
 {
 	int							x;

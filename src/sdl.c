@@ -6,14 +6,14 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:40:34 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 19:44:13 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/16 13:41:58 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-int				free_sdl(t_sdl *sdl,int flag)
+int				free_sdl(t_sdl *sdl, int flag)
 {
 	if (flag >= 1)
 		SDL_Quit();

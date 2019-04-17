@@ -57,8 +57,8 @@ void							draw_square(t_edit *edit, t_draw *draw)
 
 void						draw_(t_edit *edit, t_draw *draw)
 {
-	int		x;
-	int		nb;
+	int						x;
+	int						nb;
 
 	draw->i = 0;
 	x = draw->x;
@@ -86,7 +86,7 @@ void						draw_(t_edit *edit, t_draw *draw)
 
 void						draw_num(t_edit *edit, t_draw data, int num)
 {
-	t_draw	draw;
+	t_draw					draw;
 
 	draw.input = check_num(num);
 	draw.x = data.x;
@@ -97,9 +97,12 @@ void						draw_num(t_edit *edit, t_draw data, int num)
 	draw_(edit, &draw);
 }
 
-int				check_lis_input(t_lis *vert)
+void						draw_text(t_edit *edit)
 {
-	t_lis		*tmp;
+	int						x;
+	int						y;
+	int						i;
+	int						nb;
 
 	tmp = vert;
 	while (tmp && tmp->text != -1)
@@ -190,5 +193,23 @@ void			input_mode(t_input *in, t_edit *edit)
 			j = 0;
 		}
 		i++;
+	}
+}
+
+void			check_input(t_edit *edit, t_input *in)
+{
+	if (in->key[SDL_SCANCODE_T] && edit->hl_sec)
+	{
+		if (edit->hl_vert)
+		{
+			if (edit->hl_vert->next)
+				edit->hl_vert->next->col = edit->hl_vert->next->oldcol;
+			else
+				edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
+		}
+		edit->hl_vert = NULL;
+		edit->input_flag = 1;
+		edit->input_trigger = 1;
+		in->key[SDL_SCANCODE_T] = SDL_FALSE;
 	}
 }

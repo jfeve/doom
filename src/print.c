@@ -6,12 +6,21 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 21:32:10 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/13 16:13:08 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/16 15:05:16 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+void			print_info(t_edit *edit, t_input *in)
+{
+	if (in->key[SDL_SCANCODE_G])
+	{
+		print_sec(edit->sect);
+		in->key[SDL_SCANCODE_G] = SDL_FALSE;
+	}
+}
 
 void			print_lis(t_lis **vert)
 {
