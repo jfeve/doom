@@ -6,24 +6,12 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/15 17:22:48 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/15 19:39:21 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 18:20:59 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
-
-char	*check_spe(int num)
-{
-	if (num == 10)
-		return (_CURSOR_);
-	else if (num == 11)
-		return (_EQUAL_);
-	else if (num == 12)
-		return (_SLASH_);
-	else
-		return (NULL);
-}
 
 char	*check_num(int num)
 {

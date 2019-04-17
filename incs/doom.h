@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/15 19:46:57 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 19:42:25 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -108,6 +108,8 @@ typedef	struct					s_draw
 typedef	struct					s_content
 {
 	int							display;
+	int							cursor;
+	int							trigger;
 	char						c_title[256];
 	char						c_content[2048];
 	struct s_content			*next;
@@ -134,6 +136,9 @@ typedef	struct					s_bresen
 /*
 ** Event
 */
+void							cancels(t_edit *edit, t_input *in);
+void							check_input(t_edit *edit, t_input *in);
+void							new_vert(t_edit *edit, t_input *in);
 void							update_event(t_input *in);
 void							check_event(char *mapname,
 									t_input *in, t_edit *edit);
@@ -172,6 +177,7 @@ void							put_vert(t_edit *edit, t_lis *vert);
 /*
 ** Vector
 */
+void							draw_vec(t_edit *edit, t_input in);
 void							portals(t_edit *edit, t_input *in);
 void							put_new_vert(t_edit *edit, t_input *in);
 int								vec_here(t_lis *tmp, t_lis*vert, t_point *in);
@@ -201,11 +207,14 @@ void							print_sec(t_sec *sec);
 /*
 ** HUD
 */
+void							set_grid(t_edit *edit);
 void							hud(t_edit *edit);
 
 /*
 ** Draw Object-Enemy
 */
+void							handle_obj(t_edit *edit);
+void							handle_enem(t_edit *edit);
 void							draw_obj_enem(t_edit *edit);
 void							obj(t_edit *edit, t_input *in);
 void							enem(t_edit *edit, t_input *in);
@@ -214,19 +223,41 @@ int								check_lis_input(t_lis *vert);
 /*
 ** Map Saver
 */
+int								check_mapname(char *mapname);
 int								map_writer(char *mapname, t_edit *edit);
 int								save_map(t_input *in, char *mapname,
 									t_edit *edit);
+/*
+** Input Detection
+*/
+void							put_zer_flag(t_edit *edit);
+void							handle_res(t_edit *edit);
+void							edit_mode(t_input *in, t_edit *edit);
 
 /*
 ** Drawer
 */
-void							handle_res(t_edit *edit);
-char							*check_num(int num);
 char							*check_spe(int num);
-void							draw_num(t_edit *edit, t_draw data, int num);
-void							draw_(t_edit *edit, t_draw *draw);
-t_draw							write_num(int x, int y, int col);
-void							draw_text(t_edit *edit);
-void							input_mode(t_input *in, t_edit *edit);
+char							*check_num(int num);
+char							*check_alpha1(int num);
+char							*check_alpha2(int num);
+char							*check_alpha3(int num);
+
+void							tadd_title(t_text *content);
+void							tadd_content(t_text *content);
+void							tdisplay(t_edit *edit,
+										t_text *content, t_draw *draw);
+
+void							edit_input(t_edit *edit);
+
+/*
+**char							*check_num(int num);
+**char							*check_spe(int num);
+**void							draw_num(t_edit *edit, t_draw data, int num);
+**void							draw_(t_edit *edit, t_draw *draw);
+**t_draw							write_num(int x, int y, int col);
+*/
+
+
+
 #endif

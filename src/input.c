@@ -6,113 +6,30 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/15 20:11:54 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 19:42:09 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-int		check_color(int c)
-{
-	if (c == 1)
-		return (RED);
-	else if (c == 2)
-		return (CYAN);
-	else if (c == 3)
-		return (GREEN);
-	else if (c == 4)
-		return (DARK);
-	else
-		return (WHITE);
-}
 
-t_draw							write_num(int x, int y,int col)
-{
-	t_draw	data;
+// void						draw_text(t_edit *edit)
+// {
+// 	int						x;
+// 	int						y;
+// 	int						i;
+// 	int						nb;
 
-	data.x = x;
-	data.y = y;
-	data.y_s = 2;
-	data.x_s = 1;
-	data.color = col;
-	return (data);
-}
+// 	tmp = vert;
+// 	while (tmp && tmp->text != -1)
+// 		tmp = tmp->next;
+// 	if (tmp == NULL)
+// 		return (0);
+// 	return (1);
+// }
 
-void							draw_square(t_edit *edit, t_draw *draw)
-{
-	int i;
-	int j;
-
-	i = draw->x;
-	j = draw->y;
-	while (j <= draw->y + draw->y_s)
-	{
-		i = draw->x;
-		while (i <= draw->x + draw->x_s)
-			edit->sdl.pix[j * WIN_W + i++] = draw->color;
-		j++;
-	}
-}
-
-void						draw_(t_edit *edit, t_draw *draw)
-{
-	int						x;
-	int						nb;
-
-	draw->i = 0;
-	x = draw->x;
-	nb = 0;
-	while (draw->input[draw->i])
-	{
-		nb = draw->input[draw->i] - 48;
-		if (draw->input[draw->i] == '1')
-		{
-			draw->x += draw->x_s;
-			draw_square(edit, draw);
-		}
-		if (draw->input[draw->i] != '1' && draw->input[draw->i] != '0')
-			draw->x += (draw->x_s * nb);
-		if (draw->input[draw->i] != '1' && draw->input[draw->i] == '0')
-			draw->x += draw->x_s;
-		else if (draw->input[draw->i] == '\n')
-		{
-			draw->x = x;
-			draw->y += draw->y_s;
-		}
-		draw->i += 1;
-	}
-}
-
-void						draw_num(t_edit *edit, t_draw data, int num)
-{
-	t_draw					draw;
-
-	draw.input = check_num(num);
-	draw.x = data.x;
-	draw.y = data.y;
-	draw.y_s = data.y_s;
-	draw.x_s = data.y_s;
-	draw.color = check_color(data.color);
-	draw_(edit, &draw);
-}
-
-void						draw_text(t_edit *edit)
-{
-	int						x;
-	int						y;
-	int						i;
-	int						nb;
-
-	tmp = vert;
-	while (tmp && tmp->text != -1)
-		tmp = tmp->next;
-	if (tmp == NULL)
-		return (0);
-	return (1);
-}
-
-void						draw_text(t_edit *edit)
+void						edit_input(t_edit *edit)
 {
 	int		x;
 	int		y;
@@ -135,7 +52,7 @@ void						draw_text(t_edit *edit)
 	}
 }
 
-void			input_mode(t_input *in, t_edit *edit)
+void			edit_mode(t_input *in, t_edit *edit)
 {
 	int		minkey;
 	int		maxkey;
@@ -196,17 +113,21 @@ void			input_mode(t_input *in, t_edit *edit)
 	}
 }
 
+void			init_text(t_text *text)
+{
+	text->c_cursor = 0;
+	text->c_flag = 0;
+	text->c_trigger = 0;
+	text->content = NULL;
+}
+
 void			check_input(t_edit *edit, t_input *in)
 {
+	t_text		text;
+
+	init_text(&text);
 	if (in->key[SDL_SCANCODE_T] && edit->hl_sec)
 	{
-		if (edit->hl_vert)
-		{
-			if (edit->hl_vert->next)
-				edit->hl_vert->next->col = edit->hl_vert->next->oldcol;
-			else
-				edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
-		}
 		edit->hl_vert = NULL;
 		edit->input_flag = 1;
 		edit->input_trigger = 1;

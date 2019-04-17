@@ -3,17 +3,17 @@
 /*                                                              /             */
 /*   check.c                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 15:25:45 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 15:27:23 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 18:21:12 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-int				check_mapname(char *mapname)
+int			check_mapname(char *mapname)
 {
 	int		i;
 
@@ -31,4 +31,30 @@ int				check_mapname(char *mapname)
 	else
 		return (0);
 	return (1);
+}
+
+int			check_color(int c)
+{
+	if (c == 1)
+		return (RED);
+	else if (c == 2)
+		return (CYAN);
+	else if (c == 3)
+		return (GREEN);
+	else if (c == 4)
+		return (DARK);
+	else
+		return (WHITE);
+}
+
+char		*check_spe(int num)
+{
+	if (num == 10)
+		return (_CURSOR_);
+	else if (num == 11)
+		return (_EQUAL_);
+	else if (num == 12)
+		return (_SLASH_);
+	else
+		return (NULL);
 }

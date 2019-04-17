@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   hl_vec.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/14 16:43:02 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/14 16:49:20 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 18:00:35 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,7 +35,7 @@ void			hl_vec(t_edit *edit, t_input *in)
 	t_lis		*tmp;
 	t_point		point;
 
-	if (in->mouse[SDL_BUTTON_RIGHT] && edit->hl_sec && edit->input_trigger != 1)
+	if (in->mouse[SDL_BUTTON_RIGHT] && edit->hl_sec)
 	{
 		point.x = in->x;
 		point.y = in->y;
