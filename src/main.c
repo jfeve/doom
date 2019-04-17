@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 18:16:40 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 20:24:15 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,12 +20,18 @@ int				usage(void)
 	return (0);
 }
 
+void			init_content(t_edit *edit)
+{
+	edit->content = create_content();
+}
+
 int				init_edit(t_edit *edit)
 {
 	// edit->hud_flag = 0;
 	// edit->input_flag = 0;
 	// edit->input_cursor = 0;
 	// edit->input_trigger = 0;
+	init_content(edit);
 	edit->player = NULL;
 	edit->hl_sec = NULL;
 	edit->hl_vert = NULL;

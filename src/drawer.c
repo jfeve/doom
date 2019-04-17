@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 18:21:59 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 19:43:06 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 19:56:57 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,6 +32,7 @@ void			draw_square(t_edit *edit, t_draw *draw)
 void			draw_content(t_edit *content, t_draw *draw)
 {
 	int		x;
+	int		y;
 	int		nb;
 
 	draw->i = 0;

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 19:42:25 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 20:11:44 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -78,22 +78,6 @@ typedef struct					s_sdl
 	SDL_PixelFormat				*form;
 }								t_sdl;
 
-typedef struct					s_edit
-{
-	int							hud_flag;
-	int							nbsect;
-	int							hl;
-	int							sec;
-	int							err;
-	t_lis						*player;
-	t_lis						*vert;
-	t_sec						*sect;
-	t_sdl						sdl;
-	t_sec						*hl_sec;
-	t_lis						*hl_vert;
-	t_lis						*oldvert;
-}								t_edit;
-
 typedef	struct					s_draw
 {
 	char						*input;
@@ -107,6 +91,9 @@ typedef	struct					s_draw
 
 typedef	struct					s_content
 {
+	int							x;
+	int							y;
+	t_draw						draw;
 	int							display;
 	int							cursor;
 	int							trigger;
@@ -115,14 +102,22 @@ typedef	struct					s_content
 	struct s_content			*next;
 }								t_content;
 
-typedef	struct					s_text
+typedef struct					s_edit
 {
-	int							c_cursor;
-	int							c_flag;
-	int							c_trigger;
-	t_content					*content;
-	struct s_text				*next;
-}								t_text;
+	int							hud_flag;
+	int							nbsect;
+	int							hl;
+	int							sec;
+	int							err;
+	t_content					*con;
+	t_lis						*player;
+	t_lis						*vert;
+	t_sec						*sect;
+	t_sdl						sdl;
+	t_sec						*hl_sec;
+	t_lis						*hl_vert;
+	t_lis						*oldvert;
+}								t_edit;
 
 typedef	struct					s_bresen
 {

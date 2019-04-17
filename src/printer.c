@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/12 17:10:06 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 18:33:12 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 20:24:08 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,11 +20,10 @@ void			tadd_title(t_text *content)
 	return ;
 }
 
-void			tadd_content(t_text *content)
+t_content		create_content(void)
 {
-	if (content == NULL)
-		return ;
-	return ;
+	t_content	*content;
+	return (content);
 }
 
 void			tdisplay(t_edit *edit, t_text *content, t_draw *draw)
