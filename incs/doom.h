@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 17:43:00 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/17 19:05:06 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -194,11 +194,17 @@ void							input_mode(t_input *in, t_edit *edit);
 int					min(int a, int b);
 int					max(int a, int b);
 int					clamp(int a, int mi, int ma);
-int					vxs(t_point a, t_point b);
+int					vxs(int ax, int ay, int bx, int by);
+int					overlap(t_point a, t_point b);
+int					intersectbox(t_point a, t_point b, t_point c, t_point d);
+int					pointside(t_point p, t_point a, t_point b);
 
 float				f_max(float a, float b);
 float				f_min(float a, float b);
 float				f_clamp(float a, float mi, float ma);
-float				f_vxs(t_float a, t_float b);
+float				f_vxs(float ax, float ay, float bx, float by);
+int					f_overlap(t_float a, t_float b);
+int					f_intersectbox(t_float a, t_float b, t_float c, t_float d);
+float				f_pointside(t_float p, t_float a, t_float b);
 
 #endif
