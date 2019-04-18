@@ -6,15 +6,13 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/12 17:10:06 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 15:53:33 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 18:14:54 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-//fct pour remplir title ou content, j'ai essayer de faire modulaire, je dois retravailler dessus
-// Si on passe *edit, et un title et un content dirrectement, on peu remplir les deux sans check la size, en prenant le STRLen de chacune des chaine.
 void			fill_str_content(int size, char *ret, char *str)
 {
 	int			i;
