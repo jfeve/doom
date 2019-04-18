@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/12 17:10:06 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 15:53:33 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 19:24:09 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,7 +60,7 @@ void			add_content(t_edit *edit, char *cont, char *title, t_draw draw)
 	fill_str_content(2048, new->c_content, cont);
 	new->x = draw.x;
 	new->y = draw.y;
-	new->display = draw.i;
+	new->display = 0;
 	new->cursor = 0;
 	new->trigger = draw.i;
 	new->next = NULL;

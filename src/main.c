@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 17:43:17 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 19:25:56 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,9 +25,9 @@ void			init_content(t_edit *edit)
 	edit->con = create_content();
 	edit->con->x = WIN_W / 3;
 	edit->con->y = 35;
-	edit->con->display = 1;
+	edit->con->display = 0;
 	edit->con->cursor = 0;
-	edit->con->trigger = 0;
+	edit->con->trigger = 1;
 	fill_str_content(256, edit->con->c_title, "level editor ");
 	fill_str_content(2048, edit->con->c_content, "v1");
 }
@@ -36,6 +36,7 @@ int				init_edit(t_edit *edit)
 {
 	init_content(edit);
 	edit->player = NULL;
+	edit->dyn_trigger = 0;
 	edit->finish = NULL;
 	edit->hl_sec = NULL;
 	edit->hl_vert = NULL;

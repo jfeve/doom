@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 18:06:53 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 18:29:03 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -115,6 +115,7 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 	new_vert(edit, in);
 	portals(edit, in);
 	check_input(edit, in);
+	dyn_input(edit, in);
 	// input_mode(in, edit);
 	enem(edit, in);
 	obj(edit, in);

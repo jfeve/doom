@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:56:35 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 17:58:30 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 20:01:55 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,11 +15,7 @@
 
 void			put_zer_flag(t_edit *edit)
 {
-	if (edit)
-		return ;
-	return ;
-	// edit->input_flag = 0;
-	// edit->input_trigger = 0;
+	 edit->dyn_trigger = 0;
 }
 
 int				check_lis_input(t_lis *vert)
@@ -47,9 +43,7 @@ void			handle_after_vec(t_edit *edit)
 		edit->hl_sec->enem->col = BROWN;
 	}
 	else
-	{
 		put_zer_flag(edit);
-	}
 	edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
 	edit->hl_vert = NULL;
 }
@@ -61,7 +55,7 @@ void			handle_vec(t_edit *edit)
 	tmp = edit->hl_sec->vert;
 	while (tmp->next && tmp->text != -1)
 		tmp = tmp->next;
-	// tmp->text = edit->input_res;
+	tmp->text = edit->input_res;
 	if (tmp->next)
 	{
 		edit->hl_vert = tmp->next;
@@ -87,18 +81,17 @@ void			handle_res(t_edit *edit)
 
 	tmp = edit->hl_sec->vert;
 	if (edit->hl_sec->floor == -1)
-		return ;
-		// edit->hl_sec->floor = edit->input_res;
-	// else if (edit->hl_sec->ceil == -1)
-	// {
-	// 	// edit->hl_sec->ceil = edit->input_res;
-	// 	edit->hl_vert = edit->hl_sec->vert;
-	// 	edit->hl_vert->next->col = GREEN;
-	// }
-	// else if (check_lis_input(tmp))
-	// 	handle_vec(edit);
-	// else if (check_lis_input(edit->hl_sec->obj))
-	// 	handle_obj(edit);
-	// else if (check_lis_input(edit->hl_sec->enem))
-	// 	handle_enem(edit);
+		 edit->hl_sec->floor = edit->input_res;
+	 else if (edit->hl_sec->ceil == -1)
+	 {
+		 edit->hl_sec->ceil = edit->input_res;
+		 edit->hl_vert = edit->hl_sec->vert;
+		 edit->hl_vert->next->col = GREEN;
+	 }
+	 else if (check_lis_input(tmp))
+		 handle_vec(edit);
+	 else if (check_lis_input(edit->hl_sec->obj))
+		 handle_obj(edit);
+	 else if (check_lis_input(edit->hl_sec->enem))
+		 handle_enem(edit);
 }

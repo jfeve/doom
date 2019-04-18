@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 18:21:59 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 18:09:01 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 19:15:55 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,7 +57,7 @@ char			*get_content_char(int num)
 	else if (num == '\t' || num == ' ')
 		return ("\t\0");
 	else
-		return (NULL);
+		return (ft_strdup("\0"));
 }
 
 void			draw_content(t_edit *edit, t_draw *draw)
@@ -119,7 +119,6 @@ void		get_string(t_edit *edit, t_draw *draw)
 		return ;
 	while (tmp != NULL)
 	{
-		dprintf(1, "1\n");
 		len = (ft_strlen(tmp->c_title) + ft_strlen(tmp->c_content) + 2);
 		if ((draw->input = (char *)malloc(sizeof(char) * (len + 1))) == NULL)
 			return ;
