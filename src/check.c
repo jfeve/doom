@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 15:25:45 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 18:21:12 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 20:44:11 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -49,11 +49,11 @@ int			check_color(int c)
 
 char		*check_spe(int num)
 {
-	if (num == 10)
+	if (num == 74)
 		return (_CURSOR_);
-	else if (num == 11)
+	else if (num == 61)
 		return (_EQUAL_);
-	else if (num == 12)
+	else if (num == 47)
 		return (_SLASH_);
 	else
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/14 16:13:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 18:14:55 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 20:59:03 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,7 +20,7 @@ void			handle_obj(t_edit *edit)
 	tmp = edit->hl_sec->obj;
 	while (tmp->next && tmp->text != -1)
 		tmp = tmp->next;
-	// tmp->text = edit->input_res;
+	tmp->text = edit->input_res;
 	if (tmp->next)
 	{
 		tmp->next->oldcol = tmp->next->col;
@@ -47,7 +47,7 @@ void			handle_enem(t_edit *edit)
 	tmp = edit->hl_sec->enem;
 	while (tmp->next && tmp->text != -1)
 		tmp = tmp->next;
-	// tmp->text = edit->input_res;
+	tmp->text = edit->input_res;
 	if (tmp->next)
 	{
 		tmp->next->oldcol = tmp->next->col;

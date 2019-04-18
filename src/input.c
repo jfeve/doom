@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 20:23:54 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 21:06:37 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -137,10 +137,63 @@ void			free_dyn_content(t_content **con)
 	tmp->next = NULL;
 }
 
-//void			get_title(t_edit *edit, t_content *con)
-//{
+void			get_lis_num(t_content **con, t_lis *vert)
+{
+	t_content	*temp;
+	t_lis		*tmp;
+	int			i;
+	int			j;
+	char		*str;
 
-//}
+	tmp = vert;
+	i = 1;
+	j = 0;
+	temp = *con;
+	while (tmp && tmp->text != -1)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	if (tmp == NULL)
+		return ;
+	str = ft_itoa(i);
+	i = 0;
+	while (temp->c_title[j])
+		j++;
+	while (str[i])
+		temp->c_title[j++] = str[i++];
+	temp->c_title[j++] = ' ';
+	temp->c_title[j++] = '=';
+	temp->c_title[j++] = ' ';
+}
+
+void			get_title(t_edit *edit, t_content **con)
+{
+	t_sec		*hl;
+	t_content	*tmp;
+
+	hl = edit->hl_sec;
+	tmp = *con;
+	if (hl->floor == -1)
+		fill_str_content(256, tmp->c_title, FLOOR);
+	else if (hl->ceil == -1)
+		fill_str_content(256, tmp->c_title, CEIL);
+	else if (check_lis_input(hl->vert))
+	{
+		fill_str_content(256, tmp->c_title, VEC);
+		get_lis_num(&tmp, hl->vert);
+	}
+	else if (check_lis_input(hl->obj))
+	{
+		fill_str_content(256, tmp->c_title, OBJ);
+		get_lis_num(&tmp, hl->obj);
+	}
+	else if (check_lis_input(hl->enem))
+	{
+		fill_str_content(256, tmp->c_title, ENEM);
+		get_lis_num(&tmp, hl->enem);
+	}
+}
 
 void			dyn_input(t_edit *edit, t_input *in)
 {
@@ -161,7 +214,7 @@ void			dyn_input(t_edit *edit, t_input *in)
 	}
 	if (edit->dyn_trigger == 1 && tmp->display == 1)
 	{
-//		get_title(edit, tmp);
+		get_title(edit, &tmp);
 		if (in->key[SDL_SCANCODE_BACKSPACE])
 		{
 			if (tmp->cursor != 0)
@@ -205,6 +258,8 @@ void			check_input(t_edit *edit, t_input *in)
 
 	if (in->key[SDL_SCANCODE_T] && edit->hl_sec)
 	{
+		clear_hl_vec(edit->hl_sec);
+		edit->hl_vert = NULL;
 		in->key[SDL_SCANCODE_T] = SDL_FALSE;
 		add_content(edit, "", "floor = ", init_draw(600, HUD_BEGIN + 50, 1));
 		tmp = edit->con;
