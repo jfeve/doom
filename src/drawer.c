@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 18:21:59 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 16:27:23 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 18:09:01 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,6 +54,8 @@ char			*get_content_char(int num)
 		return (check_alpha3(num));
 	else if (check_spe(num) != NULL)
 		return (check_spe(num));
+	else if (num == '\t' || num == ' ')
+		return ("\t\0");
 	else
 		return (NULL);
 }
@@ -72,9 +74,8 @@ void			draw_content(t_edit *edit, t_draw *draw)
 	while (draw->input[draw->i] != '\0')
 	{
 		j = 0;
-		dprintf(1, "\n\n%s\n\n", get_content_char(draw->input[draw->i]));
-		return ;
-		tmp = (char*)malloc(sizeof(char) * 500);
+		tmp = (char*)malloc(sizeof(char) *
+			ft_strlen(get_content_char(draw->input[draw->i])));
 		if ((tmp = get_content_char((int)draw->input[draw->i])) == NULL)
 			return ;
 		while (tmp[j] != '\0')
@@ -94,6 +95,13 @@ void			draw_content(t_edit *edit, t_draw *draw)
 				draw->x = x;
 				draw->y += draw->y_s;
 			}
+			if (tmp[j + 1] == '\0')
+			{
+				x += 32;
+				draw->x = x;
+				draw->y = y;
+			}
+			j += 1;
 		}
 		draw->i += 1;
 	}
@@ -111,6 +119,7 @@ void		get_string(t_edit *edit, t_draw *draw)
 		return ;
 	while (tmp != NULL)
 	{
+		dprintf(1, "1\n");
 		len = (ft_strlen(tmp->c_title) + ft_strlen(tmp->c_content) + 2);
 		if ((draw->input = (char *)malloc(sizeof(char) * (len + 1))) == NULL)
 			return ;
@@ -118,7 +127,10 @@ void		get_string(t_edit *edit, t_draw *draw)
 		ft_strcat(draw->input, tmp->c_title);
 		ft_strcat(draw->input, tmp->c_content);
 		draw->input[len] = '.';
+		draw->x = tmp->x;
+		draw->y = tmp->y;
 		len = 0;
+		draw_content(edit, draw);
 		if (draw->input != NULL)
 			free(draw->input);
 		tmp = tmp->next;
@@ -129,10 +141,8 @@ void		prepare_draw(t_edit *edit)
 {
 	t_draw		draw;
 
-	get_string(edit, &draw);
-	dprintf(1, "\n\n\n%s\n\n\n", draw.input);
-	draw.y_s = 4;
-	draw.x_s = 2;
+	draw.y_s = 6;
+	draw.x_s = 5;
 	draw.color = WHITE;
-	draw_content(edit, &draw);
+	get_string(edit, &draw);
 }

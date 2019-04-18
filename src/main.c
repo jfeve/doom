@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 15:59:41 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 17:43:17 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,13 +23,13 @@ int				usage(void)
 void			init_content(t_edit *edit)
 {
 	edit->con = create_content();
-	edit->con->x = WIN_W / 2;
-	edit->con->y = WIN_H - 100;
+	edit->con->x = WIN_W / 3;
+	edit->con->y = 35;
 	edit->con->display = 1;
 	edit->con->cursor = 0;
 	edit->con->trigger = 0;
-	fill_str_content(256, edit->con->c_title, "Level Editor : ");
-	fill_str_content(2048, edit->con->c_content, "V2");
+	fill_str_content(256, edit->con->c_title, "level editor ");
+	fill_str_content(2048, edit->con->c_content, "v1");
 }
 
 int				init_edit(t_edit *edit)
@@ -57,13 +57,13 @@ void			get_update(t_edit *edit, t_input *in, char *mapname)
 	check_event(mapname, in, edit);
 	set_grid(edit);
 	hud(edit);
-	// draw_text(edit);
 	put_vert(edit, edit->vert);
 	draw_obj_enem(edit);
 	draw_vec(edit, *in);
 	draw_sec(edit);
 	if (edit->player)
 		draw_vert(edit->player, edit);
+	prepare_draw(edit);
 }
 
 void			level_editor(char *mapname)
