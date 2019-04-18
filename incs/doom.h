@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 15:33:34 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 19:37:17 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -105,6 +105,8 @@ typedef	struct					s_content
 typedef struct					s_edit
 {
 	int							hud_flag;
+	int							dyn_trigger;
+	int							input_res;
 	int							nbsect;
 	int							hl;
 	int							sec;
@@ -241,6 +243,8 @@ char							*check_alpha1(int num);
 char							*check_alpha2(int num);
 char							*check_alpha3(int num);
 
+
+void							dyn_input(t_edit *edit, t_input *in);
 void							fill_str_content(int size,
 										char *ret, char *str);
 t_draw							init_draw(int x, int y, int disp);

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 20:00:48 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 20:23:54 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -137,6 +137,11 @@ void			free_dyn_content(t_content **con)
 	tmp->next = NULL;
 }
 
+//void			get_title(t_edit *edit, t_content *con)
+//{
+
+//}
+
 void			dyn_input(t_edit *edit, t_input *in)
 {
 	t_content	*tmp;
@@ -156,6 +161,7 @@ void			dyn_input(t_edit *edit, t_input *in)
 	}
 	if (edit->dyn_trigger == 1 && tmp->display == 1)
 	{
+//		get_title(edit, tmp);
 		if (in->key[SDL_SCANCODE_BACKSPACE])
 		{
 			if (tmp->cursor != 0)

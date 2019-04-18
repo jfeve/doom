@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 17:12:13 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 20:20:59 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,4 +72,9 @@
 # define _X_ "21412\n21412\n311113\n21412\n214100\0"
 # define _Y_ "21312\n21312\n2111112\n414\n414\0"
 # define _Z_ "21111112\n712\n613\n514\n316\n21111112\0"
+# define FLOOR "floor = "
+# define CEIL "ceil = "
+# define VEC "vec "
+# define OBJ "obj "
+# define ENEM "enem "
 #endif
