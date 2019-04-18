@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/15 17:22:48 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 18:20:59 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 15:59:44 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,51 +15,51 @@
 
 char	*check_num(int num)
 {
-	if (num == 1)
-		return (_1_);
-	else if (num == 2)
-		return (_2_);
-	else if (num == 3)
-		return (_3_);
-	else if (num == 4)
-		return (_4_);
-	else if (num == 5)
-		return (_5_);
-	else if (num == 6)
-		return (_6_);
-	else if (num == 7)
-		return (_7_);
-	else if (num == 8)
-		return (_8_);
-	else if (num == 9)
-		return (_9_);
-	else if (num == 0)
+	if (num == 48)
 		return (_0_);
+	else if (num == 49)
+		return (_1_);
+	else if (num == 50)
+		return (_2_);
+	else if (num == 51)
+		return (_3_);
+	else if (num == 52)
+		return (_4_);
+	else if (num == 53)
+		return (_5_);
+	else if (num == 54)
+		return (_6_);
+	else if (num == 55)
+		return (_7_);
+	else if (num == 56)
+		return (_8_);
+	else if (num == 57)
+		return (_9_);
 	else
 		return (0);
 }
 
 char	*check_alpha1(int num)
 {
-	if (num == 13)
+	if (num == 97)
 		return (_A_);
-	else if (num == 14)
+	else if (num == 98)
 		return (_B_);
-	else if (num == 15)
+	else if (num == 99)
 		return (_C_);
-	else if (num == 16)
+	else if (num == 100)
 		return (_D_);
-	else if (num == 17)
+	else if (num == 101)
 		return (_E_);
-	else if (num == 18)
+	else if (num == 102)
 		return (_F_);
-	else if (num == 19)
+	else if (num == 103)
 		return (_G_);
-	else if (num == 20)
+	else if (num == 104)
 		return (_H_);
-	else if (num == 21)
+	else if (num == 105)
 		return (_I_);
-	else if (num == 22)
+	else if (num == 106)
 		return (_J_);
 	else
 		return (0);
@@ -67,25 +67,25 @@ char	*check_alpha1(int num)
 
 char	*check_alpha2(int num)
 {
-	if (num == 23)
+	if (num == 107)
 		return (_K_);
-	else if (num == 24)
+	else if (num == 108)
 		return (_L_);
-	else if (num == 25)
+	else if (num == 109)
 		return (_M_);
-	else if (num == 26)
+	else if (num == 110)
 		return (_N_);
-	else if (num == 27)
+	else if (num == 111)
 		return (_O_);
-	else if (num == 28)
+	else if (num == 112)
 		return (_P_);
-	else if (num == 29)
+	else if (num == 113)
 		return (_Q_);
-	else if (num == 30)
+	else if (num == 114)
 		return (_R_);
-	else if (num == 31)
+	else if (num == 115)
 		return (_S_);
-	else if (num == 32)
+	else if (num == 116)
 		return (_T_);
 	else
 		return (0);
@@ -93,17 +93,17 @@ char	*check_alpha2(int num)
 
 char	*check_alpha3(int num)
 {
-	if (num == 23)
+	if (num == 117)
 		return (_U_);
-	else if (num == 24)
+	else if (num == 118)
 		return (_V_);
-	else if (num == 25)
+	else if (num == 119)
 		return (_W_);
-	else if (num == 26)
+	else if (num == 120)
 		return (_X_);
-	else if (num == 27)
+	else if (num == 121)
 		return (_Y_);
-	else if (num == 28)
+	else if (num == 122)
 		return (_Z_);
 	else
 		return (0);
