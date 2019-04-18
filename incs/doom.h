@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 22:54:57 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 15:33:34 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -111,6 +111,7 @@ typedef struct					s_edit
 	int							err;
 	t_content					*con;
 	t_lis						*player;
+	t_lis						*finish;
 	t_lis						*vert;
 	t_sec						*sect;
 	t_sdl						sdl;
@@ -240,12 +241,15 @@ char							*check_alpha1(int num);
 char							*check_alpha2(int num);
 char							*check_alpha3(int num);
 
-void							fill_str_content(int size, char *ret, char *str);
+void							fill_str_content(int size,
+										char *ret, char *str);
 t_draw							init_draw(int x, int y, int disp);
 t_content						*create_content(void);
-void							add_content(t_edit *edit, char *cont, char *title, t_draw draw);
+void							add_content(t_edit *edit, char *cont,
+										char *title, t_draw draw);
 void							edit_input(t_edit *edit);
-
+void							prepare_draw(t_edit *edit);
+void							get_string(t_edit *edit, t_draw *draw);
 /*
 **char							*check_num(int num);
 **char							*check_spe(int num);
