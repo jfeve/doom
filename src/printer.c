@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/12 17:10:06 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 16:02:00 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 15:53:33 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,38 +21,17 @@ void			fill_str_content(int size, char *ret, char *str)
 
 	i = 0;
 	if (!*str)
-	{
-		if (size == 2048)
-		{
-			while (i < size)
-				ret[i++] = '\0';
-		}
-		else if (size == 256)
-			while (i < size)
-				ret[i++] = '\0';
-	}
+		while (i < size)
+			ret[i++] = '\0';
 	else
 	{
-		if (size == 2048)
+		while (str[i] && i < size)
 		{
-			while (str[i] && i < size)
-			{
-				ret[i] = str[i];
-				i++;
-			}
-			while (i < size)
-				ret[i++] = '\0';
+			ret[i] = str[i];
+			i++;
 		}
-		else if (size == 256)
-		{
-			while (str[i] && i < size)
-			{
-				ret[i] = str[i];
-				i++;
-			}
-			while (i < size)
-				ret[i++] = '\0';
-		}
+		while (i < size)
+			ret[i++] = '\0';
 	}
 }
 
