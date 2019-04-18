@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 18:29:03 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 21:22:45 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -96,16 +96,6 @@ void			settings_event(t_edit *edit, t_input *in)
 
 void			check_event(char *mapname, t_input *in, t_edit *edit)
 {
-	if (in->key[SDL_SCANCODE_D])
-	{
-		add_content(edit, "testcontent ", "testtitle  ", init_draw(WIN_W / 2, WIN_H / 2, 1));
-		in->key[SDL_SCANCODE_D] = SDL_FALSE;
-	}
-	if (in->key[SDL_SCANCODE_X])
-	{
-		add_content(edit, "tesqwdqdwtent ", "tqwdtle  ", init_draw(WIN_W / 3, WIN_H / 2, 1));
-		in->key[SDL_SCANCODE_X] = SDL_FALSE;
-	}
 	print_info(edit, in);
 	settings_event(edit, in);
 	cancels(edit, in);
@@ -116,7 +106,6 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 	portals(edit, in);
 	check_input(edit, in);
 	dyn_input(edit, in);
-	// input_mode(in, edit);
 	enem(edit, in);
 	obj(edit, in);
 	create_player(edit, in);

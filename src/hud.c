@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:29:02 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 15:29:22 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 22:14:47 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,27 +34,16 @@ void			set_grid(t_edit *edit)
 
 void			hud_hl(t_edit *edit)
 {
-	int			x;
-	int			y;
+	t_content	*con;
 
-	x = 250;
-	y = 880;
-	while (x < 350)
+	con = edit->con;
+	while (ft_strcmp(con->c_title, HL_SET_TUTO) != 0 && con)
 	{
-		edit->sdl.pix[y * WIN_W + x] = 0xFF0000FF;
-		x++;
-		y++;
+		if (ft_strcmp(con->c_title, TUTO) == 0)
+			con->trigger = 0;
+		con = con->next;
 	}
-	while (x >= 250)
-	{
-		edit->sdl.pix[y * WIN_W + x] = 0xFF0000FF;
-		x--;
-	}
-	while (y > 880)
-	{
-		edit->sdl.pix[y * WIN_W + x] = 0xFF0000FF;
-		y--;
-	}
+	con->trigger = 1;
 }
 
 void			hud_vert(t_edit *edit)
@@ -104,6 +93,23 @@ void			grey_hud(t_edit *edit)
 	}
 }
 
+void			set_tuto(t_edit *edit, char *s1, char *s2)
+{
+	t_content	*tmp;
+
+	tmp = edit->con;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->c_title, s2) == 0)
+			tmp->trigger = 0;
+		tmp = tmp->next;
+	}
+	tmp = edit->con;
+	while (tmp && ft_strcmp(tmp->c_title, s1) != 0)
+		tmp = tmp->next;
+	tmp->trigger = 1;
+}
+
 void			hud(t_edit *edit)
 {
 	int x;
@@ -123,6 +129,8 @@ void			hud(t_edit *edit)
 	grey_hud(edit);
 	if (edit->hud_flag == 1)
 		hud_vert(edit);
-	if (edit->hud_flag == 2)
+	else if (edit->hud_flag == 2)
 		hud_hl(edit);
+	else
+		set_tuto(edit, TUTO, HL_SET_TUTO);
 }

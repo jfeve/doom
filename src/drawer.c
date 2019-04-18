@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 18:21:59 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 19:15:55 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 21:35:17 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -119,19 +119,22 @@ void		get_string(t_edit *edit, t_draw *draw)
 		return ;
 	while (tmp != NULL)
 	{
-		len = (ft_strlen(tmp->c_title) + ft_strlen(tmp->c_content) + 2);
-		if ((draw->input = (char *)malloc(sizeof(char) * (len + 1))) == NULL)
-			return ;
-		draw->input[0] = '\0';
-		ft_strcat(draw->input, tmp->c_title);
-		ft_strcat(draw->input, tmp->c_content);
-		draw->input[len] = '.';
-		draw->x = tmp->x;
-		draw->y = tmp->y;
-		len = 0;
-		draw_content(edit, draw);
-		if (draw->input != NULL)
-			free(draw->input);
+		if (tmp->trigger == 1)
+		{
+			len = (ft_strlen(tmp->c_title) + ft_strlen(tmp->c_content) + 2);
+			if ((draw->input = (char *)malloc(sizeof(char) * (len + 1))) == NULL)
+				return ;
+			draw->input[0] = '\0';
+			ft_strcat(draw->input, tmp->c_title);
+			ft_strcat(draw->input, tmp->c_content);
+			draw->input[len] = '.';
+			draw->x = tmp->x;
+			draw->y = tmp->y;
+			len = 0;
+			draw_content(edit, draw);
+			if (draw->input != NULL)
+				free(draw->input);
+		}
 		tmp = tmp->next;
 	}
 }

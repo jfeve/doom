@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 19:25:56 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 21:35:39 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,6 +35,9 @@ void			init_content(t_edit *edit)
 int				init_edit(t_edit *edit)
 {
 	init_content(edit);
+	add_content(edit, "", TUTO, init_draw(10, 950, 1));
+	add_content(edit, "", HL_SET_TUTO, init_draw(100, 950, 0));
+	add_content(edit, "", HL_TUTO, init_draw(100, 950, 0));
 	edit->player = NULL;
 	edit->dyn_trigger = 0;
 	edit->finish = NULL;
