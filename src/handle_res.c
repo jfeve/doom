@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:56:35 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 20:58:05 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/19 18:17:28 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 void			put_zer_flag(t_edit *edit)
 {
-	 edit->dyn_trigger = 0;
+	edit->dyn_trigger = 0;
 }
 
 int				check_lis_input(t_lis *vert)
@@ -81,17 +81,17 @@ void			handle_res(t_edit *edit)
 
 	tmp = edit->hl_sec->vert;
 	if (edit->hl_sec->floor == -1)
-		 edit->hl_sec->floor = edit->input_res;
-	 else if (edit->hl_sec->ceil == -1)
-	 {
-		 edit->hl_sec->ceil = edit->input_res;
-		 edit->hl_vert = edit->hl_sec->vert;
-		 edit->hl_vert->next->col = GREEN;
-	 }
-	 else if (check_lis_input(tmp))
-		 handle_vec(edit);
-	 else if (check_lis_input(edit->hl_sec->obj))
-		 handle_obj(edit);
-	 else if (check_lis_input(edit->hl_sec->enem))
-		 handle_enem(edit);
+		edit->hl_sec->floor = edit->input_res;
+	else if (edit->hl_sec->ceil == -1)
+	{
+		edit->hl_sec->ceil = edit->input_res;
+		edit->hl_vert = edit->hl_sec->vert;
+		edit->hl_vert->next->col = GREEN;
+	}
+	else if (check_lis_input(tmp))
+		handle_vec(edit);
+	else if (check_lis_input(edit->hl_sec->obj))
+		handle_obj(edit);
+	else if (check_lis_input(edit->hl_sec->enem))
+		handle_enem(edit);
 }

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 20:47:52 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/19 18:22:15 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -242,26 +242,33 @@ char							*check_num(int num);
 char							*check_alpha1(int num);
 char							*check_alpha2(int num);
 char							*check_alpha3(int num);
+void							draw_square(t_edit *edit, t_draw *draw);
+void							prepare_draw(t_edit *edit);
+t_draw							init_draw(int x, int y, int disp);
+void							draw_norm(t_draw *cnt, t_draw *draw,
+										t_edit *ed, char *tmp);
+void							draw_checks(char c, t_draw *cnt, t_draw *draw);
 
-
+/*
+** Contents
+*/
 void							dyn_input(t_edit *edit, t_input *in);
 void							fill_str_content(int size,
 										char *ret, char *str);
-t_draw							init_draw(int x, int y, int disp);
 t_content						*create_content(void);
 void							add_content(t_edit *edit, char *cont,
 										char *title, t_draw draw);
-void							edit_input(t_edit *edit);
-void							prepare_draw(t_edit *edit);
-void							get_string(t_edit *edit, t_draw *draw);
 /*
-**char							*check_num(int num);
-**char							*check_spe(int num);
-**void							draw_num(t_edit *edit, t_draw data, int num);
-**void							draw_(t_edit *edit, t_draw *draw);
-**t_draw							write_num(int x, int y, int col);
+** Live Input
 */
-
-
+void							edit_input(t_edit *edit);
+void							get_string(t_edit *edit, t_draw *draw);
+char							*get_content_char(int num);
+void							level_editor(char *mapname);
+int								init_edit(t_edit *edit);
+void							get_update(t_edit *edit,
+									t_input *in, char *mapname);
+void							init_content(t_edit *edit);
+void							hud_hl(t_edit *edit);
 
 #endif

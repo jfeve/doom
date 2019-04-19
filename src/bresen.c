@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:26:28 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/15 19:38:20 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/19 18:17:49 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,7 +71,7 @@ static	void		do_global(t_bresen *brs)
 		do_6(brs);
 }
 
-void			bresen(t_lis a, t_lis b, t_sdl *sdl)
+void				bresen(t_lis a, t_lis b, t_sdl *sdl)
 {
 	t_bresen	brs;
 

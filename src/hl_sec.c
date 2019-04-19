@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 04:44:01 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 17:58:40 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/19 18:14:50 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,8 +41,6 @@ void			check_hl_mode(t_edit *edit, t_input *in)
 		in->key[SDL_SCANCODE_H] = SDL_FALSE;
 		if (edit->hl == 0)
 			edit->hl++;
-		// else if (edit->hl == 2 && edit->input_trigger != 1)
-			// edit->hl = 0;
 		else if (edit->hl == 1)
 			edit->hl--;
 		if (edit->hl % 2 == 0 && edit->hl != 2)

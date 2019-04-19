@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 13:45:34 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/19 18:20:29 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -104,7 +104,7 @@ int						map_writer(char *mapname, t_edit *edit)
 	}
 }
 
-int		save_map(t_input *in, char *mapname, t_edit *edit)
+int							save_map(t_input *in, char *mapname, t_edit *edit)
 {
 	if (in->key[SDL_SCANCODE_S])
 	{

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 21:06:37 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/19 17:52:18 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -229,7 +229,7 @@ void			dyn_input(t_edit *edit, t_input *in)
 			edit->input_res = ft_atoi(tmp->c_content);
 			handle_res(edit);
 			while (tmp->cursor > 0)
-			tmp->c_content[--tmp->cursor] = '\0';
+				tmp->c_content[--tmp->cursor] = '\0';
 			in->key[SDL_SCANCODE_KP_ENTER] = SDL_FALSE;
 		}
 		while (i <= maxkey)
@@ -251,7 +251,6 @@ void			dyn_input(t_edit *edit, t_input *in)
 	}
 }
 
-//cree un maillon content avec trigger = 1 si T appuyer 
 void			check_input(t_edit *edit, t_input *in)
 {
 	t_content	*tmp;
