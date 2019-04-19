@@ -60,49 +60,53 @@ char			*get_content_char(int num)
 		return (ft_strdup("\0"));
 }
 
+void			draw_norm(t_draw *cnt, t_draw *draw, t_edit *ed, char *tmp)
+{
+	int			nb;
+
+	cnt->i = 0;
+	while (tmp[cnt->i] != '\0')
+	{
+		nb = tmp[cnt->i] - 48;
+		if (tmp[cnt->i] == '1')
+		{
+			draw->x += draw->x_s;
+			draw_square(ed, draw);
+		}
+		if (tmp[cnt->i] != '1' && tmp[cnt->i] != '0')
+			draw->x += (draw->x_s * nb);
+		if (tmp[cnt->i] != '1' && tmp[cnt->i] == '0')
+			draw->x += draw->x_s;
+		else if (tmp[cnt->i] == '\n')
+		{
+			draw->x = cnt->x;
+			draw->y += draw->y_s;
+		}
+		if (tmp[cnt->i + 1] == '\0')
+		{
+			cnt->x += 45;
+			draw->x = cnt->x;
+			draw->y = cnt->y;
+		}
+		cnt->i += 1;
+	}
+}
+
 void			draw_content(t_edit *edit, t_draw *draw)
 {
-	int		x;
-	int		y;
-	int		nb;
-	int		j;
-	char	*tmp;
+	t_draw		cnt;
+	char		*tmp;
 
 	draw->i = 0;
-	x = draw->x;
-	y = draw->y;
+	cnt.x = draw->x;
+	cnt.y = draw->y;
 	while (draw->input[draw->i] != '\0')
 	{
-		j = 0;
 		tmp = (char*)malloc(sizeof(char) *
 			ft_strlen(get_content_char(draw->input[draw->i])));
 		if ((tmp = get_content_char((int)draw->input[draw->i])) == NULL)
 			return ;
-		while (tmp[j] != '\0')
-		{
-			nb = tmp[j] - 48;
-			if (tmp[j] == '1')
-			{
-				draw->x += draw->x_s;
-				draw_square(edit, draw);
-			}
-			if (tmp[j] != '1' && tmp[j] != '0')
-				draw->x += (draw->x_s * nb);
-			if (tmp[j] != '1' && tmp[j] == '0')
-				draw->x += draw->x_s;
-			else if (tmp[j] == '\n')
-			{
-				draw->x = x;
-				draw->y += draw->y_s;
-			}
-			if (tmp[j + 1] == '\0')
-			{
-				x += 32;
-				draw->x = x;
-				draw->y = y;
-			}
-			j += 1;
-		}
+		draw_norm(&cnt, draw, edit, tmp);
 		draw->i += 1;
 	}
 }
