@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 17:52:18 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/20 16:41:11 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -193,6 +193,8 @@ void			get_title(t_edit *edit, t_content **con)
 		fill_str_content(256, tmp->c_title, ENEM);
 		get_lis_num(&tmp, hl->enem);
 	}
+	else
+		return ;
 }
 
 void			dyn_input(t_edit *edit, t_input *in)
@@ -203,15 +205,13 @@ void			dyn_input(t_edit *edit, t_input *in)
 	int		maxkey;
 	char	c;
 
-	i = 89;
+	i = 48;
 	maxkey = 98;
 	tmp = edit->con;
 	while (tmp->next && tmp->display == 0)
 		tmp = tmp->next;
 	if (edit->dyn_trigger == 0 && tmp->display == 1)
-	{
 		free_dyn_content(&edit->con);
-	}
 	if (edit->dyn_trigger == 1 && tmp->display == 1)
 	{
 		get_title(edit, &tmp);
@@ -224,13 +224,15 @@ void			dyn_input(t_edit *edit, t_input *in)
 			}
 			in->key[SDL_SCANCODE_BACKSPACE] = SDL_FALSE;
 		}
-		if (in->key[SDL_SCANCODE_KP_ENTER])
+		if (in->key[SDL_SCANCODE_KP_ENTER] || in->key[SDL_SCANCODE_RETURN])
 		{
 			edit->input_res = ft_atoi(tmp->c_content);
 			handle_res(edit);
 			while (tmp->cursor > 0)
 				tmp->c_content[--tmp->cursor] = '\0';
-			in->key[SDL_SCANCODE_KP_ENTER] = SDL_FALSE;
+			in->key[(in->key[SDL_SCANCODE_RETURN] ||
+				in->key[SDL_SCANCODE_KP_ENTER] ? SDL_SCANCODE_RETURN
+					: SDL_SCANCODE_KP_ENTER)] = SDL_FALSE;
 		}
 		while (i <= maxkey)
 		{
