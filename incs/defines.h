@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 17:59:35 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/20 16:27:18 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,6 +33,7 @@
 # define PURPLE 0x8820E8FF
 # define BROWN 0x673415FF
 # define GREEN 0x00A800FF
+# define YELLOW 0xFFFF4DFF
 # define _0_ "311113\n211312\n2101212\n2101212\n2121012\n213112\n311113\0"
 # define _1_ "514\n211114\n514\n514\n514\n514\n21111112\0"
 # define _2_ "31114\n21313\n514\n415\n316\n217\n2111113\0"
@@ -45,7 +46,7 @@
 # define _9_ "311113\n21412\n21412\n3111112\n712\n21412\n311113\0"
 # define _CURSOR_ "65\n515\n515\n515\n515\n515\n515\n65\0"
 # define _EQUAL_ "82\n82\n0111111110\n82\n82\n0111111110\n82\n82\0"
-# define _SLASH_ "82\n7110\n0000001100\n5113\n4114\n3115\n2116\n0117\n82\0"
+# define _SLASH_ "82\n7100\n0000001000\n5103\n4104\n3105\n2106\n0107\n82\0"
 # define _A_ "28\n28\n311113\n21412\n21111112\n21412\n21412\n28\0"
 # define _B_ "28\n28\n2111113\n21412\n2111113\n21412\n2111113\n28\0"
 # define _C_ "28\n28\n3111112\n217\n217\n217\n3111112\n28\0"
@@ -65,19 +66,20 @@
 # define _Q_ "28\n28\n311113\n21412\n21412\n2121112\n3111112\n28\0"
 # define _R_ "28\n28\n2111113\n21412\n2111113\n21412\n21510\n28\0"
 # define _S_ "28\n28\n3111112\n217\n311113\n712\n2111113\n28\0"
-# define _T_ "28\n28\n21111112\n4114\n4114\n4114\n4114\n28\0"
+# define _T_ "8\n8\n21111102\n414\n414\n414\n414\n8\0"
 # define _U_ "28\n28\n21412\n21412\n21412\n21412\n211111100\n28\0"
 # define _V_ "28\n28\n21412\n21412\n21412\n2112112\n4114\n28\0"
 # define _W_ "28\n28\n21412\n21412\n21412\n21011012\n31213\n28\0"
 # define _X_ "28\n28\n21412\n21412\n311113\n21412\n214100\n28\0"
 # define _Y_ "28\n28\n21312\n21312\n2111112\n414\n414\n28\0"
 # define _Z_ "28\n28\n21111112\n712\n613\n514\n316\n21111112\n28\0"
-# define TUTO "l click = vertex / h = highlight;\0"
-# define HL_SET_TUTO "left/right = move / enter = select;\0"
+# define _COMMA_ "28\n28\n28\n28\n415\n415\n316\n28\n28\0"
+# define TUTO "l click = vertex / h = highlight\0"
+# define HL_SET_TUTO "left/right = change sector / enter = select\0"
 # define FLOOR "floor = \0"
 # define CEIL "ceil = \0"
 # define VEC "vec \0"
 # define OBJ "obj \0"
 # define ENEM "enem \0"
-# define HL_TUTO "o = obj / e = enem / z = cancel obj / x = cancel enem;\0"
+# define HL_TUTO "o = obj / e = enem / z = cancel obj / x = cancel enem\0"
 #endif

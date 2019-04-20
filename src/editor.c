@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/19 18:18:31 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 18:18:58 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/20 14:42:45 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,8 +44,8 @@ int				init_edit(t_edit *edit)
 	add_content(edit, "", HL_SET_TUTO, init_draw(100, 950, 0));
 	add_content(edit, "", HL_TUTO, init_draw(100, 950, 0));
 	edit->player = NULL;
-	edit->dyn_trigger = 0;
 	edit->finish = NULL;
+	edit->dyn_trigger = 0;
 	edit->hl_sec = NULL;
 	edit->hl_vert = NULL;
 	edit->nbsect = 0;

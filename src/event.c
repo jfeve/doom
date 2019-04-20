@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 18:35:10 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/20 14:50:33 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,27 +55,6 @@ void			switch_highlight(t_input *in, t_edit *edit)
 	}
 }
 
-void			create_player(t_edit *edit, t_input *in)
-{
-	if (in->key[SDL_SCANCODE_J] && edit->hl_sec)
-	{
-		in->key[SDL_SCANCODE_J] = SDL_FALSE;
-		if (!edit->player)
-		{
-			edit->player = create_vert(in->x, in->y);
-			edit->player->col = SKYBLUE;
-			edit->player->text = edit->hl_sec->id;
-		}
-		else if (edit->player->x != arr(in->x) && edit->player->y != arr(in->y))
-		{
-			free(edit->player);
-			edit->player = create_vert(in->x, in->y);
-			edit->player->col = SKYBLUE;
-			edit->player->text = edit->hl_sec->id;
-		}
-	}
-}
-
 void			settings_event(t_edit *edit, t_input *in)
 {
 	if (in->key[SDL_SCANCODE_R])
@@ -109,5 +88,6 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 	enem(edit, in);
 	obj(edit, in);
 	create_player(edit, in);
+	create_finish(edit, in);
 	save_map(in, mapname, edit);
 }

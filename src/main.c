@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 18:18:43 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/20 14:46:49 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,6 +45,8 @@ void			get_update(t_edit *edit, t_input *in, char *mapname)
 	draw_sec(edit);
 	if (edit->player)
 		draw_vert(edit->player, edit);
+	if (edit->finish)
+		draw_vert(edit->finish, edit);
 	prepare_draw(edit);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 15:25:45 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 20:44:11 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/20 16:25:01 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,6 +55,10 @@ char		*check_spe(int num)
 		return (_EQUAL_);
 	else if (num == 47)
 		return (_SLASH_);
+	else if (num == ',')
+		return (_COMMA_);
+	else if (num == ' ')
+		return ("\t\0");
 	else
-		return (NULL);
+		return ("\0");
 }

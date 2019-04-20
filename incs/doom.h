@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 18:22:15 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/20 14:51:16 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -140,6 +140,9 @@ void							new_vert(t_edit *edit, t_input *in);
 void							update_event(t_input *in);
 void							check_event(char *mapname,
 									t_input *in, t_edit *edit);
+void							create_player(t_edit *edit, t_input *in);
+void							create_finish(t_edit *edit, t_input *in);
+
 
 /*
 ** SDL

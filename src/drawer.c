@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 18:21:59 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 18:16:16 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/20 15:35:22 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,13 +21,18 @@ void			draw_content(t_edit *edit, t_draw *draw)
 	draw->i = 0;
 	cnt.x = draw->x;
 	cnt.y = draw->y;
-	while (draw->input[draw->i] != '\0')
+	while (draw->input[draw->i])
 	{
 		tmp = (char*)malloc(sizeof(char) *
 			ft_strlen(get_content_char(draw->input[draw->i])));
 		if ((tmp = get_content_char((int)draw->input[draw->i])) == NULL)
 			return ;
+		if (ft_isdigit(draw->input[draw->i]))
+			draw->color = RED;
+		else
+			draw->color = WHITE;
 		draw_norm(&cnt, draw, edit, tmp);
+		free(&tmp);
 		draw->i += 1;
 	}
 }
@@ -58,7 +63,6 @@ void			get_string(t_edit *edit, t_draw *draw)
 					malloc(sizeof(char) * (len + 1))) == NULL)
 				return ;
 			draw->input[0] = '\0';
-			draw->input[len] = '.';
 			norm_string(tmp, draw);
 			len = 0;
 			draw_content(edit, draw);
@@ -73,8 +77,8 @@ void			prepare_draw(t_edit *edit)
 {
 	t_draw		draw;
 
-	draw.y_s = 4;
-	draw.x_s = 3;
+	draw.y_s = 3;
+	draw.x_s = 2;
 	draw.color = WHITE;
 	get_string(edit, &draw);
 }
