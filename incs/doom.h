@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/20 14:51:16 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/21 22:06:15 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -255,6 +255,10 @@ void							draw_checks(char c, t_draw *cnt, t_draw *draw);
 /*
 ** Contents
 */
+void							dyn_enter(t_edit *edit, t_input *in, t_content *tmp);
+void							check_keyboard(t_input *in, t_content *tmp);
+void							get_title(t_edit *edit, t_content **con);
+void							free_dyn_content(t_content **con);
 void							dyn_input(t_edit *edit, t_input *in);
 void							fill_str_content(int size,
 										char *ret, char *str);

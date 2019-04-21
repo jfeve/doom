@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/19 18:18:31 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/20 14:42:45 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/21 19:51:32 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,9 +40,9 @@ void			level_editor(char *mapname)
 int				init_edit(t_edit *edit)
 {
 	init_content(edit);
-	add_content(edit, "", TUTO, init_draw(10, 950, 1));
-	add_content(edit, "", HL_SET_TUTO, init_draw(100, 950, 0));
-	add_content(edit, "", HL_TUTO, init_draw(100, 950, 0));
+	add_content(edit, TUTO, "create : \n", init_draw(10, 930, 1));
+	add_content(edit, HL_SET_TUTO, "explore : \n", init_draw(10, 930, 0));
+	add_content(edit, HL_TUTO, "highlight : \n", init_draw(10, 930, 0));
 	edit->player = NULL;
 	edit->finish = NULL;
 	edit->dyn_trigger = 0;

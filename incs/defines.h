@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/20 16:27:18 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/21 20:30:12 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,6 +46,7 @@
 # define _9_ "311113\n21412\n21412\n3111112\n712\n21412\n311113\0"
 # define _CURSOR_ "65\n515\n515\n515\n515\n515\n515\n65\0"
 # define _EQUAL_ "82\n82\n0111111110\n82\n82\n0111111110\n82\n82\0"
+# define _POINT_ "82\n82\n0000110000\n82\n82\n0000110000\n82\n82\0"
 # define _SLASH_ "82\n7100\n0000001000\n5103\n4104\n3105\n2106\n0107\n82\0"
 # define _A_ "28\n28\n311113\n21412\n21111112\n21412\n21412\n28\0"
 # define _B_ "28\n28\n2111113\n21412\n2111113\n21412\n2111113\n28\0"
@@ -76,10 +77,10 @@
 # define _COMMA_ "28\n28\n28\n28\n415\n415\n316\n28\n28\0"
 # define TUTO "l click = vertex / h = highlight\0"
 # define HL_SET_TUTO "left/right = change sector / enter = select\0"
+# define HL_TUTO "o = obj / e = enem / zx = cancel obj/enem / t = input mode\0"
 # define FLOOR "floor = \0"
 # define CEIL "ceil = \0"
 # define VEC "vec \0"
 # define OBJ "obj \0"
 # define ENEM "enem \0"
-# define HL_TUTO "o = obj / e = enem / z = cancel obj / x = cancel enem\0"
 #endif

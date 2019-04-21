@@ -6,14 +6,25 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 18:21:59 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/20 15:35:22 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/21 19:55:21 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			draw_content(t_edit *edit, t_draw *draw)
+void			check_newline(t_draw *draw, t_content *temp, t_draw *cnt)
+{
+	if (draw->input[draw->i] == '\n')
+	{
+		draw->x = temp->x;
+		draw->y = temp->y + (10 * draw->y_s);
+		cnt->x = draw->x;
+		cnt->y = draw->y;
+	}
+}
+
+void			draw_content(t_edit *edit, t_content *temp, t_draw *draw)
 {
 	t_draw		cnt;
 	char		*tmp;
@@ -23,6 +34,7 @@ void			draw_content(t_edit *edit, t_draw *draw)
 	cnt.y = draw->y;
 	while (draw->input[draw->i])
 	{
+		check_newline(draw, temp, &cnt);
 		tmp = (char*)malloc(sizeof(char) *
 			ft_strlen(get_content_char(draw->input[draw->i])));
 		if ((tmp = get_content_char((int)draw->input[draw->i])) == NULL)
@@ -65,7 +77,7 @@ void			get_string(t_edit *edit, t_draw *draw)
 			draw->input[0] = '\0';
 			norm_string(tmp, draw);
 			len = 0;
-			draw_content(edit, draw);
+			draw_content(edit, tmp, draw);
 			if (draw->input != NULL)
 				free(draw->input);
 		}

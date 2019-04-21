@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 04:44:01 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 18:14:50 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/21 19:14:55 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,6 +43,8 @@ void			check_hl_mode(t_edit *edit, t_input *in)
 			edit->hl++;
 		else if (edit->hl == 1)
 			edit->hl--;
+		else if (edit->hl == 2 && edit->dyn_trigger == 0)
+			edit->hl = 0;
 		if (edit->hl % 2 == 0 && edit->hl != 2)
 		{
 			edit->hud_flag = 0;

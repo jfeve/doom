@@ -6,12 +6,27 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 15:03:25 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 21:01:25 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/21 21:59:29 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+void			free_dyn_content(t_content **con)
+{
+	t_content	*tmp;
+
+	tmp = *con;
+	while (tmp->next)
+	{
+		if (tmp->next->next == NULL)
+			break ;
+		tmp = tmp->next;
+	}
+	free(tmp->next);
+	tmp->next = NULL;
+}
 
 void			cancel_last(t_lis **vert)
 {

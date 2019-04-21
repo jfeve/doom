@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/12 17:10:06 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 18:14:54 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/21 19:25:58 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,12 +62,6 @@ void			add_content(t_edit *edit, char *cont, char *title, t_draw draw)
 	new->cursor = 0;
 	new->trigger = draw.i;
 	new->next = NULL;
-}
-
-void			tdisplay(t_edit *edit, t_draw *draw)
-{
-	if (edit == NULL || draw == NULL)
-		return ;
 }
 
 t_draw			set_printd(int x, int y, t_draw settings)

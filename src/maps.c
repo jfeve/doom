@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 18:20:29 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/21 22:19:21 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,13 +41,12 @@ static	int				putinfo_head(int fd, t_edit *edit,
 		return (0);
 }
 
-static	int				putinfo_sector(int fd, t_edit *edit,
-		unsigned short count_sect)
+static	int				putinfo_sector(int fd, t_edit *edit)
 {
-	t_sec		*tmp;
-	t_lis		*temp;
-	int			i;
-	int			sect;
+	t_sec				*tmp;
+	t_lis				*temp;
+	int					i;
+	int					sect;
 
 	sect = 1;
 	i = 1;
@@ -59,7 +58,6 @@ static	int				putinfo_sector(int fd, t_edit *edit,
 		temp = tmp->vert;
 		while (temp != NULL)
 		{
-			dprintf(1, "Sector %d || Vertex %d : x = %d , y = %d\n", i, sect, temp->x, temp->y);
 			temp = temp->next;
 			i += 1;
 		}
@@ -67,8 +65,14 @@ static	int				putinfo_sector(int fd, t_edit *edit,
 		sect += 1;
 		tmp = tmp->next;
 	}
-	dprintf(1, "\n -- List of Sectors : %d\n", count_sect);
 	return (1);
+}
+
+int						open_error(char **mapfile)
+{
+	ft_putendl("We could not open the file");
+	free(mapfile);
+	return (0);
 }
 
 int						map_writer(char *mapname, t_edit *edit)
@@ -84,7 +88,7 @@ int						map_writer(char *mapname, t_edit *edit)
 		if (edit->nbsect != 0)
 		{
 			putinfo_head(fd, edit, edit->nbsect);
-			putinfo_sector(fd, edit, edit->nbsect);
+			putinfo_sector(fd, edit);
 			close(fd);
 			return (1);
 		}
@@ -96,15 +100,10 @@ int						map_writer(char *mapname, t_edit *edit)
 		}
 	}
 	else
-	{
-		ft_putendl("We could not open the file");
-		free(mapfile);
-		close(fd);
-		return (0);
-	}
+		return (open_error(&mapfile));
 }
 
-int							save_map(t_input *in, char *mapname, t_edit *edit)
+int						save_map(t_input *in, char *mapname, t_edit *edit)
 {
 	if (in->key[SDL_SCANCODE_S])
 	{
