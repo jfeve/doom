@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 15:44:33 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/21 20:20:12 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,34 +55,10 @@ void			switch_highlight(t_input *in, t_edit *edit)
 	}
 }
 
-void			create_player(t_edit *edit, t_input *in)
-{
-	if (in->key[SDL_SCANCODE_J] && edit->hl_sec)
-	{
-		in->key[SDL_SCANCODE_J] = SDL_FALSE;
-		if (!edit->player)
-		{
-			edit->player = create_vert(in->x, in->y);
-			edit->player->col = SKYBLUE;
-			edit->player->text = edit->hl_sec->id;
-		}
-		else if (edit->player->x != arr(in->x) && edit->player->y != arr(in->y))
-		{
-			free(edit->player);
-			edit->player = create_vert(in->x, in->y);
-			edit->player->col = SKYBLUE;
-			edit->player->text = edit->hl_sec->id;
-		}
-	}
-}
-
 void			settings_event(t_edit *edit, t_input *in)
 {
 	if (in->key[SDL_SCANCODE_R])
 	{
-		edit->input_flag = 0;
-		edit->input_trigger = 0;
-		edit->input_cursor = 0;
 		edit->nbsect = 0;
 		edit->err = 0;
 		edit->hud_flag = 0;
@@ -99,6 +75,7 @@ void			settings_event(t_edit *edit, t_input *in)
 
 void			check_event(char *mapname, t_input *in, t_edit *edit)
 {
+	print_info(edit, in);
 	settings_event(edit, in);
 	cancels(edit, in);
 	switch_highlight(in, edit);
@@ -107,10 +84,10 @@ void			check_event(char *mapname, t_input *in, t_edit *edit)
 	new_vert(edit, in);
 	portals(edit, in);
 	check_input(edit, in);
-	input_mode(in, edit);
-	draw_text(edit);
+	dyn_input(edit, in);
 	enem(edit, in);
 	obj(edit, in);
 	create_player(edit, in);
+	create_finish(edit, in);
 	save_map(in, mapname, edit);
 }

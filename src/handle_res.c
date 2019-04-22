@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   handle_res.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:56:35 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 15:01:47 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 15:39:46 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,8 +15,7 @@
 
 void			put_zer_flag(t_edit *edit)
 {
-	edit->input_flag = 0;
-	edit->input_trigger = 0;
+	edit->dyn_trigger = 0;
 }
 
 int				check_lis_input(t_lis *vert)
@@ -40,13 +39,11 @@ void			handle_after_vec(t_edit *edit)
 	}
 	else if (edit->hl_sec->enem)
 	{
-		edit->hl_sec->enem->oldcol = edit->hl_sec->obj->col;
+		edit->hl_sec->enem->oldcol = edit->hl_sec->enem->col;
 		edit->hl_sec->enem->col = BROWN;
 	}
 	else
-	{
 		put_zer_flag(edit);
-	}
 	edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
 	edit->hl_vert = NULL;
 }

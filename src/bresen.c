@@ -3,150 +3,88 @@
 /*                                                              /             */
 /*   bresen.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:26:28 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 15:30:21 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/19 18:17:49 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			bresen(t_lis a, t_lis b, t_sdl *sdl)
+static	void		do_5(t_bresen *brs)
 {
-	int dx;
-	int dy;
-	int e;
+	if (brs->dy > 0)
+	{
+		while (brs->a->y != brs->b->y)
+		{
+			if (brs->sdl->pix[brs->a->y * WIN_W + brs->a->x] != RED &&
+						brs->sdl->pix[brs->a->y * WIN_W + brs->a->x] != GREEN &&
+						brs->sdl->pix[brs->a->y * WIN_W + brs->a->x] != PURPLE)
+				brs->sdl->pix[brs->a->y * WIN_W + brs->a->x] = brs->b->col;
+			brs->a->y++;
+		}
+	}
+	else
+	{
+		while (brs->a->y != brs->b->y)
+		{
+			if (brs->sdl->pix[brs->a->y * WIN_W + brs->a->x] != RED &&
+						brs->sdl->pix[brs->a->y * WIN_W + brs->a->x] != GREEN &&
+						brs->sdl->pix[brs->a->y * WIN_W + brs->a->x] != PURPLE)
+				brs->sdl->pix[brs->a->y * WIN_W + brs->a->x] = brs->b->col;
+			brs->a->y--;
+		}
+	}
+}
 
-	a.col = b.col;
-	dx = b.x - a.x;
-	dy = b.y - a.y;
-	if (dx > 0)
+static	void		do_6(t_bresen *brs)
+{
+	while (brs->a->x != brs->b->x)
 	{
-		if (dy < 0)
-		{
-			if (dx >= -1 * dy)
-			{
-				e = dx;
-				dx *= 2;
-				dy *= 2;
-				while (a.x != b.x)
-				{
-					if (sdl->pix[a.y * WIN_W + a.x] != RED &&
-							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
-							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
-						sdl->pix[a.y * WIN_W + a.x] = b.col;
-					e += dy;
-					if (e < 0)
-					{
-						a.y -= 1;
-						e += dx;
-					}
-					a.x += 1;
-				}
-			}
-			else
-			{
-				e = dy;
-				dx *= 2;
-				dy *= 2;
-				while (a.y != b.y)
-				{
-					if (sdl->pix[a.y * WIN_W + a.x] != RED &&
-							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
-							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
-						sdl->pix[a.y * WIN_W + a.x] = b.col;
-					e += dx;
-					if (e > 0)
-					{
-						a.x += 1;
-						e += dy;
-					}
-					a.y -= 1;
-				}
-			}
-		}
-		else if (dy > 0)
-		{
-			if (dx >= dy)
-			{
-				e = dx;
-				dx *= 2;
-				dy *= 2;
-				while (a.x != b.x)
-				{
-					if (sdl->pix[a.y * WIN_W + a.x] != RED &&
-							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
-							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
-						sdl->pix[a.y * WIN_W + a.x] = b.col;
-					e -= dy;
-					if (e < 0)
-					{
-						a.y += 1;
-						e += dx;
-					}
-					a.x += 1;
-				}
-			}
-			else
-			{
-				e = dy;
-				dx *= 2;
-				dy *= 2;
-				while (a.y != b.y)
-				{
-					if (sdl->pix[a.y * WIN_W + a.x] != RED &&
-							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
-							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
-						sdl->pix[a.y * WIN_W + a.x] = b.col;
-					e -= dx;
-					if (e < 0)
-					{
-						a.x += 1;
-						e += dy;
-					}
-					a.y += 1;
-				}
-			}
-		}
-		else
-		{
-			while (a.x != b.x)
-			{
-				if (sdl->pix[a.y * WIN_W + a.x] != RED &&
-							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
-							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
-					sdl->pix[a.y * WIN_W + a.x] = b.col;
-				a.x++;
-			}
-		}
+		if (brs->sdl->pix[brs->a->y * WIN_W + brs->a->x] != RED &&
+					brs->sdl->pix[brs->a->y * WIN_W + brs->a->x] != GREEN &&
+					brs->sdl->pix[brs->a->y * WIN_W + brs->a->x] != PURPLE)
+			brs->sdl->pix[brs->a->y * WIN_W + brs->a->x] = brs->b->col;
+		brs->a->x++;
 	}
-	else if (dx == 0)
+}
+
+static	void		do_global(t_bresen *brs)
+{
+	if (brs->dy < 0)
 	{
-		if (dy > 0)
-		{
-			while (a.y != b.y)
-			{
-				if (sdl->pix[a.y * WIN_W + a.x] != RED &&
-							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
-							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
-					sdl->pix[a.y * WIN_W + a.x] = b.col;
-				a.y++;
-			}
-		}
+		if (brs->dx >= -1 * brs->dy)
+			do_1(brs);
 		else
-		{
-			while (a.y != b.y)
-			{
-				if (sdl->pix[a.y * WIN_W + a.x] != RED &&
-							sdl->pix[a.y * WIN_W + a.x] != GREEN &&
-							sdl->pix[a.y * WIN_W + a.x] != PURPLE)
-					sdl->pix[a.y * WIN_W + a.x] = b.col;
-				a.y--;
-			}
-		}
+			do_2(brs);
 	}
+	else if (brs->dy > 0)
+	{
+		if (brs->dx >= brs->dy)
+			do_3(brs);
+		else
+			do_4(brs);
+	}
+	else
+		do_6(brs);
+}
+
+void				bresen(t_lis a, t_lis b, t_sdl *sdl)
+{
+	t_bresen	brs;
+
+	brs.a = &a;
+	brs.b = &b;
+	brs.sdl = sdl;
+	brs.a->col = brs.b->col;
+	brs.dx = brs.b->x - brs.a->x;
+	brs.dy = brs.b->y - brs.a->y;
+	if (brs.dx > 0)
+		do_global(&brs);
+	else if (brs.dx == 0)
+		do_5(&brs);
 	else
 		bresen(b, a, sdl);
 }
