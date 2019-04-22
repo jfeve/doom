@@ -6,34 +6,29 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/21 22:19:21 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 15:19:20 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-static	int				putinfo_head(int fd, t_edit *edit,
-		unsigned short count_sect)
+static	int				putinfo_head(int fd, t_edit *edit)
 {
-	float				player_pos_x;
-	float				player_pos_y;
-	unsigned short		player_pos_s;
-
-	player_pos_x = 5.0;
-	player_pos_y = 15.0;
-	player_pos_s = 0;
 	if (fd == -1)
 		return (0);
 	write(fd, "MAPF", 4);
-	if (count_sect != 0)
+	if (edit->nbsect != 0)
 	{
 		if (edit->sec)
 		{
-			write(fd, &player_pos_x, sizeof(float));
-			write(fd, &player_pos_y, sizeof(float));
-			write(fd, &player_pos_s, sizeof(unsigned short));
-			write(fd, &count_sect, sizeof(unsigned short));
+			write(fd, &edit->player->x, sizeof(int));
+			write(fd, &edit->player->y, sizeof(int));
+			write(fd, &edit->player->text, sizeof(short));
+			write(fd, &edit->finish->x, sizeof(int));
+			write(fd, &edit->finish->y, sizeof(int));
+			write(fd, &edit->finish->text, sizeof(short));
+			write(fd, &edit->nbsect, sizeof(int));
 		}
 		return (1);
 	}
@@ -45,11 +40,7 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 {
 	t_sec				*tmp;
 	t_lis				*temp;
-	int					i;
-	int					sect;
 
-	sect = 1;
-	i = 1;
 	if (fd == -1)
 		return (0);
 	tmp = edit->sect;
@@ -58,11 +49,22 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 		temp = tmp->vert;
 		while (temp != NULL)
 		{
+			write(fd, &temp->x, sizeof(int));
+			write(fd, &temp->y, sizeof(int));
+			write(fd, &temp->text, sizeof(short));
 			temp = temp->next;
-			i += 1;
 		}
-		i = 1;
-		sect += 1;
+		free(temp);
+
+		temp = tmp->enem;
+		while (temp != NULL)
+		{
+			write(fd, &temp->x, sizeof(int));
+			write(fd, &temp->y, sizeof(int));
+			write(fd, &temp->text, sizeof(short));
+			temp = temp->next;
+		}
+
 		tmp = tmp->next;
 	}
 	return (1);
@@ -71,6 +73,13 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 int						open_error(char **mapfile)
 {
 	ft_putendl("We could not open the file");
+	free(mapfile);
+	return (0);
+}
+
+int						save_error(char **mapfile)
+{
+	ft_putendl("There is no sector, map not saved");
 	free(mapfile);
 	return (0);
 }
@@ -87,14 +96,14 @@ int						map_writer(char *mapname, t_edit *edit)
 	{
 		if (edit->nbsect != 0)
 		{
-			putinfo_head(fd, edit, edit->nbsect);
+			putinfo_head(fd, edit);
 			putinfo_sector(fd, edit);
 			close(fd);
 			return (1);
 		}
 		else
 		{
-			free(mapfile);
+			save_error(&mapfile);
 			close(fd);
 			return (0);
 		}

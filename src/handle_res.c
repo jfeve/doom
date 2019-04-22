@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:56:35 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 18:17:28 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 15:39:46 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,7 +39,7 @@ void			handle_after_vec(t_edit *edit)
 	}
 	else if (edit->hl_sec->enem)
 	{
-		edit->hl_sec->enem->oldcol = edit->hl_sec->obj->col;
+		edit->hl_sec->enem->oldcol = edit->hl_sec->enem->col;
 		edit->hl_sec->enem->col = BROWN;
 	}
 	else
