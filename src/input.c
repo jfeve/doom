@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/21 22:06:20 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 22:49:02 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,7 +39,7 @@ void			dyn_input(t_edit *edit, t_input *in)
 	}
 }
 
-void			check_input(t_edit *edit, t_input *in)
+int				check_input(t_edit *edit, t_input *in)
 {
 	t_content	*tmp;
 
@@ -48,11 +48,13 @@ void			check_input(t_edit *edit, t_input *in)
 		clear_hl_vec(edit->hl_sec);
 		edit->hl_vert = NULL;
 		in->key[SDL_SCANCODE_T] = SDL_FALSE;
-		add_content(edit, "", "floor = ", init_draw(600, HUD_BEGIN + 50, 1));
+		if (add_content(edit, "", "floor = ", init_draw(600, HUD_BEGIN + 50, 1)) == 0)
+			return (0);
 		tmp = edit->con;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->display = 1;
 		edit->dyn_trigger = 1;
 	}
+	return (1);
 }

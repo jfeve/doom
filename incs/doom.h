@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 15:44:17 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 23:31:17 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,6 +76,7 @@ typedef struct					s_sdl
 	SDL_Window					*win;
 	SDL_Renderer				*ren;
 	Uint32						*pix;
+	Uint32						*white_frame;
 	SDL_PixelFormat				*form;
 }								t_sdl;
 
@@ -105,6 +106,12 @@ typedef	struct					s_content
 
 typedef struct					s_edit
 {
+	t_content					*con;
+	t_sdl						sdl;
+	t_lis						*vert;
+	t_sec						*sect;
+	t_lis						*player;
+	t_lis						*finish;
 	int							hud_flag;
 	int							dyn_trigger;
 	int							input_res;
@@ -112,12 +119,6 @@ typedef struct					s_edit
 	int							hl;
 	int							sec;
 	int							err;
-	t_content					*con;
-	t_lis						*player;
-	t_lis						*finish;
-	t_lis						*vert;
-	t_sec						*sect;
-	t_sdl						sdl;
 	t_sec						*hl_sec;
 	t_lis						*hl_vert;
 	t_lis						*oldvert;
@@ -137,13 +138,13 @@ typedef	struct					s_bresen
 ** Event
 */
 void							cancels(t_edit *edit, t_input *in);
-void							check_input(t_edit *edit, t_input *in);
-void							new_vert(t_edit *edit, t_input *in);
+int								check_input(t_edit *edit, t_input *in);
+int								new_vert(t_edit *edit, t_input *in);
 void							update_event(t_input *in);
-void							check_event(char *mapname,
+int								check_event(char *mapname,
 									t_input *in, t_edit *edit);
-void							create_player(t_edit *edit, t_input *in);
-void							create_finish(t_edit *edit, t_input *in);
+int								create_player(t_edit *edit, t_input *in);
+int								create_finish(t_edit *edit, t_input *in);
 
 
 /*
@@ -182,7 +183,7 @@ void							put_vert(t_edit *edit, t_lis *vert);
 */
 void							draw_vec(t_edit *edit, t_input in);
 void							portals(t_edit *edit, t_input *in);
-void							put_new_vert(t_edit *edit, t_input *in);
+int								put_new_vert(t_edit *edit, t_input *in);
 int								vec_here(t_lis *tmp, t_lis*vert, t_point *in);
 int								check_coord_in(t_lis *tmp, t_lis *vert,
 									t_point *in, int flag);
@@ -212,7 +213,9 @@ void							print_sec(t_sec *sec);
 /*
 ** HUD
 */
+void							wf_mode(t_input *in, t_edit *edit);
 void							set_grid(t_edit *edit);
+void							fill_wf(t_edit *edit);
 void							hud(t_edit *edit);
 
 /*
@@ -221,8 +224,8 @@ void							hud(t_edit *edit);
 void							handle_obj(t_edit *edit);
 void							handle_enem(t_edit *edit);
 void							draw_obj_enem(t_edit *edit);
-void							obj(t_edit *edit, t_input *in);
-void							enem(t_edit *edit, t_input *in);
+int								obj(t_edit *edit, t_input *in);
+int								enem(t_edit *edit, t_input *in);
 int								check_lis_input(t_lis *vert);
 
 /*
@@ -266,7 +269,7 @@ void							dyn_input(t_edit *edit, t_input *in);
 void							fill_str_content(int size,
 										char *ret, char *str);
 t_content						*create_content(void);
-void							add_content(t_edit *edit, char *cont,
+int								add_content(t_edit *edit, char *cont,
 										char *title, t_draw draw);
 /*
 ** Live Input
@@ -276,13 +279,16 @@ void							get_string(t_edit *edit, t_draw *draw);
 char							*get_content_char(int num);
 void							level_editor(char *mapname);
 int								init_edit(t_edit *edit);
-void							get_update(t_edit *edit,
+int								get_update(t_edit *edit,
 									t_input *in, char *mapname);
-void							init_content(t_edit *edit);
+int								init_content(t_edit *edit);
 void							hud_hl(t_edit *edit);
 
 
 /*rend*/
+void				free_lis(t_lis **vert);
+void				free_sec(t_sec **sec);
+int					free_content(t_edit *edit);
 int					min(int a, int b);
 int					max(int a, int b);
 int					clamp(int a, int mi, int ma);

@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:21:04 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 13:24:04 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 21:59:28 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,7 +53,7 @@ int				add_vert(int x, int y, t_edit *edit, t_lis *vert)
 	if (parse_data(x, y, edit, vert) == 0)
 		return (0);
 	if (!(point = (t_lis*)malloc(sizeof(t_lis))))
-		return (0);
+		return (-1);
 	point->x = arr(x);
 	point->neigh = -1;
 	point->port = 0;

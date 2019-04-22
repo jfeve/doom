@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:40:34 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 13:41:58 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 23:30:25 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,6 +25,8 @@ int				free_sdl(t_sdl *sdl, int flag)
 		free(sdl->pix);
 	if (flag >= 5)
 		SDL_FreeFormat(sdl->form);
+	if (flag >= 6)
+		free(sdl->white_frame);
 	return (0);
 }
 
@@ -44,6 +46,8 @@ int				sdl_init(t_sdl *sdl)
 	sdl->form = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
 	if (sdl->form == NULL)
 		return (free_sdl(sdl, 4));
+	if (!(sdl->white_frame = malloc(sizeof(Uint32) * (WF_W * WF_H))))
+		return (free_sdl(sdl, 5));
 	return (1);
 }
 

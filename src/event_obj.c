@@ -6,14 +6,14 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/20 14:50:45 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/21 19:56:06 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 22:57:47 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			create_player(t_edit *edit, t_input *in)
+int				create_player(t_edit *edit, t_input *in)
 {
 	if (in->key[SDL_SCANCODE_J] && edit->hl_sec)
 	{
@@ -21,20 +21,25 @@ void			create_player(t_edit *edit, t_input *in)
 		if (!edit->player)
 		{
 			edit->player = create_vert(in->x, in->y);
+			if (edit->player == NULL)
+				return (0);
 			edit->player->col = SKYBLUE;
 			edit->player->text = edit->hl_sec->id;
 		}
 		else if (edit->player->x != arr(in->x) && edit->player->y != arr(in->y))
 		{
-			free(edit->player);
+			free_lis(&edit->player);
 			edit->player = create_vert(in->x, in->y);
+			if (edit->player == NULL)
+				return (0);
 			edit->player->col = SKYBLUE;
 			edit->player->text = edit->hl_sec->id;
 		}
 	}
+	return (1);
 }
 
-void			create_finish(t_edit *edit, t_input *in)
+int				create_finish(t_edit *edit, t_input *in)
 {
 	if (in->key[SDL_SCANCODE_F] && edit->hl_sec)
 	{
@@ -42,6 +47,8 @@ void			create_finish(t_edit *edit, t_input *in)
 		if (!edit->finish)
 		{
 			edit->finish = create_vert(in->x, in->y);
+			if (edit->player == NULL)
+				return (0);
 			edit->finish->col = YELLOW;
 			edit->finish->text = edit->hl_sec->id;
 		}
@@ -49,8 +56,11 @@ void			create_finish(t_edit *edit, t_input *in)
 		{
 			free(edit->finish);
 			edit->finish = create_vert(in->x, in->y);
+			if (edit->player == NULL)
+				return (0);
 			edit->finish->col = YELLOW;
 			edit->finish->text = edit->hl_sec->id;
 		}
 	}
+	return (1);
 }

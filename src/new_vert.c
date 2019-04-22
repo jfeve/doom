@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:40:20 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 15:20:19 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 22:47:06 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,12 +40,13 @@ void			swap_datas(t_lis *vert, t_lis *last)
 	}
 }
 
-void			put_new_vert(t_edit *edit, t_input *in)
+int				put_new_vert(t_edit *edit, t_input *in)
 {
 	t_lis		*tmp;
 	t_lis		*last;
 
-	add_vert(in->x, in->y, edit, edit->hl_sec->vert);
+	if (add_vert(in->x, in->y, edit, edit->hl_sec->vert) == -1)
+		return (0);
 	last = edit->hl_sec->vert;
 	while (last->next)
 		last = last->next;
@@ -61,9 +62,10 @@ void			put_new_vert(t_edit *edit, t_input *in)
 	else
 		edit->hl_sec->vert->col = GREEN;
 	edit->hl_vert = tmp;
+	return (1);
 }
 
-void			new_vert(t_edit *edit, t_input *in)
+int				new_vert(t_edit *edit, t_input *in)
 {
 	t_lis		*tmp;
 
@@ -78,9 +80,13 @@ void			new_vert(t_edit *edit, t_input *in)
 			tmp = tmp->next;
 		}
 		if (!tmp)
-			put_new_vert(edit, in);
+		{
+			if (put_new_vert(edit, in) == 0)
+				return (0);
+		}
 		else
 			edit->oldvert = NULL;
 		in->key[SDL_SCANCODE_A] = SDL_FALSE;
 	}
+	return (1);
 }

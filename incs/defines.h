@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/21 20:30:12 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 23:35:51 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,6 +15,8 @@
 # define DEFINES_H
 # define WIN_W 1500
 # define WIN_H 1000
+# define WF_W 500
+# define WF_H 300
 # define UNIT 15
 # define HUD_BEGIN 851
 # define TEXT_INPUT 1000

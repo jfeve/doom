@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/12 17:10:06 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/21 19:25:58 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 19:02:08 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,13 +43,13 @@ t_content		*create_content(void)
 	return (content);
 }
 
-void			add_content(t_edit *edit, char *cont, char *title, t_draw draw)
+int				add_content(t_edit *edit, char *cont, char *title, t_draw draw)
 {
 	t_content	*new;
 	t_content	*tmp;
 
 	if (!(new = (t_content*)malloc(sizeof(t_content))))
-		return ;
+		return (0);
 	tmp = edit->con;
 	while (tmp->next)
 		tmp = tmp->next;
@@ -62,6 +62,7 @@ void			add_content(t_edit *edit, char *cont, char *title, t_draw draw)
 	new->cursor = 0;
 	new->trigger = draw.i;
 	new->next = NULL;
+	return (1);
 }
 
 t_draw			set_printd(int x, int y, t_draw settings)

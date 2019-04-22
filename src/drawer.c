@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 18:21:59 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/21 19:55:21 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 18:56:31 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,8 +35,9 @@ void			draw_content(t_edit *edit, t_content *temp, t_draw *draw)
 	while (draw->input[draw->i])
 	{
 		check_newline(draw, temp, &cnt);
-		tmp = (char*)malloc(sizeof(char) *
-			ft_strlen(get_content_char(draw->input[draw->i])));
+		if (!(tmp = (char*)malloc(sizeof(char) *
+			ft_strlen(get_content_char(draw->input[draw->i])))))
+			return ;
 		if ((tmp = get_content_char((int)draw->input[draw->i])) == NULL)
 			return ;
 		if (ft_isdigit(draw->input[draw->i]))
@@ -44,7 +45,6 @@ void			draw_content(t_edit *edit, t_content *temp, t_draw *draw)
 		else
 			draw->color = WHITE;
 		draw_norm(&cnt, draw, edit, tmp);
-		free(&tmp);
 		draw->i += 1;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/14 16:13:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 20:59:03 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 22:52:39 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -78,38 +78,50 @@ void			draw_obj_enem(t_edit *edit)
 	}
 }
 
-void			obj(t_edit *edit, t_input *in)
+int				obj(t_edit *edit, t_input *in)
 {
 	t_lis *tmp;
 
 	if (in->key[SDL_SCANCODE_O] && edit->hl_sec)
 	{
 		if (edit->hl_sec->obj == NULL)
+		{
 			edit->hl_sec->obj = create_vert(in->x, in->y);
+			if (edit->hl_sec->obj == NULL)
+				return (0);
+		}
 		else if (edit->hl_sec->obj->text == -1)
-			add_vert(in->x, in->y, edit, edit->hl_sec->obj);
+			if (add_vert(in->x, in->y, edit, edit->hl_sec->obj) == 0)
+				return (0);
 		tmp = edit->hl_sec->obj;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->col = GREEN;
 		in->key[SDL_SCANCODE_O] = SDL_FALSE;
 	}
+	return (1);
 }
 
-void			enem(t_edit *edit, t_input *in)
+int				enem(t_edit *edit, t_input *in)
 {
 	t_lis		*tmp;
 
 	if (in->key[SDL_SCANCODE_E] && edit->hl_sec)
 	{
 		if (edit->hl_sec->enem == NULL)
+		{
 			edit->hl_sec->enem = create_vert(in->x, in->y);
+			if (edit->hl_sec->enem == NULL)
+				return (0);
+		}
 		else if (edit->hl_sec->enem->text == -1)
-			add_vert(in->x, in->y, edit, edit->hl_sec->enem);
+			if (add_vert(in->x, in->y, edit, edit->hl_sec->enem) == 0)
+				return (0);
 		tmp = edit->hl_sec->enem;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->col = RED;
 		in->key[SDL_SCANCODE_E] = SDL_FALSE;
 	}
+	return (1);
 }
