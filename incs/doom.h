@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 14:49:44 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 15:44:17 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -108,8 +108,6 @@ typedef struct					s_edit
 	int							hud_flag;
 	int							dyn_trigger;
 	int							input_res;
-	t_lis						*hl_vert;
-	t_sec						*hl_sec_temp;
 	int							nbsect;
 	int							hl;
 	int							sec;
@@ -123,6 +121,7 @@ typedef struct					s_edit
 	t_sec						*hl_sec;
 	t_lis						*hl_vert;
 	t_lis						*oldvert;
+	t_sec						*hl_sec_temp;
 }								t_edit;
 
 typedef	struct					s_bresen

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 15:19:20 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 16:24:01 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,7 +64,18 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 			write(fd, &temp->text, sizeof(short));
 			temp = temp->next;
 		}
-
+		free(temp);
+		temp = tmp->obj;
+		while (temp != NULL)
+		{
+			write(fd, &temp->x, sizeof(int));
+			write(fd, &temp->y, sizeof(int));
+			write(fd, &temp->text, sizeof(short));
+			temp = temp->next;
+		}
+		free(temp);
+		write(fd, &tmp->floor, sizeof(short));
+		write(fd, &tmp->ceil, sizeof(short));
 		tmp = tmp->next;
 	}
 	return (1);
