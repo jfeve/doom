@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 16:24:01 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 17:32:29 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,6 +36,19 @@ static	int				putinfo_head(int fd, t_edit *edit)
 		return (0);
 }
 
+int				save_d(int fd, t_lis *temp)
+{
+	while (temp != NULL)
+	{
+		write(fd, &temp->x, sizeof(int));
+		write(fd, &temp->y, sizeof(int));
+		write(fd, &temp->text, sizeof(short));
+		temp = temp->next;
+	}
+	free(temp);
+	return (1);
+}
+
 static	int				putinfo_sector(int fd, t_edit *edit)
 {
 	t_sec				*tmp;
@@ -46,53 +59,15 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 	tmp = edit->sect;
 	while (tmp != NULL)
 	{
-		temp = tmp->vert;
-		while (temp != NULL)
-		{
-			write(fd, &temp->x, sizeof(int));
-			write(fd, &temp->y, sizeof(int));
-			write(fd, &temp->text, sizeof(short));
-			temp = temp->next;
-		}
-		free(temp);
-
-		temp = tmp->enem;
-		while (temp != NULL)
-		{
-			write(fd, &temp->x, sizeof(int));
-			write(fd, &temp->y, sizeof(int));
-			write(fd, &temp->text, sizeof(short));
-			temp = temp->next;
-		}
-		free(temp);
-		temp = tmp->obj;
-		while (temp != NULL)
-		{
-			write(fd, &temp->x, sizeof(int));
-			write(fd, &temp->y, sizeof(int));
-			write(fd, &temp->text, sizeof(short));
-			temp = temp->next;
-		}
-		free(temp);
+		if ((temp = tmp->vert))
+			putinfo_sec(fd, temp, tmp);
+		else
+			save_error2("Error while saving the Vertex", temp);
 		write(fd, &tmp->floor, sizeof(short));
 		write(fd, &tmp->ceil, sizeof(short));
 		tmp = tmp->next;
 	}
 	return (1);
-}
-
-int						open_error(char **mapfile)
-{
-	ft_putendl("We could not open the file");
-	free(mapfile);
-	return (0);
-}
-
-int						save_error(char **mapfile)
-{
-	ft_putendl("There is no sector, map not saved");
-	free(mapfile);
-	return (0);
 }
 
 int						map_writer(char *mapname, t_edit *edit)
@@ -114,7 +89,7 @@ int						map_writer(char *mapname, t_edit *edit)
 		}
 		else
 		{
-			save_error(&mapfile);
+			save_error(mapfile);
 			close(fd);
 			return (0);
 		}
