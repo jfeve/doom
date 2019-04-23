@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/20 14:50:45 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 22:57:47 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 14:09:34 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,7 +47,7 @@ int				create_finish(t_edit *edit, t_input *in)
 		if (!edit->finish)
 		{
 			edit->finish = create_vert(in->x, in->y);
-			if (edit->player == NULL)
+			if (edit->finish == NULL)
 				return (0);
 			edit->finish->col = YELLOW;
 			edit->finish->text = edit->hl_sec->id;
@@ -56,7 +56,7 @@ int				create_finish(t_edit *edit, t_input *in)
 		{
 			free(edit->finish);
 			edit->finish = create_vert(in->x, in->y);
-			if (edit->player == NULL)
+			if (edit->finish == NULL)
 				return (0);
 			edit->finish->col = YELLOW;
 			edit->finish->text = edit->hl_sec->id;
