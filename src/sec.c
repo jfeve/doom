@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   sec.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 16:22:44 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 13:41:37 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 16:08:07 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -79,7 +79,7 @@ void			draw_sec(t_edit *edit)
 					(int)PURPLE && edit->hl > 0 && temp->next->col !=
 					(int)WHITE))
 			put_vert(edit, temp);
-		while (temp->next)
+		while (temp->next != NULL)
 		{
 			bresen(mult_unit(*temp), mult_unit(*temp->next), &edit->sdl);
 			temp = temp->next;

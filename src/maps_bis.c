@@ -6,12 +6,40 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:07:42 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 13:49:00 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 16:25:38 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+int						save_d(int fd, t_lis *temp)
+{
+	while (temp != NULL)
+	{
+		write(fd, &temp->x, sizeof(int));
+		write(fd, &temp->y, sizeof(int));
+		write(fd, &temp->text, sizeof(short));
+		write(fd, &temp->neigh, sizeof(short));
+		write(fd, &temp->port, sizeof(short));
+		temp = temp->next;
+	}
+	free(temp);
+	return (1);
+}
+
+int						save_objs(int fd, t_lis *temp)
+{
+	while (temp != NULL)
+	{
+		write(fd, &temp->x, sizeof(int));
+		write(fd, &temp->y, sizeof(int));
+		write(fd, &temp->text, sizeof(short));
+		temp = temp->next;
+	}
+	free(temp);
+	return (1);
+}
 
 int						open_error(char **mapfile)
 {
@@ -37,14 +65,8 @@ int						save_error2(char *error, t_lis *temp)
 void					putinfo_sec(int fd, t_lis *temp, t_sec *tmp)
 {
 	save_d(fd, temp);
-	if ((temp = tmp->enem))
-	{
-		save_d(fd, temp);
-		if ((temp = tmp->obj))
-			save_d(fd, temp);
-		else
-			save_error2("Error while saving the Objects", temp);
-	}
-	else
-		save_error2("Error while saving the Enemies", temp);
+	if ((temp = tmp->obj))
+		save_objs(fd, temp);
+	if ((temp = tmp->obj))
+		save_objs(fd, temp);
 }
