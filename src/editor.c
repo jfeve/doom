@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/19 18:18:31 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 11:05:36 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 11:44:30 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -97,7 +97,7 @@ void			level_editor(char *mapname)
 		}
 		SDL_Delay(1000 / 60);
 	}
-	free_all(2, &edit);	
+	free_all(2, &edit);
 	return ;
 }
 
@@ -123,9 +123,11 @@ int				init_edit(t_edit *edit)
 		return (0);
 	if (add_content(edit, TUTO, "create : \n", init_draw(10, 930, 1)) == 0)
 		return (free_content(edit));
-	if (add_content(edit, HL_SET_TUTO, "explore : \n", init_draw(10, 930, 0)) == 0)
+	if (add_content(edit, HL_SET_TUTO, "explore : \n",
+					init_draw(10, 930, 0)) == 0)
 		return (free_content(edit));
-	if (add_content(edit, HL_TUTO, "highlight : \n", init_draw(10, 930, 0)) == 0)
+	if (add_content(edit, HL_TUTO, "highlight : \n",
+					init_draw(10, 930, 0)) == 0)
 		return (free_content(edit));
 	if (sdl_init(&edit->sdl) == 0)
 		return (free_content(edit));

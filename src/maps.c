@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 17:32:29 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 11:44:52 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,7 +36,7 @@ static	int				putinfo_head(int fd, t_edit *edit)
 		return (0);
 }
 
-int				save_d(int fd, t_lis *temp)
+int						save_d(int fd, t_lis *temp)
 {
 	while (temp != NULL)
 	{

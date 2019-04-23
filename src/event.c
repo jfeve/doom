@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 23:37:09 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 11:44:02 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -90,20 +90,19 @@ void			settings_event(t_edit *edit, t_input *in)
 
 int				check_event(char *mapname, t_input *in, t_edit *edit)
 {
-	print_info(edit, in);//
-	settings_event(edit, in);//
-	cancels(edit, in);//
+	print_info(edit, in);
+	settings_event(edit, in);
+	cancels(edit, in);
 	if (click_vert(in, edit) == 0)
 		return (0);
-	hl_mode(in, edit);//
-//	wf_mode(in, edit);
-	hl_vec(edit, in);//
+	hl_mode(in, edit);
+	hl_vec(edit, in);
 	if (new_vert(edit, in) == 0)
 		return (0);
-	portals(edit, in);//
+	portals(edit, in);
 	if (check_input(edit, in) == 0)
 		return (0);
-	dyn_input(edit, in);//
+	dyn_input(edit, in);
 	if (enem(edit, in) == 0)
 		return (0);
 	if (obj(edit, in) == 0)

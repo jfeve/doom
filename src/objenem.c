@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/14 16:13:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 11:10:34 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 11:45:09 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -92,7 +92,7 @@ int				obj(t_edit *edit, t_input *in)
 		}
 		else if (edit->hl_sec->obj->text == -1)
 			if (add_vert(in->x, in->y, edit, edit->hl_sec->obj) == -1)
-				return (0); 
+				return (0);
 		tmp = edit->hl_sec->obj;
 		while (tmp->next)
 			tmp = tmp->next;
