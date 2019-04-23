@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 23:31:17 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 17:32:12 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -235,6 +235,13 @@ int								check_mapname(char *mapname);
 int								map_writer(char *mapname, t_edit *edit);
 int								save_map(t_input *in, char *mapname,
 									t_edit *edit);
+int								open_error(char **mapfile);
+int								save_error(char *mapfile);
+int								save_error2(char *error, t_lis *temp);
+void							putinfo_sec(int fd, t_lis *temp, t_sec *tmp);
+int								save_d(int fd, t_lis *temp);
+
+
 /*
 ** Input Detection
 */
@@ -289,6 +296,13 @@ void							hud_hl(t_edit *edit);
 void				free_lis(t_lis **vert);
 void				free_sec(t_sec **sec);
 int					free_content(t_edit *edit);
+/*
+**-------------------------------------|
+** ------------ Render ----------------|
+** ------------------------------------|
+** --------- Render Parts -------------|
+** ------------------------------------|
+*/
 int					min(int a, int b);
 int					max(int a, int b);
 int					clamp(int a, int mi, int ma);

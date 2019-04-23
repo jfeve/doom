@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   maths_2.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 16:28:51 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 19:05:07 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/22 17:14:59 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,12 +23,12 @@ float		f_clamp(float a, float mi, float ma)
 	return (f_min(f_max(a, mi), ma));
 }
 
-int			vxs(int ax,int ay, int  bx, int  by)
+int			vxs(int ax, int ay, int bx, int by)
 {
 	return (ax * by - ay * bx);
 }
 
-float		f_vxs(float ax,float ay, float bx, float by)
+float		f_vxs(float ax, float ay, float bx, float by)
 {
 	return (ax * by - ay * bx);
 }
