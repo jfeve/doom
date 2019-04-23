@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 16:23:15 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 16:59:41 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,6 +46,8 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 	tmp = edit->sect;
 	while (tmp != NULL)
 	{
+		if (tmp->floor == -1 && tmp->ceil == -1)
+			return (err_map("A sector has some unset data", temp));
 		temp = tmp->vert;
 		putinfo_sec(fd, temp, tmp);
 		write(fd, &tmp->floor, sizeof(short));
