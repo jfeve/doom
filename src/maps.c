@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 11:44:52 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 14:08:50 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,11 +17,11 @@ static	int				putinfo_head(int fd, t_edit *edit)
 {
 	if (fd == -1)
 		return (0);
-	write(fd, "MAPF", 4);
-	if (edit->nbsect != 0)
+	if (edit->nbsect != 0 && mcheck_pos(edit))
 	{
 		if (edit->sec)
 		{
+			write(fd, "MAPF", 4);
 			write(fd, &edit->player->x, sizeof(int));
 			write(fd, &edit->player->y, sizeof(int));
 			write(fd, &edit->player->text, sizeof(short));
@@ -40,6 +40,8 @@ int						save_d(int fd, t_lis *temp)
 {
 	while (temp != NULL)
 	{
+		if (!mcheck_d(temp))
+			return (err_map("some vectors in a sector is not set properly", temp));
 		write(fd, &temp->x, sizeof(int));
 		write(fd, &temp->y, sizeof(int));
 		write(fd, &temp->text, sizeof(short));
@@ -62,7 +64,9 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 		if ((temp = tmp->vert))
 			putinfo_sec(fd, temp, tmp);
 		else
-			save_error2("Error while saving the Vertex", temp);
+			return (save_error2("Error while saving the Vertex", temp));
+		if (!mcheck_sec(tmp))
+			return (err_map("A sector has some unset data", temp));
 		write(fd, &tmp->floor, sizeof(short));
 		write(fd, &tmp->ceil, sizeof(short));
 		tmp = tmp->next;
@@ -82,8 +86,21 @@ int						map_writer(char *mapname, t_edit *edit)
 	{
 		if (edit->nbsect != 0)
 		{
-			putinfo_head(fd, edit);
-			putinfo_sector(fd, edit);
+			if (putinfo_head(fd, edit))
+				if (putinfo_sector(fd, edit))
+					return (1);
+				else
+				{
+					save_error(mapfile);
+					close(fd);
+					return (0);
+				}
+			else
+			{
+				save_error(mapfile);
+				close(fd);
+				return (0);
+			}
 			close(fd);
 			return (1);
 		}
