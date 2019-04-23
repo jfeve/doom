@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:56:35 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 15:39:46 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 11:34:04 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,6 +55,8 @@ void			handle_vec(t_edit *edit)
 	tmp = edit->hl_sec->vert;
 	while (tmp->next && tmp->text != -1)
 		tmp = tmp->next;
+	if (edit->input_res > 4)
+		return ;
 	tmp->text = edit->input_res;
 	if (tmp->next)
 	{
@@ -84,9 +86,12 @@ void			handle_res(t_edit *edit)
 		edit->hl_sec->floor = edit->input_res;
 	else if (edit->hl_sec->ceil == -1)
 	{
-		edit->hl_sec->ceil = edit->input_res;
-		edit->hl_vert = edit->hl_sec->vert;
-		edit->hl_vert->next->col = GREEN;
+		if (edit->input_res > edit->hl_sec->floor)
+		{
+			edit->hl_sec->ceil = edit->input_res;
+			edit->hl_vert = edit->hl_sec->vert;
+			edit->hl_vert->next->col = GREEN;
+		}
 	}
 	else if (check_lis_input(tmp))
 		handle_vec(edit);

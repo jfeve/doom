@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/19 18:18:31 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 23:22:41 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 11:05:36 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,7 +54,7 @@ void			free_all(int flag, t_edit *edit)
 	if (flag >= 1)
 		free_content(edit);
 	if (flag >= 2)
-		free_sdl(&edit->sdl, 5);
+		free_sdl(&edit->sdl, 6);
 	if (edit->vert)
 		free_lis(&edit->vert);
 	if (edit->sect)
@@ -97,6 +97,7 @@ void			level_editor(char *mapname)
 		}
 		SDL_Delay(1000 / 60);
 	}
+	free_all(2, &edit);	
 	return ;
 }
 

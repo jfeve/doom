@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:21:04 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 21:59:28 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 11:11:51 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,7 +67,10 @@ int				add_vert(int x, int y, t_edit *edit, t_lis *vert)
 	{
 		tmp = tmp->next;
 		if (tmp->x == point->x && tmp->y == point->y)
+		{
+			free(point);
 			return (0);
+		}
 	}
 	tmp->next = point;
 	return (1);

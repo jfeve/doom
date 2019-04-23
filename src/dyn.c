@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/21 22:03:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/21 22:08:20 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 11:14:24 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -49,6 +49,7 @@ void			get_lis_num(t_content **con, t_lis *vert)
 	while (str[i])
 		temp->c_title[j++] = str[i++];
 	add_equal(&temp, j);
+	ft_strdel(&str);
 }
 
 void			get_title(t_edit *edit, t_content **con)

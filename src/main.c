@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 21:54:41 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 11:18:23 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,13 +57,11 @@ int				get_update(t_edit *edit, t_input *in, char *mapname)
 
 int				main(int argc, char **argv)
 {
-//	sleep(15);
 	if (argc == 3 && ft_strcmp(argv[1], "edit") == 0)
 		level_editor(argv[2]);
 //	else if (argc == 2 && ft_strcmp(argv[1], "game") == 0)
 //		render();
 	else
 		return (usage());
-//	sleep(15);
 	return (0);
 }
