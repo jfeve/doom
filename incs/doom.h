@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 05:08:54 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 20:03:06 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -316,6 +316,14 @@ int								free_content(t_edit *edit);
 ** --------- Render Parts -------------|
 ** ------------------------------------|
 */
+
+typedef struct		s_queue
+{
+	int				sect;
+	int				sx1;
+	int				sx2;
+}					t_queue;
+
 int					min(int a, int b);
 int					max(int a, int b);
 int					clamp(int a, int mi, int ma);
@@ -331,5 +339,8 @@ float				f_vxs(float ax, float ay, float bx, float by);
 int					f_overlap(t_float a, t_float b);
 int					f_intersectbox(t_float a, t_float b, t_float c, t_float d);
 float				f_pointside(t_float p, t_float a, t_float b);
+t_float				f_intersect(t_float a, t_float b, t_float c, t_float d);
+
+void				render(char *str);
 
 #endif

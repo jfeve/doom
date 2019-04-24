@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 17:34:38 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 19:55:07 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 21:20:41 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,3 +35,8 @@ t_float			f_intersect(t_float a, t_float b, t_float c, t_float d)
 			f_vxs(a.x - b.x, a.x - b.y, c.x - d.x, c.y - d.y));
 	return (ret);
 }
+
+//int				yaw(int y, int z)
+//{
+//	return (y + z * player.yaw);
+//}
