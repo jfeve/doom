@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 04:42:59 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 19:05:40 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -88,6 +88,29 @@ void			settings_event(t_edit *edit, t_input *in)
 		in->quit = SDL_TRUE;
 }
 
+void			read_map(char *mapname)
+{
+	int		fd;
+	char	magic[5];
+	char	*mapfile;
+
+	mapfile = (char*)malloc(sizeof(char) *
+		(int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
+	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
+	if ((fd = open(mapfile, O_RDONLY)) != -1)
+	{
+		dprintf(1, "\n------------Data Read----------\n");
+		read(fd, magic, 4);
+		magic[4] = '\0';
+		dprintf(1, "%s\n", magic);
+	}
+	else
+	{
+		dprintf(1, "\nThe map does not exist\n");
+		return ;
+	}
+}
+
 int				check_event(char *mapname, t_input *in, t_edit *edit)
 {
 	if (in->key[SDL_SCANCODE_K] && edit->hl_sec && edit->dyn_trigger != 1)
@@ -117,5 +140,10 @@ int				check_event(char *mapname, t_input *in, t_edit *edit)
 	if (create_finish(edit, in) == 0)
 		return (0);
 	save_map(in, mapname, edit);
+	if (in->key[SDL_SCANCODE_L])
+	{
+		in->key[SDL_SCANCODE_L] = SDL_FALSE;
+		read_map(mapname);
+	}
 	return (1);
 }
