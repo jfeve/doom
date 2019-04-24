@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 11:44:02 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 04:42:59 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -90,6 +90,11 @@ void			settings_event(t_edit *edit, t_input *in)
 
 int				check_event(char *mapname, t_input *in, t_edit *edit)
 {
+	if (in->key[SDL_SCANCODE_K] && edit->hl_sec && edit->dyn_trigger != 1)
+	{
+		edit->err = 2;
+		in->key[SDL_SCANCODE_K] = SDL_FALSE;
+	}
 	print_info(edit, in);
 	settings_event(edit, in);
 	cancels(edit, in);

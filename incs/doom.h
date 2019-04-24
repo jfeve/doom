@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 15:36:47 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 05:08:54 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,7 +76,6 @@ typedef struct					s_sdl
 	SDL_Window					*win;
 	SDL_Renderer				*ren;
 	Uint32						*pix;
-	Uint32						*white_frame;
 	SDL_PixelFormat				*form;
 }								t_sdl;
 
@@ -104,8 +103,15 @@ typedef	struct					s_content
 	struct s_content			*next;
 }								t_content;
 
+typedef struct					s_time
+{
+	unsigned long long			oldtime;
+	unsigned long long			time;
+}								t_time;
+
 typedef struct					s_edit
 {
+	t_time						time;
 	t_content					*con;
 	t_sdl						sdl;
 	t_lis						*vert;
@@ -213,6 +219,9 @@ void							print_sec(t_sec *sec);
 /*
 ** HUD
 */
+int								choose_set(t_edit *edit);
+void							set_trigger(t_edit *edit, int choice, int trig);
+void							draw_wf(int x, int y, t_edit *edit);
 void							wf_mode(t_input *in, t_edit *edit);
 void							set_grid(t_edit *edit);
 void							fill_wf(t_edit *edit);

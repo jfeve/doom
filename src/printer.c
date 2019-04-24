@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/12 17:10:06 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 19:02:08 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 04:51:13 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,9 +18,11 @@ void			fill_str_content(int size, char *ret, char *str)
 	int			i;
 
 	i = 0;
-	if (!*str)
+	if (str == NULL)
+	{
 		while (i < size)
 			ret[i++] = '\0';
+	}
 	else
 	{
 		while (str[i] && i < size)

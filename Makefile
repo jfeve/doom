@@ -6,7 +6,7 @@
 #    By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/18 21:26:38 by jfeve        #+#   ##    ##    #+#        #
-#    Updated: 2019/04/23 11:17:22 by jfeve       ###    #+. /#+    ###.fr      #
+#    Updated: 2019/04/24 05:28:45 by jfeve       ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,7 +16,7 @@
 #******************************************************************************#
 
 CC = gcc
-CC_FLAGS = -Wall -Wextra -Werror -g3 -O3
+CC_FLAGS = -Wall -Wextra -Werror -g3 -O3 -g
 SDL_FLAGS = -lm -liconv -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal
 
 #******************************************************************************#

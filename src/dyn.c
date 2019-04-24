@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/21 22:03:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 11:14:24 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 05:25:49 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,7 +89,7 @@ void			check_keyboard(t_input *in, t_content *tmp)
 
 	i = 48;
 	maxkey = 98;
-	while (i <= maxkey)
+	while (i <= maxkey && tmp->cursor < 4)
 	{
 		if (in->key[i])
 		{

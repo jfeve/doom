@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 18:21:59 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 18:56:31 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 05:53:05 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +21,23 @@ void			check_newline(t_draw *draw, t_content *temp, t_draw *cnt)
 		draw->y = temp->y + (10 * draw->y_s);
 		cnt->x = draw->x;
 		cnt->y = draw->y;
+	}
+}
+
+void			cursor(t_draw *cnt, t_draw *draw, t_edit *edit, t_content *temp)
+{
+	char *tmp;
+
+	if (temp->cursor < 4 && edit->dyn_trigger == 1)
+	{
+		if (!(tmp = (char*)malloc(sizeof(char) *
+			ft_strlen(get_content_char(74)))))
+			return ;
+		if ((tmp = get_content_char(74)) == NULL)
+			return ;
+		draw->color = WHITE;
+		draw_norm(cnt, draw, edit, tmp);
+		draw->i += 1;
 	}
 }
 
@@ -47,6 +64,7 @@ void			draw_content(t_edit *edit, t_content *temp, t_draw *draw)
 		draw_norm(&cnt, draw, edit, tmp);
 		draw->i += 1;
 	}
+	cursor(&cnt, draw, edit, temp);
 }
 
 void			norm_string(t_content *tmp, t_draw *draw)
