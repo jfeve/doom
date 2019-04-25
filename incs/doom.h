@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 05:08:54 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 18:00:16 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,6 +51,7 @@ typedef struct					s_sec
 	unsigned short				id;
 	short						floor;
 	short						ceil;
+	int							nbvert;
 	t_lis						*vert;
 	t_lis						*enem;
 	t_lis						*obj;

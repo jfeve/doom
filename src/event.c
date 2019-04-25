@@ -6,12 +6,13 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 19:05:40 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 20:14:54 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+#include "../incs/mapf.h"
 
 void			update_event(t_input *in)
 {
@@ -88,21 +89,101 @@ void			settings_event(t_edit *edit, t_input *in)
 		in->quit = SDL_TRUE;
 }
 
+void			read_head(int fd, t_mapf *mapf)
+{
+	read(fd, &mapf->pl_x, sizeof(int));
+	read(fd, &mapf->pl_y, sizeof(int));
+	read(fd, &mapf->pl_sec, sizeof(short));
+	read(fd, &mapf->finish_x, sizeof(int));
+	read(fd, &mapf->finish_y, sizeof(int));
+	read(fd, &mapf->finish_sec, sizeof(short));
+	read(fd, &mapf->nbsect, sizeof(int));
+}
+
 void			read_map(char *mapname)
 {
-	int		fd;
-	char	magic[5];
-	char	*mapfile;
+	int			fd;
+	char		*mapfile;
+	t_mapf		*mapf;
+	int			i;
+	int			k;
 
+	i = 0;
+	mapf = (t_mapf *)malloc(sizeof(mapf));
 	mapfile = (char*)malloc(sizeof(char) *
 		(int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
 	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
 	if ((fd = open(mapfile, O_RDONLY)) != -1)
 	{
+		read(fd, &mapf->magic, 4);
+		mapf->magic[4] = '\0';
+		if (ft_strcmp(mapf->magic, "MAPF") != 0)
+		{
+			ft_putendl("Error, the map file is not valid");
+			free(mapfile);
+			close(fd);
+			return ;
+		}
 		dprintf(1, "\n------------Data Read----------\n");
-		read(fd, magic, 4);
-		magic[4] = '\0';
-		dprintf(1, "%s\n", magic);
+		read(fd, &mapf->pl_x, sizeof(int));
+		read(fd, &mapf->pl_y, sizeof(int));
+		read(fd, &mapf->pl_sec, sizeof(short));
+		read(fd, &mapf->finish_x, sizeof(int));
+		read(fd, &mapf->finish_y, sizeof(int));
+		read(fd, &mapf->finish_sec, sizeof(short));
+		read(fd, &mapf->nbsect, sizeof(int));
+		mapf->sectors = (t_sector *)malloc(sizeof(t_sector) * mapf->nbsect + 1);
+		while (i != mapf->nbsect)
+		{
+			read(fd, &mapf->sectors[i].floor, sizeof(short));
+			read(fd, &mapf->sectors[i].ceil, sizeof(short));
+			read(fd, &mapf->sectors[i].nbvert, sizeof(int));
+			mapf->sectors[i].vert =
+				(t_vertex *)malloc(sizeof(t_vertex) * mapf->sectors[i].nbvert);
+			k = 0;
+			while (k != mapf->sectors[i].nbvert)
+			{
+				read(fd, &mapf->sectors[i].vert[k].x, sizeof(int));
+				read(fd, &mapf->sectors[i].vert[k].y, sizeof(int));
+				read(fd, &mapf->sectors[i].vert[k].text, sizeof(short));
+				read(fd, &mapf->sectors[i].vert[k].neigh, sizeof(int));
+				k++;
+			}
+			i++;
+		}
+		dprintf(1, "Header : %s\n", mapf->magic);
+		dprintf(1, "Player : x = %d\n", mapf->pl_x);
+		dprintf(1, "Player : y = %d\n", mapf->pl_y);
+		dprintf(1, "Player : Sector = %d\n", mapf->pl_sec);
+		dprintf(1, "Finish : x = %d\n", mapf->finish_x);
+		dprintf(1, "Finish : y = %d\n", mapf->finish_y);
+		dprintf(1, "Finish : Sector = %d\n", mapf->finish_sec);
+		dprintf(1, "Nb sector : %d\n", mapf->nbsect);
+		dprintf(1, "Num of Bits : %lu\n", (sizeof(int) + sizeof(int)
+						+ sizeof(short) + sizeof(int) + sizeof(int)
+							+ sizeof(short) + sizeof(int)));
+		dprintf(1, "\n--------\n");
+		i = 0;
+		k = 0;
+		while (i < mapf->nbsect)
+		{
+			dprintf(1, "Sector : %d\n", i);
+			dprintf(1, " Floor : %d\n", mapf->sectors[i].floor);
+			dprintf(1, " Ceil : %d\n", mapf->sectors[i].ceil);
+			dprintf(1, " Nb Vertex %d\n", mapf->sectors[i].nbvert);
+			k = 0;
+			while (k < mapf->sectors[i].nbvert)
+			{
+				dprintf(1, "   X : %d\n", mapf->sectors[i].vert[k].x);
+				dprintf(1, "   Y : %d\n", mapf->sectors[i].vert[k].y);
+				dprintf(1, "   Texture : %d\n", mapf->sectors[i].vert[k].text);
+				dprintf(1, "   Voisins : %d\n", mapf->sectors[i].vert[k].neigh);
+				k++;
+			}
+			i++;
+		}
+		dprintf(1, "\n------------End Read----------\n");
+		close(fd);
 	}
 	else
 	{

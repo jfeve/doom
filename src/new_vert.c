@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   new_vert.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:40:20 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 22:47:06 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 18:16:38 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -83,6 +83,7 @@ int				new_vert(t_edit *edit, t_input *in)
 		{
 			if (put_new_vert(edit, in) == 0)
 				return (0);
+			edit->hl_sec->nbvert++;
 		}
 		else
 			edit->oldvert = NULL;
