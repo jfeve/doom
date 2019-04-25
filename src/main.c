@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 17:58:36 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/25 18:49:22 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -148,8 +148,8 @@ int				main(int argc, char **argv)
 {
 	if (argc == 3 && ft_strcmp(argv[1], "edit") == 0)
 		level_editor(argv[2]);
-//	else if (argc == 2)
-//		render(argv[1]);
+	else if (argc == 2)
+		render(argv[1]);
 	else
 		return (usage());
 	return (0);

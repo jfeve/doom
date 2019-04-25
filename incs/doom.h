@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 20:03:06 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/25 20:13:22 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -79,6 +79,8 @@ typedef struct					s_sdl
 	Uint32						*pix;
 	SDL_PixelFormat				*form;
 }								t_sdl;
+
+# include "mapf.h"
 
 typedef	struct					s_draw
 {
@@ -325,6 +327,8 @@ typedef struct		s_queue
 	int				sx2;
 }					t_queue;
 
+
+void				read_map(t_mapf *mapf, char *mapname);
 int					min(int a, int b);
 int					max(int a, int b);
 int					clamp(int a, int mi, int ma);

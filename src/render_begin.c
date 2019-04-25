@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 21:48:16 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/25 20:15:01 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,27 @@ t_float		create_float(float a, float b)
 	return (x);
 }
 
-void		fill_pix(t_mapf *mapf, t_input *in)
+void		draw(t_mapf *mapf, int x, int y1, int y2, int color)
+{
+	int		y;
+
+	y = 0;
+	y1 = clamp(y1, 0, WIN_H - 1);
+	y2 = clamp(y2, 0, WIN_H - 1);
+	if (y2 == y1)
+		mapf->sdl.pix[y1 * WIN_W + x] = color;
+	else if (y2 > y1)
+	{
+		y = y1;
+		while (y <= y2)
+		{
+			mapf->sdl.pix[y * WIN_W + x] = color;
+			y++;
+		}
+	}
+}
+
+void		fill_pix(t_mapf *mapf)
 {
 	int		maxq = 32;
 	t_queue	queue[maxq];
@@ -30,13 +50,13 @@ void		fill_pix(t_mapf *mapf, t_input *in)
 	t_queue	*tail = queue;
 	int		ytop[WIN_W];
 	int		ybot[WIN_W];
-	int		rendersect[nbsect];
+	int		rendersect[mapf->nbsect];
 	int		i = 0;
 
 	while (i < WIN_W)
 		ybot[i++] = WIN_H - 1;
 	i = 0;
-	while (i < nbsect)
+	while (i < mapf->nbsect)
 		rendersect[i++] = 0;
 	head->sect = mapf->player.sect;
 	head->sx1 = 0;
@@ -51,16 +71,16 @@ void		fill_pix(t_mapf *mapf, t_input *in)
 		if (!(rendersect[now.sect] & 0x21))
 			break ;
 		rendersect[now.sect]++;
-		t_sector	*sect = &mapf->sector[now.sect];
+		t_sector	*sect = &mapf->sectors[now.sect];
 		int s = 0;
-		while (s < setc->nbvert)
+		while (s < sect->nbvert)
 		{
-			float vx1 = sect->vert[s].x - player.where.x;
-			float vy1 = sect->vert[s].y - player.where.y;
-			float vx2 = sect->vert[s + 1].x - player.where.x;
-			float vy2 = sect->vert[s + 1].y - player.where.y;
-			float pcos = player.anglecos;
-			float psin = player.anglesin;
+			float vx1 = sect->vert[s].x - mapf->player.where.x;
+			float vy1 = sect->vert[s].y - mapf->player.where.y;
+			float vx2 = sect->vert[s + 1].x - mapf->player.where.x;
+			float vy2 = sect->vert[s + 1].y - mapf->player.where.y;
+			float pcos = mapf->player.anglecos;
+			float psin = mapf->player.anglesin;
 			float tx1 = vx1 * psin - vy1 * pcos;
 			float tz1 = vx1 * pcos + vy1 * psin;
 			float tx2 = vx2 * psin - vy2 * pcos;
@@ -114,50 +134,52 @@ void		fill_pix(t_mapf *mapf, t_input *in)
 			int x2 = WIN_W / 2 - (int)(tx2 * xscale2);
 			if (!(x1 >= x2 || x2 < now.sx1 || x1 > now.sx2))
 				return ;
-			float yceil = sect->ceil - player.where.z;
-			float yfloor = sect->floor - player.where.z;
-			int neigh = sect->neigh[s];
+			float yceil = sect->ceil - mapf->player.where.z;
+			float yfloor = sect->floor - mapf->player.where.z;
+			int neigh = sect->vert[s].neigh;
+			float nyceil = 0;
+			float nyfloor = 0;
 			if (neigh >= 0)
 			{
-				float nyceil = sect[neigh].ceil - player.where.z;
-				float nyfloor = sect[neigh].floor - player.where.z;
+				nyceil = sect[neigh].ceil - mapf->player.where.z;
+				nyfloor = sect[neigh].floor - mapf->player.where.z;
 			}
 			//define Yaw(y, z) (y + z * player.yaw)
-			int y1a = WIN_H / 2 - (int)((yceil + tz1 * player.yaw) * yscale1); 
-			int y1b = WIN_H / 2 - (int)((yfloor + tz1 * player.yaw) * yscale1); 
-			int y2a = WIN_H / 2 - (int)((yceil + tz2 * player.yaw) * yscale2); 
-			int y2b = WIN_H / 2 - (int)((yfloor + tz2 * player.yaw) * yscale2); 
-			int ny1a = WIN_H / 2 - (int)((nyceil + tz1 * player.yaw) * yscale1); 
-			int ny1b = WIN_H / 2 - (int)((nyfloor + tz1 * player.yaw) * yscale1); 
-			int ny2a = WIN_H / 2 - (int)((nyceil + tz2 * player.yaw) * yscale2); 
-			int ny2b = WIN_H / 2 - (int)((nyfloor + tz2 * player.yaw) * yscale2);
+			int y1a = WIN_H / 2 - (int)((yceil + tz1 * mapf->player.yaw) * yscale1); 
+			int y1b = WIN_H / 2 - (int)((yfloor + tz1 * mapf->player.yaw) * yscale1); 
+			int y2a = WIN_H / 2 - (int)((yceil + tz2 * mapf->player.yaw) * yscale2); 
+			int y2b = WIN_H / 2 - (int)((yfloor + tz2 * mapf->player.yaw) * yscale2); 
+			int ny1a = WIN_H / 2 - (int)((nyceil + tz1 * mapf->player.yaw) * yscale1); 
+			int ny1b = WIN_H / 2 - (int)((nyfloor + tz1 * mapf->player.yaw) * yscale1); 
+			int ny2a = WIN_H / 2 - (int)((nyceil + tz2 * mapf->player.yaw) * yscale2); 
+			int ny2b = WIN_H / 2 - (int)((nyfloor + tz2 * mapf->player.yaw) * yscale2);
 			int beginx = max(x1, now.sx1);
 			int	endx = min(x2, now.sx2);
 			int x = beginx;
 			while (x <= endx)
 			{
 				int ya = (x - x1) * (y2a - y1a) / (x2 - x1) + y1a;
-				int cya = clamp(ya, ytop[x], ybottom[x]);
+				int cya = clamp(ya, ytop[x], ybot[x]);
 				int yb = (x - x1) * (y2b - y1b) / (x2 - x1) + y1b;
-				int cyb = clamp(yb, ytop[x], ybottom[x]);
-				draw(x, ytop[x], cya - 1);
-				draw(x, cyb + 1, ybottom[x]);
+				int cyb = clamp(yb, ytop[x], ybot[x]);
+				draw(mapf, x, ytop[x], cya - 1, 0xFF0000FF);
+				draw(mapf, x, cyb + 1, ybot[x], 0x0000FFFF);
 				if (neigh >= 0)
 				{
 					int nya = (x - x1) * (ny2a - ny1a) / (x2 - x1) + ny1a;
-					int cnya = clamp(nya, ytop[x], ybottom[x]);
+					int cnya = clamp(nya, ytop[x], ybot[x]);
 					int nyb = (x - x1) * (ny2b - ny1b) / (x2 - x1) + ny1b;
-					int cnyb = clamp(nyb, ytop[x], ybottom[x]);
+					int cnyb = clamp(nyb, ytop[x], ybot[x]);
 					//unsigned r1 = 0x010101 * (255 - z), r2 = 0x040003 * (31 - z /8);
-					draw(x, cya, cnya - 1);
+					draw(mapf, x, cya, cnya - 1, 0x00FF00FF);
 					ytop[x] = clamp(max(cya, cnya), ytop[x], WIN_H - 1);
-					draw(x, cnyb + 1, cyb);
-					ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
+					draw(mapf, x, cnyb + 1, cyb, 0xFFFFFFFF);
+					ybot[x] = clamp(min(cyb, cnyb), 0, ybot[x]);
 				}
 				else
 				{
 					//unsigned r = 0x010101 * (255 - z);
-					draw(x, cya, cyb);
+					draw(mapf, x, cya, cyb, 0x00FF00FF);
 				}
 				x++;
 			}
@@ -181,10 +203,22 @@ void		render(char *str)
 	t_input	in;
 
 	ft_bzero(&in, sizeof(t_input));
-//	mapf = load_data(str);
+	read_map(&mapf, str);
+	sdl_init(&mapf.sdl);
+	mapf.player.where.x = mapf.pl_x;
+	mapf.player.where.y = mapf.pl_y;
+	mapf.player.sect = mapf.pl_sec;
+	mapf.player.where.z = mapf.sectors[mapf.player.sect].floor + EYE;
+	mapf.player.velo.x = 0;
+	mapf.player.velo.y = 0;
+	mapf.player.velo.z = 0;
+	mapf.player.angle = 0;
+	mapf.player.anglecos = cos(0);
+	mapf.player.anglesin = sin(0);
+	mapf.player.yaw = 0;
 	while (!in.quit)
 	{
-		fill_pix(/*&mapf, */&in);
+		fill_pix(&mapf);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix) == 0)
 			return ;
 		SDL_Delay(1000 / 60);

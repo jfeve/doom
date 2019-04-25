@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 20:14:54 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/25 20:13:50 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,11 +100,10 @@ void			read_head(int fd, t_mapf *mapf)
 	read(fd, &mapf->nbsect, sizeof(int));
 }
 
-void			read_map(char *mapname)
+void			read_map(t_mapf *mapf, char *mapname)
 {
 	int			fd;
 	char		*mapfile;
-	t_mapf		*mapf;
 	int			i;
 	int			k;
 
@@ -190,10 +189,13 @@ void			read_map(char *mapname)
 		dprintf(1, "\nThe map does not exist\n");
 		return ;
 	}
+	return ;
 }
 
 int				check_event(char *mapname, t_input *in, t_edit *edit)
 {
+	t_mapf		mapf;
+
 	if (in->key[SDL_SCANCODE_K] && edit->hl_sec && edit->dyn_trigger != 1)
 	{
 		edit->err = 2;
@@ -224,7 +226,7 @@ int				check_event(char *mapname, t_input *in, t_edit *edit)
 	if (in->key[SDL_SCANCODE_L])
 	{
 		in->key[SDL_SCANCODE_L] = SDL_FALSE;
-		read_map(mapname);
+		read_map(&mapf, mapname);
 	}
 	return (1);
 }

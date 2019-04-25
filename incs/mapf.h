@@ -6,13 +6,15 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 19:07:07 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/25 19:59:04 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #ifndef MAPF_H
 # define MAPF_H
+# include "doom.h"
+
 
 /*
 ** Coucou
@@ -26,6 +28,24 @@ typedef struct				s_enemies
 	short					sec;
 	struct s_enemies		*next;
 }							t_enemies;
+
+typedef struct				s_xyz
+{
+	float					x;
+	float					y;
+	float					z;
+}							t_xyz;
+
+typedef struct				s_player
+{
+	t_xyz					where;
+	t_xyz					velo;
+	float					angle;
+	float					anglesin;
+	float					yaw;
+	float					anglecos;
+	unsigned				sect;
+}							t_player;
 
 typedef struct				s_vertex
 {
@@ -54,6 +74,8 @@ typedef struct				s_mapf
 	short					finish_sec;
 	int						nbsect;
 	t_sector				*sectors;
+	t_player				player;
+	t_sdl					sdl;
 }							t_mapf;
 
 #endif
