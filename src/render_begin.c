@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/25 20:15:01 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/25 22:43:44 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,7 +33,8 @@ void		draw(t_mapf *mapf, int x, int y1, int y2, int color)
 		mapf->sdl.pix[y1 * WIN_W + x] = color;
 	else if (y2 > y1)
 	{
-		y = y1;
+		y = y1 + 1;
+		mapf->sdl.pix[y1 * WIN_W + x] = 0x000000FF;
 		while (y <= y2)
 		{
 			mapf->sdl.pix[y * WIN_W + x] = color;
@@ -56,6 +57,9 @@ void		fill_pix(t_mapf *mapf)
 	while (i < WIN_W)
 		ybot[i++] = WIN_H - 1;
 	i = 0;
+	while (i < WIN_W)
+		ytop[i++] = 0;
+	i = 0;
 	while (i < mapf->nbsect)
 		rendersect[i++] = 0;
 	head->sect = mapf->player.sect;
@@ -68,12 +72,12 @@ void		fill_pix(t_mapf *mapf)
 		t_queue	now = *tail;
 		if (++tail == queue + maxq)
 			tail = queue;
-		if (!(rendersect[now.sect] & 0x21))
-			break ;
+		if ((rendersect[now.sect] & 0x21))
+			continue ;
 		rendersect[now.sect]++;
 		t_sector	*sect = &mapf->sectors[now.sect];
 		int s = 0;
-		while (s < sect->nbvert)
+		while (s < sect->nbvert - 1)
 		{
 			float vx1 = sect->vert[s].x - mapf->player.where.x;
 			float vy1 = sect->vert[s].y - mapf->player.where.y;
@@ -85,12 +89,14 @@ void		fill_pix(t_mapf *mapf)
 			float tz1 = vx1 * pcos + vy1 * psin;
 			float tx2 = vx2 * psin - vy2 * pcos;
 			float tz2 = vx2 * pcos + vy2 * psin;
+			if (tz1 <= 0 && tz2 <= 0)
+				continue ;
 			if (tz1 <= 0 || tz2 < 0)
 			{
-				float nearz = 1e-4f;
-				float farz = 5;
-				float nearside = 1e-5f;
-				float farside = 20.0f;
+				float nearz = 0.0001f;
+				float farz = 5.f;
+				float nearside = 0.00001f;
+				float farside = 20.f;
 				t_float a = create_float(tx1, tz1);
 				t_float b = create_float(tx2, tz2);
 				t_float c = create_float(-nearside, nearz);
@@ -126,14 +132,15 @@ void		fill_pix(t_mapf *mapf)
 					}
 				}
 			}
-			float xscale1 = hfov / tz1;
-			float yscale1 = vfov / tz1;
-			int x1 = WIN_W / 2 - (int)(tx1 * xscale1);
-			float xscale2 = hfov / tz2;
-			float yscale2 = vfov / tz2;
+			float xscale1 = HFOV / tz1;
+			float yscale1 = VFOV / tz1;
+			int x1 = (tx1 * xscale1);
+			x1 = x1 * -1 + WIN_W / 2;
+			float xscale2 = HFOV / tz2;
+			float yscale2 = VFOV / tz2;
 			int x2 = WIN_W / 2 - (int)(tx2 * xscale2);
-			if (!(x1 >= x2 || x2 < now.sx1 || x1 > now.sx2))
-				return ;
+//			if (x1 >= x2 || x2 < now.sx2 || x1 > now.sx1)
+//				continue ;
 			float yceil = sect->ceil - mapf->player.where.z;
 			float yfloor = sect->floor - mapf->player.where.z;
 			int neigh = sect->vert[s].neigh;
@@ -144,11 +151,11 @@ void		fill_pix(t_mapf *mapf)
 				nyceil = sect[neigh].ceil - mapf->player.where.z;
 				nyfloor = sect[neigh].floor - mapf->player.where.z;
 			}
-			//define Yaw(y, z) (y + z * player.yaw)
-			int y1a = WIN_H / 2 - (int)((yceil + tz1 * mapf->player.yaw) * yscale1); 
-			int y1b = WIN_H / 2 - (int)((yfloor + tz1 * mapf->player.yaw) * yscale1); 
-			int y2a = WIN_H / 2 - (int)((yceil + tz2 * mapf->player.yaw) * yscale2); 
-			int y2b = WIN_H / 2 - (int)((yfloor + tz2 * mapf->player.yaw) * yscale2); 
+# define Yaw(y, z) (y + z * mapf->player.yaw)
+			int y1a = WIN_H / 2 - (int)(Yaw(yceil, tz1) * yscale1); 
+			int y1b = WIN_H / 2 - (int)(Yaw(yfloor, tz1) * yscale1); 
+			int y2a = WIN_H / 2 - (int)(Yaw(yceil, tz2) * yscale2); 
+			int y2b = WIN_H / 2 - (int)(Yaw(yfloor, tz2) * yscale2); 
 			int ny1a = WIN_H / 2 - (int)((nyceil + tz1 * mapf->player.yaw) * yscale1); 
 			int ny1b = WIN_H / 2 - (int)((nyfloor + tz1 * mapf->player.yaw) * yscale1); 
 			int ny2a = WIN_H / 2 - (int)((nyceil + tz2 * mapf->player.yaw) * yscale2); 
@@ -158,10 +165,18 @@ void		fill_pix(t_mapf *mapf)
 			int x = beginx;
 			while (x <= endx)
 			{
-				int ya = (x - x1) * (y2a - y1a) / (x2 - x1) + y1a;
+				int ya = ((x - x1) * (y2a - y1a)) / (x2 - x1) + y1a;
+				if (now.sect == 0)
+					dprintf(1, "ya = %d\t", ya);
 				int cya = clamp(ya, ytop[x], ybot[x]);
-				int yb = (x - x1) * (y2b - y1b) / (x2 - x1) + y1b;
+				if (now.sect == 0)
+					dprintf(1, "cya = %d\n", cya);
+				int yb = ((x - x1) * (y2b - y1b)) / (x2 - x1) + y1b;
+				if (now.sect == 0)
+					dprintf(1, "yb = %d\t", yb);
 				int cyb = clamp(yb, ytop[x], ybot[x]);
+				if (now.sect == 0)
+					dprintf(1, "cyb = %d\n", cyb);
 				draw(mapf, x, ytop[x], cya - 1, 0xFF0000FF);
 				draw(mapf, x, cyb + 1, ybot[x], 0x0000FFFF);
 				if (neigh >= 0)
@@ -171,14 +186,23 @@ void		fill_pix(t_mapf *mapf)
 					int nyb = (x - x1) * (ny2b - ny1b) / (x2 - x1) + ny1b;
 					int cnyb = clamp(nyb, ytop[x], ybot[x]);
 					//unsigned r1 = 0x010101 * (255 - z), r2 = 0x040003 * (31 - z /8);
-					draw(mapf, x, cya, cnya - 1, 0x00FF00FF);
+					if (x == beginx || x == endx)
+						draw(mapf, x, cya, cnya - 1, 0x000000FF);
+					else
+						draw(mapf, x, cya, cnya - 1, 0x00FF00FF);
 					ytop[x] = clamp(max(cya, cnya), ytop[x], WIN_H - 1);
-					draw(mapf, x, cnyb + 1, cyb, 0xFFFFFFFF);
+					if (x == beginx || x == endx)
+						draw(mapf, x, cnyb + 1, cyb, 0x000000FF);
+					else
+						draw(mapf, x, cnyb + 1, cyb, 0x00FFFFFF);
 					ybot[x] = clamp(min(cyb, cnyb), 0, ybot[x]);
 				}
 				else
 				{
 					//unsigned r = 0x010101 * (255 - z);
+					if (x == beginx || x == endx)
+					draw(mapf, x, cya, cyb, 0x000000FF);
+					else
 					draw(mapf, x, cya, cyb, 0x00FF00FF);
 				}
 				x++;
@@ -203,12 +227,13 @@ void		render(char *str)
 	t_input	in;
 
 	ft_bzero(&in, sizeof(t_input));
+	ft_bzero(&mapf, sizeof(t_mapf));
 	read_map(&mapf, str);
 	sdl_init(&mapf.sdl);
 	mapf.player.where.x = mapf.pl_x;
 	mapf.player.where.y = mapf.pl_y;
 	mapf.player.sect = mapf.pl_sec;
-	mapf.player.where.z = mapf.sectors[mapf.player.sect].floor + EYE;
+	mapf.player.where.z = mapf.sectors[mapf.pl_sec].floor + EYE;
 	mapf.player.velo.x = 0;
 	mapf.player.velo.y = 0;
 	mapf.player.velo.z = 0;
@@ -216,6 +241,12 @@ void		render(char *str)
 	mapf.player.anglecos = cos(0);
 	mapf.player.anglesin = sin(0);
 	mapf.player.yaw = 0;
+	dprintf(1, "height of 1st sec = %d\n", mapf.sectors[0].ceil);
+	dprintf(1, "height of 1st sec = %d\n", mapf.sectors[0].floor);
+	dprintf(1, "height of 2st sec = %d\n", mapf.sectors[1].ceil);
+	dprintf(1, "height of 2st sec = %d\n", mapf.sectors[1].floor);
+	dprintf(1, "height of 3st sec = %d\n", mapf.sectors[2].ceil);
+	dprintf(1, "height of 3st sec = %d\n", mapf.sectors[2].floor);
 	while (!in.quit)
 	{
 		fill_pix(&mapf);

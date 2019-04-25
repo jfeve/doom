@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/25 20:13:50 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/25 20:31:40 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -108,7 +108,6 @@ void			read_map(t_mapf *mapf, char *mapname)
 	int			k;
 
 	i = 0;
-	mapf = (t_mapf *)malloc(sizeof(mapf));
 	mapfile = (char*)malloc(sizeof(char) *
 		(int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
 	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");

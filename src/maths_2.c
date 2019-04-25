@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 16:28:51 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 17:14:59 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/25 22:29:06 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,5 +30,5 @@ int			vxs(int ax, int ay, int bx, int by)
 
 float		f_vxs(float ax, float ay, float bx, float by)
 {
-	return (ax * by - ay * bx);
+	return ((ax * by) - (ay * bx));
 }
