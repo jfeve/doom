@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 16:22:44 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 16:08:07 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 18:00:31 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,6 +37,19 @@ static void		add_sec(t_edit *edit)
 	tmp->next = sec;
 }
 
+int				count_vert(t_lis *vert)
+{
+	int		nb;
+
+	nb = 0;
+	while (vert != NULL)
+	{
+		nb++;
+		vert = vert->next;
+	}
+	return (nb);
+}
+
 void			set_sect(t_edit *edit)
 {
 	t_sec		*tmp;
@@ -53,6 +66,7 @@ void			set_sect(t_edit *edit)
 			tmp = tmp->next;
 	}
 	tmp->vert = edit->vert;
+	tmp->nbvert = count_vert(edit->vert);
 	tmp->id = edit->nbsect;
 	tmp->vert->col = WHITE;
 	tmp->floor = -1;

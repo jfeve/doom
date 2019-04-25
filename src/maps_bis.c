@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:07:42 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 16:54:56 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 19:58:24 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,8 +20,7 @@ int						save_d(int fd, t_lis *temp)
 		write(fd, &temp->x, sizeof(int));
 		write(fd, &temp->y, sizeof(int));
 		write(fd, &temp->text, sizeof(short));
-		write(fd, &temp->neigh, sizeof(short));
-		write(fd, &temp->port, sizeof(short));
+		write(fd, &temp->neigh, sizeof(int));
 		temp = temp->next;
 	}
 	free(temp);

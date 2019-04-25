@@ -51,6 +51,7 @@ typedef struct					s_sec
 	unsigned short				id;
 	short						floor;
 	short						ceil;
+	int							nbvert;
 	t_lis						*vert;
 	t_lis						*enem;
 	t_lis						*obj;
