@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   main.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 12:04:39 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 15:18:23 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,11 +53,6 @@ int				get_update(t_edit *edit, t_input *in, char *mapname)
 		draw_vert(edit->finish, edit);
 	prepare_draw(edit);
 	return (1);
-}
-
-void			render(void)
-{
-	return ;
 }
 
 int				main(int argc, char **argv)
