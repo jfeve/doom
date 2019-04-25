@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 20:14:54 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/25 20:04:35 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,7 +100,7 @@ void			read_head(int fd, t_mapf *mapf)
 	read(fd, &mapf->nbsect, sizeof(int));
 }
 
-void			read_map(char *mapname)
+t_mapf			*read_map(char *mapname)
 {
 	int			fd;
 	char		*mapfile;
@@ -122,7 +122,7 @@ void			read_map(char *mapname)
 			ft_putendl("Error, the map file is not valid");
 			free(mapfile);
 			close(fd);
-			return ;
+			return NULL;
 		}
 		dprintf(1, "\n------------Data Read----------\n");
 		read(fd, &mapf->pl_x, sizeof(int));
@@ -182,13 +182,14 @@ void			read_map(char *mapname)
 			}
 			i++;
 		}
+		return (mapf);
 		dprintf(1, "\n------------End Read----------\n");
 		close(fd);
 	}
 	else
 	{
 		dprintf(1, "\nThe map does not exist\n");
-		return ;
+		return NULL;
 	}
 }
 
