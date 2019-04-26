@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 18:50:04 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 19:59:45 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,13 +53,17 @@ t_mapf			*read_map(t_mapf *mapf, char *mapname)
 		read(fd, &mapf->finish_x, sizeof(int));
 		read(fd, &mapf->finish_y, sizeof(int));
 		read(fd, &mapf->finish_sec, sizeof(short));
+		read(fd, &mapf->difficulty, sizeof(short));
 		read(fd, &mapf->nbsect, sizeof(int));
 		mapf->sectors = (t_sector *)malloc(sizeof(t_sector) * mapf->nbsect + 1);
 		while (i != mapf->nbsect)
 		{
+			read(fd, &mapf->sectors[i].gravity, sizeof(short));
 			read(fd, &mapf->sectors[i].floor, sizeof(short));
 			read(fd, &mapf->sectors[i].ceil, sizeof(short));
 			read(fd, &mapf->sectors[i].nbvert, sizeof(int));
+			read(fd, &mapf->sectors[i].nbobjs, sizeof(int));
+			read(fd, &mapf->sectors[i].nbenem, sizeof(int));
 			mapf->sectors[i].vert =
 				(t_vertex *)malloc(sizeof(t_vertex) * mapf->sectors[i].nbvert);
 			k = 0;
@@ -101,6 +105,7 @@ static	int				putinfo_head(int fd, t_edit *edit)
 			write(fd, &edit->finish->y, sizeof(int));
 			write(fd, &edit->finish->text, sizeof(short));
 			write(fd, &edit->nbsect, sizeof(int));
+			write(fd, &edit->diff, sizeof(short));
 		}
 		return (1);
 	}
@@ -121,9 +126,12 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 		if (tmp->floor == -1 && tmp->ceil == -1)
 			return (err_map("A sector has some unset data", temp));
 		temp = tmp->vert;
+		write(fd, &tmp->gravity, sizeof(short));
 		write(fd, &tmp->floor, sizeof(short));
 		write(fd, &tmp->ceil, sizeof(short));
 		write(fd, &tmp->nbvert, sizeof(int));
+		write(fd, &tmp->objscount, sizeof(int));
+		write(fd, &tmp->enemcount, sizeof(int));
 		putinfo_sec(fd, temp, tmp);
 		tmp = tmp->next;
 	}

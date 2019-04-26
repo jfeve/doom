@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 19:07:07 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 20:00:18 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,7 +52,9 @@ typedef struct				s_mapf
 	int						finish_x;
 	int						finish_y;
 	short					finish_sec;
-	int						nbsect;
+	short					nbsect;
+	short					nbobjs;
+	short					nbenem;
 	t_sector				*sectors;
 }							t_mapf;
 
