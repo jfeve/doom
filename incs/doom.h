@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 18:00:16 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 19:40:26 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,7 +21,7 @@
 # include "../lib/SDL2_ttf.framework/Headers/SDL_ttf.h"
 # include "../lib/SDL2_mixer.framework/Headers/SDL_mixer.h"
 # include <stdio.h>
-
+# include "../incs/mapf.h"
 typedef struct					s_float
 {
 	float						x;
@@ -51,7 +51,10 @@ typedef struct					s_sec
 	unsigned short				id;
 	short						floor;
 	short						ceil;
+	short						gravity;
 	int							nbvert;
+	int							enemcount;
+	int							objscount;
 	t_lis						*vert;
 	t_lis						*enem;
 	t_lis						*obj;
@@ -210,13 +213,13 @@ void							set_sect(t_edit *edit);
 void							draw_sec(t_edit *edit);
 
 /*
-** Print
+** Print // A DELETE PLUS TARD
 */
 void							print_info(t_edit *edit, t_input *in);
 void							print_content(t_edit *edit);
 void							print_lis(t_lis **vert);
 void							print_sec(t_sec *sec);
-
+void							print_read(t_mapf *mapf);
 /*
 ** HUD
 */
@@ -255,6 +258,8 @@ int								mcheck_d(t_lis *temp);
 int								mcheck_sec(t_sec *tmp);
 int								err_map(char *msg, t_lis *temp);
 int								save_objs(int fd, t_lis *temp);
+t_mapf							*read_map(t_mapf *mapf, char *mapname);
+
 /*
 ** Input Detection
 */

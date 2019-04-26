@@ -6,12 +6,84 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 19:58:15 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 18:50:04 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+void			read_head(int fd, t_mapf *mapf)
+{
+	read(fd, &mapf->pl_x, sizeof(int));
+	read(fd, &mapf->pl_y, sizeof(int));
+	read(fd, &mapf->pl_sec, sizeof(short));
+	read(fd, &mapf->finish_x, sizeof(int));
+	read(fd, &mapf->finish_y, sizeof(int));
+	read(fd, &mapf->finish_sec, sizeof(short));
+	read(fd, &mapf->nbsect, sizeof(int));
+}
+
+t_mapf			*read_map(t_mapf *mapf, char *mapname)
+{
+	int			fd;
+	char		*mapfile;
+	int			i;
+	int			k;
+
+	i = 0;
+	mapfile = (char*)malloc(sizeof(char) *
+		(int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
+	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
+	if ((fd = open(mapfile, O_RDONLY)) != -1)
+	{
+		read(fd, &mapf->magic, 4);
+		mapf->magic[4] = '\0';
+		if (ft_strcmp(mapf->magic, "MAPF") != 0)
+		{
+			ft_putendl("Error, the map file is not valid");
+			free(mapfile);
+			close(fd);
+			return NULL;
+		}
+		dprintf(1, "\n------------Data Read----------\n");
+		read(fd, &mapf->pl_x, sizeof(int));
+		read(fd, &mapf->pl_y, sizeof(int));
+		read(fd, &mapf->pl_sec, sizeof(short));
+		read(fd, &mapf->finish_x, sizeof(int));
+		read(fd, &mapf->finish_y, sizeof(int));
+		read(fd, &mapf->finish_sec, sizeof(short));
+		read(fd, &mapf->nbsect, sizeof(int));
+		mapf->sectors = (t_sector *)malloc(sizeof(t_sector) * mapf->nbsect + 1);
+		while (i != mapf->nbsect)
+		{
+			read(fd, &mapf->sectors[i].floor, sizeof(short));
+			read(fd, &mapf->sectors[i].ceil, sizeof(short));
+			read(fd, &mapf->sectors[i].nbvert, sizeof(int));
+			mapf->sectors[i].vert =
+				(t_vertex *)malloc(sizeof(t_vertex) * mapf->sectors[i].nbvert);
+			k = 0;
+			while (k != mapf->sectors[i].nbvert)
+			{
+				read(fd, &mapf->sectors[i].vert[k].x, sizeof(int));
+				read(fd, &mapf->sectors[i].vert[k].y, sizeof(int));
+				read(fd, &mapf->sectors[i].vert[k].text, sizeof(short));
+				read(fd, &mapf->sectors[i].vert[k].neigh, sizeof(int));
+				k++;
+			}
+			i++;
+		}
+		print_read(mapf);
+		return (mapf);
+		dprintf(1, "\n------------End Read----------\n");
+		close(fd);
+	}
+	else
+	{
+		dprintf(1, "\nThe map does not exist\n");
+		return NULL;
+	}
+}
 
 static	int				putinfo_head(int fd, t_edit *edit)
 {

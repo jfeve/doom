@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:56:35 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 11:46:27 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 18:00:27 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -82,7 +82,14 @@ void			handle_res(t_edit *edit)
 	t_lis		*tmp;
 
 	tmp = edit->hl_sec->vert;
-	if (edit->hl_sec->floor == -1)
+	if (edit->hl_sec->gravity == -1)
+	{
+		if (edit->hl_sec->gravity > 5)
+			return ;
+		else
+			edit->hl_sec->gravity = edit->input_res;
+	}
+	else if (edit->hl_sec->floor == -1)
 		edit->hl_sec->floor = edit->input_res;
 	else if (edit->hl_sec->ceil == -1)
 	{

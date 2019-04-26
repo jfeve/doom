@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 04:45:26 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 18:47:02 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -86,4 +86,7 @@
 # define VEC "vec \0"
 # define OBJ "obj \0"
 # define ENEM "enem \0"
+# define DIFICULTY "Diff \0"
+# define PLAYER_OR "player look \0"
+# define GRAVITY "gravity \0"
 #endif

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 05:41:02 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 18:01:38 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,7 @@ int				init_content(t_edit *edit)
 	edit->con = create_content();
 	if (edit->con == NULL)
 		return (0);
-	edit->con->x = WIN_W / 3;
+	edit->con->x = WIN_W / 2;
 	edit->con->y = 35;
 	edit->con->display = 0;
 	edit->con->cursor = 0;
