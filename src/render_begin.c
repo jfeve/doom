@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/25 22:43:44 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 19:41:56 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,20 +77,34 @@ void		fill_pix(t_mapf *mapf)
 		rendersect[now.sect]++;
 		t_sector	*sect = &mapf->sectors[now.sect];
 		int s = 0;
-		while (s < sect->nbvert - 1)
+		while (s < sect->nbvert)
 		{
-			float vx1 = sect->vert[s].x - mapf->player.where.x;
-			float vy1 = sect->vert[s].y - mapf->player.where.y;
-			float vx2 = sect->vert[s + 1].x - mapf->player.where.x;
-			float vy2 = sect->vert[s + 1].y - mapf->player.where.y;
+			float vx1;
+			float vy1;
+			float vx2;
+			float vy2;
+			if (s == sect->nbvert - 1)
+			{
+				vx1 = sect->vert[s].x - mapf->player.where.x;
+				vy1 = sect->vert[s].y - mapf->player.where.y;
+				vx2 = sect->vert[0].x - mapf->player.where.x;
+				vy2 = sect->vert[0].y - mapf->player.where.y;
+			}
+			else
+			{
+				vx1 = sect->vert[s].x - mapf->player.where.x;
+				vy1 = sect->vert[s].y - mapf->player.where.y;
+				vx2 = sect->vert[s + 1].x - mapf->player.where.x;
+				vy2 = sect->vert[s + 1].y - mapf->player.where.y;
+			}
 			float pcos = mapf->player.anglecos;
 			float psin = mapf->player.anglesin;
 			float tx1 = vx1 * psin - vy1 * pcos;
 			float tz1 = vx1 * pcos + vy1 * psin;
 			float tx2 = vx2 * psin - vy2 * pcos;
 			float tz2 = vx2 * pcos + vy2 * psin;
-			if (tz1 <= 0 && tz2 <= 0)
-				continue ;
+//			if (tz1 <= 0 && tz2 <= 0)
+//				continue ;
 			if (tz1 <= 0 || tz2 < 0)
 			{
 				float nearz = 0.0001f;
@@ -166,19 +180,11 @@ void		fill_pix(t_mapf *mapf)
 			while (x <= endx)
 			{
 				int ya = ((x - x1) * (y2a - y1a)) / (x2 - x1) + y1a;
-				if (now.sect == 0)
-					dprintf(1, "ya = %d\t", ya);
 				int cya = clamp(ya, ytop[x], ybot[x]);
-				if (now.sect == 0)
-					dprintf(1, "cya = %d\n", cya);
 				int yb = ((x - x1) * (y2b - y1b)) / (x2 - x1) + y1b;
-				if (now.sect == 0)
-					dprintf(1, "yb = %d\t", yb);
 				int cyb = clamp(yb, ytop[x], ybot[x]);
-				if (now.sect == 0)
-					dprintf(1, "cyb = %d\n", cyb);
-				draw(mapf, x, ytop[x], cya - 1, 0xFF0000FF);
-				draw(mapf, x, cyb + 1, ybot[x], 0x0000FFFF);
+				draw(mapf, x, ytop[x], cya - 1, PURPLE);
+				draw(mapf, x, cyb + 1, ybot[x], BROWN);
 				if (neigh >= 0)
 				{
 					int nya = (x - x1) * (ny2a - ny1a) / (x2 - x1) + ny1a;
@@ -189,12 +195,12 @@ void		fill_pix(t_mapf *mapf)
 					if (x == beginx || x == endx)
 						draw(mapf, x, cya, cnya - 1, 0x000000FF);
 					else
-						draw(mapf, x, cya, cnya - 1, 0x00FF00FF);
+						draw(mapf, x, cya, cnya - 1, GREEN);
 					ytop[x] = clamp(max(cya, cnya), ytop[x], WIN_H - 1);
 					if (x == beginx || x == endx)
 						draw(mapf, x, cnyb + 1, cyb, 0x000000FF);
 					else
-						draw(mapf, x, cnyb + 1, cyb, 0x00FFFFFF);
+						draw(mapf, x, cnyb + 1, cyb, CYAN);
 					ybot[x] = clamp(min(cyb, cnyb), 0, ybot[x]);
 				}
 				else
@@ -203,7 +209,7 @@ void		fill_pix(t_mapf *mapf)
 					if (x == beginx || x == endx)
 					draw(mapf, x, cya, cyb, 0x000000FF);
 					else
-					draw(mapf, x, cya, cyb, 0x00FF00FF);
+					draw(mapf, x, cya, cyb, WF_COL);
 				}
 				x++;
 			}
@@ -221,6 +227,65 @@ void		fill_pix(t_mapf *mapf)
 	}
 }
 
+void		mouse_aim(t_mapf *mapf, t_input *in)
+{
+	float yaw = 0;
+
+	mapf->player.angle += in->xrel * 0.03f;
+	mapf->player.anglesin = sin(mapf->player.angle);
+	mapf->player.anglecos = cos(mapf->player.angle);
+	yaw = f_clamp(yaw - in->yrel * 0.05f, -5, 5);
+	mapf->player.yaw -= yaw - mapf->player.velo.z * 0.5f;
+	mapf->player.yaw = f_clamp(mapf->player.yaw, -5, 4);
+}
+
+void		move_chara(t_mapf *mapf, t_input *in)
+{
+	float	move_vec[2];
+	float acc = 0.4f;
+
+	move_vec[0] = 0.0f;
+	move_vec[1] = 0.0f;
+	if (in->key[SDL_SCANCODE_W])
+	{
+		move_vec[0] += mapf->player.anglecos*0.2f;
+		move_vec[1] += mapf->player.anglesin*0.2f;
+		in->key[SDL_SCANCODE_W] = SDL_FALSE;
+	}
+	if (in->key[SDL_SCANCODE_S])
+	{
+		move_vec[0] -= mapf->player.anglecos*0.2f;
+		move_vec[1] -= mapf->player.anglesin*0.2f;
+		in->key[SDL_SCANCODE_S] = SDL_FALSE;
+	}
+	if (in->key[SDL_SCANCODE_A])
+	{
+		move_vec[0] += mapf->player.anglesin*0.2f;
+		move_vec[1] -= mapf->player.anglecos*0.2f;
+		in->key[SDL_SCANCODE_A] = SDL_FALSE;
+	}
+	if (in->key[SDL_SCANCODE_D])
+	{
+		move_vec[0] -= mapf->player.anglesin*0.2f;
+		move_vec[1] += mapf->player.anglecos*0.2f;
+		in->key[SDL_SCANCODE_D] = SDL_FALSE;
+	}
+		mapf->player.velo.x = mapf->player.velo.x * (1 - acc) + move_vec[0]
+		* acc;
+		mapf->player.velo.y = mapf->player.velo.y * (1 - acc) + move_vec[1]
+		* acc;
+		mapf->player.where.x += mapf->player.velo.x;
+		mapf->player.where.y += mapf->player.velo.y;
+}
+
+void		render_check_event(t_mapf *mapf, t_input *in)
+{
+	move_chara(mapf, in);
+	mouse_aim(mapf, in);
+	if (in->key[SDL_SCANCODE_ESCAPE])
+		in->quit = SDL_TRUE;
+}
+
 void		render(char *str)
 {
 	t_mapf	mapf;
@@ -230,6 +295,9 @@ void		render(char *str)
 	ft_bzero(&mapf, sizeof(t_mapf));
 	read_map(&mapf, str);
 	sdl_init(&mapf.sdl);
+	SDL_WarpMouseInWindow(mapf.sdl.win, WIN_W / 2, WIN_H / 2);
+	if ((SDL_SetRelativeMouseMode(SDL_ENABLE)) != 0)
+		return ;
 	mapf.player.where.x = mapf.pl_x;
 	mapf.player.where.y = mapf.pl_y;
 	mapf.player.sect = mapf.pl_sec;
@@ -241,14 +309,12 @@ void		render(char *str)
 	mapf.player.anglecos = cos(0);
 	mapf.player.anglesin = sin(0);
 	mapf.player.yaw = 0;
-	dprintf(1, "height of 1st sec = %d\n", mapf.sectors[0].ceil);
-	dprintf(1, "height of 1st sec = %d\n", mapf.sectors[0].floor);
-	dprintf(1, "height of 2st sec = %d\n", mapf.sectors[1].ceil);
-	dprintf(1, "height of 2st sec = %d\n", mapf.sectors[1].floor);
-	dprintf(1, "height of 3st sec = %d\n", mapf.sectors[2].ceil);
-	dprintf(1, "height of 3st sec = %d\n", mapf.sectors[2].floor);
 	while (!in.quit)
 	{
+		ft_bzero(&in, sizeof(t_input));
+		clear_tab(&mapf.sdl);
+		update_event(&in);
+		render_check_event(&mapf, &in);
 		fill_pix(&mapf);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix) == 0)
 			return ;
