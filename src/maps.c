@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 19:59:45 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 20:11:00 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,7 +53,7 @@ t_mapf			*read_map(t_mapf *mapf, char *mapname)
 		read(fd, &mapf->finish_x, sizeof(int));
 		read(fd, &mapf->finish_y, sizeof(int));
 		read(fd, &mapf->finish_sec, sizeof(short));
-		read(fd, &mapf->difficulty, sizeof(short));
+		read(fd, &mapf->diff, sizeof(short));
 		read(fd, &mapf->nbsect, sizeof(int));
 		mapf->sectors = (t_sector *)malloc(sizeof(t_sector) * mapf->nbsect + 1);
 		while (i != mapf->nbsect)

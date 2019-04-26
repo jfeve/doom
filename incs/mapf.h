@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 20:00:18 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 20:21:30 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,10 +22,18 @@ typedef struct				s_enemies
 	int						x;
 	int						y;
 	unsigned	int			life;
+	int						display;
 	int						type;
 	short					sec;
-	struct s_enemies		*next;
 }							t_enemies;
+typedef struct				s_objects
+{
+	int						x;
+	int						y;
+	int						type;
+	int						hitbox;
+	short					sec;
+}							t_objs;
 
 typedef struct				s_vertex
 {
@@ -55,7 +63,11 @@ typedef struct				s_mapf
 	short					nbsect;
 	short					nbobjs;
 	short					nbenem;
+	short					diff;
 	t_sector				*sectors;
+	t_enemies				*enemies;
+	t_objs					*objects;
+	t_player				
 }							t_mapf;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 20:00:22 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 20:10:27 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -129,7 +129,7 @@ typedef struct					s_edit
 	int							hl;
 	int							sec;
 	int							err;
-	int							diff;
+	short						diff;
 	t_sec						*hl_sec;
 	t_lis						*hl_vert;
 	t_lis						*oldvert;
