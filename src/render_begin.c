@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 19:41:56 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 20:26:05 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -179,9 +179,11 @@ void		fill_pix(t_mapf *mapf)
 			int x = beginx;
 			while (x <= endx)
 			{
+				if (x2 - x1 == 0)
+					break ;
 				int ya = ((x - x1) * (y2a - y1a)) / (x2 - x1) + y1a;
-				int cya = clamp(ya, ytop[x], ybot[x]);
 				int yb = ((x - x1) * (y2b - y1b)) / (x2 - x1) + y1b;
+				int cya = clamp(ya, ytop[x], ybot[x]);
 				int cyb = clamp(yb, ytop[x], ybot[x]);
 				draw(mapf, x, ytop[x], cya - 1, PURPLE);
 				draw(mapf, x, cyb + 1, ybot[x], BROWN);
@@ -242,7 +244,7 @@ void		mouse_aim(t_mapf *mapf, t_input *in)
 void		move_chara(t_mapf *mapf, t_input *in)
 {
 	float	move_vec[2];
-	float acc = 0.4f;
+	float acc = 0.2f;
 
 	move_vec[0] = 0.0f;
 	move_vec[1] = 0.0f;
@@ -250,32 +252,28 @@ void		move_chara(t_mapf *mapf, t_input *in)
 	{
 		move_vec[0] += mapf->player.anglecos*0.2f;
 		move_vec[1] += mapf->player.anglesin*0.2f;
-		in->key[SDL_SCANCODE_W] = SDL_FALSE;
 	}
 	if (in->key[SDL_SCANCODE_S])
 	{
 		move_vec[0] -= mapf->player.anglecos*0.2f;
 		move_vec[1] -= mapf->player.anglesin*0.2f;
-		in->key[SDL_SCANCODE_S] = SDL_FALSE;
 	}
 	if (in->key[SDL_SCANCODE_A])
 	{
 		move_vec[0] += mapf->player.anglesin*0.2f;
 		move_vec[1] -= mapf->player.anglecos*0.2f;
-		in->key[SDL_SCANCODE_A] = SDL_FALSE;
 	}
 	if (in->key[SDL_SCANCODE_D])
 	{
 		move_vec[0] -= mapf->player.anglesin*0.2f;
 		move_vec[1] += mapf->player.anglecos*0.2f;
-		in->key[SDL_SCANCODE_D] = SDL_FALSE;
 	}
-		mapf->player.velo.x = mapf->player.velo.x * (1 - acc) + move_vec[0]
-		* acc;
-		mapf->player.velo.y = mapf->player.velo.y * (1 - acc) + move_vec[1]
-		* acc;
-		mapf->player.where.x += mapf->player.velo.x;
-		mapf->player.where.y += mapf->player.velo.y;
+	mapf->player.velo.x = mapf->player.velo.x * (1 - acc) + move_vec[0]
+	* acc;
+	mapf->player.velo.y = mapf->player.velo.y * (1 - acc) + move_vec[1]
+	* acc;
+	mapf->player.where.x += mapf->player.velo.x;
+	mapf->player.where.y += mapf->player.velo.y;
 }
 
 void		render_check_event(t_mapf *mapf, t_input *in)
@@ -311,7 +309,8 @@ void		render(char *str)
 	mapf.player.yaw = 0;
 	while (!in.quit)
 	{
-		ft_bzero(&in, sizeof(t_input));
+		in.xrel = 0;
+		in.yrel = 0;
 		clear_tab(&mapf.sdl);
 		update_event(&in);
 		render_check_event(&mapf, &in);

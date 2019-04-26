@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:40:34 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/25 20:04:16 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 20:19:34 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,7 +39,7 @@ int				sdl_init(t_sdl *sdl)
 			SDL_WINDOW_ALWAYS_ON_TOP);
 	if (sdl->win == NULL)
 		return (free_sdl(sdl, 1));
-	sdl->ren = SDL_CreateRenderer(sdl->win, -1, SDL_RENDERER_ACCELERATED);
+	sdl->ren = SDL_CreateRenderer(sdl->win, -1, SDL_RENDERER_PRESENTVSYNC);
 	if (sdl->ren == NULL)
 		return (free_sdl(sdl, 2));
 	if (!(sdl->pix = malloc(sizeof(Uint32) * (WIN_W * WIN_H))))
