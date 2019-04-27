@@ -25,7 +25,7 @@ int				init_content(t_edit *edit)
 	edit->con = create_content();
 	if (edit->con == NULL)
 		return (0);
-	edit->con->x = WIN_W / 3;
+	edit->con->x = WIN_W / 2;
 	edit->con->y = 35;
 	edit->con->display = 0;
 	edit->con->cursor = 0;

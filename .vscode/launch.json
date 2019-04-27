@@ -15,6 +15,18 @@
 			"environment": [],
 			"externalConsole": false,
 			"MIMode": "lldb"
+		},
+		{
+			"name": "Launch Game",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/doom-nukem",
+			"args": ["mapee"],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "lldb"
 		}
 	]
 }

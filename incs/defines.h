@@ -91,4 +91,7 @@
 # define HEADMARGE 1
 # define HFOV (0.73f * WIN_H)
 # define VFOV (0.2f * WIN_H)
+# define DIFICULTY "Diff \0"
+# define PLAYER_OR "player look \0"
+# define GRAVITY "gravity \0"
 #endif

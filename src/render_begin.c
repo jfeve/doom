@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   render_begin.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 20:26:05 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 14:24:37 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -296,16 +296,9 @@ void		render(char *str)
 	SDL_WarpMouseInWindow(mapf.sdl.win, WIN_W / 2, WIN_H / 2);
 	if ((SDL_SetRelativeMouseMode(SDL_ENABLE)) != 0)
 		return ;
-	mapf.player.where.x = mapf.pl_x;
-	mapf.player.where.y = mapf.pl_y;
-	mapf.player.sect = mapf.pl_sec;
-	mapf.player.where.z = mapf.sectors[mapf.pl_sec].floor + EYE;
 	mapf.player.velo.x = 0;
 	mapf.player.velo.y = 0;
 	mapf.player.velo.z = 0;
-	mapf.player.angle = 0;
-	mapf.player.anglecos = cos(0);
-	mapf.player.anglesin = sin(0);
 	mapf.player.yaw = 0;
 	while (!in.quit)
 	{

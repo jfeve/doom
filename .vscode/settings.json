@@ -3,6 +3,8 @@
 	"editor.insertSpaces": false,
 	"editor.tabSize": 4,
 	"files.associations": {
-		"doom.h": "c"
+		"doom.h": "c",
+		"mapf.h": "c",
+		"stdio.h": "c"
 	}
 }
