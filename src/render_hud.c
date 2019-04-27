@@ -6,12 +6,16 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 13:39:41 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 13:50:01 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+/*
+** Frees all the hud textures.
+*/
 
 static void	free_hud(t_hud *hud)
 {
@@ -23,6 +27,11 @@ static void	free_hud(t_hud *hud)
 	if (hud->ammo)
 		SDL_FreeSurface(hud->ammo);
 }
+
+/*
+** Initialize all the textures needed in the hud.
+** tmp is here to change the format of the textures, to match the screen's.
+*/
 
 static int	init_texture(t_hud *hud, Uint32 format)
 {
@@ -85,6 +94,10 @@ static int	init_texture(t_hud *hud, Uint32 format)
 	return (1);
 }
 
+/*
+** Draws the aiming cross in the middle of the screen
+*/
+
 static void	draw_cross(t_sdl *sdl)
 {
 		bresen((t_lis){.x = WIN_W / 2 - 25, .y = WIN_H / 2, .col = 0x000000ff},
@@ -97,36 +110,45 @@ static void	draw_cross(t_sdl *sdl)
 		(t_lis){.x = WIN_W / 2, .y = WIN_H / 2 - 10, .col = 0x000000ff}, sdl);
 }
 
-static void	draw_hand(t_sdl *sdl, SDL_Surface *s[6], int id)
-{
-	int		i;
-	Uint32	*p;
-
-	SDL_LockSurface(s[id]);
-	p = s[id]->pixels;
-	i = 0;
-	int x, y = WIN_H - s[id]->h;
-	while (y < WIN_H)
-	{
-		x = 2 * WIN_W / 3;
-		while (x < 2 * WIN_W / 3 + s[id]->w)
-		{
-			if (p[i] & 0x000000ff)
-				sdl->pix[y * WIN_W + x] = p[i];
-			x++;
-			i++;
-		}
-		y++;
-	}
-	s[id]->pixels = p;
-	SDL_UnlockSurface(s[id]);
-}
-
+/*
+** Deals with the hud related events (for now)
+*/
 
 static void	render_check_event(t_input *in, t_hud *hud)
 {
 	if (in->mouse[SDL_BUTTON_LEFT])
 		hud->anim = SDL_TRUE;
+}
+
+/*
+** Draws the sprite contained in s starting at the (x, y) coordinates.
+*/
+
+static void	draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
+{
+	int		i;
+	int		x_index;
+	int		y_index;
+	Uint32	*p;
+
+	SDL_LockSurface(s);
+	p = s->pixels;
+	i = 0;
+	y_index = y;
+	while (y_index < y + s->h)
+	{
+		x_index = x;
+		while (x_index < x + s->w)
+		{
+			if (p[i] & 0x000000ff)
+				sdl->pix[y_index * WIN_W + x_index] = p[i];
+			x_index++;
+			i++;
+		}
+		y_index++;
+	}
+	s->pixels = p;
+	SDL_UnlockSurface(s);
 }
 
 void		render(void)
@@ -160,7 +182,7 @@ void		render(void)
 			hud.anim = SDL_FALSE;
 			hud.id = 0;
 		}
-		draw_hand(&sdl, hud.gun, hud.id);
+		draw_sprite(&sdl, hud.gun[hud.id], 2 * WIN_W / 3, WIN_H - hud.gun[hud.id]->h);
 		draw_cross(&sdl);
 		if (display_frame(sdl.ren, sdl.pix) == 0)
 		{
