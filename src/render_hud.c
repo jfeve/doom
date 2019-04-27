@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 17:26:15 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 17:53:24 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,6 +27,10 @@ static void	free_hud(t_hud *hud)
 			SDL_FreeSurface(hud->gun[i]);
 	if (hud->ammo)
 		SDL_FreeSurface(hud->ammo);
+	if (hud->life)
+		SDL_FreeSurface(hud->life);
+	if (hud->small_gun)
+		SDL_FreeSurface(hud->small_gun);
 }
 
 /*
@@ -100,6 +104,14 @@ static int	init_texture(t_hud *hud, Uint32 format)
 		return (0);
 	}
 	SDL_FreeSurface(hud->tmp);
+	if (!(hud->tmp = SDL_LoadBMP("data/textures/small_gun.bmp")))
+		return (0);
+	if (!(hud->small_gun = SDL_ConvertSurfaceFormat(hud->tmp, format, 0)))
+	{
+		SDL_FreeSurface(hud->tmp);
+		return (0);
+	}
+	SDL_FreeSurface(hud->tmp);
 	return (1);
 }
 
@@ -128,7 +140,8 @@ static void	render_check_event(t_input *in, t_hud *hud, Mix_Chunk *gunshot)
 	if (in->mouse[SDL_BUTTON_LEFT])
 	{
 		hud->anim = SDL_TRUE;
-		Mix_PlayChannel(1, gunshot, 0);
+		if (hud->id == 0)
+			Mix_PlayChannel(1, gunshot, 0);
 	}
 }
 
@@ -188,13 +201,14 @@ void		render(void)
 		free_hud(&hud);
 		return ;
 	}
-	if (!(music = Mix_LoadMUS("data/sounds/petit_poney.mp3")))
+	if (!(music = Mix_LoadMUS("data/sounds/theme.mp3")))
 	{
 		free_sdl(&sdl, 6);
 		free_hud(&hud);
 		Mix_CloseAudio();
 		return ;
 	}
+	Mix_Volume(0, MIX_MAX_VOLUME / 3);
 	if (!(gunshot = Mix_LoadWAV("data/sounds/gun.wav")))
 	{
 		dprintf(1, "%s\n", Mix_GetError()); 
@@ -220,8 +234,9 @@ void		render(void)
 			hud.id = 0;
 		}
 		draw_sprite(&sdl, hud.gun[hud.id], 2 * WIN_W / 3, WIN_H - hud.gun[hud.id]->h);
-		draw_sprite(&sdl, hud.ammo, 0, WIN_H - hud.ammo->h);
-		draw_sprite(&sdl, hud.life, 0, WIN_H - hud.ammo->h - hud.life->h - 25);
+		draw_sprite(&sdl, hud.ammo, 10, WIN_H - hud.ammo->h - 10);
+		draw_sprite(&sdl, hud.life, 10, WIN_H - hud.ammo->h - hud.life->h - 25);
+		draw_sprite(&sdl, hud.small_gun, WIN_W - hud.small_gun->w - 15, WIN_H - hud.small_gun->h - 15);
 		draw_cross(&sdl);
 		if (display_frame(sdl.ren, sdl.pix) == 0)
 		{
