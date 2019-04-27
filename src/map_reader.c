@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:12:18 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 20:36:26 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,7 +41,7 @@ int				read_mapfhead(int fd, t_mapf *mapf, char *mapfile)
 {
 	read(fd, &mapf->magic, 4);
 	mapf->magic[4] = '\0';
-	if (ft_strcmp(mapf->magic, "MAPF") != 0)
+	if (ft_strcmp(mapf->magic, "MAP2") != 0)
 	{
 		ft_putendl("Error, the map file is not valid");
 		free(mapfile);
@@ -105,7 +105,12 @@ int				read_map(t_mapf *mapf, char *mapname)
 	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
 	if ((fd = open(mapfile, O_RDONLY)) != -1)
 	{
-		read_mapfhead(fd, mapf, mapfile);
+		if (!read_mapfhead(fd, mapf, mapfile))
+		{
+			free (&mapfile);
+			close (fd);
+			return (0);
+		}
 		mapf->sectors = (t_sector *)malloc(sizeof(t_sector) * mapf->nbsect + 1);
 		while (++i != mapf->nbsect)
 			read_sector(fd, mapf, i);
