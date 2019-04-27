@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 18:47:02 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/25 20:58:45 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -86,6 +86,11 @@
 # define VEC "vec \0"
 # define OBJ "obj \0"
 # define ENEM "enem \0"
+# define DUCK 2.5
+# define EYE 6
+# define HEADMARGE 1
+# define HFOV (0.73f * WIN_H)
+# define VFOV (0.2f * WIN_H)
 # define DIFICULTY "Diff \0"
 # define PLAYER_OR "player look \0"
 # define GRAVITY "gravity \0"

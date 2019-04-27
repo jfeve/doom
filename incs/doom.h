@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 20:10:27 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/25 20:13:22 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -82,6 +82,8 @@ typedef struct					s_sdl
 	Uint32						*pix;
 	SDL_PixelFormat				*form;
 }								t_sdl;
+
+# include "mapf.h"
 
 typedef	struct					s_draw
 {
@@ -323,6 +325,16 @@ int								free_content(t_edit *edit);
 ** --------- Render Parts -------------|
 ** ------------------------------------|
 */
+
+typedef struct		s_queue
+{
+	int				sect;
+	int				sx1;
+	int				sx2;
+}					t_queue;
+
+
+void				read_map(t_mapf *mapf, char *mapname);
 int					min(int a, int b);
 int					max(int a, int b);
 int					clamp(int a, int mi, int ma);
@@ -338,5 +350,8 @@ float				f_vxs(float ax, float ay, float bx, float by);
 int					f_overlap(t_float a, t_float b);
 int					f_intersectbox(t_float a, t_float b, t_float c, t_float d);
 float				f_pointside(t_float p, t_float a, t_float b);
+t_float				f_intersect(t_float a, t_float b, t_float c, t_float d);
+
+void				render(char *str);
 
 #endif

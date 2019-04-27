@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 18:01:38 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 16:51:37 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -79,19 +79,6 @@ void			draw_wf(int x, int y, t_edit *edit)
 
 	i = x;
 	j = y;
-//	if (!edit->time.oldtime)
-//		edit->time.oldtime = SDL_GetTicks();
-//	else
-//	{
-//		edit->time.time = SDL_GetTicks();
-//		if (edit->time.time > edit->time.oldtime + 2000)
-//		{
-//			set_trigger(edit, choose_set(edit), 0);
-//			edit->time.oldtime = 0;
-//			edit->err = 0;
-//			return ;
-//		}
-//	}
 	if (edit->dyn_trigger == 1)
 	{
 		set_trigger(edit, choose_set(edit), 0);
@@ -157,17 +144,12 @@ int				get_update(t_edit *edit, t_input *in, char *mapname)
 	return (1);
 }
 
-void			render(void)
-{
-	return ;
-}
-
 int				main(int argc, char **argv)
 {
 	if (argc == 3 && ft_strcmp(argv[1], "edit") == 0)
 		level_editor(argv[2]);
-	else if (argc == 2 && ft_strcmp(argv[1], "game") == 0)
-		render();
+	else if (argc == 2)
+		render(argv[1]);
 	else
 		return (usage());
 	return (0);
