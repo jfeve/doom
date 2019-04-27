@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/25 20:13:22 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 12:54:03 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,7 +21,7 @@
 # include "../lib/SDL2_ttf.framework/Headers/SDL_ttf.h"
 # include "../lib/SDL2_mixer.framework/Headers/SDL_mixer.h"
 # include <stdio.h>
-# include "../incs/mapf.h"
+
 typedef struct					s_float
 {
 	float						x;
@@ -261,7 +261,6 @@ int								mcheck_d(t_lis *temp);
 int								mcheck_sec(t_sec *tmp);
 int								err_map(char *msg, t_lis *temp);
 int								save_objs(int fd, t_lis *temp);
-t_mapf							*read_map(t_mapf *mapf, char *mapname);
 
 /*
 ** Input Detection

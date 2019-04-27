@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 20:11:00 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 13:01:24 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,7 @@ void			read_head(int fd, t_mapf *mapf)
 	read(fd, &mapf->nbsect, sizeof(int));
 }
 
-t_mapf			*read_map(t_mapf *mapf, char *mapname)
+void			read_map(t_mapf *mapf, char *mapname)
 {
 	int			fd;
 	char		*mapfile;
@@ -44,12 +44,14 @@ t_mapf			*read_map(t_mapf *mapf, char *mapname)
 			ft_putendl("Error, the map file is not valid");
 			free(mapfile);
 			close(fd);
-			return NULL;
+			return ;
 		}
 		dprintf(1, "\n------------Data Read----------\n");
+		// TODO Replace This by the Structure value.
 		read(fd, &mapf->pl_x, sizeof(int));
 		read(fd, &mapf->pl_y, sizeof(int));
 		read(fd, &mapf->pl_sec, sizeof(short));
+		//
 		read(fd, &mapf->finish_x, sizeof(int));
 		read(fd, &mapf->finish_y, sizeof(int));
 		read(fd, &mapf->finish_sec, sizeof(short));
@@ -64,6 +66,7 @@ t_mapf			*read_map(t_mapf *mapf, char *mapname)
 			read(fd, &mapf->sectors[i].nbvert, sizeof(int));
 			read(fd, &mapf->sectors[i].nbobjs, sizeof(int));
 			read(fd, &mapf->sectors[i].nbenem, sizeof(int));
+			//TODO Read the objects and enemies after every sectors to add them in the final complete OBjects and Enemies sturctures
 			mapf->sectors[i].vert =
 				(t_vertex *)malloc(sizeof(t_vertex) * mapf->sectors[i].nbvert);
 			k = 0;
@@ -78,14 +81,14 @@ t_mapf			*read_map(t_mapf *mapf, char *mapname)
 			i++;
 		}
 		print_read(mapf);
-		return (mapf);
+		free(mapfile);
 		dprintf(1, "\n------------End Read----------\n");
 		close(fd);
 	}
 	else
 	{
 		dprintf(1, "\nThe map does not exist\n");
-		return NULL;
+		return ;
 	}
 }
 

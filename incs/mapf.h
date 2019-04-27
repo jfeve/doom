@@ -6,14 +6,13 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/25 19:59:04 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 13:00:08 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #ifndef MAPF_H
 # define MAPF_H
-# include "doom.h"
 
 
 /*
@@ -23,11 +22,12 @@ typedef struct				s_enemies
 {
 	int						x;
 	int						y;
-	unsigned	int			life;
+	int						life;
 	int						display;
 	int						type;
 	short					sec;
 }							t_enemies;
+
 typedef struct				s_objects
 {
 	int						x;
@@ -68,21 +68,18 @@ typedef struct				s_sector
 	short					floor;
 	short					ceil;
 	int						nbvert;
+	short					nbobjs;
+	short					nbenem;
 	t_vertex				*vert;
 }							t_sector;
 
 typedef struct				s_mapf
 {
 	char					magic[5];
-	int						pl_x;
-	int						pl_y;
-	short					pl_sec;
 	int						finish_x;
 	int						finish_y;
 	short					finish_sec;
 	short					nbsect;
-	short					nbobjs;
-	short					nbenem;
 	short					diff;
 	t_sector				*sectors;
 	t_player				player;
