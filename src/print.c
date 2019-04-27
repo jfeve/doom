@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 21:32:10 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 19:32:20 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 17:36:24 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -88,15 +88,16 @@ void			print_read(t_mapf *mapf)
 	int		k;
 
 	dprintf(1, "Header : %s\n", mapf->magic);
-	dprintf(1, "Player : x = %d\n", mapf->pl_x);
-	dprintf(1, "Player : y = %d\n", mapf->pl_y);
-	dprintf(1, "Player : Sector = %d\n", mapf->pl_sec);
+	dprintf(1, "Player : x = %f\n", mapf->player.where.x);
+	dprintf(1, "Player : y = %f\n", mapf->player.where.y);
+	dprintf(1, "Player : Angle = %f\n", mapf->player.angle);
+	dprintf(1, "Player : Sector = %d\n", mapf->player.sect);
 	dprintf(1, "Finish : x = %d\n", mapf->finish_x);
 	dprintf(1, "Finish : y = %d\n", mapf->finish_y);
 	dprintf(1, "Finish : Sector = %d\n", mapf->finish_sec);
 	dprintf(1, "Nb sector : %d\n", mapf->nbsect);
-	dprintf(1, "Num of Bits : %lu\n", (sizeof(int) + sizeof(int)
-					+ sizeof(short) + sizeof(int) + sizeof(int)
+	dprintf(1, "Num of Bits : %lu\n", (sizeof(float) + sizeof(float)
+					+ sizeof(float) + sizeof(short) + sizeof(int) + sizeof(int)
 						+ sizeof(short) + sizeof(int)));
 	dprintf(1, "\n--------\n");
 	i = 0;
@@ -104,9 +105,12 @@ void			print_read(t_mapf *mapf)
 	while (i < mapf->nbsect)
 	{
 		dprintf(1, "Sector : %d\n", i);
+		dprintf(1, " Gravity : %d\n", mapf->sectors[i].gravity);
 		dprintf(1, " Floor : %d\n", mapf->sectors[i].floor);
 		dprintf(1, " Ceil : %d\n", mapf->sectors[i].ceil);
 		dprintf(1, " Nb Vertex %d\n", mapf->sectors[i].nbvert);
+		dprintf(1, " Nb Objs %d\n", mapf->sectors[i].nbobjs);
+		dprintf(1, " Nb Enem %d\n", mapf->sectors[i].nbenem);
 		k = 0;
 		while (k < mapf->sectors[i].nbvert)
 		{
@@ -117,5 +121,29 @@ void			print_read(t_mapf *mapf)
 			k++;
 		}
 		i++;
+	}
+	i = 0;
+	if (mapf->nbobjs != 0)
+	{
+		dprintf(1, "\n-------\nList Objects\n");
+		while (i < mapf->nbobjs)
+		{
+			dprintf(1, "   X : %d\n", mapf->objects[i].x);
+			dprintf(1, "   Y : %d\n", mapf->objects[i].y);
+			dprintf(1, "   Texture : %d\n\n", mapf->objects[i].type);
+			i++;
+		}
+	}
+	i = 0;
+	if (mapf->nbenem != 0)
+	{
+		dprintf(1, "\n--------\nList Enemies\n");
+		while (i < mapf->nbenem)
+		{
+			dprintf(1, "   X : %d\n", mapf->enemies[i].x);
+			dprintf(1, "   Y : %d\n", mapf->enemies[i].y);
+			dprintf(1, "   Texture : %d\n", mapf->enemies[i].type);
+			i++;
+		}
 	}
 }

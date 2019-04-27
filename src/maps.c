@@ -6,94 +6,18 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 13:01:24 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 18:08:14 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			read_head(int fd, t_mapf *mapf)
-{
-	read(fd, &mapf->pl_x, sizeof(int));
-	read(fd, &mapf->pl_y, sizeof(int));
-	read(fd, &mapf->pl_sec, sizeof(short));
-	read(fd, &mapf->finish_x, sizeof(int));
-	read(fd, &mapf->finish_y, sizeof(int));
-	read(fd, &mapf->finish_sec, sizeof(short));
-	read(fd, &mapf->nbsect, sizeof(int));
-}
-
-void			read_map(t_mapf *mapf, char *mapname)
-{
-	int			fd;
-	char		*mapfile;
-	int			i;
-	int			k;
-
-	i = 0;
-	mapfile = (char*)malloc(sizeof(char) *
-		(int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
-	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
-	if ((fd = open(mapfile, O_RDONLY)) != -1)
-	{
-		read(fd, &mapf->magic, 4);
-		mapf->magic[4] = '\0';
-		if (ft_strcmp(mapf->magic, "MAPF") != 0)
-		{
-			ft_putendl("Error, the map file is not valid");
-			free(mapfile);
-			close(fd);
-			return ;
-		}
-		dprintf(1, "\n------------Data Read----------\n");
-		// TODO Replace This by the Structure value.
-		read(fd, &mapf->pl_x, sizeof(int));
-		read(fd, &mapf->pl_y, sizeof(int));
-		read(fd, &mapf->pl_sec, sizeof(short));
-		//
-		read(fd, &mapf->finish_x, sizeof(int));
-		read(fd, &mapf->finish_y, sizeof(int));
-		read(fd, &mapf->finish_sec, sizeof(short));
-		read(fd, &mapf->diff, sizeof(short));
-		read(fd, &mapf->nbsect, sizeof(int));
-		mapf->sectors = (t_sector *)malloc(sizeof(t_sector) * mapf->nbsect + 1);
-		while (i != mapf->nbsect)
-		{
-			read(fd, &mapf->sectors[i].gravity, sizeof(short));
-			read(fd, &mapf->sectors[i].floor, sizeof(short));
-			read(fd, &mapf->sectors[i].ceil, sizeof(short));
-			read(fd, &mapf->sectors[i].nbvert, sizeof(int));
-			read(fd, &mapf->sectors[i].nbobjs, sizeof(int));
-			read(fd, &mapf->sectors[i].nbenem, sizeof(int));
-			//TODO Read the objects and enemies after every sectors to add them in the final complete OBjects and Enemies sturctures
-			mapf->sectors[i].vert =
-				(t_vertex *)malloc(sizeof(t_vertex) * mapf->sectors[i].nbvert);
-			k = 0;
-			while (k != mapf->sectors[i].nbvert)
-			{
-				read(fd, &mapf->sectors[i].vert[k].x, sizeof(int));
-				read(fd, &mapf->sectors[i].vert[k].y, sizeof(int));
-				read(fd, &mapf->sectors[i].vert[k].text, sizeof(short));
-				read(fd, &mapf->sectors[i].vert[k].neigh, sizeof(int));
-				k++;
-			}
-			i++;
-		}
-		print_read(mapf);
-		free(mapfile);
-		dprintf(1, "\n------------End Read----------\n");
-		close(fd);
-	}
-	else
-	{
-		dprintf(1, "\nThe map does not exist\n");
-		return ;
-	}
-}
-
 static	int				putinfo_head(int fd, t_edit *edit)
 {
+	float			angle;
+
+	angle = 0.5;
 	if (fd == -1)
 		return (0);
 	if (edit->nbsect != 0 && mcheck_pos(edit))
@@ -104,6 +28,7 @@ static	int				putinfo_head(int fd, t_edit *edit)
 			write(fd, &edit->player->x, sizeof(int));
 			write(fd, &edit->player->y, sizeof(int));
 			write(fd, &edit->player->text, sizeof(short));
+			write(fd, &angle, sizeof(float));
 			write(fd, &edit->finish->x, sizeof(int));
 			write(fd, &edit->finish->y, sizeof(int));
 			write(fd, &edit->finish->text, sizeof(short));
@@ -142,6 +67,29 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 	return (1);
 }
 
+int						put_data(char *mapfile, int fd, t_edit *edit)
+{
+	if (putinfo_head(fd, edit))
+	{
+		if (putinfo_sector(fd, edit))
+			return (1);
+		else
+		{
+			save_error(mapfile);
+			close(fd);
+			return (0);
+		}
+	}
+	else
+	{
+		save_error(mapfile);
+		close(fd);
+		return (0);
+	}
+	close(fd);
+	return (1);
+}
+
 int						map_writer(char *mapname, t_edit *edit)
 {
 	int					fd;
@@ -153,27 +101,7 @@ int						map_writer(char *mapname, t_edit *edit)
 	if ((fd = open(mapfile, O_TRUNC | O_CREAT | O_WRONLY, S_IRWXU)) != -1)
 	{
 		if (edit->nbsect != 0)
-		{
-			if (putinfo_head(fd, edit))
-			{
-				if (putinfo_sector(fd, edit))
-					return (1);
-				else
-				{
-					save_error(mapfile);
-					close(fd);
-					return (0);
-				}
-			}
-			else
-			{
-				save_error(mapfile);
-				close(fd);
-				return (0);
-			}
-			close(fd);
-			return (1);
-		}
+			return (put_data(mapfile, fd, edit));
 		else
 		{
 			save_error(mapfile);
