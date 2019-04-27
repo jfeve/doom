@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 13:50:01 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 17:12:39 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -91,6 +91,14 @@ static int	init_texture(t_hud *hud, Uint32 format)
 		return (0);
 	}
 	SDL_FreeSurface(hud->tmp);
+	if (!(hud->tmp = SDL_LoadBMP("data/textures/life.bmp")))
+		return (0);
+	if (!(hud->life = SDL_ConvertSurfaceFormat(hud->tmp, format, 0)))
+	{
+		SDL_FreeSurface(hud->tmp);
+		return (0);
+	}
+	SDL_FreeSurface(hud->tmp);
 	return (1);
 }
 
@@ -114,10 +122,13 @@ static void	draw_cross(t_sdl *sdl)
 ** Deals with the hud related events (for now)
 */
 
-static void	render_check_event(t_input *in, t_hud *hud)
+static void	render_check_event(t_input *in, t_hud *hud, Mix_Chunk *gunshot)
 {
 	if (in->mouse[SDL_BUTTON_LEFT])
+	{
 		hud->anim = SDL_TRUE;
+		Mix_PlayChannel(1, gunshot, 0);
+	}
 }
 
 /*
@@ -156,6 +167,8 @@ void		render(void)
 	t_sdl		sdl;
 	t_input		in;
 	t_hud		hud;
+	Mix_Music	*music;
+	Mix_Chunk	*gunshot;
 
 	ft_bzero(&in, sizeof(t_input));
 	ft_bzero(&sdl, sizeof(t_sdl));
@@ -168,11 +181,34 @@ void		render(void)
 		return ;
 	}
 	hud.anim = SDL_FALSE;
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
+	{
+		free_sdl(&sdl, 6);
+		free_hud(&hud);
+		return ;
+	}
+	if (!(music = Mix_LoadMUS("data/sounds/petit_poney.mp3")))
+	{
+		free_sdl(&sdl, 6);
+		free_hud(&hud);
+		Mix_CloseAudio();
+		return ;
+	}
+	if (!(gunshot = Mix_LoadWAV("data/sounds/gun.wav")))
+	{
+		dprintf(1, "%s\n", Mix_GetError()); 
+		free_sdl(&sdl, 6);
+		free_hud(&hud);
+		Mix_FreeMusic(music);
+		Mix_CloseAudio();
+		return ;
+	}
+	Mix_PlayMusic(music, -1);
 	while (!in.quit)
 	{
 		clear_tab(&sdl);
 		update_event(&in);
-		render_check_event(&in, &hud);
+		render_check_event(&in, &hud, gunshot);
 		if (hud.anim == SDL_FALSE)
 			hud.id = 0;
 		else
@@ -183,15 +219,23 @@ void		render(void)
 			hud.id = 0;
 		}
 		draw_sprite(&sdl, hud.gun[hud.id], 2 * WIN_W / 3, WIN_H - hud.gun[hud.id]->h);
+		draw_sprite(&sdl, hud.ammo, 0, WIN_H - hud.ammo->h);
+		draw_sprite(&sdl, hud.life, 0, WIN_H - hud.ammo->h - hud.life->h - 25);
 		draw_cross(&sdl);
 		if (display_frame(sdl.ren, sdl.pix) == 0)
 		{
 			free_sdl(&sdl, 6);
 			free_hud(&hud);
+			Mix_FreeMusic(music);
+			Mix_FreeChunk(gunshot);
+			Mix_CloseAudio();
 			return ;
 		}
 		SDL_Delay(1000 / 60);
 	}
 	free_sdl(&sdl, 6);
 	free_hud(&hud);
+	Mix_FreeMusic(music);
+	Mix_FreeChunk(gunshot);
+	Mix_CloseAudio();
 }

@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+      #
+#    By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/18 21:26:38 by jfeve        #+#   ##    ##    #+#        #
-#    Updated: 2019/04/26 13:32:24 by flombard    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/04/27 16:27:09 by nzenzela    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,8 +16,11 @@
 #******************************************************************************#
 
 CC = gcc
-CC_FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
-SDL_FLAGS = -lm -liconv -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal
+CC_FLAGS = -Wall -Wextra -Werror -g3 -O3 -g -F./lib
+SDL_FLAGS = -rpath ./lib -F./lib -framework SDL2 \
+                                                -framework SDL2_mixer \
+                                                -framework SDL2_ttf \
+												-lm -liconv -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal
 
 #******************************************************************************#
 #----------------------------------LIBFT---------------------------------------#
