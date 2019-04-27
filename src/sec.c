@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 16:22:44 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 18:00:31 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 19:38:31 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -73,6 +73,8 @@ void			set_sect(t_edit *edit)
 	tmp->ceil = -1;
 	tmp->obj = NULL;
 	tmp->enem = NULL;
+	tmp->objscount = 0;
+	tmp->enemcount = 0;
 	edit->vert = NULL;
 	edit->oldvert = NULL;
 	edit->nbsect++;

@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   dyn.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/21 22:03:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 05:25:49 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 18:33:23 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,6 +59,8 @@ void			get_title(t_edit *edit, t_content **con)
 
 	hl = edit->hl_sec;
 	tmp = *con;
+	if (hl->gravity == -1)
+		fill_str_content(256, tmp->c_title, GRAVITY);
 	if (hl->floor == -1)
 		fill_str_content(256, tmp->c_title, FLOOR);
 	else if (hl->ceil == -1)

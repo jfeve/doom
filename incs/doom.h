@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/25 20:13:22 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 18:13:53 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,7 +51,10 @@ typedef struct					s_sec
 	unsigned short				id;
 	short						floor;
 	short						ceil;
+	short						gravity;
 	int							nbvert;
+	int							enemcount;
+	int							objscount;
 	t_lis						*vert;
 	t_lis						*enem;
 	t_lis						*obj;
@@ -128,6 +131,7 @@ typedef struct					s_edit
 	int							hl;
 	int							sec;
 	int							err;
+	short						diff;
 	t_sec						*hl_sec;
 	t_lis						*hl_vert;
 	t_lis						*oldvert;
@@ -161,6 +165,7 @@ int								create_finish(t_edit *edit, t_input *in);
 */
 int								free_sdl(t_sdl *sdl, int flag);
 int								sdl_init(t_sdl *sdl);
+void							free_all(int flag, t_edit *edit);
 int								display_frame(SDL_Renderer *ren, Uint32 *pix);
 void							clear_tab(t_sdl *sdl);
 
@@ -212,13 +217,13 @@ void							set_sect(t_edit *edit);
 void							draw_sec(t_edit *edit);
 
 /*
-** Print
+** Print // A DELETE PLUS TARD
 */
 void							print_info(t_edit *edit, t_input *in);
 void							print_content(t_edit *edit);
 void							print_lis(t_lis **vert);
 void							print_sec(t_sec *sec);
-
+void							print_read(t_mapf *mapf);
 /*
 ** HUD
 */
@@ -257,6 +262,7 @@ int								mcheck_d(t_lis *temp);
 int								mcheck_sec(t_sec *tmp);
 int								err_map(char *msg, t_lis *temp);
 int								save_objs(int fd, t_lis *temp);
+
 /*
 ** Input Detection
 */
@@ -327,8 +333,15 @@ typedef struct		s_queue
 	int				sx2;
 }					t_queue;
 
-
-void				read_map(t_mapf *mapf, char *mapname);
+/*
+** Map Reader Functions
+*/
+int					read_map(t_mapf *mapf, char *mapname);
+int					read_enem_data(int fd, t_mapf *mapf, int ienem);
+int					read_objs_data(int fd, t_mapf *mapf, int iobjs);
+int					read_entities(int fd, t_mapf *mapf, int i);
+int					read_mapfhead(int fd, t_mapf *mapf, char *mapfile);
+int					read_sector(int fd, t_mapf *mapf, int i);
 int					min(int a, int b);
 int					max(int a, int b);
 int					clamp(int a, int mi, int ma);
