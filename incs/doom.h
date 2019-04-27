@@ -3,7 +3,7 @@
 /*                                                              /             */
 /*   doom.h                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
 /*   Updated: 2019/04/27 18:13:53 by nzenzela    ###    #+. /#+    ###.fr     */
@@ -325,6 +325,18 @@ int								free_content(t_edit *edit);
 ** --------- Render Parts -------------|
 ** ------------------------------------|
 */
+
+typedef struct		s_hud
+{
+	int				id;
+	SDL_Surface		*gun[6];
+	SDL_Surface		*small_gun;
+	SDL_Surface		*ammo;
+	SDL_Surface		*life;
+	SDL_Surface		*tmp;
+	SDL_bool		anim;
+}					t_hud;
+
 
 typedef struct		s_queue
 {
