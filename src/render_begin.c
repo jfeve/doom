@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 14:24:37 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 20:36:50 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -291,7 +291,8 @@ void		render(char *str)
 
 	ft_bzero(&in, sizeof(t_input));
 	ft_bzero(&mapf, sizeof(t_mapf));
-	read_map(&mapf, str);
+	if (!read_map(&mapf, str))
+		return ;
 	sdl_init(&mapf.sdl);
 	SDL_WarpMouseInWindow(mapf.sdl.win, WIN_W / 2, WIN_H / 2);
 	if ((SDL_SetRelativeMouseMode(SDL_ENABLE)) != 0)

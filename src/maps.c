@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:08:14 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 20:29:09 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,7 @@ static	int				putinfo_head(int fd, t_edit *edit)
 	{
 		if (edit->sect)
 		{
-			write(fd, "MAPF", 4);
+			write(fd, "MAP2", 4);
 			write(fd, &edit->player->x, sizeof(int));
 			write(fd, &edit->player->y, sizeof(int));
 			write(fd, &edit->player->text, sizeof(short));
@@ -118,9 +118,14 @@ int						save_map(t_input *in, char *mapname, t_edit *edit)
 	if (in->key[SDL_SCANCODE_S])
 	{
 		if (map_writer(mapname, edit))
+		{
 			write(1, "\n-------Map sauver-------\n", 27);
-		else
+			return (1);
+		}
+		else{
 			write(1, "\n--------Map not saved-------\n", 30);
+			return (0);
+		}
 		in->key[SDL_SCANCODE_S] = SDL_FALSE;
 	}
 	return (0);
