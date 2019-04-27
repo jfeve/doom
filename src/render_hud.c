@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 17:12:39 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 17:26:15 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,8 @@ static void	free_hud(t_hud *hud)
 
 	i = -1;
 	while (++i < 6)
-		SDL_FreeSurface(hud->gun[i]);
+		if (hud->gun[i])
+			SDL_FreeSurface(hud->gun[i]);
 	if (hud->ammo)
 		SDL_FreeSurface(hud->ammo);
 }
