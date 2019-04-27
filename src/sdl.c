@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:40:34 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 15:13:09 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 12:26:09 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,7 +33,7 @@ int				free_sdl(t_sdl *sdl, int flag)
 int				sdl_init(t_sdl *sdl)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
-		return (0);
+		return (free_sdl(sdl, 1));
 	sdl->win = SDL_CreateWindow("Doom-Nukem", 100, 100, WIN_W, WIN_H,
 			SDL_WINDOW_ALWAYS_ON_TOP); 
 	if (sdl->win == NULL)
@@ -55,8 +55,8 @@ int				display_frame(SDL_Renderer *ren, Uint32 *pix)
 {
 	SDL_Texture *tex;
 
-	SDL_SetRenderDrawColor(ren, 0x00, 0x00, 0x00, 0x00);
-	SDL_RenderClear(ren);
+	/*SDL_SetRenderDrawColor(ren, 0x00, 0x00, 0x00, 0x00);
+	SDL_RenderClear(ren);*/
 	tex = SDL_CreateTexture(ren, PIXFOR,
 		SDL_TEXTUREACCESS_STREAMING, WIN_W, WIN_H);
 	SDL_UpdateTexture(tex, NULL, (void*)pix, sizeof(Uint32) * WIN_W);
@@ -80,7 +80,7 @@ void			clear_tab(t_sdl *sdl)
 		x = 0;
 		while (x < WIN_W)
 		{
-			sdl->pix[y * WIN_W + x] = 0x000000FF;
+			sdl->pix[y * WIN_W + x] = 0xFFFFFFFF;
 			x++;
 		}
 		y++;

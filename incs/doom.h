@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 15:59:18 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 13:17:43 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -306,6 +306,16 @@ int								free_content(t_edit *edit);
 ** --------- Render Parts -------------|
 ** ------------------------------------|
 */
+
+typedef struct		s_hud
+{
+	int				id;
+	SDL_Surface		*gun[6];
+	SDL_Surface		*ammo;
+	SDL_Surface		*tmp;
+	SDL_bool		anim;
+}					t_hud;
+
 int					min(int a, int b);
 int					max(int a, int b);
 int					clamp(int a, int mi, int ma);
@@ -321,29 +331,6 @@ float				f_vxs(float ax, float ay, float bx, float by);
 int					f_overlap(t_float a, t_float b);
 int					f_intersectbox(t_float a, t_float b, t_float c, t_float d);
 float				f_pointside(t_float p, t_float a, t_float b);
-
-typedef struct		s_player
-{
-	float			x;
-	float			y;
-	float			z;
-	unsigned int	current_sec;
-}					t_player;
-
-typedef struct		s_sector
-{
-	float			floor;
-	float			ceil;
-	t_float			vertex[4];
-	unsigned int	nbpts;
-	short			neighbors[4];
-}					t_sector;
-
-typedef struct		s_render
-{
-	t_player		p;
-	t_sector		sects;
-}					t_render;
 
 void				render(void);
 
