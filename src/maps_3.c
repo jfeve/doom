@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 13:34:28 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 16:04:39 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 19:31:41 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,10 +17,11 @@ int				mcheck_pos(t_edit *edit)
 {
 	if (edit->player != NULL)
 	{
-		if (edit->finish != NULL)
-			return (1);
-		else
+		if (edit->pl_angle == -1)
 			return (0);
+		if (edit->finish == NULL)
+			return (0);
+		return (1);
 	}
 	else
 		return (0);

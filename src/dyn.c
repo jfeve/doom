@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/21 22:03:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 18:33:23 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 19:20:28 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,7 +61,11 @@ void			get_title(t_edit *edit, t_content **con)
 	tmp = *con;
 	if (hl->gravity == -1)
 		fill_str_content(256, tmp->c_title, GRAVITY);
-	if (hl->floor == -1)
+	else if (edit->pl_angle == -1)
+		fill_str_content(256, tmp->c_title, PLAYER_OR);
+	else if (edit->diff == -1)
+		fill_str_content(256, tmp->c_title, DIFICULTY);
+	else if (hl->floor == -1)
 		fill_str_content(256, tmp->c_title, FLOOR);
 	else if (hl->ceil == -1)
 		fill_str_content(256, tmp->c_title, CEIL);
@@ -88,10 +92,14 @@ void			check_keyboard(t_input *in, t_content *tmp)
 	int			j;
 	int			maxkey;
 	char		c;
+	int			k;
+	int			maxk;
 
 	i = 48;
+	k = 30;
+	maxk = 39;
 	maxkey = 98;
-	while (i <= maxkey && tmp->cursor < 4)
+	while ((i <= maxkey && tmp->cursor < 4) || (k <= maxk && tmp->cursor < 4))
 	{
 		if (in->key[i])
 		{
@@ -105,6 +113,19 @@ void			check_keyboard(t_input *in, t_content *tmp)
 			tmp->cursor++;
 			in->key[i] = SDL_FALSE;
 		}
+		if (in->key[k])
+		{
+			if (k != 39)
+				j = k - 29;
+			else
+				j = 0;
+			c = j + '0';
+			j = 0;
+			tmp->c_content[tmp->cursor] = c;
+			tmp->cursor++;
+			in->key[k] = SDL_FALSE;
+		}
+		k++;
 		i++;
 	}
 }

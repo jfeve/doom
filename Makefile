@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+      #
+#    By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/18 21:26:38 by jfeve        #+#   ##    ##    #+#        #
-#    Updated: 2019/04/28 13:10:13 by flombard    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/04/28 17:47:45 by nzenzela    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,7 +16,7 @@
 #******************************************************************************#
 
 CC = gcc
-CC_FLAGS = -Wall -Wextra -Werror -g -fsanitize=address -F./lib
+CC_FLAGS = -Wall -Wextra -Werror -g3 -O3 -F./lib
 SDL_FLAGS = -rpath ./lib -F./lib -framework SDL2 \
                                                 -framework SDL2_mixer \
                                                 -framework SDL2_ttf \

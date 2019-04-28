@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/09 04:44:01 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 05:16:53 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 18:19:51 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,7 +47,7 @@ void			check_hl_mode(t_edit *edit, t_input *in)
 			edit->hl = 0;
 		if (edit->hl % 2 == 0 && edit->hl != 2)
 		{
-			set_trigger(edit, choose_set(edit), 0);
+			// set_trigger(edit, choose_set(edit), 0);
 			edit->hud_flag = 0;
 			edit->sec = 0;
 			clear_hl_vec(edit->hl_sec);

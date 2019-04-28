@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 21:32:10 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 17:36:24 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 18:59:35 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -75,6 +75,7 @@ void			print_sec(t_sec *sec)
 		dprintf(1, "obj = %p\n", tmp->obj);
 		dprintf(1, "Nb objets = %d\n", tmp->objscount);
 		dprintf(1, "Nb enems = %d\n", tmp->enemcount);
+		dprintf(1, "Gravity = %d\n", tmp->gravity);
 		print_lis(&tmp->vert);
 		dprintf(1, "\n||||||SEC END||||||\n");
 		tmp = tmp->next;

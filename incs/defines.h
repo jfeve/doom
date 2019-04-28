@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 12:19:44 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 19:27:32 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,7 @@
 # define WIN_W 1500
 # define WIN_H 1000
 # define WF_W 200
-# define WF_H 150
+# define WF_H 140
 # define UNIT 15
 # define HUD_BEGIN 851
 # define TEXT_INPUT 1000
@@ -92,7 +92,7 @@
 # define HEADMARGE 1
 # define HFOV (0.73f * WIN_H)
 # define VFOV (0.2f * WIN_H)
-# define DIFICULTY "Diff \0"
-# define PLAYER_OR "player look \0"
-# define GRAVITY "gravity \0"
+# define DIFICULTY "diff = \0"
+# define PLAYER_OR "pl look = \0"
+# define GRAVITY "grav = \0"
 #endif

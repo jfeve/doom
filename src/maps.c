@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 20:29:09 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 19:09:44 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,9 +15,6 @@
 
 static	int				putinfo_head(int fd, t_edit *edit)
 {
-	float			angle;
-
-	angle = 0.5;
 	if (fd == -1)
 		return (0);
 	if (edit->nbsect != 0 && mcheck_pos(edit))
@@ -28,7 +25,7 @@ static	int				putinfo_head(int fd, t_edit *edit)
 			write(fd, &edit->player->x, sizeof(int));
 			write(fd, &edit->player->y, sizeof(int));
 			write(fd, &edit->player->text, sizeof(short));
-			write(fd, &angle, sizeof(float));
+			write(fd, &edit->pl_angle, sizeof(float));
 			write(fd, &edit->finish->x, sizeof(int));
 			write(fd, &edit->finish->y, sizeof(int));
 			write(fd, &edit->finish->text, sizeof(short));
@@ -51,7 +48,7 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 	tmp = edit->sect;
 	while (tmp != NULL)
 	{
-		if (tmp->floor == -1 && tmp->ceil == -1)
+		if (tmp->floor == -1 && tmp->ceil == -1 && tmp->gravity == -1)
 			return (err_map("A sector has some unset data", temp));
 		temp = tmp->vert;
 		write(fd, &tmp->gravity, sizeof(short));

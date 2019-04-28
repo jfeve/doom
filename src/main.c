@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   main.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 16:22:48 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 18:25:35 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,7 +35,7 @@ int				init_content(t_edit *edit)
 	return (1);
 }
 
-int				choose_set(t_edit*edit)
+int				choose_set(t_edit *edit)
 {
 	if (edit->hl_sec_temp)
 	{
@@ -94,7 +94,7 @@ void			draw_wf(int x, int y, t_edit *edit)
 			else if (j < y + 10 || j > y + WF_H - 10)
 				edit->sdl.pix[i + j * WIN_W] = WHITE;
 			else
-				edit->sdl.pix[i + j * WIN_W] = WF_COL;
+				edit->sdl.pix[i + j * WIN_W] = RED;
 			i++;
 		}
 		j++;
