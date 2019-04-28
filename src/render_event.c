@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 12:37:34 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 14:23:14 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,7 +46,7 @@ void		jump(t_mapf *mapf, t_input *in)
 	}
 	else if (mapf->player.state == falling)
 	{
-		if (mapf->player.where.z > mapf->sectors[mapf->player.sect].floor + EYE)
+		if (mapf->player.where.z - 0.5 > mapf->sectors[mapf->player.sect].floor + EYE)
 			mapf->player.add_z -= 0.5;
 		else if (mapf->player.add_z >= 4 && mapf->player.add_z < 5)
 			mapf->player.add_z -= 0.25;

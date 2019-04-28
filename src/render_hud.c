@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:59:56 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 12:57:43 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -127,14 +127,14 @@ static int	init_texture(t_hud *hud, Uint32 format)
 
 static void	draw_cross(t_sdl *sdl)
 {
-		bresen((t_lis){.x = WIN_W / 2 - 25, .y = WIN_H / 2, .col = 0x000000ff},
-		(t_lis){.x = WIN_W / 2 - 10, .y = WIN_H / 2, .col = 0x000000ff}, sdl);
-		bresen((t_lis){.x = WIN_W / 2 + 25, .y = WIN_H / 2, .col = 0x000000ff},
-		(t_lis){.x = WIN_W / 2 + 10, .y = WIN_H / 2, .col = 0x000000ff}, sdl);
-		bresen((t_lis){.x = WIN_W / 2, .y = WIN_H / 2 + 25, .col = 0x000000ff},
-		(t_lis){.x = WIN_W / 2, .y = WIN_H / 2 + 10, .col = 0x000000ff}, sdl);
-		bresen((t_lis){.x = WIN_W / 2, .y = WIN_H / 2 - 25, .col = 0x000000ff},
-		(t_lis){.x = WIN_W / 2, .y = WIN_H / 2 - 10, .col = 0x000000ff}, sdl);
+		bresen((t_lis){.x = WIN_W / 2 - 25, .y = WIN_H / 2, .col = 0x00FF00ff},
+		(t_lis){.x = WIN_W / 2 - 10, .y = WIN_H / 2, .col = 0x00FF00ff}, sdl);
+		bresen((t_lis){.x = WIN_W / 2 + 25, .y = WIN_H / 2, .col = 0x00FF00ff},
+		(t_lis){.x = WIN_W / 2 + 10, .y = WIN_H / 2, .col = 0x00fF00ff}, sdl);
+		bresen((t_lis){.x = WIN_W / 2, .y = WIN_H / 2 + 25, .col = 0x00FF00ff},
+		(t_lis){.x = WIN_W / 2, .y = WIN_H / 2 + 10, .col = 0x00FF00ff}, sdl);
+		bresen((t_lis){.x = WIN_W / 2, .y = WIN_H / 2 - 25, .col = 0x00FF00ff},
+		(t_lis){.x = WIN_W / 2, .y = WIN_H / 2 - 10, .col = 0x00FF00ff}, sdl);
 }
 
 /*
