@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 15:25:45 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 13:27:48 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/24 18:21:32 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,15 +16,23 @@
 int			check_mapname(char *mapname)
 {
 	int		i;
+	int		c;
+	int		j;
 
+	j = 0;
 	i = 0;
-	if (ft_strlen(mapname) >= 4)
+	c = ft_strlen(mapname);
+	if (c >= 4)
 	{
 		while (mapname[i])
-			if (ft_isalpha(mapname[i]))
-				i++;
+		{
+			if (ft_isalpha(mapname[i++]))
+				j++;
 			else
-				i--;
+				j--;
+		}
+		if (j != i)
+			return (0);
 		if (i != ((int)ft_strlen(mapname)))
 			return (0);
 		else

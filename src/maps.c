@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 14:08:50 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 18:08:14 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,40 +15,30 @@
 
 static	int				putinfo_head(int fd, t_edit *edit)
 {
+	float			angle;
+
+	angle = 0.5;
 	if (fd == -1)
 		return (0);
 	if (edit->nbsect != 0 && mcheck_pos(edit))
 	{
-		if (edit->sec)
+		if (edit->sect)
 		{
 			write(fd, "MAPF", 4);
 			write(fd, &edit->player->x, sizeof(int));
 			write(fd, &edit->player->y, sizeof(int));
 			write(fd, &edit->player->text, sizeof(short));
+			write(fd, &angle, sizeof(float));
 			write(fd, &edit->finish->x, sizeof(int));
 			write(fd, &edit->finish->y, sizeof(int));
 			write(fd, &edit->finish->text, sizeof(short));
 			write(fd, &edit->nbsect, sizeof(int));
+			write(fd, &edit->diff, sizeof(short));
 		}
 		return (1);
 	}
 	else
 		return (0);
-}
-
-int						save_d(int fd, t_lis *temp)
-{
-	while (temp != NULL)
-	{
-		if (!mcheck_d(temp))
-			return (err_map("some vectors in a sector is not set properly", temp));
-		write(fd, &temp->x, sizeof(int));
-		write(fd, &temp->y, sizeof(int));
-		write(fd, &temp->text, sizeof(short));
-		temp = temp->next;
-	}
-	free(temp);
-	return (1);
 }
 
 static	int				putinfo_sector(int fd, t_edit *edit)
@@ -61,16 +51,42 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 	tmp = edit->sect;
 	while (tmp != NULL)
 	{
-		if ((temp = tmp->vert))
-			putinfo_sec(fd, temp, tmp);
-		else
-			return (save_error2("Error while saving the Vertex", temp));
-		if (!mcheck_sec(tmp))
+		if (tmp->floor == -1 && tmp->ceil == -1)
 			return (err_map("A sector has some unset data", temp));
+		temp = tmp->vert;
+		write(fd, &tmp->gravity, sizeof(short));
 		write(fd, &tmp->floor, sizeof(short));
 		write(fd, &tmp->ceil, sizeof(short));
+		write(fd, &tmp->nbvert, sizeof(int));
+		write(fd, &tmp->objscount, sizeof(int));
+		write(fd, &tmp->enemcount, sizeof(int));
+		putinfo_sec(fd, temp, tmp);
 		tmp = tmp->next;
 	}
+	free(tmp);
+	return (1);
+}
+
+int						put_data(char *mapfile, int fd, t_edit *edit)
+{
+	if (putinfo_head(fd, edit))
+	{
+		if (putinfo_sector(fd, edit))
+			return (1);
+		else
+		{
+			save_error(mapfile);
+			close(fd);
+			return (0);
+		}
+	}
+	else
+	{
+		save_error(mapfile);
+		close(fd);
+		return (0);
+	}
+	close(fd);
 	return (1);
 }
 
@@ -85,25 +101,7 @@ int						map_writer(char *mapname, t_edit *edit)
 	if ((fd = open(mapfile, O_TRUNC | O_CREAT | O_WRONLY, S_IRWXU)) != -1)
 	{
 		if (edit->nbsect != 0)
-		{
-			if (putinfo_head(fd, edit))
-				if (putinfo_sector(fd, edit))
-					return (1);
-				else
-				{
-					save_error(mapfile);
-					close(fd);
-					return (0);
-				}
-			else
-			{
-				save_error(mapfile);
-				close(fd);
-				return (0);
-			}
-			close(fd);
-			return (1);
-		}
+			return (put_data(mapfile, fd, edit));
 		else
 		{
 			save_error(mapfile);

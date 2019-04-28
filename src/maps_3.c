@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 13:34:28 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 14:21:52 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 16:04:39 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,7 +28,7 @@ int				mcheck_pos(t_edit *edit)
 
 int				mcheck_d(t_lis *temp)
 {
-	if (temp->x && temp->x && temp->text && temp->neigh && temp->port)
+	if (temp->x >= 0 && temp->x >= 0 && temp->text != -1)
 		return (1);
 	else
 		return (0);

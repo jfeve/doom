@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 17:49:12 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 18:13:53 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,6 +51,10 @@ typedef struct					s_sec
 	unsigned short				id;
 	short						floor;
 	short						ceil;
+	short						gravity;
+	int							nbvert;
+	int							enemcount;
+	int							objscount;
 	t_lis						*vert;
 	t_lis						*enem;
 	t_lis						*obj;
@@ -76,9 +80,10 @@ typedef struct					s_sdl
 	SDL_Window					*win;
 	SDL_Renderer				*ren;
 	Uint32						*pix;
-	Uint32						*white_frame;
 	SDL_PixelFormat				*form;
 }								t_sdl;
+
+# include "mapf.h"
 
 typedef	struct					s_draw
 {
@@ -104,8 +109,15 @@ typedef	struct					s_content
 	struct s_content			*next;
 }								t_content;
 
+typedef struct					s_time
+{
+	unsigned long long			oldtime;
+	unsigned long long			time;
+}								t_time;
+
 typedef struct					s_edit
 {
+	t_time						time;
 	t_content					*con;
 	t_sdl						sdl;
 	t_lis						*vert;
@@ -119,6 +131,7 @@ typedef struct					s_edit
 	int							hl;
 	int							sec;
 	int							err;
+	short						diff;
 	t_sec						*hl_sec;
 	t_lis						*hl_vert;
 	t_lis						*oldvert;
@@ -152,6 +165,7 @@ int								create_finish(t_edit *edit, t_input *in);
 */
 int								free_sdl(t_sdl *sdl, int flag);
 int								sdl_init(t_sdl *sdl);
+void							free_all(int flag, t_edit *edit);
 int								display_frame(SDL_Renderer *ren, Uint32 *pix);
 void							clear_tab(t_sdl *sdl);
 
@@ -203,16 +217,19 @@ void							set_sect(t_edit *edit);
 void							draw_sec(t_edit *edit);
 
 /*
-** Print
+** Print // A DELETE PLUS TARD
 */
 void							print_info(t_edit *edit, t_input *in);
 void							print_content(t_edit *edit);
 void							print_lis(t_lis **vert);
 void							print_sec(t_sec *sec);
-
+void							print_read(t_mapf *mapf);
 /*
 ** HUD
 */
+int								choose_set(t_edit *edit);
+void							set_trigger(t_edit *edit, int choice, int trig);
+void							draw_wf(int x, int y, t_edit *edit);
 void							wf_mode(t_input *in, t_edit *edit);
 void							set_grid(t_edit *edit);
 void							fill_wf(t_edit *edit);
@@ -244,6 +261,8 @@ int								mcheck_pos(t_edit *edit);
 int								mcheck_d(t_lis *temp);
 int								mcheck_sec(t_sec *tmp);
 int								err_map(char *msg, t_lis *temp);
+int								save_objs(int fd, t_lis *temp);
+
 /*
 ** Input Detection
 */
@@ -318,6 +337,23 @@ typedef struct		s_hud
 	SDL_bool		anim;
 }					t_hud;
 
+
+typedef struct		s_queue
+{
+	int				sect;
+	int				sx1;
+	int				sx2;
+}					t_queue;
+
+/*
+** Map Reader Functions
+*/
+int					read_map(t_mapf *mapf, char *mapname);
+int					read_enem_data(int fd, t_mapf *mapf, int ienem);
+int					read_objs_data(int fd, t_mapf *mapf, int iobjs);
+int					read_entities(int fd, t_mapf *mapf, int i);
+int					read_mapfhead(int fd, t_mapf *mapf, char *mapfile);
+int					read_sector(int fd, t_mapf *mapf, int i);
 int					min(int a, int b);
 int					max(int a, int b);
 int					clamp(int a, int mi, int ma);
@@ -333,7 +369,8 @@ float				f_vxs(float ax, float ay, float bx, float by);
 int					f_overlap(t_float a, t_float b);
 int					f_intersectbox(t_float a, t_float b, t_float c, t_float d);
 float				f_pointside(t_float p, t_float a, t_float b);
+t_float				f_intersect(t_float a, t_float b, t_float c, t_float d);
 
-void				render(void);
+void				render(char *str);
 
 #endif

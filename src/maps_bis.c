@@ -6,18 +6,36 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:07:42 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 13:49:00 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 18:14:47 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-int						open_error(char **mapfile)
+int						save_d(int fd, t_lis *temp)
 {
-	ft_putendl("We could not open the file");
-	free(mapfile);
-	return (0);
+	while (temp != NULL)
+	{
+		write(fd, &temp->x, sizeof(int));
+		write(fd, &temp->y, sizeof(int));
+		write(fd, &temp->text, sizeof(short));
+		write(fd, &temp->neigh, sizeof(int));
+		temp = temp->next;
+	}
+	return (1);
+}
+
+int						save_objs(int fd, t_lis *temp)
+{
+	while (temp != NULL)
+	{
+		write(fd, &temp->x, sizeof(int));
+		write(fd, &temp->y, sizeof(int));
+		write(fd, &temp->text, sizeof(short));
+		temp = temp->next;
+	}
+	return (1);
 }
 
 int						save_error(char *mapfile)
@@ -37,14 +55,14 @@ int						save_error2(char *error, t_lis *temp)
 void					putinfo_sec(int fd, t_lis *temp, t_sec *tmp)
 {
 	save_d(fd, temp);
-	if ((temp = tmp->enem))
+	if (tmp->obj != NULL && tmp->objscount != 0)
 	{
-		save_d(fd, temp);
-		if ((temp = tmp->obj))
-			save_d(fd, temp);
-		else
-			save_error2("Error while saving the Objects", temp);
+		temp = tmp->obj;
+		save_objs(fd, temp);
 	}
-	else
-		save_error2("Error while saving the Enemies", temp);
+	if (tmp->enem != NULL && tmp->enemcount != 0)
+	{
+		temp = tmp->enem;
+		save_objs(fd, temp);
+	}
 }

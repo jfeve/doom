@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 17:50:22 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 18:51:41 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -90,6 +90,13 @@ void			settings_event(t_edit *edit, t_input *in)
 
 int				check_event(char *mapname, t_input *in, t_edit *edit)
 {
+	t_mapf		mapf;
+
+	if (in->key[SDL_SCANCODE_K] && edit->hl_sec && edit->dyn_trigger != 1)
+	{
+		edit->err = 2;
+		in->key[SDL_SCANCODE_K] = SDL_FALSE;
+	}
 	print_info(edit, in);
 	settings_event(edit, in);
 	cancels(edit, in);
@@ -112,5 +119,10 @@ int				check_event(char *mapname, t_input *in, t_edit *edit)
 	if (create_finish(edit, in) == 0)
 		return (0);
 	save_map(in, mapname, edit);
+	if (in->key[SDL_SCANCODE_L])
+	{
+		in->key[SDL_SCANCODE_L] = SDL_FALSE;
+		read_map(&mapf, mapname);
+	}
 	return (1);
 }
