@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 17:53:24 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 18:59:56 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@
 ** Frees all the hud textures.
 */
 
-static void	free_hud(t_hud *hud)
+int			free_hud(t_hud *hud)
 {
 	int		i;
 
@@ -31,6 +31,12 @@ static void	free_hud(t_hud *hud)
 		SDL_FreeSurface(hud->life);
 	if (hud->small_gun)
 		SDL_FreeSurface(hud->small_gun);
+	if (hud->music)
+		Mix_FreeMusic(hud->music);
+	if (hud->gunshot)
+		Mix_FreeChunk(hud->gunshot);
+	Mix_CloseAudio();
+	return (0);
 }
 
 /*
@@ -132,24 +138,10 @@ static void	draw_cross(t_sdl *sdl)
 }
 
 /*
-** Deals with the hud related events (for now)
-*/
-
-static void	render_check_event(t_input *in, t_hud *hud, Mix_Chunk *gunshot)
-{
-	if (in->mouse[SDL_BUTTON_LEFT])
-	{
-		hud->anim = SDL_TRUE;
-		if (hud->id == 0)
-			Mix_PlayChannel(1, gunshot, 0);
-	}
-}
-
-/*
 ** Draws the sprite contained in s starting at the (x, y) coordinates.
 */
 
-static void	draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
+void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 {
 	int		i;
 	int		x_index;
@@ -176,7 +168,48 @@ static void	draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 	SDL_UnlockSurface(s);
 }
 
-void		render(void)
+int			init_hud(t_hud *hud, Uint32 format)
+{
+	if (!init_texture(hud, format))
+		return (free_hud(hud));
+	hud->anim = SDL_FALSE;
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
+		return (free_hud(hud));
+	if (!(hud->music = Mix_LoadMUS("data/sounds/theme.mp3")))
+	{
+		Mix_CloseAudio();
+		return (free_hud(hud));
+	}
+	Mix_Volume(0, MIX_MAX_VOLUME / 3);
+	if (!(hud->gunshot = Mix_LoadWAV("data/sounds/gun.wav")))
+	{
+		Mix_CloseAudio();
+		return (free_hud(hud));
+	}
+	return (1);
+}
+
+void		draw_hud(t_sdl *sdl, t_hud *hud)
+{
+	if (hud->anim == SDL_FALSE)
+		hud->id = 0;
+	else
+		hud->id++;
+	if (hud->id > 5)
+	{
+		hud->anim = SDL_FALSE;
+		hud->id = 0;
+	}
+	draw_sprite(sdl, hud->gun[hud->id], 2 * WIN_W / 3,
+	WIN_H - hud->gun[hud->id]->h);
+	draw_sprite(sdl, hud->ammo, 10, WIN_H - hud->ammo->h - 10);
+	draw_sprite(sdl, hud->life, 10, WIN_H - hud->ammo->h - hud->life->h - 25);
+	draw_sprite(sdl, hud->small_gun, WIN_W - hud->small_gun->w - 15, WIN_H -
+	hud->small_gun->h - 15);
+	draw_cross(sdl);
+}
+
+/*void		render(void)
 {
 	t_sdl		sdl;
 	t_input		in;
@@ -254,4 +287,14 @@ void		render(void)
 	Mix_FreeMusic(music);
 	Mix_FreeChunk(gunshot);
 	Mix_CloseAudio();
-}
+}*/
+
+/*static void	render_check_event(t_input *in, t_hud *hud, Mix_Chunk *gunshot)
+{
+	if (in->mouse[SDL_BUTTON_LEFT])
+	{
+		hud->anim = SDL_TRUE;
+		if (hud->id == 0)
+			Mix_PlayChannel(1, gunshot, 0);
+	}
+}*/

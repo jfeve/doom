@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:13:53 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 12:37:32 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -335,6 +335,8 @@ typedef struct		s_hud
 	SDL_Surface		*life;
 	SDL_Surface		*tmp;
 	SDL_bool		anim;
+	Mix_Music		*music;
+	Mix_Chunk		*gunshot;
 }					t_hud;
 
 
@@ -348,6 +350,10 @@ typedef struct		s_queue
 /*
 ** Map Reader Functions
 */
+void				fill_pix(t_mapf *mapf);
+void				render_check_event(t_mapf *mapf, t_input *in, t_hud *hud);
+float				vector_measure(float x1, float y1, float x2, float y2);
+void				move_chara(t_mapf *mapf, t_input *in);
 int					read_map(t_mapf *mapf, char *mapname);
 int					read_enem_data(int fd, t_mapf *mapf, int ienem);
 int					read_objs_data(int fd, t_mapf *mapf, int iobjs);
@@ -372,5 +378,9 @@ float				f_pointside(t_float p, t_float a, t_float b);
 t_float				f_intersect(t_float a, t_float b, t_float c, t_float d);
 
 void				render(char *str);
+
+void				draw_hud(t_sdl *sdl, t_hud *hud);
+int					free_hud(t_hud *hud);
+int					init_hud(t_hud *hud, Uint32 format);
 
 #endif
