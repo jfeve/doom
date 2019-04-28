@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:09:05 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 12:08:32 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,6 +44,16 @@ typedef struct				s_xyz
 	float					z;
 }							t_xyz;
 
+typedef enum				e_state
+{
+	nmoving,
+	moving,
+	jumping,
+	falling,
+	crouching,
+	flying
+}							t_state;
+
 typedef struct				s_player
 {
 	t_xyz					where;
@@ -53,6 +63,11 @@ typedef struct				s_player
 	float					yaw;
 	float					anglecos;
 	short					sect;
+	int						coll;
+	t_state					state;
+	float					add_z;
+	int						jump_sec;
+	float					eye;
 }							t_player;
 
 typedef struct				s_vertex
@@ -92,5 +107,4 @@ typedef struct				s_mapf
 	t_objs					*objects;
 	t_enemies				*enemies;
 }							t_mapf;
-
 #endif

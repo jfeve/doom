@@ -6,7 +6,7 @@
 #    By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/18 21:26:38 by jfeve        #+#   ##    ##    #+#        #
-#    Updated: 2019/04/27 16:27:09 by nzenzela    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/04/28 10:09:39 by jfeve       ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,7 +16,7 @@
 #******************************************************************************#
 
 CC = gcc
-CC_FLAGS = -Wall -Wextra -Werror -g3 -O3 -g -F./lib
+CC_FLAGS = -Wall -Wextra -Werror -g -fsanitize=address -F./lib
 SDL_FLAGS = -rpath ./lib -F./lib -framework SDL2 \
                                                 -framework SDL2_mixer \
                                                 -framework SDL2_ttf \
