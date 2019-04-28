@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/20 14:50:45 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 14:09:34 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 18:19:52 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,6 +18,9 @@ int				create_player(t_edit *edit, t_input *in)
 	if (in->key[SDL_SCANCODE_J] && edit->hl_sec)
 	{
 		in->key[SDL_SCANCODE_J] = SDL_FALSE;
+		if (edit->finish != NULL)
+			if (edit->finish->x == arr(in->x) && edit->finish->y == arr(in->y))
+				return (1);
 		if (!edit->player)
 		{
 			edit->player = create_vert(in->x, in->y);
@@ -44,6 +47,9 @@ int				create_finish(t_edit *edit, t_input *in)
 	if (in->key[SDL_SCANCODE_F] && edit->hl_sec)
 	{
 		in->key[SDL_SCANCODE_F] = SDL_FALSE;
+		if (edit->player != NULL)
+			if (edit->player->x == arr(in->x) && edit->player->y == arr(in->y))
+				return (1);
 		if (!edit->finish)
 		{
 			edit->finish = create_vert(in->x, in->y);
