@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 14:03:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 16:06:10 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 17:50:26 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,7 +98,7 @@ void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 ** Draws the entire hud (gun, life, ammo, type of gun)
 */
 
-void		draw_hud(t_sdl *sdl, t_hud *hud)
+void		draw_hud(t_sdl *sdl, t_hud *hud, int ammo)
 {
 	if (hud->anim == SDL_FALSE)
 		hud->id = 0;
@@ -109,6 +109,8 @@ void		draw_hud(t_sdl *sdl, t_hud *hud)
 		hud->anim = SDL_FALSE;
 		hud->id = 0;
 	}
+	if (hud->anim == SDL_FALSE && hud->id == 0 && ammo == 0)
+		hud->id = 6;
 	draw_sprite(sdl, hud->gun[hud->id], 2 * WIN_W / 3,
 	WIN_H - hud->gun[hud->id]->h);
 	draw_sprite(sdl, hud->ammo, 10, WIN_H - hud->ammo->h - 10);

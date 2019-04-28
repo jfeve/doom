@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 19:10:00 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 17:45:37 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -330,13 +330,14 @@ int								free_content(t_edit *edit);
 typedef struct		s_hud
 {
 	int				id;
-	SDL_Surface		*gun[6];
+	SDL_Surface		*gun[7];
 	SDL_Surface		*smallgun;
 	SDL_Surface		*ammo;
 	SDL_Surface		*life;
 	SDL_bool		anim;
 	Mix_Music		*music;
 	Mix_Chunk		*gunshot;
+	Mix_Chunk		*empty;
 }					t_hud;
 
 typedef	struct		s_line
@@ -402,7 +403,7 @@ void				render(char *str);
 */
 
 int					init_hud(t_hud *hud, Uint32 format);
-void				draw_hud(t_sdl *sdl, t_hud *hud);
+void				draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
 int					free_hud(t_hud *hud);
 
 #endif

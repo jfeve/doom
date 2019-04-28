@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 15:55:19 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 16:47:51 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 17:46:07 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,6 +19,8 @@ static void	free_audio(t_hud *hud)
 		Mix_FreeMusic(hud->music);
 	if (hud->gunshot)
 		Mix_FreeChunk(hud->gunshot);
+	if (hud->empty)
+		Mix_FreeChunk(hud->empty);
 	Mix_CloseAudio();
 }
 
