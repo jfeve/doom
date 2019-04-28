@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 15:55:19 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 16:23:05 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 16:47:51 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,8 +40,6 @@ int			free_hud(t_hud *hud)
 		SDL_FreeSurface(hud->life);
 	if (hud->smallgun)
 		SDL_FreeSurface(hud->smallgun);
-	if (hud->tmp)
-		SDL_FreeSurface(hud->tmp);
 	free_audio(hud);
 	return (0);
 }

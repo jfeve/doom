@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 16:17:31 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 16:47:47 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -333,7 +333,6 @@ typedef struct		s_hud
 	SDL_Surface		*smallgun;
 	SDL_Surface		*ammo;
 	SDL_Surface		*life;
-	SDL_Surface		*tmp;
 	SDL_bool		anim;
 	Mix_Music		*music;
 	Mix_Chunk		*gunshot;

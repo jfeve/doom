@@ -6,12 +6,28 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 16:20:11 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 16:48:34 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+static SDL_Surface	*init_image(char *path, Uint32 format)
+{
+	SDL_Surface	*tmp;
+	SDL_Surface	*ret;
+
+	if (!(tmp = SDL_LoadBMP(path)))
+		return (NULL);
+	if (!(ret = SDL_ConvertSurfaceFormat(tmp, format, 0)))
+	{
+		SDL_FreeSurface(tmp);
+		return (NULL);
+	}
+	SDL_FreeSurface(tmp);
+	return (ret);
+}
 
 /*
 ** Initialize all the textures needed in the hud.
@@ -20,51 +36,24 @@
 
 static int	init_texture(t_hud *hud, Uint32 format)
 {
-	if (!(hud->tmp = SDL_LoadBMP("data/textures/idle.bmp")))
+	if (!(hud->gun[0] = init_image("data/textures/idle.bmp", format)))
 		return (0);
-	if (!(hud->gun[0] = SDL_ConvertSurfaceFormat(hud->tmp, format, 0)))
+	if (!(hud->gun[1] = init_image("data/textures/shoot1.bmp", format)))
 		return (0);
-	SDL_FreeSurface(hud->tmp);
-	if (!(hud->tmp = SDL_LoadBMP("data/textures/shoot1.bmp")))
+	if (!(hud->gun[2] = init_image("data/textures/shoot2.bmp", format)))
 		return (0);
-	if (!(hud->gun[1] = SDL_ConvertSurfaceFormat(hud->tmp, format, 0)))
+	if (!(hud->gun[3] = init_image("data/textures/recoil1.bmp", format)))
 		return (0);
-	SDL_FreeSurface(hud->tmp);
-	if (!(hud->tmp = SDL_LoadBMP("data/textures/shoot2.bmp")))
+	if (!(hud->gun[4] = init_image("data/textures/recoil2.bmp", format)))
 		return (0);
-	if (!(hud->gun[2] = SDL_ConvertSurfaceFormat(hud->tmp, format, 0)))
+	if (!(hud->gun[5] = init_image("data/textures/recoil3.bmp", format)))
 		return (0);
-	SDL_FreeSurface(hud->tmp);
-	if (!(hud->tmp = SDL_LoadBMP("data/textures/recoil1.bmp")))
+	if (!(hud->ammo = init_image("data/textures/ammo.bmp", format)))
 		return (0);
-	if (!(hud->gun[3] = SDL_ConvertSurfaceFormat(hud->tmp, format, 0)))
+	if (!(hud->life = init_image("data/textures/life.bmp", format)))
 		return (0);
-	SDL_FreeSurface(hud->tmp);
-	if (!(hud->tmp = SDL_LoadBMP("data/textures/recoil2.bmp")))
+	if (!(hud->smallgun = init_image("data/textures/smallgun.bmp", format)))
 		return (0);
-	if (!(hud->gun[4] = SDL_ConvertSurfaceFormat(hud->tmp, format, 0)))
-		return (0);
-	SDL_FreeSurface(hud->tmp);
-	if (!(hud->tmp = SDL_LoadBMP("data/textures/recoil3.bmp")))
-		return (0);
-	if (!(hud->gun[5] = SDL_ConvertSurfaceFormat(hud->tmp, format, 0)))
-		return (0);
-	SDL_FreeSurface(hud->tmp);
-	if (!(hud->tmp = SDL_LoadBMP("data/textures/ammo.bmp")))
-		return (0);
-	if (!(hud->ammo = SDL_ConvertSurfaceFormat(hud->tmp, format, 0)))
-		return (0);
-	SDL_FreeSurface(hud->tmp);
-	if (!(hud->tmp = SDL_LoadBMP("data/textures/life.bmp")))
-		return (0);
-	if (!(hud->life = SDL_ConvertSurfaceFormat(hud->tmp, format, 0)))
-		return (0);
-	SDL_FreeSurface(hud->tmp);
-	if (!(hud->tmp = SDL_LoadBMP("data/textures/smallgun.bmp")))
-		return (0);
-	if (!(hud->smallgun = SDL_ConvertSurfaceFormat(hud->tmp, format, 0)))
-		return (0);
-	SDL_FreeSurface(hud->tmp);
 	return (1);
 }
 
@@ -76,7 +65,6 @@ int			init_hud(t_hud *hud, Uint32 format)
 {
 	if (!init_texture(hud, format))
 		return (free_hud(hud));
-	hud->anim = SDL_FALSE;
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
 		return (free_hud(hud));
 	if (!(hud->music = Mix_LoadMUS("data/sounds/theme.mp3")))
@@ -84,5 +72,6 @@ int			init_hud(t_hud *hud, Uint32 format)
 	Mix_Volume(0, MIX_MAX_VOLUME / 3);
 	if (!(hud->gunshot = Mix_LoadWAV("data/sounds/gun.wav")))
 		return (free_hud(hud));
+	hud->anim = SDL_FALSE;
 	return (1);
 }
