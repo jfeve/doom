@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 00:54:16 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 19:03:07 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,96 +42,88 @@ void			update_event(t_input *in)
 	}
 }
 
-void			cancel_last(t_edit*edit)
+int				click_vert(t_input *in, t_edit *edit)
 {
-	t_lis		*tmp;
-	
-	if (edit->vert == NULL)
-		return ;
-	tmp = edit->vert;
-	if (tmp->next)
-		while(tmp->next->next)
-			tmp = tmp->next;
-	if (tmp->next)
-	{
-		free(tmp->next);
-		tmp->next = NULL;
-	}
-	else
-	{
-		free(edit->vert);
-		edit->vert = NULL;
-	}
-}
-
-void			check_event(char *mapname, t_input *in, t_edit *edit)
-{
-	hl_mode(in, edit);
-	if (in->key[SDL_SCANCODE_ESCAPE])
-		in->quit = SDL_TRUE;
-	if (in->key[SDL_SCANCODE_S])
-	{
-		if(save_map(mapname, edit))
-			write(1, "\n-------Map sauver-------\n", 27);
-		else
-			write(1, "\n--------Map not saved-------\n", 30);
-		in->key[SDL_SCANCODE_S] = SDL_FALSE;
-	}
-	if (in->key[SDL_SCANCODE_R])
-	{
-		edit->hl_sec = NULL;
-		edit->nbsect = 0;
-		edit->sec = 0;
-		edit->hl = 0;
-		edit->vert = NULL;
-		edit->sect = NULL;
-	}
-	if (in->key[SDL_SCANCODE_Z])
-	{
-		cancel_last(edit);
-		in->key[SDL_SCANCODE_Z] = SDL_FALSE;
-	}
-	if (in->mouse[SDL_BUTTON_RIGHT])
-	{
-		if (check_on_vec(edit, in) == 1)
-			printf("2\n");
-		in->mouse[SDL_BUTTON_RIGHT] = SDL_FALSE;
-	}
 	if (in->mouse[SDL_BUTTON_LEFT] && in->y < HUD_BEGIN && edit->hl == 0)
 	{
 		edit->hud_flag = 1;
 		if (edit->vert == NULL)
+		{
 			edit->vert = create_vert(in->x, in->y);
+			if (edit->vert == NULL)
+				return (0);
+		}
 		else
-			add_vert(in->x, in->y, edit, edit->vert);
+		{
+			if (add_vert(in->x, in->y, edit, edit->vert) == -1)
+				return (0);
+		}
 		in->mouse[SDL_BUTTON_LEFT] = SDL_FALSE;
 	}
-	if (in->key[SDL_SCANCODE_O] && edit->hl_sec)
-	{
-		if (edit->hl_sec->obj == NULL)
-			edit->hl_sec->obj = create_vert(in->x, in->y);
-		else
-			add_vert(in->x, in->y, edit, edit->hl_sec->obj);
-		t_lis *tmp;
+	return (1);
+}
 
-		tmp = edit->hl_sec->obj;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->col = GREEN;
-		in->key[SDL_SCANCODE_O] = SDL_FALSE;
-	}
-	if (in->key[SDL_SCANCODE_E] && edit->hl_sec)
+void			settings_event(t_edit *edit, t_input *in)
+{
+	if (in->key[SDL_SCANCODE_R])
 	{
-		if (edit->hl_sec->enem == NULL)
-			edit->hl_sec->enem = create_vert(in->x, in->y);
-		else
-			add_vert(in->x, in->y, edit, edit->hl_sec->enem);
-		t_lis *tmp;
-
-		tmp = edit->hl_sec->enem;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->col = RED;
-		in->key[SDL_SCANCODE_E] = SDL_FALSE;
+		edit->nbsect = 0;
+		edit->err = 0;
+		edit->hud_flag = 0;
+		edit->hl_sec = NULL;
+		edit->hl_vert = NULL;
+		edit->nbsect = 0;
+		edit->sec = 0;
+		edit->hl = 0;
+		if (edit->vert)
+			free_lis(&edit->vert);
+		if (edit->player)
+			free_lis(&edit->player);
+		if (edit->finish)
+			free_lis(&edit->finish);
+		if (edit->sect)
+			free_sec(&edit->sect);
+		set_trigger(edit, choose_set(edit), 0);
 	}
+	if (in->key[SDL_SCANCODE_ESCAPE])
+		in->quit = SDL_TRUE;
+}
+
+int				check_event(char *mapname, t_input *in, t_edit *edit)
+{
+	t_mapf		mapf;
+
+	if (in->key[SDL_SCANCODE_K] && edit->hl_sec && edit->dyn_trigger != 1)
+	{
+		edit->err = 2;
+		in->key[SDL_SCANCODE_K] = SDL_FALSE;
+	}
+	print_info(edit, in);
+	settings_event(edit, in);
+	cancels(edit, in);
+	if (click_vert(in, edit) == 0)
+		return (0);
+	hl_mode(in, edit);
+	hl_vec(edit, in);
+	if (new_vert(edit, in) == 0)
+		return (0);
+	portals(edit, in);
+	if (check_input(edit, in) == 0)
+		return (0);
+	dyn_input(edit, in);
+	if (enem(edit, in) == 0)
+		return (0);
+	if (obj(edit, in) == 0)
+		return (0);
+	if (create_player(edit, in) == 0)
+		return (0);
+	if (create_finish(edit, in) == 0)
+		return (0);
+	save_map(in, mapname, edit);
+	if (in->key[SDL_SCANCODE_L])
+	{
+		in->key[SDL_SCANCODE_L] = SDL_FALSE;
+		read_map(&mapf, ft_strjoin(mapname, ".mapf"));
+	}
+	return (1);
 }

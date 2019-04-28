@@ -5,15 +5,27 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "(lldb) Launch",
+			"name": "Launch Editor",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/doom-nukem",
-			"args": ["edit", "testrandom"],
+			"args": ["edit", "mapee"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],
-			"externalConsole": true,
+			"externalConsole": false,
+			"MIMode": "lldb"
+		},
+		{
+			"name": "Launch Game",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/doom-nukem",
+			"args": ["maphiro.mapf"],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"environment": [],
+			"externalConsole": false,
 			"MIMode": "lldb"
 		}
 	]

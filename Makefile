@@ -15,6 +15,12 @@
 #-----------------------------------GCC----------------------------------------#
 #******************************************************************************#
 
+CC = gcc
+CC_FLAGS = -Wall -Wextra -Werror -g3 -O3 -F./lib
+SDL_FLAGS = -rpath ./lib -F./lib -framework SDL2 \
+                                                -framework SDL2_mixer \
+                                                -framework SDL2_ttf \
+												-lm -liconv -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal
 CC = x86_64-w64-mingw32-gcc
 CC_FLAGS = -Wall -Wextra -Werror -g3 -O3
 SDL_FLAGS = -I/tmp/sdl2-win64/include/SDL2 -L/tmp/sdl2-win64/lib -lmingw32 -lSDL2main -lSDL2 -mwindows
@@ -25,6 +31,15 @@ SDL_FLAGS = -I/tmp/sdl2-win64/include/SDL2 -L/tmp/sdl2-win64/lib -lmingw32 -lSDL
 
 NAME_LIB = libft.a
 PATH_LIB = ./libft/
+
+#******************************************************************************#
+#----------------------------------SDL__---------------------------------------#
+#******************************************************************************#
+
+NAME_SDLLIB = libSDL2.a
+NAME_SDLTTFLIB = libSDL2_ttf.a
+NAME_SDLMIXERLIB = libSDL2_mixer.a
+PATH_SDLLIB = ./lib/
 
 #******************************************************************************#
 #-----------------------------------DOOM----------------------------------------#
@@ -48,8 +63,8 @@ INC_DOOM = $(addprefix $(PATH_INC_DOOM), doom.h)
 all: $(NAME)
 
 $(NAME): $(PATH_LIB)$(NAME_LIB) $(PATH_OBJ_DOOM) $(OBJ_DOOM)
-	@$(CC) $(CC_FLAGS) $(OBJ_DOOM) $(PATH_LIB)$(NAME_LIB) $(SDL_FLAGS)\
-		-o $(NAME).exe
+	@$(CC) $(CC_FLAGS) $(SDL_FLAGS) $(OBJ_DOOM) $(PATH_LIB)$(NAME_LIB) $(PATH_SDLLIB)$(NAME_SDLLIB) $(PATH_SDLLIB)$(NAME_SDLTTFLIB) $(PATH_SDLLIB)$(NAME_SDLMIXERLIB)\
+		-o $(NAME)
 	@echo "*******\nexecutable doom-nukem cree.\n*******\n"
 
 $(PATH_OBJ_DOOM):
@@ -88,7 +103,6 @@ clean: clean_lib clean_doom
 #******************************************************************************#
 #---------------------------------FCLEAN---------------------------------------#
 #******************************************************************************#
-
 
 fclean_doom: clean_doom
 	@rm -f $(NAME)

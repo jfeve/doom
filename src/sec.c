@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   sec.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 16:22:44 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/09 12:53:46 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 18:57:00 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,12 +37,24 @@ static void		add_sec(t_edit *edit)
 	tmp->next = sec;
 }
 
+int				count_vert(t_lis *vert)
+{
+	int		nb;
+
+	nb = 0;
+	while (vert != NULL)
+	{
+		nb++;
+		vert = vert->next;
+	}
+	return (nb);
+}
+
 void			set_sect(t_edit *edit)
 {
 	t_sec		*tmp;
 
 	edit->hud_flag = 0;
-	edit->nbsect++;
 	if (edit->sect == NULL)
 		edit->sect = create_sec();
 	else
@@ -54,14 +66,19 @@ void			set_sect(t_edit *edit)
 			tmp = tmp->next;
 	}
 	tmp->vert = edit->vert;
+	tmp->nbvert = count_vert(edit->vert);
+	tmp->id = edit->nbsect;
 	tmp->vert->col = WHITE;
-	tmp->text = 0;
-	tmp->floor = 0;
-	tmp->ceil = 0;
+	tmp->floor = -1;
+	tmp->ceil = -1;
+	tmp->gravity = -1;
 	tmp->obj = NULL;
 	tmp->enem = NULL;
+	tmp->objscount = 0;
+	tmp->enemcount = 0;
 	edit->vert = NULL;
 	edit->oldvert = NULL;
+	edit->nbsect++;
 }
 
 void			draw_sec(t_edit *edit)
@@ -75,7 +92,11 @@ void			draw_sec(t_edit *edit)
 	while (tmp)
 	{
 		temp = tmp->vert;
-		while (temp->next)
+		if (temp->col == (int)RED || temp->col == (int)GREEN || (temp->col ==
+					(int)PURPLE && edit->hl > 0 && temp->next->col !=
+					(int)WHITE))
+			put_vert(edit, temp);
+		while (temp->next != NULL)
 		{
 			bresen(mult_unit(*temp), mult_unit(*temp->next), &edit->sdl);
 			temp = temp->next;

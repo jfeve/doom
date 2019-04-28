@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 00:55:28 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 18:25:35 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,157 +15,142 @@
 
 int				usage(void)
 {
-	ft_putendl("Usage : ./doom-nukem <file>\n\tor ./doom-nukem edit <mapname>.");
+	ft_putendl("Usage : ./doom-nukem <file>");
+	ft_putendl("\tor ./doom-nukem edit <mapname>.");
 	return (0);
 }
 
-int				init_edit(t_edit *edit)
+int				init_content(t_edit *edit)
 {
-	edit->hud_flag = 0;
-	edit->hl_sec = NULL;
-	edit->nbsect = 0;
-	edit->hl = 0;
-	edit->sect = 0;
-	if (sdl_init(&edit->sdl) == 0)
+	edit->con = create_content();
+	if (edit->con == NULL)
 		return (0);
-	edit->err = 0;
-	edit->vert = NULL;
-	edit->sect = NULL;
+	edit->con->x = WIN_W / 2;
+	edit->con->y = 35;
+	edit->con->display = 0;
+	edit->con->cursor = 0;
+	edit->con->trigger = 1;
+	fill_str_content(256, edit->con->c_title, "level editor ");
+	fill_str_content(2048, edit->con->c_content, "v1");
 	return (1);
 }
 
-void			set_grid(t_edit *edit)
+int				choose_set(t_edit *edit)
 {
-	int x;
-	int y;
-
-	y = 0;
-	while (y < WIN_H)
+	if (edit->hl_sec_temp)
 	{
-		x = 0;
-		while (x < WIN_W)
-		{
-			if (y % UNIT == 0 || x % UNIT == 0)
-				edit->sdl.pix[y * WIN_W + x] = CYAN;
-			x++;
-		}
-		y++;
-	}
-}
-
-t_lis			mult_unit(t_lis vert)
-{
-	t_lis	a;
-	a.x = vert.x * UNIT;
-	a.y = vert.y * UNIT;
-	a.col = vert.col;
-	return (a);
-}
-
-void			draw_vec(t_edit *edit, t_input in)
-{
-	t_lis *tmp;
-	t_lis point;
-
-	if (edit->vert == NULL)
-		return ;
-	tmp = edit->vert;
-	while (tmp->next != NULL)
-	{
-		bresen(mult_unit(*tmp), mult_unit(*tmp->next), &edit->sdl);
-		tmp =tmp->next;
-	}
-	if (edit->oldvert != NULL)
-	{
-		bresen(mult_unit(*edit->oldvert), mult_unit(*tmp), &edit->sdl);
-		set_sect(edit);
-	}
-	else
-	{
-		point.x = arr(in.x);
-		point.y = arr(in.y);
-		point.col = WHITE;
-		bresen(mult_unit(*tmp), mult_unit(point), &edit->sdl);
-	}
-}
-
-int				check_mapname(char *mapname)
-{
-	int		i;
-
-	i = 0;
-	if (ft_strlen(mapname) >= 4)
-	{
-		while (mapname[i])
-			if (ft_isalpha(mapname[i]))
-				i++;
-		if (i != ((int)ft_strlen(mapname)))
-			return (0);
-		else
+		if (edit->hl_sec_temp->floor == -1)
 			return (1);
 	}
+	else if (edit->hl_sec)
+		if (edit->hl_sec->floor == -1)
+			return (1);
+	return (0);
+}
+
+void			set_trigger(t_edit *edit, int choice, int trig)
+{
+	t_content	*tmp;
+	char		*str;
+	char		*title;
+
+	tmp = edit->con;
+	title = ft_strdup("\0");
+	if (choice == 0)
+		str = ft_strdup("set");
 	else
-		return (0);
-	return (1);
-}
-void			draw_obj_enem(t_edit *edit)
-{
-	t_sec		*temp;
-
-	if (edit->sect == NULL)
-		return ;
-	temp = edit->sect;
-	while (temp)
+		str = ft_strdup("not set");
+	while (tmp)
 	{
-		if (temp->obj)
-			put_vert(edit, temp->obj);
-		if (temp->enem)
-			put_vert(edit, temp->enem);
-		temp = temp->next;
-	}
-}
-
-void			level_editor(char *mapname)
-{
-	t_edit		edit;
-	t_input		in;
-
-	ft_bzero(&in, sizeof(t_input));
-	ft_bzero(&edit, sizeof(t_edit));
-	if (init_edit(&edit) == 0)
-		return (ft_putendl("Init Edit Error"));
-	if (!check_mapname(mapname))
-		return (ft_putendl("Map name not valid"));
-	while (!in.quit)
-	{
-		clear_tab(&edit.sdl);
-		update_event(&in);
-		check_event(mapname, &in, &edit);
-		set_grid(&edit);
-		hud(&edit);
-		put_vert(&edit, edit.vert);
-		draw_obj_enem(&edit);
-		if (edit.hl_sec && edit.hl_sec->obj)
-			put_vert(&edit, edit.hl_sec->obj);
-		if (edit.hl_sec && edit.hl_sec->enem)
-			put_vert(&edit, edit.hl_sec->enem);
-		draw_vec(&edit, in);
-		draw_sec(&edit);
-		if (display_frame(edit.sdl.ren, edit.sdl.pix) == 0)
+		if ((ft_strcmp(title, tmp->c_title) == 0) &&
+				(ft_strcmp(str, tmp->c_content) == 0))
 		{
-			free_sdl(&edit.sdl, 5);
+			tmp->trigger = trig;
 			return ;
 		}
-		SDL_Delay(1000/60);
+		tmp = tmp->next;
 	}
-	return ;
+}
+
+void			draw_wf(int x, int y, t_edit *edit)
+{
+	int			i;
+	int			j;
+
+	i = x;
+	j = y;
+	if (edit->dyn_trigger == 1)
+	{
+		set_trigger(edit, choose_set(edit), 0);
+		return ;
+	}
+	while (j < y + WF_H)
+	{
+		i = x;
+		while (i < x + WF_W)
+		{
+			if (i < x + 10 || i > x + WF_W - 10)
+				edit->sdl.pix[i + j * WIN_W] = WHITE;
+			else if (j < y + 10 || j > y + WF_H - 10)
+				edit->sdl.pix[i + j * WIN_W] = WHITE;
+			else
+				edit->sdl.pix[i + j * WIN_W] = RED;
+			i++;
+		}
+		j++;
+	}
+	set_trigger(edit, choose_set(edit), 1);
+}
+
+void			draw_back(t_edit *edit)
+{
+	int			i;
+	int			j;
+
+	j = HUD_BEGIN + 37;
+	while (j < HUD_BEGIN + 87)
+	{
+		i = 575;
+		while (i < 850)
+		{
+			edit->sdl.pix[j * WIN_W + i] = BROWN;
+			i++;
+		}
+		j++;
+	}
+}
+
+int				get_update(t_edit *edit, t_input *in, char *mapname)
+{
+	clear_tab(&edit->sdl);
+	update_event(in);
+	if (check_event(mapname, in, edit) == 0)
+		return (0);
+	set_grid(edit);
+	hud(edit);
+	put_vert(edit, edit->vert);
+	draw_obj_enem(edit);
+	draw_vec(edit, *in);
+	draw_sec(edit);
+	if (edit->player)
+		draw_vert(edit->player, edit);
+	if (edit->finish)
+		draw_vert(edit->finish, edit);
+	if (edit->hl_sec_temp || edit->hl_sec)
+		draw_wf(WIN_W - WF_W, WIN_H - WF_H, edit);
+	if (edit->dyn_trigger == 1)
+		draw_back(edit);
+	prepare_draw(edit);
+	return (1);
 }
 
 int				main(int argc, char **argv)
 {
-	if (argc == 3 && strcmp(argv[1], "edit") == 0)
+	if (argc == 3 && ft_strcmp(argv[1], "edit") == 0)
 		level_editor(argv[2]);
+	else if (argc == 2)
+		render(argv[1]);
 	else
-		return(usage());
+		return (usage());
 	return (0);
 }

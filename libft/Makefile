@@ -14,7 +14,7 @@
 
 NAME = libft.a
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g3 -O3
 
 HEADERS = libft.h
 
