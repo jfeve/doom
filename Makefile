@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+      #
+#    By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/18 21:26:38 by jfeve        #+#   ##    ##    #+#        #
-#    Updated: 2019/04/27 16:27:09 by nzenzela    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/04/28 13:10:13 by flombard    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,7 +16,7 @@
 #******************************************************************************#
 
 CC = gcc
-CC_FLAGS = -Wall -Wextra -Werror -g3 -O3 -g -F./lib
+CC_FLAGS = -Wall -Wextra -Werror -g -fsanitize=address -F./lib
 SDL_FLAGS = -rpath ./lib -F./lib -framework SDL2 \
                                                 -framework SDL2_mixer \
                                                 -framework SDL2_ttf \
@@ -37,7 +37,6 @@ NAME_SDLLIB = libSDL2.a
 NAME_SDLTTFLIB = libSDL2_ttf.a
 NAME_SDLMIXERLIB = libSDL2_mixer.a
 PATH_SDLLIB = ./lib/
-
 
 #******************************************************************************#
 #-----------------------------------DOOM----------------------------------------#
@@ -101,7 +100,6 @@ clean: clean_lib clean_doom
 #******************************************************************************#
 #---------------------------------FCLEAN---------------------------------------#
 #******************************************************************************#
-
 
 fclean_doom: clean_doom
 	@rm -f $(NAME)
