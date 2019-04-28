@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:09:05 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 06:26:24 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,6 +53,7 @@ typedef struct				s_player
 	float					yaw;
 	float					anglecos;
 	short					sect;
+	int						coll;
 }							t_player;
 
 typedef struct				s_vertex

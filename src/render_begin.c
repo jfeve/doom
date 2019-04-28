@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 20:36:50 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 08:07:11 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,6 +41,18 @@ void		draw(t_mapf *mapf, int x, int y1, int y2, int color)
 			y++;
 		}
 	}
+}
+
+float		vector_measure(float x1, float y1, float x2, float y2)
+{
+	float dx;
+	float dy;
+	float res;
+
+	dx = x2 - x1;
+	dy = y2 - y1;
+	res = sqrtf(dx * dx + dy * dy);
+	return (res);
 }
 
 void		fill_pix(t_mapf *mapf)
@@ -103,9 +115,7 @@ void		fill_pix(t_mapf *mapf)
 			float tz1 = vx1 * pcos + vy1 * psin;
 			float tx2 = vx2 * psin - vy2 * pcos;
 			float tz2 = vx2 * pcos + vy2 * psin;
-//			if (tz1 <= 0 && tz2 <= 0)
-//				continue ;
-			if (tz1 <= 0 || tz2 < 0)
+			if (tz1 <= 0 || tz2 <= 0)
 			{
 				float nearz = 0.0001f;
 				float farz = 5.f;
@@ -148,13 +158,12 @@ void		fill_pix(t_mapf *mapf)
 			}
 			float xscale1 = HFOV / tz1;
 			float yscale1 = VFOV / tz1;
-			int x1 = (tx1 * xscale1);
-			x1 = x1 * -1 + WIN_W / 2;
+			int x1 = (tx1 * xscale1) * -1 + WIN_W / 2;
 			float xscale2 = HFOV / tz2;
 			float yscale2 = VFOV / tz2;
 			int x2 = WIN_W / 2 - (int)(tx2 * xscale2);
-//			if (x1 >= x2 || x2 < now.sx2 || x1 > now.sx1)
-//				continue ;
+	//		if (x1 >= x2 || x2 < now.sx2 || x1 > now.sx1)
+	//			break ;
 			float yceil = sect->ceil - mapf->player.where.z;
 			float yfloor = sect->floor - mapf->player.where.z;
 			int neigh = sect->vert[s].neigh;
@@ -162,8 +171,8 @@ void		fill_pix(t_mapf *mapf)
 			float nyfloor = 0;
 			if (neigh >= 0)
 			{
-				nyceil = sect[neigh].ceil - mapf->player.where.z;
-				nyfloor = sect[neigh].floor - mapf->player.where.z;
+				nyceil = mapf->sectors[neigh].ceil - mapf->player.where.z;
+				nyfloor = mapf->sectors[neigh].floor - mapf->player.where.z;
 			}
 # define Yaw(y, z) (y + z * mapf->player.yaw)
 			int y1a = WIN_H / 2 - (int)(Yaw(yceil, tz1) * yscale1); 
@@ -233,18 +242,162 @@ void		mouse_aim(t_mapf *mapf, t_input *in)
 {
 	float yaw = 0;
 
-	mapf->player.angle += in->xrel * 0.03f;
+	mapf->player.angle += in->xrel * 0.02f;
 	mapf->player.anglesin = sin(mapf->player.angle);
 	mapf->player.anglecos = cos(mapf->player.angle);
-	yaw = f_clamp(yaw - in->yrel * 0.05f, -5, 5);
+	yaw = f_clamp(yaw - in->yrel * 0.04f, -5, 5);
 	mapf->player.yaw -= yaw - mapf->player.velo.z * 0.5f;
-	mapf->player.yaw = f_clamp(mapf->player.yaw, -5, 4);
+	mapf->player.yaw = f_clamp(mapf->player.yaw, -4, 3);
+}
+
+void		slide_wall(t_mapf *mapf, int i)
+{
+	float		dx;
+	float		dy;
+	float		x;
+	float		y;
+	t_sector	*sec;
+	t_float		proj;
+
+	x = 0;
+	y = 0;
+	sec = &mapf->sectors[mapf->player.sect];
+	if (i != sec->nbvert - 1)
+	{
+		dx = sec->vert[i + 1].x - sec->vert[i].x;
+		dy = sec->vert[i + 1].y - sec->vert[i].y;
+	}
+	else
+	{
+		dx = sec->vert[0].x - sec->vert[i].x;
+		dy = sec->vert[0].y - sec->vert[i].y;
+	}
+	if (dx == 0)
+	{
+		x = sec->vert[i].x;
+		mapf->player.where.y += mapf->player.velo.y;
+	}
+	else if (dy == 0)
+	{
+		y = sec->vert[i].y;
+		mapf->player.where.x += mapf->player.velo.x;
+	}
+	else
+	{
+		float	px = mapf->player.where.x;
+		float	py = mapf->player.where.y;
+		x = dy / dx;
+		y = mapf->player.where.y - x * mapf->player.where.x;
+		t_float		b;
+		b = (t_float){mapf->player.where.x + 2, x *
+			(mapf->player.where.x + 2) + y};
+		proj.x = ((mapf->player.velo.x * (b.x - px) +
+				mapf->player.velo.y * (b.y - py)) / vector_measure(px, py, b.x, b.y) *
+				vector_measure(px, py, b.x, b.y) * (b.x - px));
+		proj.y = ((mapf->player.velo.x * (b.x - px) +
+				mapf->player.velo.y * (b.y - py)) / vector_measure(px, py, b.x, b.y) *
+				vector_measure(px, py, b.x, b.y) * (b.y - py));
+		mapf->player.where.x += proj.x;
+		mapf->player.where.y += proj.y;
+	}
+}
+
+int			check_port(t_mapf *mapf, int i, t_sector *sect)
+{
+	float	ps;
+	float	ps2;
+	float	px = mapf->player.where.x;
+	float	py = mapf->player.where.y;
+	float	dx = mapf->player.velo.x;
+	float	dy = mapf->player.velo.y;
+
+	if (i != sect->nbvert - 1)
+	{
+		ps = f_pointside((t_float){px, py}, (t_float){sect->vert[i].x, sect->vert[i].y},
+			(t_float){sect->vert[i + 1].x, sect->vert[i + 1].y});
+		ps2 = f_pointside((t_float){px + dx, py + dy}, (t_float){sect->vert[i].x, sect->vert[i].y},
+			(t_float){sect->vert[i + 1].x, sect->vert[i + 1].y});
+	}
+	else
+	{
+		ps = f_pointside((t_float){px, py}, (t_float){sect->vert[i].x, sect->vert[i].y},
+			(t_float){sect->vert[0].x, sect->vert[0].y});
+		ps2 = f_pointside((t_float){px + dx, py + dy}, (t_float){sect->vert[i].x, sect->vert[i].y},
+			(t_float){sect->vert[0].x, sect->vert[0].y});
+	}
+//	dprintf(1, "-----------------------------------------\n");
+//	dprintf(1, "ps = %f\tps2 = %f\n", ps, ps2);
+//	if (i != sect->nbvert - 1)
+//		dprintf(1, "x1 = %d\ty1 = %d\tx2 = %d\ty2 = %d\n", sect->vert[i].x, sect->vert[i].y,
+//				sect->vert[i + 1].x, sect->vert[i + 1].y);
+//	else
+//		dprintf(1, "x1 = %d\ty1 = %d\tx2 = %d\ty2 = %d\n", sect->vert[i].x, sect->vert[i].y,
+//				sect->vert[0].x, sect->vert[0].y);
+//	dprintf(1, "px =%f\tpy = %f\n", px, py);
+//	dprintf(1, "dx =%f\tdy = %f\n", dx, dy);
+	if ((ps >= fabs(dx * 4) && ps2 <= fabs(dx * 4)) || (ps <= fabs(dx * 4) && ps2 >= fabs(dx * 4)))
+	{
+		mapf->player.sect = sect->vert[i].neigh;
+		return (1);
+	}
+	return (0);
+}
+
+int			check_horcoll(t_mapf *mapf)
+{
+	float	px = mapf->player.where.x;
+	float	py = mapf->player.where.y;
+	float	dx = mapf->player.velo.x;
+	float	dy = mapf->player.velo.y;
+	float	vmp;
+	float	vmp2;
+	float	vmw;
+	int		i;
+	t_sector	*sect;
+
+	i = 0;
+	sect = &mapf->sectors[mapf->player.sect];
+	while (i < sect->nbvert)
+	{
+		if (i != sect->nbvert - 1)
+		{
+			vmw = vector_measure(sect->vert[i].x, sect->vert[i].y, sect->vert[i + 1].x, sect->vert[i + 1].y);
+			vmp = vector_measure(sect->vert[i].x, sect->vert[i].y, px, py) +
+				vector_measure(sect->vert[i + 1].x, sect->vert[i + 1].y, px, py);
+			vmp2 = vector_measure(sect->vert[i].x, sect->vert[i].y, px + dx, py + dy ) +
+				vector_measure(sect->vert[i + 1].x, sect->vert[i + 1].y, px + dx, py + dy);
+		}
+		else
+		{
+			vmw = vector_measure(sect->vert[i].x, sect->vert[i].y, sect->vert[0].x, sect->vert[0].y);
+			vmp = vector_measure(sect->vert[i].x, sect->vert[i].y, px, py) +
+				vector_measure(sect->vert[0].x, sect->vert[0].y, px, py);
+			vmp2 = vector_measure(sect->vert[i].x, sect->vert[i].y, px + dx, py + dy ) +
+				vector_measure(sect->vert[0].x, sect->vert[0].y, px + dx, py + dy);
+		}
+		if (vmp > vmp2 && vmp2 <= vmw + 0.2)
+		{
+			if (sect->vert[i].neigh != -1)
+				check_port(mapf, i, sect);
+			else
+			{
+					slide_wall(mapf, i);
+					mapf->player.coll++;
+					return (1);
+			}
+		}
+		i++;
+	}
+	mapf->player.coll = 0;
+	return (0);
 }
 
 void		move_chara(t_mapf *mapf, t_input *in)
 {
 	float	move_vec[2];
 	float acc = 0.2f;
+	float tmpx;
+	float tmpy;
 
 	move_vec[0] = 0.0f;
 	move_vec[1] = 0.0f;
@@ -268,12 +421,18 @@ void		move_chara(t_mapf *mapf, t_input *in)
 		move_vec[0] -= mapf->player.anglesin*0.2f;
 		move_vec[1] += mapf->player.anglecos*0.2f;
 	}
+	tmpx = mapf->player.velo.x;
+	tmpy = mapf->player.velo.y;
 	mapf->player.velo.x = mapf->player.velo.x * (1 - acc) + move_vec[0]
 	* acc;
 	mapf->player.velo.y = mapf->player.velo.y * (1 - acc) + move_vec[1]
 	* acc;
-	mapf->player.where.x += mapf->player.velo.x;
-	mapf->player.where.y += mapf->player.velo.y;
+	if (check_horcoll(mapf) == 0)
+	{
+		mapf->player.where.x += mapf->player.velo.x;
+		mapf->player.where.y += mapf->player.velo.y;
+	}
+
 }
 
 void		render_check_event(t_mapf *mapf, t_input *in)
@@ -282,6 +441,22 @@ void		render_check_event(t_mapf *mapf, t_input *in)
 	mouse_aim(mapf, in);
 	if (in->key[SDL_SCANCODE_ESCAPE])
 		in->quit = SDL_TRUE;
+	if (in->key[SDL_SCANCODE_H])
+	{
+		if (mapf->player.sect == mapf->nbsect - 1)
+			mapf->player.sect = 0;
+		else
+			mapf->player.sect++;
+		in->key[SDL_SCANCODE_H] = SDL_FALSE;
+	}
+	if (in->key[SDL_SCANCODE_J])
+	{
+		if (mapf->player.sect == 0)
+			mapf->player.sect = mapf->nbsect - 1;
+		else
+			mapf->player.sect--;
+		in->key[SDL_SCANCODE_J] = SDL_FALSE;
+	}
 }
 
 void		render(char *str)
@@ -301,10 +476,12 @@ void		render(char *str)
 	mapf.player.velo.y = 0;
 	mapf.player.velo.z = 0;
 	mapf.player.yaw = 0;
+	mapf.player.coll = 0;
 	while (!in.quit)
 	{
 		in.xrel = 0;
 		in.yrel = 0;
+		mapf.player.where.z = mapf.sectors[mapf.player.sect].floor + EYE;
 		clear_tab(&mapf.sdl);
 		update_event(&in);
 		render_check_event(&mapf, &in);
