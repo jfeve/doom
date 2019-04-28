@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 16:48:34 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 17:45:58 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,6 +48,8 @@ static int	init_texture(t_hud *hud, Uint32 format)
 		return (0);
 	if (!(hud->gun[5] = init_image("data/textures/recoil3.bmp", format)))
 		return (0);
+	if (!(hud->gun[6] = init_image("data/textures/noammo.bmp", format)))
+		return (0);
 	if (!(hud->ammo = init_image("data/textures/ammo.bmp", format)))
 		return (0);
 	if (!(hud->life = init_image("data/textures/life.bmp", format)))
@@ -71,6 +73,8 @@ int			init_hud(t_hud *hud, Uint32 format)
 		return (free_hud(hud));
 	Mix_Volume(0, MIX_MAX_VOLUME / 3);
 	if (!(hud->gunshot = Mix_LoadWAV("data/sounds/gun.wav")))
+		return (free_hud(hud));
+	if (!(hud->empty = Mix_LoadWAV("data/sounds/empty.wav")))
 		return (free_hud(hud));
 	hud->anim = SDL_FALSE;
 	return (1);
