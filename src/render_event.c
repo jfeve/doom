@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   render_event.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 12:13:37 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 12:37:34 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -103,7 +103,7 @@ void		crouch(t_mapf *mapf, t_input *in)
 	}
 }
 
-void		render_check_event(t_mapf *mapf, t_input *in)
+void		render_check_event(t_mapf *mapf, t_input *in, t_hud *hud)
 {
 	move_chara(mapf, in);
 	mouse_aim(mapf, in);
@@ -127,5 +127,11 @@ void		render_check_event(t_mapf *mapf, t_input *in)
 		else
 			mapf->player.sect--;
 		in->key[SDL_SCANCODE_J] = SDL_FALSE;
+	}
+	if (in->mouse[SDL_BUTTON_LEFT])
+	{
+		hud->anim = SDL_TRUE;
+		if (hud->id == 0)
+			Mix_PlayChannel(1, hud->gunshot, 0);
 	}
 }

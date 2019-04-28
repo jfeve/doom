@@ -3,7 +3,7 @@
 /*                                                              /             */
 /*   sdl.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:40:34 by jfeve        #+#   ##    ##    #+#       */
 /*   Updated: 2019/04/26 20:19:34 by jfeve       ###    #+. /#+    ###.fr     */
@@ -34,9 +34,9 @@ int				sdl_init(t_sdl *sdl)
 
 	i = 0;
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
-		return (0);
+		return (free_sdl(sdl, 1));
 	sdl->win = SDL_CreateWindow("Doom-Nukem", 100, 100, WIN_W, WIN_H,
-			SDL_WINDOW_ALWAYS_ON_TOP);
+			SDL_WINDOW_ALWAYS_ON_TOP); 
 	if (sdl->win == NULL)
 		return (free_sdl(sdl, 1));
 	sdl->ren = SDL_CreateRenderer(sdl->win, -1, SDL_RENDERER_PRESENTVSYNC);
