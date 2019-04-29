@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 21:32:10 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 18:59:35 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 01:51:55 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,15 +18,15 @@ void			print_content(t_edit *edit)
 	t_content	*tmp;
 
 	tmp = edit->con;
-	dprintf(1, "==========CONTENT==========\n");
+	printf( "==========CONTENT==========\n");
 	while (tmp)
 	{
-		dprintf(1, "cx = %d\tcy = %d\t addr = %p\n", tmp->x, tmp->y, tmp);
-		dprintf(1, "display = %d\tcursor = %d\t trigger = %d\n", tmp->display, tmp->cursor, tmp->trigger);
-		dprintf(1, "title = %s\tcontent = %s\n\n", tmp->c_title, tmp->c_content);
+		printf("cx = %d\tcy = %d\t addr = %p\n", tmp->x, tmp->y, tmp);
+		printf("display = %d\tcursor = %d\t trigger = %d\n", tmp->display, tmp->cursor, tmp->trigger);
+		printf("title = %s\tcontent = %s\n\n", tmp->c_title, tmp->c_content);
 		tmp = tmp->next;
 	}
-	dprintf(1, "========CONTENT END========");
+	printf( "========CONTENT END========");
 }
 
 void			print_info(t_edit *edit, t_input *in)
@@ -47,9 +47,9 @@ void			print_lis(t_lis **vert)
 	printf("\n----------LIS----------\n");
 	while (tmp != NULL)
 	{
-		dprintf(1, "x = %d\ty = %d\taddr = %p\n", tmp->x, tmp->y, tmp);
-		dprintf(1, "col = %0x\toldcol = %0x\ttext = %d\n", tmp->col, tmp->oldcol, tmp->text);
-		dprintf(1, "port = %d\tneigh = %d\n", tmp->port, tmp->neigh);
+		printf("x = %d\ty = %d\taddr = %p\n", tmp->x, tmp->y, tmp);
+		printf("col = %0x\toldcol = %0x\ttext = %d\n", tmp->col, tmp->oldcol, tmp->text);
+		printf("port = %d\tneigh = %d\n", tmp->port, tmp->neigh);
 		tmp = tmp->next;
 	}
 	printf("\n--------LIS END--------\n");
@@ -62,25 +62,25 @@ void			print_sec(t_sec *sec)
 	t_sec		*tmp;
 
 	tmp = sec;
-	dprintf(1, "\n\n\n\n\n\n\n\n-------PRINT SEC-------\n");
+	printf("\n\n\n\n\n\n\n\n-------PRINT SEC-------\n");
 	if (tmp == NULL)
-		dprintf(1, "No Sector");
+		printf("No Sector");
 	while (tmp != NULL)
 	{
-		dprintf(1, "\n||||||||SEC||||||||\n");
-		dprintf(1, "id = %d\n", tmp->id);
-		dprintf(1, "floor = %d\n", tmp->floor);
-		dprintf(1, "ceil = %d\n", tmp->ceil);
-		dprintf(1, "enem = %p\n", tmp->enem);
-		dprintf(1, "obj = %p\n", tmp->obj);
-		dprintf(1, "Nb objets = %d\n", tmp->objscount);
-		dprintf(1, "Nb enems = %d\n", tmp->enemcount);
-		dprintf(1, "Gravity = %d\n", tmp->gravity);
+		printf("\n||||||||SEC||||||||\n");
+		printf("id = %d\n", tmp->id);
+		printf("floor = %d\n", tmp->floor);
+		printf("ceil = %d\n", tmp->ceil);
+		printf("enem = %p\n", tmp->enem);
+		printf("obj = %p\n", tmp->obj);
+		printf("Nb objets = %d\n", tmp->objscount);
+		printf("Nb enems = %d\n", tmp->enemcount);
+		printf("Gravity = %d\n", tmp->gravity);
 		print_lis(&tmp->vert);
-		dprintf(1, "\n||||||SEC END||||||\n");
+		printf("\n||||||SEC END||||||\n");
 		tmp = tmp->next;
 	}
-	dprintf(1, "\n-----PRINT SEC END-----\n\n");
+	printf("\n-----PRINT SEC END-----\n\n");
 }
 
 void			print_read(t_mapf *mapf)
@@ -88,37 +88,37 @@ void			print_read(t_mapf *mapf)
 	int		i;
 	int		k;
 
-	dprintf(1, "Header : %s\n", mapf->magic);
-	dprintf(1, "Player : x = %f\n", mapf->player.where.x);
-	dprintf(1, "Player : y = %f\n", mapf->player.where.y);
-	dprintf(1, "Player : Angle = %f\n", mapf->player.angle);
-	dprintf(1, "Player : Sector = %d\n", mapf->player.sect);
-	dprintf(1, "Finish : x = %d\n", mapf->finish_x);
-	dprintf(1, "Finish : y = %d\n", mapf->finish_y);
-	dprintf(1, "Finish : Sector = %d\n", mapf->finish_sec);
-	dprintf(1, "Nb sector : %d\n", mapf->nbsect);
-	dprintf(1, "Num of Bits : %lu\n", (sizeof(float) + sizeof(float)
+	printf( "Header : %s\n", mapf->magic);
+	printf( "Player : x = %f\n", mapf->player.where.x);
+	printf( "Player : y = %f\n", mapf->player.where.y);
+	printf( "Player : Angle = %f\n", mapf->player.angle);
+	printf( "Player : Sector = %d\n", mapf->player.sect);
+	printf( "Finish : x = %d\n", mapf->finish_x);
+	printf( "Finish : y = %d\n", mapf->finish_y);
+	printf( "Finish : Sector = %d\n", mapf->finish_sec);
+	printf( "Nb sector : %d\n", mapf->nbsect);
+	printf( "Num of Bits : %lu\n", (sizeof(float) + sizeof(float)
 					+ sizeof(float) + sizeof(short) + sizeof(int) + sizeof(int)
 						+ sizeof(short) + sizeof(int)));
-	dprintf(1, "\n--------\n");
+	printf( "\n--------\n");
 	i = 0;
 	k = 0;
 	while (i < mapf->nbsect)
 	{
-		dprintf(1, "Sector : %d\n", i);
-		dprintf(1, " Gravity : %d\n", mapf->sectors[i].gravity);
-		dprintf(1, " Floor : %d\n", mapf->sectors[i].floor);
-		dprintf(1, " Ceil : %d\n", mapf->sectors[i].ceil);
-		dprintf(1, " Nb Vertex %d\n", mapf->sectors[i].nbvert);
-		dprintf(1, " Nb Objs %d\n", mapf->sectors[i].nbobjs);
-		dprintf(1, " Nb Enem %d\n", mapf->sectors[i].nbenem);
+		printf( "Sector : %d\n", i);
+		printf( " Gravity : %d\n", mapf->sectors[i].gravity);
+		printf( " Floor : %d\n", mapf->sectors[i].floor);
+		printf( " Ceil : %d\n", mapf->sectors[i].ceil);
+		printf( " Nb Vertex %d\n", mapf->sectors[i].nbvert);
+		printf( " Nb Objs %d\n", mapf->sectors[i].nbobjs);
+		printf( " Nb Enem %d\n", mapf->sectors[i].nbenem);
 		k = 0;
 		while (k < mapf->sectors[i].nbvert)
 		{
-			dprintf(1, "   X : %d\n", mapf->sectors[i].vert[k].x);
-			dprintf(1, "   Y : %d\n", mapf->sectors[i].vert[k].y);
-			dprintf(1, "   Texture : %d\n", mapf->sectors[i].vert[k].text);
-			dprintf(1, "   Voisins : %d\n", mapf->sectors[i].vert[k].neigh);
+			printf( "   X : %d\n", mapf->sectors[i].vert[k].x);
+			printf( "   Y : %d\n", mapf->sectors[i].vert[k].y);
+			printf( "   Texture : %d\n", mapf->sectors[i].vert[k].text);
+			printf( "   Voisins : %d\n", mapf->sectors[i].vert[k].neigh);
 			k++;
 		}
 		i++;
@@ -126,24 +126,24 @@ void			print_read(t_mapf *mapf)
 	i = 0;
 	if (mapf->nbobjs != 0)
 	{
-		dprintf(1, "\n-------\nList Objects\n");
+		printf( "\n-------\nList Objects\n");
 		while (i < mapf->nbobjs)
 		{
-			dprintf(1, "   X : %d\n", mapf->objects[i].x);
-			dprintf(1, "   Y : %d\n", mapf->objects[i].y);
-			dprintf(1, "   Texture : %d\n\n", mapf->objects[i].type);
+			printf( "   X : %d\n", mapf->objects[i].x);
+			printf( "   Y : %d\n", mapf->objects[i].y);
+			printf( "   Texture : %d\n\n", mapf->objects[i].type);
 			i++;
 		}
 	}
 	i = 0;
 	if (mapf->nbenem != 0)
 	{
-		dprintf(1, "\n--------\nList Enemies\n");
+		printf( "\n--------\nList Enemies\n");
 		while (i < mapf->nbenem)
 		{
-			dprintf(1, "   X : %d\n", mapf->enemies[i].x);
-			dprintf(1, "   Y : %d\n", mapf->enemies[i].y);
-			dprintf(1, "   Texture : %d\n", mapf->enemies[i].type);
+			printf( "   X : %d\n", mapf->enemies[i].x);
+			printf( "   Y : %d\n", mapf->enemies[i].y);
+			printf( "   Texture : %d\n", mapf->enemies[i].type);
 			i++;
 		}
 	}

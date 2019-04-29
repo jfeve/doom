@@ -6,7 +6,7 @@
 #    By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/06 21:20:39 by jfeve        #+#   ##    ##    #+#        #
-#    Updated: 2019/04/10 00:48:06 by nzenzela    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/04/29 00:55:08 by nzenzela    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -14,7 +14,7 @@
 
 NAME = libft.a
 
-FLAGS = -Wall -Werror -Wextra -g3 -O3
+FLAGS =  -g3 -O3
 
 HEADERS = libft.h
 

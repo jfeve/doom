@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 10:17:57 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 01:48:53 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -101,7 +101,7 @@ int				read_map(t_mapf *mapf, char *mapname)
 
 	i = -1;
 	mapfile = ft_strjoin(MAP_PATH, mapname);
-	dprintf(1, "%s\n", mapfile);
+	printf("%s\n", mapfile);
 	if ((fd = open(mapfile, O_RDONLY)) != -1)
 	{
 		if (!read_mapfhead(fd, mapf, mapfile))
@@ -121,7 +121,7 @@ int				read_map(t_mapf *mapf, char *mapname)
 	}
 	else
 	{
-		dprintf(1, "\nThe map does not exist\n");
+		printf("\nThe map does not exist\n");
 		return (0);
 	}
 }

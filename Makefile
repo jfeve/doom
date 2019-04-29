@@ -6,7 +6,7 @@
 #    By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/18 21:26:38 by jfeve        #+#   ##    ##    #+#        #
-#    Updated: 2019/04/10 01:01:00 by nzenzela    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/04/29 02:13:44 by nzenzela    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -15,15 +15,9 @@
 #-----------------------------------GCC----------------------------------------#
 #******************************************************************************#
 
-CC = gcc
-CC_FLAGS = -Wall -Wextra -Werror -g3 -O3 -F./lib
-SDL_FLAGS = -rpath ./lib -F./lib -framework SDL2 \
-                                                -framework SDL2_mixer \
-                                                -framework SDL2_ttf \
-												-lm -liconv -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal
 CC = x86_64-w64-mingw32-gcc
-CC_FLAGS = -Wall -Wextra -Werror -g3 -O3
-SDL_FLAGS = -I/tmp/sdl2-win64/include/SDL2 -L/tmp/sdl2-win64/lib -lmingw32 -lSDL2main -lSDL2 -mwindows
+CC_FLAGS = -g3 -O3
+SDL_FLAGS = -I/opt/local/x86_64-w64-mingw32/include/SDL2 -Dmain=SDL_main -L/opt/local/x86_64-w64-mingw32/lib -lmingw32 -lSDL2main -mwindows -Wl,--no-undefined -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid -static-libgcc -lSDL2_mixer -lSDL2_ttf -lSDL2_image
 
 #******************************************************************************#
 #----------------------------------LIBFT---------------------------------------#
@@ -36,9 +30,10 @@ PATH_LIB = ./libft/
 #----------------------------------SDL__---------------------------------------#
 #******************************************************************************#
 
-NAME_SDLLIB = libSDL2.a
-NAME_SDLTTFLIB = libSDL2_ttf.a
-NAME_SDLMIXERLIB = libSDL2_mixer.a
+NAME_SDLLIB = SDL2.dll
+NAME_SDLTTFLIB = SDL2_ttf.dll
+NAME_SDLMIXERLIB = SDL2_mixer.dll
+NAME_SDLIMAGELIB = SDL2_image.dll
 PATH_SDLLIB = ./lib/
 
 #******************************************************************************#
@@ -63,7 +58,7 @@ INC_DOOM = $(addprefix $(PATH_INC_DOOM), doom.h)
 all: $(NAME)
 
 $(NAME): $(PATH_LIB)$(NAME_LIB) $(PATH_OBJ_DOOM) $(OBJ_DOOM)
-	@$(CC) $(CC_FLAGS) $(SDL_FLAGS) $(OBJ_DOOM) $(PATH_LIB)$(NAME_LIB) $(PATH_SDLLIB)$(NAME_SDLLIB) $(PATH_SDLLIB)$(NAME_SDLTTFLIB) $(PATH_SDLLIB)$(NAME_SDLMIXERLIB)\
+	@$(CC) $(CC_FLAGS) $(SDL_FLAGS) $(OBJ_DOOM) $(PATH_LIB)$(NAME_LIB) $(PATH_SDLLIB)$(NAME_SDLLIB) $(PATH_SDLLIB)$(NAME_SDLTTFLIB) $(PATH_SDLLIB)$(NAME_SDLMIXERLIB) $(PATH_SDLLIB)$(NAME_SDLIMAGELIB)\
 		-o $(NAME)
 	@echo "*******\nexecutable doom-nukem cree.\n*******\n"
 

@@ -5,6 +5,8 @@
 	"files.associations": {
 		"doom.h": "c",
 		"mapf.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"sdl.h": "c",
+		"sdl_mixer.h": "c"
 	}
 }

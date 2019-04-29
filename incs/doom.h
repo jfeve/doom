@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 17:45:37 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 01:52:41 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,11 +17,11 @@
 # include "defines.h"
 # include "def_rend.h"
 # include <math.h>
-# include "/tmp/sdl2-win64/include/SDL2/SDL.h"
-# include "../lib/SDL2.framework/Versions/Current/Headers/SDL.h"
-# include "../lib/SDL2_ttf.framework/Headers/SDL_ttf.h"
-# include "../lib/SDL2_mixer.framework/Headers/SDL_mixer.h"
 # include <stdio.h>
+# include <SDL2/SDL.h>
+# include <SDL2/SDL_mixer.h>
+# include <SDL2/SDL_ttf.h>
+
 
 typedef struct					s_float
 {
