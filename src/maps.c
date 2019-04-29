@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 19:09:44 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 13:33:11 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -92,9 +92,10 @@ int						map_writer(char *mapname, t_edit *edit)
 	int					fd;
 	char				*mapfile;
 
-	mapfile = (char*)malloc(sizeof(char) *
-		(int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
-	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
+//	mapfile = (char*)malloc(sizeof(char) *
+//		(int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
+//	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
+	mapfile = ft_strjoin(MAP_PATH, mapname);
 	if ((fd = open(mapfile, O_TRUNC | O_CREAT | O_WRONLY, S_IRWXU)) != -1)
 	{
 		if (edit->nbsect != 0)

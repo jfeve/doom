@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:08:27 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:14:53 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 13:26:31 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,6 +32,6 @@ int				read_objs_data(int fd, t_mapf *mapf, int iobjs)
 int						open_error(char **mapfile)
 {
 	ft_putendl("We could not open the file");
-	free(mapfile);
+	free(*mapfile);
 	return (0);
 }
