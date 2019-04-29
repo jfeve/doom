@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 14:23:17 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 11:21:21 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,6 +23,65 @@ float		vector_measure(float x1, float y1, float x2, float y2)
 	dy = y2 - y1;
 	res = sqrtf(dx * dx + dy * dy);
 	return (res);
+}
+
+void		get_ps(t_mapf *mapf)
+{
+	t_sector	*sec;
+	int			i;
+	float		px;
+	float		py;
+	float		ps;
+
+	px = mapf->player.where.x;
+	py = mapf->player.where.y;
+	sec = &mapf->sectors[mapf->player.sect];
+	i = 0;
+	while (i < sec->nbvert)
+	{
+		if (i != sec->nbvert - 1)
+		{
+			ps = f_pointside((t_float){px, py}, (t_float){sec->vert[i].x, sec->vert[i].y},
+						(t_float){sec->vert[i + 1].x, sec->vert[i + 1].y});
+			dprintf(1, "tps = %f\n", ps);
+			if (ps > 0)
+				sec->vert[i].ps = 1;
+			else if (ps < 0)
+				sec->vert[i].ps = -1;
+			else
+				sec->vert[i].ps = 0;
+		}
+		else
+		{
+			ps = f_pointside((t_float){px, py}, (t_float){sec->vert[i].x, sec->vert[i].y},
+						(t_float){sec->vert[0].x, sec->vert[0].y});
+			dprintf(1, "tps = %f\n", ps);
+			if (f_pointside((t_float){px, py}, (t_float){sec->vert[i].x, sec->vert[i].y},
+						(t_float){sec->vert[0].x, sec->vert[0].y}) > 0)
+				sec->vert[i].ps = 1;
+			else if (f_pointside((t_float){px, py}, (t_float){sec->vert[i].x, sec->vert[i].y},
+						(t_float){sec->vert[0].x, sec->vert[0].y}) < 0)
+				sec->vert[i].ps = -1;
+			else
+				sec->vert[i].ps = 0;
+		}
+		i++;
+	}
+}
+
+void		print_ps(t_mapf *mapf)
+{
+	t_sector	*sec;
+	int			i;
+
+	sec = &mapf->sectors[mapf->player.sect];
+	i = 0;
+	dprintf(1, "----------------------------------------\n");
+	while (i < sec->nbvert)
+	{
+		dprintf(1, "ps = %d\n", sec->vert[i].ps);
+		i++;
+	}
 }
 
 void		render(char *str)
@@ -51,7 +110,9 @@ void		render(char *str)
 	mapf.player.add_z = 0;
 	mapf.player.jump_sec = 0;
 	mapf.player.state = nmoving;
-	Mix_PlayMusic(hud.music, -1);
+	get_ps(&mapf);
+	print_ps(&mapf);
+//	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
 		in.xrel = 0;

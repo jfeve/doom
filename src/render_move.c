@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:32:13 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 14:22:34 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 12:24:56 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -200,6 +200,5 @@ void		move_chara(t_mapf *mapf, t_input *in)
 		mapf->player.where.x += mapf->player.velo.x;
 		mapf->player.where.y += mapf->player.velo.y;
 	}
-
 }
 
