@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 11:21:21 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 17:22:22 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -92,7 +92,7 @@ void		render(char *str)
 
 	ft_bzero(&in, sizeof(t_input));
 	ft_bzero(&mapf, sizeof(t_mapf));
-	ft_bzero(&mapf, sizeof(t_hud));
+	ft_bzero(&hud, sizeof(t_hud));
 	read_map(&mapf, str);
 	if (sdl_init(&mapf.sdl) == 0)
 		return (ft_putendl("Init SDL Error"));
@@ -100,7 +100,7 @@ void		render(char *str)
 	if ((SDL_SetRelativeMouseMode(SDL_ENABLE)) != 0)
 		return ;
 	if (!init_hud(&hud, mapf.sdl.form->format))
-		return (ft_putendl("Init SDL_Mixer Error"));
+		return (ft_putendl("Init HUD Error"));
 	mapf.player.velo.x = 0;
 	mapf.player.velo.y = 0;
 	mapf.player.velo.z = 0;
@@ -110,9 +110,9 @@ void		render(char *str)
 	mapf.player.add_z = 0;
 	mapf.player.jump_sec = 0;
 	mapf.player.state = nmoving;
-	get_ps(&mapf);
-	print_ps(&mapf);
-//	Mix_PlayMusic(hud.music, -1);
+	mapf.player.life = 100;
+	mapf.player.ammo = 5;
+	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
 		in.xrel = 0;
@@ -139,7 +139,7 @@ void		render(char *str)
 		update_event(&in);
 		render_check_event(&mapf, &in, &hud);
 		fill_pix(&mapf);
-		draw_hud(&mapf.sdl, &hud);
+		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix) == 0)
 			return ;
 		SDL_Delay(1000 / 60);

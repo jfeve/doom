@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 09:50:15 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 17:45:37 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -329,16 +329,25 @@ int								free_content(t_edit *edit);
 typedef struct		s_hud
 {
 	int				id;
-	SDL_Surface		*gun[6];
-	SDL_Surface		*small_gun;
+	SDL_Surface		*gun[7];
+	SDL_Surface		*smallgun;
 	SDL_Surface		*ammo;
 	SDL_Surface		*life;
-	SDL_Surface		*tmp;
 	SDL_bool		anim;
 	Mix_Music		*music;
 	Mix_Chunk		*gunshot;
+	Mix_Chunk		*empty;
 }					t_hud;
 
+typedef	struct		s_line
+{
+	int				dx;
+	int				dy;
+	int				sx;
+	int				sy;
+	int				err;
+	int				err2;
+}					t_line;
 
 typedef struct		s_queue
 {
@@ -362,6 +371,11 @@ int					read_objs_data(int fd, t_mapf *mapf, int iobjs);
 int					read_entities(int fd, t_mapf *mapf, int i);
 int					read_mapfhead(int fd, t_mapf *mapf, char *mapfile);
 int					read_sector(int fd, t_mapf *mapf, int i);
+
+/*
+** Math functions for integers
+*/
+
 int					min(int a, int b);
 int					max(int a, int b);
 int					clamp(int a, int mi, int ma);
@@ -369,6 +383,10 @@ int					vxs(int ax, int ay, int bx, int by);
 int					overlap(t_point a, t_point b);
 int					intersectbox(t_point a, t_point b, t_point c, t_point d);
 int					pointside(t_point p, t_point a, t_point b);
+
+/*
+** Math functions for floating point numbers
+*/
 
 float				f_max(float a, float b);
 float				f_min(float a, float b);
@@ -381,8 +399,12 @@ t_float				f_intersect(t_float a, t_float b, t_float c, t_float d);
 
 void				render(char *str);
 
-void				draw_hud(t_sdl *sdl, t_hud *hud);
-int					free_hud(t_hud *hud);
+/*
+** HUD related functions
+*/
+
 int					init_hud(t_hud *hud, Uint32 format);
+void				draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
+int					free_hud(t_hud *hud);
 
 #endif
