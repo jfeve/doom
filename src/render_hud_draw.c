@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 14:03:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 14:28:08 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 15:39:38 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,18 +72,21 @@ void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 	int		y_index;
 	Uint32	*p;
 
-	if (x >= WIN_W || y >= WIN_H || !s)
+	if (x + s->w < 0 || y + s->h < 0 || x >= WIN_W || y >= WIN_H || !s)
 		return ;
 	SDL_LockSurface(s);
 	p = s->pixels;
 	i = 0;
-	y_index = y;
+	if ((y_index = y) < 0)
+		y_index = 0;
+	if (x < 0)
+		x = 0;
 	while (i < s->w * s->h - 1 && y_index < y + s->h && y_index < WIN_H)
 	{
 		x_index = x;
-		while (x_index < x + s->w && x_index < WIN_W)
+		while (x_index < x + s->w)
 		{
-			if (p[i] & 0x000000ff)
+			if (x_index < WIN_W && (p[i] & 0x000000ff))
 				sdl->pix[y_index * WIN_W + x_index] = p[i];
 			x_index++;
 			i++;
@@ -95,7 +98,7 @@ void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 }
 
 /*
-** Draws the entire hud (gun, life, ammo, type of gun)
+** Draws the entire hud (gun, life, ammo)
 */
 
 void		draw_hud(t_sdl *sdl, t_hud *hud, int ammo)

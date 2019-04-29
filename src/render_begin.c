@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 13:54:00 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 15:35:49 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -75,7 +75,7 @@ void		render(char *str)
 				mapf.player.add_z -= mapf.player.where.z - mapf.sectors[mapf.player.sect].ceil;
 		}
 		else
-			mapf.player.where.z = mapf.sectors[mapf.player.sect].floor + mapf.player.eye + mapf.player.add_z;
+			mapf.player.where.z = (float)mapf.sectors[mapf.player.sect].floor + mapf.player.eye + mapf.player.add_z;
 		clear_tab(&mapf.sdl);
 		update_event(&in);
 		render_check_event(&mapf, &in, &hud);
