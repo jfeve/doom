@@ -86,7 +86,7 @@
 # define VEC "vec \0"
 # define OBJ "obj \0"
 # define ENEM "enem \0"
-# define DUCK 3.5
+# define DUCK 3
 # define EYE 6
 # define KNEE 2.5
 # define HEADMARGE 1

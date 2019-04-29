@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 15:37:41 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 17:34:54 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -113,8 +113,8 @@ void		render(char *str)
 	mapf.player.state = nmoving;
 	mapf.player.ammo = 5;
 	mapf.player.life = 100;
-	mapf.player.ammo = 50;
 	Mix_PlayMusic(hud.music, -1);
+	mapf.player.ammo = 50;
 	while (!in.quit)
 	{
 		in.xrel = 0;
@@ -135,6 +135,8 @@ void		render(char *str)
 			if (mapf.player.where.z > mapf.sectors[mapf.player.sect].ceil)
 				mapf.player.add_z -= mapf.player.where.z - mapf.sectors[mapf.player.sect].ceil;
 		}
+		else
+			mapf.player.where.z = mapf.sectors[mapf.player.sect].floor + mapf.player.eye + mapf.player.add_z;
 		clear_tab(&mapf.sdl);
 		update_event(&in);
 		render_check_event(&mapf, &in, &hud);
