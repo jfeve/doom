@@ -113,7 +113,8 @@ void		render(char *str)
 	mapf.player.state = nmoving;
 	mapf.player.ammo = 5;
 	mapf.player.life = 100;
-//	Mix_PlayMusic(hud.music, -1);
+	mapf.player.ammo = 50;
+	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
 		in.xrel = 0;

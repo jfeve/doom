@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 17:45:58 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 14:30:38 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,7 @@ static SDL_Surface	*init_image(char *path, Uint32 format)
 ** tmp is here to change the format of the textures, to match the screen's.
 */
 
-static int	init_texture(t_hud *hud, Uint32 format)
+static int			init_texture(t_hud *hud, Uint32 format)
 {
 	if (!(hud->gun[0] = init_image("data/textures/idle.bmp", format)))
 		return (0);
@@ -54,7 +54,9 @@ static int	init_texture(t_hud *hud, Uint32 format)
 		return (0);
 	if (!(hud->life = init_image("data/textures/life.bmp", format)))
 		return (0);
-	if (!(hud->smallgun = init_image("data/textures/smallgun.bmp", format)))
+	if (!(hud->key = init_image("data/textures/key.bmp", format)))
+		return (0);
+	if (!(hud->armor = init_image("data/textures/armor.bmp", format)))
 		return (0);
 	return (1);
 }
@@ -63,7 +65,7 @@ static int	init_texture(t_hud *hud, Uint32 format)
 ** Initialize the textures and sounds of the hud
 */
 
-int			init_hud(t_hud *hud, Uint32 format)
+int					init_hud(t_hud *hud, Uint32 format)
 {
 	if (!init_texture(hud, format))
 		return (free_hud(hud));

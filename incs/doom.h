@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 17:45:37 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 14:28:11 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -331,9 +331,10 @@ typedef struct		s_hud
 {
 	int				id;
 	SDL_Surface		*gun[7];
-	SDL_Surface		*smallgun;
 	SDL_Surface		*ammo;
 	SDL_Surface		*life;
+	SDL_Surface		*armor;
+	SDL_Surface		*key;
 	SDL_bool		anim;
 	Mix_Music		*music;
 	Mix_Chunk		*gunshot;
