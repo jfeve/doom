@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 09:35:02 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 15:28:22 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -113,7 +113,7 @@ int				read_map(t_mapf *mapf, char *mapname)
 		mapf->sectors = (t_sector *)malloc(sizeof(t_sector) * mapf->nbsect + 1);
 		while (++i != mapf->nbsect)
 			read_sector(fd, mapf, i);
-		mapf->player.where.z = mapf->sectors[mapf->player.sect].floor + EYE;
+		mapf->player.where.z = (float)mapf->sectors[mapf->player.sect].floor + (float)EYE;
 		print_read(mapf);
 		free(mapfile);
 		close(fd);

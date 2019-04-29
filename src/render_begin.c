@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 17:22:22 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 15:37:41 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -92,27 +92,28 @@ void		render(char *str)
 
 	ft_bzero(&in, sizeof(t_input));
 	ft_bzero(&mapf, sizeof(t_mapf));
-	ft_bzero(&hud, sizeof(t_hud));
-	read_map(&mapf, str);
+	ft_bzero(&mapf, sizeof(t_hud));
+	if (read_map(&mapf, str) == 0)
+		return ;
 	if (sdl_init(&mapf.sdl) == 0)
 		return (ft_putendl("Init SDL Error"));
 	SDL_WarpMouseInWindow(mapf.sdl.win, WIN_W / 2, WIN_H / 2);
 	if ((SDL_SetRelativeMouseMode(SDL_ENABLE)) != 0)
 		return ;
 	if (!init_hud(&hud, mapf.sdl.form->format))
-		return (ft_putendl("Init HUD Error"));
+		return (ft_putendl("Init SDL_Mixer Error"));
 	mapf.player.velo.x = 0;
 	mapf.player.velo.y = 0;
 	mapf.player.velo.z = 0;
 	mapf.player.yaw = 0;
 	mapf.player.coll = 0;
 	mapf.player.eye = EYE;
-	mapf.player.add_z = 0;
+	mapf.player.add_z = 0.0f;
 	mapf.player.jump_sec = 0;
 	mapf.player.state = nmoving;
-	mapf.player.life = 100;
 	mapf.player.ammo = 5;
-	Mix_PlayMusic(hud.music, -1);
+	mapf.player.life = 100;
+//	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
 		in.xrel = 0;
@@ -133,8 +134,6 @@ void		render(char *str)
 			if (mapf.player.where.z > mapf.sectors[mapf.player.sect].ceil)
 				mapf.player.add_z -= mapf.player.where.z - mapf.sectors[mapf.player.sect].ceil;
 		}
-		else
-			mapf.player.where.z = mapf.sectors[mapf.player.sect].floor + mapf.player.eye + mapf.player.add_z;
 		clear_tab(&mapf.sdl);
 		update_event(&in);
 		render_check_event(&mapf, &in, &hud);

@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:32:13 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 12:24:56 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 15:35:29 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -90,14 +90,20 @@ int			check_port(t_mapf *mapf, int i, t_sector *sect)
 	}
 	if ((ps >= fabs(dx * 4) && ps2 <= fabs(dx * 4)) || (ps <= fabs(dx * 4) && ps2 >= fabs(dx * 4)))
 	{
-		if (mapf->player.state == flying)
-			mapf->player.add_z -= mapf->sectors[sect->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
-		if (mapf->sectors[sect->vert[i].neigh].floor < mapf->sectors[mapf->player.sect].floor + KNEE)
+		if (mapf->player.where.z - mapf->player.eye + KNEE > mapf->sectors[sect->vert[i].neigh].floor &&
+				mapf->player.where.z < mapf->sectors[sect->vert[i].neigh].ceil)
 		{
+			if (mapf->player.state == flying)
+				mapf->player.add_z -= mapf->sectors[sect->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
 			mapf->player.sect = sect->vert[i].neigh;
+			if (mapf->player.state != jumping && mapf->player.state != flying && mapf->player.state != crouching)
+				mapf->player.state = falling;
+			return (0);
 		}
 		else
+		{
 			return (1);
+		}
 	}
 	return (0);
 }
