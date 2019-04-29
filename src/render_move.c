@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:32:13 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 16:02:40 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 17:28:55 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -165,7 +165,54 @@ int			check_horcoll(t_mapf *mapf)
 	mapf->player.coll = 0;
 	return (0);
 }
-
+/*
+ *
+ *int			check_inter(t_mapf *mapf, t_float inter)
+ *{
+ *    float	px;
+ *    float	py;
+ *    float	dx;
+ *    float	dy;
+ *
+ *    px = mapf->player.where.x;
+ *    py = mapf->player.where.y;
+ *    dx = mapf->player.velo.x;
+ *    dy = mapf->player.velo.y;
+ *}
+ *
+ *void		check_coll(t_mapf *mapf)
+ *{
+ *    float	px;
+ *    float	py;
+ *    float	dx;
+ *    float	dy;
+ *    t_sector *sec;
+ *    int		i;
+ *    int		j;
+ *    t_float	inter;
+ *
+ *    i = 0;
+ *    sec = &mapf->sectors[mapf->player.sect];
+ *    px = mapf->player.where.x;
+ *    py = mapf->player.where.y;
+ *    dx = mapf->player.velo.x;
+ *    dy = mapf->player.velo.y;
+ *    while (i < sec->nbvert)
+ *    {
+ *        if (i != sec->nbvert - 1)
+ *            inter = f_intersect((t_float){px, py}, (t_float){px + dx, py + dy},
+ *                    (t_float){sec->vert[i].x, sec->vert[i].y},
+ *                    (t_float){sec->vert[i + 1].x, sec->vert[i + 1].y});
+ *        else
+ *            inter = f_intersect((t_float){px, py}, (t_float){px + dx, py + dy},
+ *                    (t_float){sec->vert[i].x, sec->vert[i].y},
+ *                    (t_float){sec->vert[0].x, sec->vert[0].y});
+ *        j = check_inter(mapf, inter);
+ *        i++;
+ *    }
+ *}
+ *
+ */
 void		move_chara(t_mapf *mapf, t_input *in)
 {
 	float	move_vec[2];
