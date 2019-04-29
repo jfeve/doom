@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 14:19:37 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 14:28:27 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,8 +53,6 @@ static int	init_texture(t_hud *hud, Uint32 format)
 	if (!(hud->ammo = init_image("data/textures/ammo.bmp", format)))
 		return (0);
 	if (!(hud->life = init_image("data/textures/life.bmp", format)))
-		return (0);
-	if (!(hud->smallgun = init_image("data/textures/smallgun.bmp", format)))
 		return (0);
 	if (!(hud->key = init_image("data/textures/key.bmp", format)))
 		return (0);

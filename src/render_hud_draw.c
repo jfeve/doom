@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 14:03:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 14:23:27 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 14:28:08 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -115,7 +115,5 @@ void		draw_hud(t_sdl *sdl, t_hud *hud, int ammo)
 	WIN_H - hud->gun[hud->id]->h);
 	draw_sprite(sdl, hud->ammo, 10, WIN_H - hud->ammo->h - 10);
 	draw_sprite(sdl, hud->life, 10, WIN_H - hud->ammo->h - hud->life->h - 25);
-	draw_sprite(sdl, hud->smallgun, WIN_W - hud->smallgun->w - 15, WIN_H -
-	hud->smallgun->h - 15);
 	draw_cross(sdl);
 }
