@@ -360,6 +360,8 @@ typedef struct		s_queue
 /*
 ** Map Reader Functions
 */
+void				print_ps(t_mapf *mapf);
+void				get_ps(t_mapf *mapf);
 void				fill_pix(t_mapf *mapf);
 void				render_check_event(t_mapf *mapf, t_input *in, t_hud *hud);
 float				vector_measure(float x1, float y1, float x2, float y2);

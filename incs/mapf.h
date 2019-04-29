@@ -78,6 +78,7 @@ typedef struct				s_vertex
 	int						y;
 	short					text;
 	int						neigh;
+	int						ps;
 }							t_vertex;
 
 typedef struct				s_sector
