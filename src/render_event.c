@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 15:19:20 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 16:01:22 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,9 +98,11 @@ void		crouch(t_mapf *mapf, t_input *in)
 		if (mapf->player.eye >= (int)DUCK)
 			mapf->player.eye -= 1;
 	}
-	else if (mapf->player.state != crouching && mapf->player.eye <= (int)EYE)
+	else if (mapf->player.state != crouching && mapf->player.eye < (int)EYE)
 	{
 		mapf->player.eye += 1;
+		if (mapf->player.eye >= (int)EYE)
+			mapf->player.where.z = mapf->sectors[mapf->player.jump_sec].floor + mapf->player.eye + mapf->player.add_z;
 	}
 }
 
