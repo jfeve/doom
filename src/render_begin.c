@@ -139,7 +139,7 @@ void		render(char *str)
 
 	ft_bzero(&in, sizeof(t_input));
 	ft_bzero(&mapf, sizeof(t_mapf));
-	ft_bzero(&mapf, sizeof(t_hud));
+	ft_bzero(&hud, sizeof(t_hud));
 	if (read_map(&mapf, str) == 0)
 		return ;
 	if (sdl_init(&mapf.sdl) == 0)
@@ -165,6 +165,8 @@ void		render(char *str)
 	{
 		in.xrel = 0;
 		in.yrel = 0;
+		ft_bzero(&mapf.rend_s, MAX_SECT * sizeof(int));
+		mapf.nbrend_s = 0;
 		clear_tab(&mapf.sdl);
 		update_event(&in);
 		render_check_event(&mapf, &in, &hud);
@@ -188,6 +190,7 @@ void		render(char *str)
 		else
 			mapf.player.where.z = mapf.sectors[mapf.player.sect].floor + mapf.player.eye + mapf.player.add_z;
 		fill_pix(&mapf);
+		draw_items(&mapf, hud.key);
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix) == 0)
 			return ;

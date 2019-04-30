@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   render_draw.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:36:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 15:38:26 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 16:28:58 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,6 +76,7 @@ void		fill_pix(t_mapf *mapf)
 			continue ;
 		rendersect[now.sect]++;
 		t_sector	*sect = &mapf->sectors[now.sect];
+		mapf->rend_s[mapf->nbrend_s++] = now.sect;
 		int s = 0;
 		while (s < sect->nbvert)
 		{
@@ -167,9 +168,9 @@ void		fill_pix(t_mapf *mapf)
 			int y1b = WIN_H / 2 - (int)(Yaw(yfloor, tz1) * yscale1); 
 			int y2a = WIN_H / 2 - (int)(Yaw(yceil, tz2) * yscale2); 
 			int y2b = WIN_H / 2 - (int)(Yaw(yfloor, tz2) * yscale2); 
-			int ny1a = WIN_H / 2 - (int)((nyceil + tz1 * mapf->player.yaw) * yscale1); 
-			int ny1b = WIN_H / 2 - (int)((nyfloor + tz1 * mapf->player.yaw) * yscale1); 
-			int ny2a = WIN_H / 2 - (int)((nyceil + tz2 * mapf->player.yaw) * yscale2); 
+			int ny1a = WIN_H / 2 - (int)((nyceil + tz1 * mapf->player.yaw) * yscale1);
+			int ny1b = WIN_H / 2 - (int)((nyfloor + tz1 * mapf->player.yaw) * yscale1);
+			int ny2a = WIN_H / 2 - (int)((nyceil + tz2 * mapf->player.yaw) * yscale2);
 			int ny2b = WIN_H / 2 - (int)((nyfloor + tz2 * mapf->player.yaw) * yscale2);
 			int beginx = max(x1, now.sx1);
 			int	endx = min(x2, now.sx2);

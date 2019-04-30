@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 14:28:11 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 15:40:09 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -406,6 +406,10 @@ void				render(char *str);
 
 int					init_hud(t_hud *hud, Uint32 format);
 void				draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
+void				draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y);
 int					free_hud(t_hud *hud);
+
+
+void				draw_items(t_mapf *mapf, SDL_Surface *s);
 
 #endif

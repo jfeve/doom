@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 14:16:37 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 14:55:23 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,10 +14,13 @@
 #ifndef MAPF_H
 # define MAPF_H
 
+# define MAX_SECT 128
+# define MAX_SPRITE 128
 
 /*
 ** Render Data
 */
+
 typedef struct				s_enemies
 {
 	int						x;
@@ -109,5 +112,8 @@ typedef struct				s_mapf
 	t_sector				*sectors;
 	t_player				player;
 	t_sdl					sdl;
+	int						rend_s[MAX_SECT];
+	short					nbrend_s;
 }							t_mapf;
+
 #endif
