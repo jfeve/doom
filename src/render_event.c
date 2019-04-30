@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 16:01:22 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 15:03:31 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -134,12 +134,12 @@ void		render_check_event(t_mapf *mapf, t_input *in, t_hud *hud)
 	if (in->mouse[SDL_BUTTON_LEFT])
 	{
 		hud->anim = SDL_TRUE;
-		if (hud->id == 0 && mapf->player.ammo > 0)
-		{
-			mapf->player.ammo--;
-			Mix_PlayChannel(1, hud->gunshot, 0);
-		}
-		else if (hud->id == 6)
-			Mix_PlayChannel(1, hud->empty, 0);
+//		if (hud->id == 0 && mapf->player.ammo > 0)
+//		{
+//			mapf->player.ammo--;
+//			Mix_PlayChannel(1, hud->gunshot, 0);
+//		}
+//		else if (hud->id == 6)
+//			Mix_PlayChannel(1, hud->empty, 0);
 	}
 }
