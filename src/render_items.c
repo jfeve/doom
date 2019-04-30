@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 18:17:07 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 18:59:58 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,27 +22,19 @@ static void	objs_swap(t_objs *a, t_objs *b)
 	*b = c;
 }
 
-static void	quickSort(t_objs *objs, int low, int high, t_point player)
+static void	bubbleSort(t_objs arr[], int n, t_point player)
 {
-	if (low < high)
+	int		i;
+	int		j;
+
+	i = -1;
+	while (++i < n - 1)
 	{
-		t_objs pivot = objs[high];
-		int i = (low - 1);
-		for (int j = low; j <= high- 1; j++)
-		{
-			if ()
-			{
-				i++;
-				objs_swap(&objs[i], &objs[j]);
-			}
-			dprintf(1, "%d   %d   %d   %d\n", (int)fabs((float)(objs[j].x - player.x)), (int)fabs((float)(pivot.x - player.x)),
-			(int)fabs((float)(objs[j].y - player.y)), (int)fabs((float)(pivot.y - player.y)));
-		}
-		objs_swap(&objs[i + 1], &objs[high]);
-		int pi = i + 1;
-		quickSort(objs, low, pi - 1, player);
-		quickSort(objs, pi + 1, high, player);
-	}
+		j = i;
+		while (++j < n - 1)
+			if (vector_measure(arr[j].x, arr[j].y, player.x, player.y) < vector_measure(arr[j + 1].x, arr[j + 1].y, player.x, player.y))
+				objs_swap(&arr[j], &arr[j+1]);
+   }
 }
 
 void		draw_items(t_mapf *mapf, SDL_Surface *s)
@@ -55,6 +47,7 @@ void		draw_items(t_mapf *mapf, SDL_Surface *s)
 	{
 		j = -1;
 		t_sector now = mapf->sectors[mapf->rend_s[i]];
+		bubbleSort(now.obj, now.nbobjs, (t_point){mapf->player.where.x, mapf->player.where.y});
 		while (++j < now.nbobjs)
 		{
 			float vx = (float)(now.obj[j].x - mapf->player.where.x);
