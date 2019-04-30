@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 15:40:09 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 20:24:45 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -361,6 +361,7 @@ typedef struct		s_queue
 ** Map Reader Functions
 */
 void				print_ps(t_mapf *mapf);
+void				slide_wall(t_mapf *mapf, int i);
 void				get_ps(t_mapf *mapf);
 void				fill_pix(t_mapf *mapf);
 void				render_check_event(t_mapf *mapf, t_input *in, t_hud *hud);

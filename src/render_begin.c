@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 20:09:28 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 20:49:58 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,10 +100,10 @@ int		check_ps(t_mapf *mapf)
 					(t_float){sec->vert[i + 1].x, sec->vert[i + 1].y});
 			if (ps < 0)
 			{
-				if (mapf->player.where.z - mapf->player.eye + KNEE > mapf->sectors[sec->vert[i].neigh].floor &&
-						mapf->player.where.z < mapf->sectors[sec->vert[i].neigh].ceil)
+				if (sec->vert[i].neigh != -1)
 				{
-					if (sec->vert[i].neigh != -1)
+					if (mapf->player.where.z - mapf->player.eye + KNEE > mapf->sectors[sec->vert[i].neigh].floor &&
+							mapf->player.where.z < mapf->sectors[sec->vert[i].neigh].ceil)
 					{
 						if (mapf->player.state == flying)
 							mapf->player.add_z -= mapf->sectors[sec->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
@@ -211,7 +211,7 @@ void		render(char *str)
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix) == 0)
 			return ;
-		mapf.old = (t_xyz){mapf.player.where.x - mapf.player.velo.x, mapf.player.where.y - mapf.player.velo.y, mapf.player.where.z - mapf.player.velo.z};
+		mapf.old = (t_xyz){mapf.player.where.x/* - mapf.player.velo.x*/, mapf.player.where.y/* - mapf.player.velo.y*/, mapf.player.where.z/* - mapf.player.velo.z*/};
 		SDL_Delay(1000 / 60);
 	}
 	free_sdl(&mapf.sdl, 6);
