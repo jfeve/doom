@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 18:29:19 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 20:06:12 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -111,5 +111,6 @@ typedef struct				s_mapf
 	t_player				player;
 	float					coeff;
 	t_sdl					sdl;
+	t_xyz					old;
 }							t_mapf;
 #endif
