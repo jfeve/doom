@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 18:15:13 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 20:09:28 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,14 +100,22 @@ int		check_ps(t_mapf *mapf)
 					(t_float){sec->vert[i + 1].x, sec->vert[i + 1].y});
 			if (ps < 0)
 			{
-				if (sec->vert[i].neigh != -1)
+				if (mapf->player.where.z - mapf->player.eye + KNEE > mapf->sectors[sec->vert[i].neigh].floor &&
+						mapf->player.where.z < mapf->sectors[sec->vert[i].neigh].ceil)
 				{
-					if (mapf->player.state == flying)
-						mapf->player.add_z -= mapf->sectors[sec->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
-					mapf->player.sect = sec->vert[i].neigh;
-					if (mapf->player.state != jumping && mapf->player.state != flying && mapf->player.state != crouching)
-						mapf->player.state = falling;
-					return (0);
+					if (sec->vert[i].neigh != -1)
+					{
+						if (mapf->player.state == flying)
+							mapf->player.add_z -= mapf->sectors[sec->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
+						mapf->player.sect = sec->vert[i].neigh;
+						if (mapf->player.state != jumping && mapf->player.state != flying && mapf->player.state != crouching)
+							mapf->player.state = falling;
+						return (0);
+					}
+				}
+				else
+				{
+					mapf->player.where = (t_xyz){mapf->old.x, mapf->old.y, mapf->old.z};
 				}
 			}
 		}
@@ -118,12 +126,20 @@ int		check_ps(t_mapf *mapf)
 					(t_float){sec->vert[0].x, sec->vert[0].y});
 			if (ps < 0)
 			{
-				if (mapf->player.state == flying)
-					mapf->player.add_z -= mapf->sectors[sec->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
-				mapf->player.sect = sec->vert[i].neigh;
-				if (mapf->player.state != jumping && mapf->player.state != flying && mapf->player.state != crouching)
-					mapf->player.state = falling;
-				return (0);
+				if (mapf->player.where.z - mapf->player.eye + KNEE > mapf->sectors[sec->vert[i].neigh].floor &&
+						mapf->player.where.z < mapf->sectors[sec->vert[i].neigh].ceil)
+				{
+					if (mapf->player.state == flying)
+						mapf->player.add_z -= mapf->sectors[sec->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
+					mapf->player.sect = sec->vert[i].neigh;
+					if (mapf->player.state != jumping && mapf->player.state != flying && mapf->player.state != crouching)
+						mapf->player.state = falling;
+					return (0);
+				}
+				else
+				{
+					mapf->player.where = (t_xyz){mapf->old.x, mapf->old.y, mapf->old.z};
+				}
 			}
 		}
 		i++;
@@ -160,6 +176,7 @@ void		render(char *str)
 	mapf.player.state = nmoving;
 	mapf.player.ammo = 20000;
 	mapf.player.life = 100;
+	mapf.coeff = 1;
 //	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
@@ -194,6 +211,7 @@ void		render(char *str)
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix) == 0)
 			return ;
+		mapf.old = (t_xyz){mapf.player.where.x - mapf.player.velo.x, mapf.player.where.y - mapf.player.velo.y, mapf.player.where.z - mapf.player.velo.z};
 		SDL_Delay(1000 / 60);
 	}
 	free_sdl(&mapf.sdl, 6);

@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 15:03:31 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 18:40:26 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -106,12 +106,32 @@ void		crouch(t_mapf *mapf, t_input *in)
 	}
 }
 
+void		plrunning(t_mapf *mapf, t_input *in)
+{
+	if (in->key[SDL_SCANCODE_LSHIFT])
+	{
+		in->key[SDL_SCANCODE_LSHIFT] = SDL_FALSE;
+		if (mapf->player.state == running)
+		{
+			mapf->player.state = moving;
+			mapf->coeff = 1;
+		}
+		else if (mapf->player.state != crouching)
+			mapf->player.state = running;
+	}
+	if (mapf->player.state == running)
+	{
+		mapf->coeff = 2;
+	}
+}
+
 void		render_check_event(t_mapf *mapf, t_input *in, t_hud *hud)
 {
 	move_chara(mapf, in);
 	mouse_aim(mapf, in);
 	jump(mapf, in);
 	fly(mapf, in);
+	plrunning(mapf, in);
 	crouch(mapf, in);
 	if (in->key[SDL_SCANCODE_ESCAPE])
 		in->quit = SDL_TRUE;

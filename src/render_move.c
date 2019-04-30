@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:32:13 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 18:12:03 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 18:32:10 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -210,23 +210,23 @@ void		move_chara(t_mapf *mapf, t_input *in)
 	move_vec[1] = 0.0f;
 	if (in->key[SDL_SCANCODE_W])
 	{
-		move_vec[0] += mapf->player.anglecos*0.2f;
-		move_vec[1] += mapf->player.anglesin*0.2f;
+		move_vec[0] += mapf->player.anglecos * 0.2f;
+		move_vec[1] += mapf->player.anglesin * 0.2f;
 	}
 	if (in->key[SDL_SCANCODE_S])
 	{
-		move_vec[0] -= mapf->player.anglecos*0.2f;
-		move_vec[1] -= mapf->player.anglesin*0.2f;
+		move_vec[0] -= mapf->player.anglecos * 0.2f;
+		move_vec[1] -= mapf->player.anglesin * 0.2f;
 	}
 	if (in->key[SDL_SCANCODE_A])
 	{
-		move_vec[0] += mapf->player.anglesin*0.2f;
-		move_vec[1] -= mapf->player.anglecos*0.2f;
+		move_vec[0] += mapf->player.anglesin * 0.2f;
+		move_vec[1] -= mapf->player.anglecos * 0.2f;
 	}
 	if (in->key[SDL_SCANCODE_D])
 	{
-		move_vec[0] -= mapf->player.anglesin*0.2f;
-		move_vec[1] += mapf->player.anglecos*0.2f;
+		move_vec[0] -= mapf->player.anglesin * 0.2f;
+		move_vec[1] += mapf->player.anglecos * 0.2f;
 	}
 	tmpx = mapf->player.velo.x;
 	tmpy = mapf->player.velo.y;
@@ -236,8 +236,8 @@ void		move_chara(t_mapf *mapf, t_input *in)
 	* acc;
 	if (check_horcoll(mapf) == 0)
 	{
-		mapf->player.where.x += mapf->player.velo.x;
-		mapf->player.where.y += mapf->player.velo.y;
+		mapf->player.where.x += mapf->player.velo.x * mapf->coeff;
+		mapf->player.where.y += mapf->player.velo.y * mapf->coeff;
 	}
 }
 
