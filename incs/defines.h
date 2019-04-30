@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   defines.h                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 15:53:25 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 20:02:13 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -95,4 +95,5 @@
 # define DIFICULTY "Diff \0"
 # define PLAYER_OR "player look \0"
 # define GRAVITY "gravity \0"
+# define YAW(y, z, yaw) (y + z * yaw)
 #endif

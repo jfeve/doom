@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 19:38:02 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 20:07:43 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,7 +33,8 @@ static void	bubbleSort(t_objs arr[], int n, t_point player)
 		j = i + 1;
 		while (j < n)
 		{
-			if (vector_measure(arr[j].x, arr[j].y, player.x, player.y) > vector_measure(arr[i].x, arr[i].y, player.x, player.y))
+			if (vector_measure(arr[j].x, arr[j].y, player.x, player.y) >
+			vector_measure(arr[i].x, arr[i].y, player.x, player.y))
 				objs_swap(&arr[j], &arr[i]);
 			j++;
 		}
@@ -58,12 +59,13 @@ void		draw_items(t_mapf *mapf, SDL_Surface *s)
 			float vy = (float)(now.obj[j].y - mapf->player.where.y);
 			float tx = vx * mapf->player.anglesin - vy * mapf->player.anglecos;
 			float tz = vx * mapf->player.anglecos + vy * mapf->player.anglesin;
-			//if (tz >= 0)
+			if (tz <= 0)
+				break ;
 			float xscale = HFOV / tz;
-			//float yscale = VFOV / tz;
+			float yscale = VFOV / tz;
 			int x = (tx * xscale) * -1 + WIN_W / 2;
-			//int y = WIN_H / 2 - (int)(Yaw(yceil, tz1) * yscale1);
-			draw_sprite(&mapf->sdl, s, x - (s->w / 2), (WIN_H / 2) - (s->h / 2));
+			int y = (WIN_H / 2) - (int)(YAW(now.floor, tz, mapf->player.yaw) * yscale);
+			draw_sprite(&mapf->sdl, s, x - (s->w / 2), y - (s->h / 2));
 		}
 	}
 }
