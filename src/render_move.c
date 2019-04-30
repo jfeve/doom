@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:32:13 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 17:28:55 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 13:01:05 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -165,54 +165,125 @@ int			check_horcoll(t_mapf *mapf)
 	mapf->player.coll = 0;
 	return (0);
 }
-/*
- *
- *int			check_inter(t_mapf *mapf, t_float inter)
- *{
- *    float	px;
- *    float	py;
- *    float	dx;
- *    float	dy;
- *
- *    px = mapf->player.where.x;
- *    py = mapf->player.where.y;
- *    dx = mapf->player.velo.x;
- *    dy = mapf->player.velo.y;
- *}
- *
- *void		check_coll(t_mapf *mapf)
- *{
- *    float	px;
- *    float	py;
- *    float	dx;
- *    float	dy;
- *    t_sector *sec;
- *    int		i;
- *    int		j;
- *    t_float	inter;
- *
- *    i = 0;
- *    sec = &mapf->sectors[mapf->player.sect];
- *    px = mapf->player.where.x;
- *    py = mapf->player.where.y;
- *    dx = mapf->player.velo.x;
- *    dy = mapf->player.velo.y;
- *    while (i < sec->nbvert)
- *    {
- *        if (i != sec->nbvert - 1)
- *            inter = f_intersect((t_float){px, py}, (t_float){px + dx, py + dy},
- *                    (t_float){sec->vert[i].x, sec->vert[i].y},
- *                    (t_float){sec->vert[i + 1].x, sec->vert[i + 1].y});
- *        else
- *            inter = f_intersect((t_float){px, py}, (t_float){px + dx, py + dy},
- *                    (t_float){sec->vert[i].x, sec->vert[i].y},
- *                    (t_float){sec->vert[0].x, sec->vert[0].y});
- *        j = check_inter(mapf, inter);
- *        i++;
- *    }
- *}
- *
- */
+
+int			check_interdxpx(t_float i, t_float p, t_float d)
+{
+	if (p.x > d.x)
+	{
+		if (p.y > d.y)
+		{
+			return (i.x <= p.x && i.x >= d.x && i.y <= p.y && i.y >= d.y);
+		}
+		else
+		{
+			return (i.x <= p.x && i.x >= d.x && i.y >= p.y && i.y <= d.y);
+		}
+	}
+	else
+	{
+		if (p.y > d.y)
+		{
+			return (i.x >= p.x && i.x <= d.x && i.y <= p.y && i.y >= d.y);
+		}
+		else
+		{
+			return (i.x >= p.x && i.x <= d.x && i.y >= p.y && i.y <= d.y);
+		}
+	}
+}
+
+int			check_interab(t_float i, t_float a, t_float b)
+{
+	if (a.x > b.x)
+	{
+		if (a.y > b.y)
+		{
+			return (i.x <= a.x && i.x >= b.x && i.y <= a.y && i.y >= b.y);
+		}
+		else
+		{
+			return (i.x <= a.x && i.x >= b.x && i.y >= a.y && i.y <= b.y);
+		}
+	}
+	else
+	{
+		if (a.y > b.y)
+		{
+			return (i.x >= a.x && i.x <= b.x && i.y <= a.y && i.y >= b.y);
+		}
+		else
+		{
+			return (i.x >= a.x && i.x <= b.x && i.y >= a.y && i.y <= b.y);
+		}
+	}
+}
+
+int			check_coll(t_mapf *mapf)
+{
+	float	px;
+	float	py;
+	float	dx;
+	float	dy;
+	t_sector *sec;
+	int		i;
+//	int		j;
+	t_float	inter;
+
+	i = 0;
+	sec = &mapf->sectors[mapf->player.sect];
+	px = mapf->player.where.x;
+	py = mapf->player.where.y;
+	dx = mapf->player.velo.x;
+	dy = mapf->player.velo.y;
+	dprintf(1, "\n\nvelox = %f\tveloy = %f\n", dx, dy);
+	if (dx < 0.3)
+		dx *= 6;
+	if (dy < 0.3)
+		dy *= 6;
+	dprintf(1, "avelox = %f\taveloy = %f\n", dx, dy);
+	dprintf(1, "-----------------------------------\n");
+	while (i < sec->nbvert)
+	{
+		if (i != sec->nbvert - 1)
+		{
+			inter = f_intersect((t_float){px, py}, (t_float){px + dx, py + dy},
+					(t_float){(float)sec->vert[i].x, (float)sec->vert[i].y},
+					(t_float){(float)sec->vert[i + 1].x, (float)sec->vert[i + 1].y});
+			dprintf(1, "inter [%f][%f] p [%f][%f] d [%f][%f] a [%d][%d] b [%d][%d]\n",
+					inter.x, inter.y, px, py, px + dx, py + dy, sec->vert[i].x, sec->vert[i].y,
+					sec->vert[i + 1].x, sec->vert[i + 1].y);
+			if (check_interdxpx(inter, (t_float){px, py}, (t_float){px + dx, py + dy}))
+			{
+				if (check_interab(inter, (t_float){sec->vert[i].x, sec->vert[i].y},
+							(t_float){sec->vert[i + 1].x, sec->vert[i + 1].y}))
+				{
+					dprintf(1, "intersect\t");
+					slide_wall(mapf, i);
+					return (0);
+				}
+			}
+		}
+		else
+		{
+			inter = f_intersect((t_float){px, py}, (t_float){px + dx, py + dy},
+					(t_float){sec->vert[i].x, sec->vert[i].y},
+					(t_float){sec->vert[0].x, sec->vert[0].y});
+			if (check_interdxpx(inter, (t_float){px, py}, (t_float){px + dx, py + dy}))
+			{
+				if (check_interab(inter, (t_float){sec->vert[i].x, sec->vert[i].y},
+							(t_float){sec->vert[0].x, sec->vert[0].y}))
+				{
+					dprintf(1, "intersect\t");
+					slide_wall(mapf, i);
+					return (0);
+				}
+			}
+		}
+		i++;
+	}
+	return (1);
+}
+
 void		move_chara(t_mapf *mapf, t_input *in)
 {
 	float	move_vec[2];
@@ -250,8 +321,11 @@ void		move_chara(t_mapf *mapf, t_input *in)
 	* acc;
 	if (check_horcoll(mapf) == 0)
 	{
+//	if (check_coll(mapf) == 1)
+//	{
 		mapf->player.where.x += mapf->player.velo.x;
 		mapf->player.where.y += mapf->player.velo.y;
 	}
+//	}
 }
 
