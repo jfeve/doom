@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 17:45:37 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 14:22:29 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -366,8 +366,8 @@ void				render_check_event(t_mapf *mapf, t_input *in, t_hud *hud);
 float				vector_measure(float x1, float y1, float x2, float y2);
 void				move_chara(t_mapf *mapf, t_input *in);
 int					read_map(t_mapf *mapf, char *mapname);
-int					read_enem_data(int fd, t_mapf *mapf, int ienem);
-int					read_objs_data(int fd, t_mapf *mapf, int iobjs);
+int					read_enem_data(int fd, t_mapf *mapf, int ienem, int i);
+int					read_objs_data(int fd, t_mapf *mapf, int iobjs, int i);
 int					read_entities(int fd, t_mapf *mapf, int i);
 int					read_mapfhead(int fd, t_mapf *mapf, char *mapfile);
 int					read_sector(int fd, t_mapf *mapf, int i);
