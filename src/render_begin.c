@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 18:15:13 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 18:32:53 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -160,6 +160,7 @@ void		render(char *str)
 	mapf.player.state = nmoving;
 	mapf.player.ammo = 20000;
 	mapf.player.life = 100;
+	mapf.coeff = 1;
 //	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{

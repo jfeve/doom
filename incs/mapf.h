@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 14:16:37 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 18:29:19 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,7 +51,8 @@ typedef enum				e_state
 	jumping,
 	falling,
 	crouching,
-	flying
+	flying,
+	running
 }							t_state;
 
 typedef struct				s_player
@@ -108,6 +109,7 @@ typedef struct				s_mapf
 	int						nbenem;
 	t_sector				*sectors;
 	t_player				player;
+	float					coeff;
 	t_sdl					sdl;
 }							t_mapf;
 #endif
