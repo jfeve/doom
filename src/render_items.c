@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 20:07:43 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 20:15:23 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,7 +64,7 @@ void		draw_items(t_mapf *mapf, SDL_Surface *s)
 			float xscale = HFOV / tz;
 			float yscale = VFOV / tz;
 			int x = (tx * xscale) * -1 + WIN_W / 2;
-			int y = (WIN_H / 2) - (int)(YAW(now.floor, tz, mapf->player.yaw) * yscale);
+			int y = (WIN_H / 2) - (int)(YAW(now.floor - mapf->player.where.z, tz, mapf->player.yaw) * yscale);
 			draw_sprite(&mapf->sdl, s, x - (s->w / 2), y - (s->h / 2));
 		}
 	}
