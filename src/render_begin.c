@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 17:34:54 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 18:15:13 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -83,6 +83,53 @@ void		print_ps(t_mapf *mapf)
 		i++;
 	}
 }
+int		check_ps(t_mapf *mapf)
+{
+	t_sector *sec;
+	int		i;
+	float	ps;
+
+	i = 0;
+	sec = &mapf->sectors[mapf->player.sect];
+	while (i < sec->nbvert)
+	{
+		if (i != sec->nbvert - 1)
+		{
+			ps = f_pointside((t_float){mapf->player.where.x, mapf->player.where.y},
+					(t_float){sec->vert[i].x, sec->vert[i].y},
+					(t_float){sec->vert[i + 1].x, sec->vert[i + 1].y});
+			if (ps < 0)
+			{
+				if (sec->vert[i].neigh != -1)
+				{
+					if (mapf->player.state == flying)
+						mapf->player.add_z -= mapf->sectors[sec->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
+					mapf->player.sect = sec->vert[i].neigh;
+					if (mapf->player.state != jumping && mapf->player.state != flying && mapf->player.state != crouching)
+						mapf->player.state = falling;
+					return (0);
+				}
+			}
+		}
+		else
+		{
+			ps = f_pointside((t_float){mapf->player.where.x, mapf->player.where.y},
+					(t_float){sec->vert[i].x, sec->vert[i].y},
+					(t_float){sec->vert[0].x, sec->vert[0].y});
+			if (ps < 0)
+			{
+				if (mapf->player.state == flying)
+					mapf->player.add_z -= mapf->sectors[sec->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
+				mapf->player.sect = sec->vert[i].neigh;
+				if (mapf->player.state != jumping && mapf->player.state != flying && mapf->player.state != crouching)
+					mapf->player.state = falling;
+				return (0);
+			}
+		}
+		i++;
+	}
+	return (1);
+}
 
 void		render(char *str)
 {
@@ -111,14 +158,17 @@ void		render(char *str)
 	mapf.player.add_z = 0.0f;
 	mapf.player.jump_sec = 0;
 	mapf.player.state = nmoving;
-	mapf.player.ammo = 5;
+	mapf.player.ammo = 20000;
 	mapf.player.life = 100;
-	Mix_PlayMusic(hud.music, -1);
-	mapf.player.ammo = 50;
+//	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
 		in.xrel = 0;
 		in.yrel = 0;
+		clear_tab(&mapf.sdl);
+		update_event(&in);
+		render_check_event(&mapf, &in, &hud);
+		check_ps(&mapf);
 		if (mapf.player.state == jumping || mapf.player.state == falling)
 		{
 			mapf.player.where.z = mapf.sectors[mapf.player.jump_sec].floor + EYE + mapf.player.add_z;
@@ -137,9 +187,6 @@ void		render(char *str)
 		}
 		else
 			mapf.player.where.z = mapf.sectors[mapf.player.sect].floor + mapf.player.eye + mapf.player.add_z;
-		clear_tab(&mapf.sdl);
-		update_event(&in);
-		render_check_event(&mapf, &in, &hud);
 		fill_pix(&mapf);
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix) == 0)

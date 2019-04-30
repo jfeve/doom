@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 18:53:32 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 14:16:37 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -90,6 +90,8 @@ typedef struct				s_sector
 	short					nbenem;
 	short					gravity;
 	t_vertex				*vert;
+	t_objs					*obj;
+	t_enemies				*enem;
 }							t_sector;
 
 typedef struct				s_mapf
@@ -107,7 +109,5 @@ typedef struct				s_mapf
 	t_sector				*sectors;
 	t_player				player;
 	t_sdl					sdl;
-	t_objs					*objects;
-	t_enemies				*enemies;
 }							t_mapf;
 #endif

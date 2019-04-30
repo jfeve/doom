@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:32:13 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 17:44:55 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 18:12:03 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -108,7 +108,7 @@ int			check_port(t_mapf *mapf, int i, t_sector *sect)
 	return (0);
 }
 
-int			check_horcoll(t_mapf *mapf)
+int			vm_check(t_mapf *mapf, int i, t_sector *sect)
 {
 	float	px = mapf->player.where.x;
 	float	py = mapf->player.where.y;
@@ -117,6 +117,53 @@ int			check_horcoll(t_mapf *mapf)
 	float	vmp;
 	float	vmp2;
 	float	vmw;
+
+	if (i < sect->nbvert - 1)
+	{
+		vmw = vector_measure(sect->vert[i].x, sect->vert[i].y, sect->vert[i + 1].x, sect->vert[i + 1].y);
+		vmp = vector_measure(sect->vert[i].x, sect->vert[i].y, px, py) +
+			vector_measure(sect->vert[i + 1].x, sect->vert[i + 1].y, px, py);
+		vmp2 = vector_measure(sect->vert[i].x, sect->vert[i].y, px + dx, py + dy ) +
+			vector_measure(sect->vert[i + 1].x, sect->vert[i + 1].y, px + dx, py + dy);
+	}
+	else
+	{
+		vmw = vector_measure(sect->vert[i].x, sect->vert[i].y, sect->vert[0].x, sect->vert[0].y);
+		vmp = vector_measure(sect->vert[i].x, sect->vert[i].y, px, py) +
+			vector_measure(sect->vert[0].x, sect->vert[0].y, px, py);
+		vmp2 = vector_measure(sect->vert[i].x, sect->vert[i].y, px + dx, py + dy ) +
+			vector_measure(sect->vert[0].x, sect->vert[0].y, px + dx, py + dy);
+	}
+	return (vmp > vmp2 && vmp2 <= vmw + 0.1);
+}
+
+int			check_near_edge(t_mapf *mapf, int i, t_sector *sect)
+{
+	float	px = mapf->player.where.x;
+	float	py = mapf->player.where.y;
+	float	vmfi;
+	float	vmse;
+
+	if (i < sect->nbvert - 1)
+	{
+		vmfi = vector_measure(sect->vert[i].x, sect->vert[i].y, px, py);
+		vmse = vector_measure(sect->vert[i + 1].x, sect->vert[i + 1].y, px, py);
+	}
+	else
+	{
+		vmfi = vector_measure(sect->vert[i].x, sect->vert[i].y, px, py);
+		vmse = vector_measure(sect->vert[0].x, sect->vert[0].y, px, py);
+	}
+	if (vmfi < 1)
+		return (1);
+	else if (vmse < 1)
+		return (2);
+	else
+		return (0);
+}
+
+int			check_horcoll(t_mapf *mapf)
+{
 	int		i;
 	t_sector	*sect;
 
@@ -124,24 +171,10 @@ int			check_horcoll(t_mapf *mapf)
 	sect = &mapf->sectors[mapf->player.sect];
 	while (i < sect->nbvert)
 	{
-		if (i != sect->nbvert - 1)
+		if (vm_check(mapf, i, sect))
 		{
-			vmw = vector_measure(sect->vert[i].x, sect->vert[i].y, sect->vert[i + 1].x, sect->vert[i + 1].y);
-			vmp = vector_measure(sect->vert[i].x, sect->vert[i].y, px, py) +
-				vector_measure(sect->vert[i + 1].x, sect->vert[i + 1].y, px, py);
-			vmp2 = vector_measure(sect->vert[i].x, sect->vert[i].y, px + dx, py + dy ) +
-				vector_measure(sect->vert[i + 1].x, sect->vert[i + 1].y, px + dx, py + dy);
-		}
-		else
-		{
-			vmw = vector_measure(sect->vert[i].x, sect->vert[i].y, sect->vert[0].x, sect->vert[0].y);
-			vmp = vector_measure(sect->vert[i].x, sect->vert[i].y, px, py) +
-				vector_measure(sect->vert[0].x, sect->vert[0].y, px, py);
-			vmp2 = vector_measure(sect->vert[i].x, sect->vert[i].y, px + dx, py + dy ) +
-				vector_measure(sect->vert[0].x, sect->vert[0].y, px + dx, py + dy);
-		}
-		if (vmp > vmp2 && vmp2 <= vmw + 0.1)
-		{
+			if (check_near_edge(mapf, i, sect))
+				return (1);
 			if (sect->vert[i].neigh != -1)
 			{
 				if (check_port(mapf, i, sect) == 1)
@@ -164,41 +197,6 @@ int			check_horcoll(t_mapf *mapf)
 	}
 	mapf->player.coll = 0;
 	return (0);
-}
-
-void		check_coll(t_mapf *mapf)
-{
-	float	px;
-	float	py;
-	float	dx;
-	float	dy;
-	t_sector *sec;
-	int		i;
-	int		j;
-	t_float	inter;
-
-	i = 0;
-	sec = &mapf->sectors[mapf->player.sect];
-	px = mapf->player.where.x;
-	py = mapf->player.where.y;
-	dx = mapf->player.velo.x;
-	dy = mapf->player.velo.y;
-	while (i < sec->nbvert)
-	{
-		if (i != sec->nbvert - 1)
-		{
-			inter = f_intersect((t_float){px, py}, (t_float){px + dx, py + dy},
-					(t_float){sec->vert[i].x, sec->vert[i].y},
-					(t_float){sec->vert[i + 1].x, sec->vert[i + 1].y});
-		}
-		else
-		{
-			inter = f_intersect((t_float){px, py}, (t_float){px + dx, py + dy},
-					(t_float){sec->vert[i].x, sec->vert[i].y},
-					(t_float){sec->vert[0].x, sec->vert[0].y});
-		}
-		i++;
-	}
 }
 
 void		move_chara(t_mapf *mapf, t_input *in)
