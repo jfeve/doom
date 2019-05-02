@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 20:06:12 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 16:47:08 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,6 +39,13 @@ typedef struct				s_objects
 	short					type;
 	short					sec;
 }							t_objs;
+
+typedef struct				s_odraw
+{
+	t_objs					o;
+	float					tx;
+	float					tz;
+}							t_odraw;
 
 typedef struct				s_xyz
 {
