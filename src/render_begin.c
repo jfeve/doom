@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 13:50:32 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 14:23:16 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -173,7 +173,7 @@ void		render(char *str)
 	mapf.player.add_z = 0.0f;
 	mapf.player.jump_sec = 0;
 	mapf.player.state = nmoving;
-	mapf.player.ammo = 20000;
+	mapf.player.ammo = 5;
 	mapf.player.life = 100;
 	mapf.coeff = 1;
 	if (!init_hud(&hud, mapf.sdl.form->format, mapf.player))
