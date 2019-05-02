@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 12:21:55 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 14:16:15 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -363,6 +363,7 @@ typedef struct		s_queue
 /*
 ** Map Reader Functions
 */
+
 void				print_ps(t_mapf *mapf);
 void				slide_wall(t_mapf *mapf, int i);
 void				get_ps(t_mapf *mapf);
@@ -409,6 +410,7 @@ void				render(char *str);
 */
 
 int					init_hud(t_hud *hud, Uint32 format, t_player player);
+SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format);
 void				draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
 void				draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y);
 int					free_hud(t_hud *hud);

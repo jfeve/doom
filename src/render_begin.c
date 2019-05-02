@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 12:21:45 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 13:50:32 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -164,8 +164,6 @@ void		render(char *str)
 	SDL_WarpMouseInWindow(mapf.sdl.win, WIN_W / 2, WIN_H / 2);
 	if ((SDL_SetRelativeMouseMode(SDL_ENABLE)) != 0)
 		return ;
-	if (!init_hud(&hud, mapf.sdl.form->format, mapf.player))
-		return (ft_putendl("Init SDL_Mixer Error"));
 	mapf.player.velo.x = 0;
 	mapf.player.velo.y = 0;
 	mapf.player.velo.z = 0;
@@ -178,6 +176,8 @@ void		render(char *str)
 	mapf.player.ammo = 20000;
 	mapf.player.life = 100;
 	mapf.coeff = 1;
+	if (!init_hud(&hud, mapf.sdl.form->format, mapf.player))
+		return (ft_putendl("Init SDL_Mixer Error"));
 //	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
