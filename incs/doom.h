@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 20:24:45 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 12:21:55 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -338,6 +338,9 @@ typedef struct		s_hud
 	Mix_Music		*music;
 	Mix_Chunk		*gunshot;
 	Mix_Chunk		*empty;
+	TTF_Font		*arial;
+	SDL_Surface		*nbammo;
+	SDL_Surface		*nblife;
 }					t_hud;
 
 typedef	struct		s_line
@@ -405,7 +408,7 @@ void				render(char *str);
 ** HUD related functions
 */
 
-int					init_hud(t_hud *hud, Uint32 format);
+int					init_hud(t_hud *hud, Uint32 format, t_player player);
 void				draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
 void				draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y);
 int					free_hud(t_hud *hud);

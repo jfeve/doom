@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 14:30:38 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 12:57:16 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -65,7 +65,7 @@ static int			init_texture(t_hud *hud, Uint32 format)
 ** Initialize the textures and sounds of the hud
 */
 
-int					init_hud(t_hud *hud, Uint32 format)
+int					init_hud(t_hud *hud, Uint32 format, t_player player)
 {
 	if (!init_texture(hud, format))
 		return (free_hud(hud));
@@ -78,6 +78,17 @@ int					init_hud(t_hud *hud, Uint32 format)
 		return (free_hud(hud));
 	if (!(hud->empty = Mix_LoadWAV("data/sounds/empty.wav")))
 		return (free_hud(hud));
+	if(TTF_Init() == -1)
+		return (free_hud(hud));
+	if ((hud->arial = TTF_OpenFont("/Library/Fonts/Arial.ttf", 25)) == NULL)
+		return (free_hud(hud));
+	if ((hud->nbammo = TTF_RenderText_Solid(hud->arial, ft_itoa(player.ammo),
+	(SDL_Color){255, 255, 255, 255})) == NULL)
+		return (free_hud(hud));
+	if ((hud->nblife = TTF_RenderText_Solid(hud->arial, ft_itoa(player.life),
+	(SDL_Color){255, 255, 255, 255})) == NULL)
+		return (free_hud(hud));
+	dprintf(1, "%p\n", hud->nblife);
 	hud->anim = SDL_FALSE;
 	return (1);
 }
