@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 14:16:37 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 20:06:12 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,10 +14,13 @@
 #ifndef MAPF_H
 # define MAPF_H
 
+# define MAX_SECT 128
+# define MAX_SPRITE 128
 
 /*
 ** Render Data
 */
+
 typedef struct				s_enemies
 {
 	int						x;
@@ -51,7 +54,8 @@ typedef enum				e_state
 	jumping,
 	falling,
 	crouching,
-	flying
+	flying,
+	running
 }							t_state;
 
 typedef struct				s_player
@@ -108,6 +112,11 @@ typedef struct				s_mapf
 	int						nbenem;
 	t_sector				*sectors;
 	t_player				player;
+	float					coeff;
 	t_sdl					sdl;
+	int						rend_s[MAX_SECT];
+	short					nbrend_s;
+	t_xyz					old;
 }							t_mapf;
+
 #endif

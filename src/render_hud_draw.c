@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 14:03:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 15:39:38 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 14:17:45 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -69,7 +69,7 @@ void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 {
 	int		i;
 	int		x_index;
-	int		y_index;
+	int		y_index = 0;
 	Uint32	*p;
 
 	if (x + s->w < 0 || y + s->h < 0 || x >= WIN_W || y >= WIN_H || !s)
@@ -78,12 +78,19 @@ void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 	p = s->pixels;
 	i = 0;
 	if ((y_index = y) < 0)
-		y_index = 0;
-	if (x < 0)
-		x = 0;
+		while (y_index < 0)
+		{
+			y_index++;
+			i += s->w;
+		}
 	while (i < s->w * s->h - 1 && y_index < y + s->h && y_index < WIN_H)
 	{
-		x_index = x;
+		if ((x_index = x) < 0)
+			while (x_index < 0)
+			{
+				x_index++;
+				i++;
+			}
 		while (x_index < x + s->w)
 		{
 			if (x_index < WIN_W && (p[i] & 0x000000ff))
@@ -117,6 +124,8 @@ void		draw_hud(t_sdl *sdl, t_hud *hud, int ammo)
 	draw_sprite(sdl, hud->gun[hud->id], 2 * WIN_W / 3,
 	WIN_H - hud->gun[hud->id]->h);
 	draw_sprite(sdl, hud->ammo, 10, WIN_H - hud->ammo->h - 10);
-	draw_sprite(sdl, hud->life, 10, WIN_H - hud->ammo->h - hud->life->h - 25);
+	draw_sprite(sdl, hud->life, 10, WIN_H - hud->ammo->h - hud->life->h - 20);
+	draw_sprite(sdl, hud->nblife, 20 + hud->life->w, WIN_H - hud->ammo->h - (hud->life->h / 2) - 35);
+	draw_sprite(sdl, hud->nbammo, 20 + hud->ammo->w, WIN_H - (hud->ammo->h / 2) - 25);
 	draw_cross(sdl);
 }

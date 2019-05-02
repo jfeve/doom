@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 14:22:29 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 14:16:15 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -339,6 +339,9 @@ typedef struct		s_hud
 	Mix_Music		*music;
 	Mix_Chunk		*gunshot;
 	Mix_Chunk		*empty;
+	TTF_Font		*arial;
+	SDL_Surface		*nbammo;
+	SDL_Surface		*nblife;
 }					t_hud;
 
 typedef	struct		s_line
@@ -361,7 +364,9 @@ typedef struct		s_queue
 /*
 ** Map Reader Functions
 */
+
 void				print_ps(t_mapf *mapf);
+void				slide_wall(t_mapf *mapf, int i);
 void				get_ps(t_mapf *mapf);
 void				fill_pix(t_mapf *mapf);
 void				render_check_event(t_mapf *mapf, t_input *in, t_hud *hud);
@@ -405,8 +410,13 @@ void				render(char *str);
 ** HUD related functions
 */
 
-int					init_hud(t_hud *hud, Uint32 format);
+int					init_hud(t_hud *hud, Uint32 format, t_player player);
+SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format);
 void				draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
+void				draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y);
 int					free_hud(t_hud *hud);
+
+
+void				draw_items(t_mapf *mapf, SDL_Surface *s);
 
 #endif
