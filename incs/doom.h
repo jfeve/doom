@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 14:52:30 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 19:24:44 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -413,6 +413,7 @@ int					init_hud(t_hud *hud, Uint32 format, t_player player);
 SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format);
 void				draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
 void				draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y);
+void				draw_sprite_resize(t_sdl *sdl, SDL_Surface *s, t_point start, t_point size);
 int					free_hud(t_hud *hud);
 
 

@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 14:03:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 14:17:45 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 13:41:26 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,8 +72,6 @@ void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 	int		y_index = 0;
 	Uint32	*p;
 
-	if (x + s->w < 0 || y + s->h < 0 || x >= WIN_W || y >= WIN_H || !s)
-		return ;
 	SDL_LockSurface(s);
 	p = s->pixels;
 	i = 0;

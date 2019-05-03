@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 16:47:08 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 15:35:38 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,6 +38,7 @@ typedef struct				s_objects
 	int						hitbox;
 	short					type;
 	short					sec;
+	short					picked;
 }							t_objs;
 
 typedef struct				s_odraw
