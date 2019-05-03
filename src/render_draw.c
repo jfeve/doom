@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:36:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 20:13:25 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 20:06:16 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,12 +55,14 @@ void		draw(t_mapf *mapf, int x, int y1, int y2, int color)
 	}
 }
 
-void		draw_text(t_mapf *mapf, int y1, int y2, int x, int x1, int x2)
+void		draw_text(t_mapf *mapf, int y1, int y2, int x, int x1, int x2, int s, t_sector *sect, int *ytop, int *ybot)
 {
 	float	texx;
+	float	vy;
 	int		tex;
 	float	texy;
 	int		tey;
+	double	tmp;
 	Uint32	*p;
 	int		y = y1;
 
@@ -68,12 +70,24 @@ void		draw_text(t_mapf *mapf, int y1, int y2, int x, int x1, int x2)
 	p = mapf->wall->pixels;
 	texx =(float)((float)x - (float)x1) / (float)((float)x2 - (float)x1);
 	tex = (int)mapf->wall->w * texx;
+	if (s != sect->nbvert - 1)
+	{
+		texx = (sect->vert[s + 1].x - sect->vert[s].x) * texx + sect->vert[s].x;
+		vy = sect->vert[s].y + ((sect->vert[s + 1].y - sect->vert[s].y) * (texx - sect->vert[s].x) / (sect->vert[s + 1].x - sect->vert[s].x));
+		texx = fvector_measure((float)sect->vert[s].x, (float)sect->vert[s].y, texx, vy) / fabs((double)(sect->vert[s + 1].x - sect->vert[s].x))/*vector_measure(sect->vert[s].x, sect->vert[s].y, sect->vert[s + 1].x, sect->vert[s + 1].y)*/;
+	//	dprintf(1, "texx = %f\n", texx);
+		texx = texx * sect->vert[s].texx;
+		//dprintf(1, "sect->texx = %f texx = %f\n", sect->vert[s].texx, texx);
+		texx = mapf->wall->w * modf(texx, &tmp);
+		tex = (int)texx;
+	}
 	while (y < y2)
 	{
 		texy =(float)((float)y - (float)y1) / (float)((float)y2 - (float)y1);
-		tey = (int)mapf->wall->h * texy;
-		if (y > 0 && y < WIN_H)
-		mapf->sdl.pix[y * WIN_W + x] = p[tey * mapf->wall->w + tex];
+		texy = texy * sect->texy;
+		tey = (int)mapf->wall->h * modf(texy, &tmp);
+		if (y > ytop[x] && y < ybot[x])
+			mapf->sdl.pix[y * WIN_W + x] = p[tey * mapf->wall->w + tex];
 		y++;
 	}
 }
@@ -245,7 +259,8 @@ void		fill_pix(t_mapf *mapf)
 					else
 					{
 				//	dprintf(1, "cya = %d cyab = %d\n", cya, cyb);
-					draw_text(mapf, ya, yb, x, x1, x2);
+					draw_text(mapf, ya, yb, x, x1, x2, s, sect, ytop, ybot);
+				//	draw(mapf, x, cya, cyb, WF_COL);
 					}
 				}
 				x++;

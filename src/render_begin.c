@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 20:11:57 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 19:58:30 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,10 +100,10 @@ int		check_ps(t_mapf *mapf)
 					(t_float){sec->vert[i + 1].x, sec->vert[i + 1].y});
 			if (ps < 0)
 			{
-				if (mapf->player.where.z - mapf->player.eye + KNEE > mapf->sectors[sec->vert[i].neigh].floor &&
-						mapf->player.where.z < mapf->sectors[sec->vert[i].neigh].ceil)
+				if (sec->vert[i].neigh != -1)
 				{
-					if (sec->vert[i].neigh != -1)
+					if (mapf->player.where.z - mapf->player.eye + KNEE > mapf->sectors[sec->vert[i].neigh].floor &&
+							mapf->player.where.z < mapf->sectors[sec->vert[i].neigh].ceil)
 					{
 						if (mapf->player.state == flying)
 							mapf->player.add_z -= mapf->sectors[sec->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
@@ -159,7 +159,7 @@ void		fill_tex_vert(t_mapf *mapf)
 	{
 		j = 0;
 		sec = &mapf->sectors[i];
-		sec->texy = (sec->ceil - sec->floor) / TEXT_S;
+		sec->texy = (sec->ceil - sec->floor) / TEXT_SY;
 		while (j < mapf->sectors[i].nbvert)
 		{
 			if (j !=  sec->nbvert - 1)
@@ -240,7 +240,7 @@ void		render(char *str)
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix) == 0)
 			return ;
 		mapf.old = (t_xyz){mapf.player.where.x - mapf.player.velo.x, mapf.player.where.y - mapf.player.velo.y, mapf.player.where.z - mapf.player.velo.z};
-		SDL_Delay(1000 / 60);
+//		SDL_Delay(1000 / 60);
 	}
 	free_sdl(&mapf.sdl, 6);
 	free_hud(&hud);
