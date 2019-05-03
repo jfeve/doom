@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 15:03:55 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 17:37:42 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -128,6 +128,7 @@ void		plrunning(t_mapf *mapf, t_input *in)
 void		render_check_event(t_mapf *mapf, t_input *in, t_hud *hud)
 {
 	move_chara(mapf, in);
+	pick_items(mapf, hud);
 	mouse_aim(mapf, in);
 	jump(mapf, in);
 	fly(mapf, in);

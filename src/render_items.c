@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 15:45:29 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 18:21:24 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,7 +98,7 @@ static void	bubbleSort(t_odraw arr[], int n, t_point player)
 ** Draw the items' sprites
 */
 
-void		draw_items(t_mapf *mapf, SDL_Surface *s)
+void		draw_items(t_mapf *mapf, SDL_Surface *items[4])
 {
 	int		i;
 	int		j;
@@ -130,19 +130,18 @@ void		draw_items(t_mapf *mapf, SDL_Surface *s)
 		j = -1;
 		while (++j < nbdraw && j < MAX_SPRITE)
 		{
+			int type = drawable[j].o.type - 1;
 			float xscale = HFOV / drawable[j].tz;
 			float yscale = VFOV / drawable[j].tz;
 			int x = (drawable[j].tx * xscale) * -1 + WIN_W / 2;
 			int y = (WIN_H / 2) - (int)(YAW(now.floor - mapf->player.where.z, drawable[j].tz, mapf->player.yaw) * yscale);
 			float distance = vector_measure(drawable[j].o.x, drawable[j].o.y, mapf->player.where.x, mapf->player.where.y);
-			dprintf(1, "%f   %f\n", distance, 16.0f / distance);
 			if (distance == 0.0f)
 				distance = 0.0001f;
-			draw_sprite_resize(&mapf->sdl, s, (t_point){x - (s->w / 2), y - (2 * s->h / 3)},
-			(t_point){(int)((float)s->w * (16.0f / distance)), (int)((float)s->h * (16.0f / distance))});
+			draw_sprite_resize(&mapf->sdl, items[type], (t_point){x - (items[type]->w / 2), y - (2 * items[type]->h / 3)},
+			(t_point){(int)((float)items[type]->w * (16.0f / distance)), (int)((float)items[type]->h * (16.0f / distance))});
 		}
 	}
-	dprintf(1, "\n");
 }
 
 /*int		i;

@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 14:03:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 13:41:26 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 17:58:36 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -121,9 +121,13 @@ void		draw_hud(t_sdl *sdl, t_hud *hud, int ammo)
 		hud->id = 6;
 	draw_sprite(sdl, hud->gun[hud->id], 2 * WIN_W / 3,
 	WIN_H - hud->gun[hud->id]->h);
-	draw_sprite(sdl, hud->ammo, 10, WIN_H - hud->ammo->h - 10);
-	draw_sprite(sdl, hud->life, 10, WIN_H - hud->ammo->h - hud->life->h - 20);
-	draw_sprite(sdl, hud->nblife, 20 + hud->life->w, WIN_H - hud->ammo->h - (hud->life->h / 2) - 35);
-	draw_sprite(sdl, hud->nbammo, 20 + hud->ammo->w, WIN_H - (hud->ammo->h / 2) - 25);
+	draw_sprite(sdl, hud->ammoicon, 10, WIN_H - hud->ammoicon->h - 10);
+	draw_sprite(sdl, hud->lifeicon, 10, WIN_H - hud->ammoicon->h - hud->lifeicon->h - 20);
+	draw_sprite(sdl, hud->nblife, 20 + hud->lifeicon->w, WIN_H - hud->ammoicon->h - (hud->lifeicon->h / 2) - 35);
+	draw_sprite(sdl, hud->nbammo, 20 + hud->ammoicon->w, WIN_H - (hud->ammoicon->h / 2) - 25);
+	if (hud->has_key)
+		draw_sprite(sdl, hud->items[0], 10, 10);
+	if (hud->has_armor)
+		draw_sprite(sdl, hud->items[1], 10, 10);
 	draw_cross(sdl);
 }

@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 19:24:44 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 18:19:25 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -326,15 +326,24 @@ int								free_content(t_edit *edit);
 ** ------------------------------------|
 */
 
+/*
+** HUD structure:
+** id: id of the frame of the gun animation we're currently drawing,
+** gun: gun animation frames, ammoicon & lifeicon: well
+** has_armor & has_key: 0 if item not picked, 1 if picked
+** items: sprites of items ; 1: key, 2: armor, 3:life kit, 4: ammo pack
+*/
+
 typedef struct		s_hud
 {
 	int				id;
 	SDL_Surface		*gun[7];
-	SDL_Surface		*ammo;
-	SDL_Surface		*life;
-	SDL_Surface		*armor;
-	SDL_Surface		*key;
 	SDL_bool		anim;
+	SDL_Surface		*ammoicon;
+	SDL_Surface		*lifeicon;
+	int				has_armor;
+	int				has_key;
+	SDL_Surface		*items[4];
 	Mix_Music		*music;
 	Mix_Chunk		*gunshot;
 	Mix_Chunk		*empty;
@@ -417,6 +426,7 @@ void				draw_sprite_resize(t_sdl *sdl, SDL_Surface *s, t_point start, t_point si
 int					free_hud(t_hud *hud);
 
 
-void				draw_items(t_mapf *mapf, SDL_Surface *s);
+void				draw_items(t_mapf *mapf, SDL_Surface *items[4]);
+void				pick_items(t_mapf *mapf, t_hud *hud);
 
 #endif

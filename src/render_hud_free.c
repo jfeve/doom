@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 15:55:19 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 13:52:21 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 17:57:48 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,14 +40,14 @@ int			free_hud(t_hud *hud)
 	while (++i < 7)
 		if (hud->gun[i])
 			SDL_FreeSurface(hud->gun[i]);
-	if (hud->ammo)
-		SDL_FreeSurface(hud->ammo);
-	if (hud->life)
-		SDL_FreeSurface(hud->life);
-	if (hud->key)
-		SDL_FreeSurface(hud->key);
-	if (hud->armor)
-		SDL_FreeSurface(hud->armor);
+	i = -1;
+	while (++i < 4)
+		if (hud->items[i])
+			SDL_FreeSurface(hud->items[i]);
+	if (hud->ammoicon)
+		SDL_FreeSurface(hud->ammoicon);
+	if (hud->lifeicon)
+		SDL_FreeSurface(hud->lifeicon);
 	free_audio(hud);
 	if (hud->arial)
 		TTF_CloseFont(hud->arial);
