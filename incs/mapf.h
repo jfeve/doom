@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 20:06:12 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 15:48:06 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -79,6 +79,7 @@ typedef struct				s_vertex
 	int						y;
 	short					text;
 	int						neigh;
+	float					texx;
 	int						ps;
 }							t_vertex;
 
@@ -93,6 +94,7 @@ typedef struct				s_sector
 	t_vertex				*vert;
 	t_objs					*obj;
 	t_enemies				*enem;
+	float					texy;
 }							t_sector;
 
 typedef struct				s_mapf
@@ -112,5 +114,6 @@ typedef struct				s_mapf
 	float					coeff;
 	t_sdl					sdl;
 	t_xyz					old;
+	SDL_Surface				*wall;
 }							t_mapf;
 #endif

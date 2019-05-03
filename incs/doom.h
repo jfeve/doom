@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 14:22:29 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 15:55:21 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -253,7 +253,7 @@ int								map_writer(char *mapname, t_edit *edit);
 int								save_map(t_input *in, char *mapname,
 									t_edit *edit);
 int								open_error(char **mapfile);
-int								save_error(char *mapfile);
+int								save_error(void);
 int								save_error2(char *error, t_lis *temp);
 void							putinfo_sec(int fd, t_lis *temp, t_sec *tmp);
 int								save_d(int fd, t_lis *temp);

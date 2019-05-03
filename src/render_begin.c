@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 20:09:28 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 20:11:57 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -147,11 +147,39 @@ int		check_ps(t_mapf *mapf)
 	return (1);
 }
 
+void		fill_tex_vert(t_mapf *mapf)
+{
+	t_sector	*sec;
+	int			i;
+	int			j;
+
+	i = 0;
+	j = 0;
+	while (i < mapf->nbsect)
+	{
+		j = 0;
+		sec = &mapf->sectors[i];
+		sec->texy = (sec->ceil - sec->floor) / TEXT_S;
+		while (j < mapf->sectors[i].nbvert)
+		{
+			if (j !=  sec->nbvert - 1)
+				sec->vert[j].texx = vector_measure(sec->vert[j].x, sec->vert[j].y,
+						sec->vert[j + 1].x, sec->vert[j + 1].y) / TEXT_S;
+			else
+				sec->vert[j].texx = vector_measure(sec->vert[j].x, sec->vert[j].y,
+						sec->vert[0].x, sec->vert[0].y) / TEXT_S;
+			j++;
+		}
+		i++;
+	}
+}
+
 void		render(char *str)
 {
 	t_mapf	mapf;
 	t_input	in;
 	t_hud	hud;
+	SDL_Surface *tmp;
 
 	ft_bzero(&in, sizeof(t_input));
 	ft_bzero(&mapf, sizeof(t_mapf));
@@ -165,6 +193,8 @@ void		render(char *str)
 		return ;
 	if (!init_hud(&hud, mapf.sdl.form->format))
 		return (ft_putendl("Init SDL_Mixer Error"));
+	tmp = SDL_LoadBMP("wall.bmp");
+	mapf.wall = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA8888, 0);
 	mapf.player.velo.x = 0;
 	mapf.player.velo.y = 0;
 	mapf.player.velo.z = 0;
@@ -177,6 +207,7 @@ void		render(char *str)
 	mapf.player.ammo = 20000;
 	mapf.player.life = 100;
 	mapf.coeff = 1;
+	fill_tex_vert(&mapf);
 //	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{

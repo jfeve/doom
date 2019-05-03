@@ -6,12 +6,24 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:36:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 15:38:26 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 20:13:25 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+float		fvector_measure(float x1, float y1, float x2, float y2)
+{
+	float dx;
+	float dy;
+	float res;
+
+	dx = x2 - x1;
+	dy = y2 - y1;
+	res = sqrtf(dx * dx + dy * dy);
+	return (res);
+}
 
 t_float		create_float(float a, float b)
 {
@@ -40,6 +52,29 @@ void		draw(t_mapf *mapf, int x, int y1, int y2, int color)
 			mapf->sdl.pix[y * WIN_W + x] = color;
 			y++;
 		}
+	}
+}
+
+void		draw_text(t_mapf *mapf, int y1, int y2, int x, int x1, int x2)
+{
+	float	texx;
+	int		tex;
+	float	texy;
+	int		tey;
+	Uint32	*p;
+	int		y = y1;
+
+	SDL_LockSurface(mapf->wall);
+	p = mapf->wall->pixels;
+	texx =(float)((float)x - (float)x1) / (float)((float)x2 - (float)x1);
+	tex = (int)mapf->wall->w * texx;
+	while (y < y2)
+	{
+		texy =(float)((float)y - (float)y1) / (float)((float)y2 - (float)y1);
+		tey = (int)mapf->wall->h * texy;
+		if (y > 0 && y < WIN_H)
+		mapf->sdl.pix[y * WIN_W + x] = p[tey * mapf->wall->w + tex];
+		y++;
 	}
 }
 
@@ -208,7 +243,10 @@ void		fill_pix(t_mapf *mapf)
 					if (x == beginx || x == endx)
 					draw(mapf, x, cya, cyb, 0x000000FF);
 					else
-					draw(mapf, x, cya, cyb, WF_COL);
+					{
+				//	dprintf(1, "cya = %d cyab = %d\n", cya, cyb);
+					draw_text(mapf, ya, yb, x, x1, x2);
+					}
 				}
 				x++;
 			}

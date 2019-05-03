@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:07:42 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:14:47 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 15:56:41 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,10 +38,10 @@ int						save_objs(int fd, t_lis *temp)
 	return (1);
 }
 
-int						save_error(char *mapfile)
+int						save_error(void)
 {
 	ft_putendl("There has been an error while saving the file");
-	free(&mapfile);
+//	free(&mapfile);
 	return (0);
 }
 
