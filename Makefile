@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+      #
+#    By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/18 21:26:38 by jfeve        #+#   ##    ##    #+#        #
-#    Updated: 2019/04/28 10:09:39 by jfeve       ###    #+. /#+    ###.fr      #
+#    Updated: 2019/05/02 15:14:05 by jfeve       ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -38,7 +38,6 @@ NAME_SDLTTFLIB = libSDL2_ttf.a
 NAME_SDLMIXERLIB = libSDL2_mixer.a
 PATH_SDLLIB = ./lib/
 
-
 #******************************************************************************#
 #-----------------------------------DOOM----------------------------------------#
 #******************************************************************************#
@@ -48,9 +47,10 @@ PATH_SRC_DOOM = ./src/
 PATH_OBJ_DOOM = ./obj/
 PATH_INC_DOOM = ./incs/
 FILES_DOOM = $(shell ls src | cut -d "." -f 1)
+INCS = $(shell ls incs | cut -d "." -f 1)
 OBJ_DOOM = $(addprefix $(PATH_OBJ_DOOM), $(addsuffix .o, $(FILES_DOOM)))
 SRC_DOOM = $(addprefix $(PATH_SRC_DOOM), $(addsuffix .c, $(FILES_DOOM)))
-INC_DOOM = $(addprefix $(PATH_INC_DOOM), doom.h)
+INC_DOOM = $(addprefix $(PATH_INC_DOOM), $(addsuffix .h, $(INCS)))
 
 #******************************************************************************#
 #----------------------------------RULES---------------------------------------#
@@ -101,7 +101,6 @@ clean: clean_lib clean_doom
 #******************************************************************************#
 #---------------------------------FCLEAN---------------------------------------#
 #******************************************************************************#
-
 
 fclean_doom: clean_doom
 	@rm -f $(NAME)

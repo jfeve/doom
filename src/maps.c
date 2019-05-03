@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 20:29:09 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 15:57:00 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,7 +67,7 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 	return (1);
 }
 
-int						put_data(char *mapfile, int fd, t_edit *edit)
+int						put_data(int fd, t_edit *edit)
 {
 	if (putinfo_head(fd, edit))
 	{
@@ -75,14 +75,14 @@ int						put_data(char *mapfile, int fd, t_edit *edit)
 			return (1);
 		else
 		{
-			save_error(mapfile);
+			save_error();
 			close(fd);
 			return (0);
 		}
 	}
 	else
 	{
-		save_error(mapfile);
+		save_error();
 		close(fd);
 		return (0);
 	}
@@ -95,16 +95,17 @@ int						map_writer(char *mapname, t_edit *edit)
 	int					fd;
 	char				*mapfile;
 
-	mapfile = (char*)malloc(sizeof(char) *
-		(int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
-	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
+//	mapfile = (char*)malloc(sizeof(char) *
+//		(int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
+//	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
+	mapfile = ft_strjoin(MAP_PATH, mapname);
 	if ((fd = open(mapfile, O_TRUNC | O_CREAT | O_WRONLY, S_IRWXU)) != -1)
 	{
 		if (edit->nbsect != 0)
-			return (put_data(mapfile, fd, edit));
+			return (put_data(fd, edit));
 		else
 		{
-			save_error(mapfile);
+			save_error();
 			close(fd);
 			return (0);
 		}
@@ -122,7 +123,8 @@ int						save_map(t_input *in, char *mapname, t_edit *edit)
 			write(1, "\n-------Map sauver-------\n", 27);
 			return (1);
 		}
-		else{
+		else
+		{
 			write(1, "\n--------Map not saved-------\n", 30);
 			return (0);
 		}

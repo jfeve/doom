@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 21:32:10 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 17:36:24 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 14:33:04 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -104,6 +104,8 @@ void			print_read(t_mapf *mapf)
 	k = 0;
 	while (i < mapf->nbsect)
 	{
+		dprintf(1, "OBJ = %d\n", mapf->sectors[i].nbobjs);
+		dprintf(1, "obj = %p\n", mapf->sectors[i].obj);
 		dprintf(1, "Sector : %d\n", i);
 		dprintf(1, " Gravity : %d\n", mapf->sectors[i].gravity);
 		dprintf(1, " Floor : %d\n", mapf->sectors[i].floor);
@@ -128,9 +130,6 @@ void			print_read(t_mapf *mapf)
 		dprintf(1, "\n-------\nList Objects\n");
 		while (i < mapf->nbobjs)
 		{
-			dprintf(1, "   X : %d\n", mapf->objects[i].x);
-			dprintf(1, "   Y : %d\n", mapf->objects[i].y);
-			dprintf(1, "   Texture : %d\n\n", mapf->objects[i].type);
 			i++;
 		}
 	}
@@ -140,9 +139,6 @@ void			print_read(t_mapf *mapf)
 		dprintf(1, "\n--------\nList Enemies\n");
 		while (i < mapf->nbenem)
 		{
-			dprintf(1, "   X : %d\n", mapf->enemies[i].x);
-			dprintf(1, "   Y : %d\n", mapf->enemies[i].y);
-			dprintf(1, "   Texture : %d\n", mapf->enemies[i].type);
 			i++;
 		}
 	}

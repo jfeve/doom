@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   mapf.h                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 12:08:32 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 15:48:06 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,7 +51,8 @@ typedef enum				e_state
 	jumping,
 	falling,
 	crouching,
-	flying
+	flying,
+	running
 }							t_state;
 
 typedef struct				s_player
@@ -68,6 +69,8 @@ typedef struct				s_player
 	float					add_z;
 	int						jump_sec;
 	float					eye;
+	int						life;
+	int						ammo;
 }							t_player;
 
 typedef struct				s_vertex
@@ -76,6 +79,8 @@ typedef struct				s_vertex
 	int						y;
 	short					text;
 	int						neigh;
+	float					texx;
+	int						ps;
 }							t_vertex;
 
 typedef struct				s_sector
@@ -87,6 +92,9 @@ typedef struct				s_sector
 	short					nbenem;
 	short					gravity;
 	t_vertex				*vert;
+	t_objs					*obj;
+	t_enemies				*enem;
+	float					texy;
 }							t_sector;
 
 typedef struct				s_mapf
@@ -103,8 +111,9 @@ typedef struct				s_mapf
 	int						nbenem;
 	t_sector				*sectors;
 	t_player				player;
+	float					coeff;
 	t_sdl					sdl;
-	t_objs					*objects;
-	t_enemies				*enemies;
+	t_xyz					old;
+	SDL_Surface				*wall;
 }							t_mapf;
 #endif
