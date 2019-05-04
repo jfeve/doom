@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 14:16:15 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 15:55:21 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -254,7 +254,7 @@ int								map_writer(char *mapname, t_edit *edit);
 int								save_map(t_input *in, char *mapname,
 									t_edit *edit);
 int								open_error(char **mapfile);
-int								save_error(char *mapfile);
+int								save_error(void);
 int								save_error2(char *error, t_lis *temp);
 void							putinfo_sec(int fd, t_lis *temp, t_sec *tmp);
 int								save_d(int fd, t_lis *temp);
@@ -327,15 +327,25 @@ int								free_content(t_edit *edit);
 ** ------------------------------------|
 */
 
+/*
+** HUD structure:
+** id: id of the frame of the gun animation we're currently drawing,
+** gun: gun animation frames, ammoicon & lifeicon: well
+** has_armor & has_key: 0 if item not picked, 1 if picked
+** items: sprites of items ; 1: key, 2: armor, 3:life kit, 4: ammo pack
+*/
+
 typedef struct		s_hud
 {
 	int				id;
 	SDL_Surface		*gun[7];
-	SDL_Surface		*ammo;
-	SDL_Surface		*life;
-	SDL_Surface		*armor;
-	SDL_Surface		*key;
 	SDL_bool		anim;
+	SDL_Surface		*ammoicon;
+	SDL_Surface		*lifeicon;
+	int				has_armor;
+	int				has_key;
+	SDL_Surface		*items[4];
+	SDL_Surface		*enemy;
 	Mix_Music		*music;
 	Mix_Chunk		*gunshot;
 	Mix_Chunk		*empty;
@@ -414,9 +424,11 @@ int					init_hud(t_hud *hud, Uint32 format, t_player player);
 SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format);
 void				draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
 void				draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y);
+void				draw_sprite_resize(t_sdl *sdl, SDL_Surface *s, t_point start, t_point size);
 int					free_hud(t_hud *hud);
 
 
-void				draw_items(t_mapf *mapf, SDL_Surface *s);
+void				draw_entities(t_mapf *mapf, SDL_Surface *items[4], SDL_Surface *enemy);
+void				pick_items(t_mapf *mapf, t_hud *hud);
 
 #endif

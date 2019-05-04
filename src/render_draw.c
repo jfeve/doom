@@ -6,12 +6,24 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:36:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 20:02:53 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 17:25:44 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+float		fvector_measure(float x1, float y1, float x2, float y2)
+{
+	float dx;
+	float dy;
+	float res;
+
+	dx = x2 - x1;
+	dy = y2 - y1;
+	res = sqrtf(dx * dx + dy * dy);
+	return (res);
+}
 
 t_float		create_float(float a, float b)
 {
@@ -40,6 +52,28 @@ void		draw(t_mapf *mapf, int x, int y1, int y2, int color)
 			mapf->sdl.pix[y * WIN_W + x] = color;
 			y++;
 		}
+	}
+}
+
+void		draw_text(t_mapf *mapf, int ya, int yb, int x, int *ytop, int *ybot, int txtx, t_sector *sect, int s)
+{
+	Uint32	*p;
+	int		y = ya;
+	float	tey;
+	int		ty;
+	int		ind = sect->vert[s].text - 1;
+
+	SDL_LockSurface(mapf->wall[ind]);
+	p = mapf->wall[ind]->pixels;
+	while (y < yb)
+	{
+		tey = (float)((float)y - (float)ya) / (float)((float)yb - (float)ya);
+		ty = mapf->wall[ind]->h * tey;
+		if (y < ybot[x] && y > ytop[x])
+		{
+			mapf->sdl.pix[y * WIN_W + x] = p[txtx % 199 + ty * mapf->wall[ind]->w];
+		}
+		y++;
 	}
 }
 
@@ -104,6 +138,8 @@ void		fill_pix(t_mapf *mapf)
 			float tz1 = vx1 * pcos + vy1 * psin;
 			float tx2 = vx2 * psin - vy2 * pcos;
 			float tz2 = vx2 * pcos + vy2 * psin;
+			int	u0 = 0;
+			int u1 = 199;
 			if (tz1 <= 0 || tz2 <= 0)
 			{
 				float nearz = 0.0001f;
@@ -118,6 +154,8 @@ void		fill_pix(t_mapf *mapf)
 				c = create_float(nearside, nearz);
 				d = create_float(farside, farz);
 				t_float i2 = f_intersect(a, b, c, d);
+				t_float org1 = (t_float){tx1, tz1};
+				t_float org2 = (t_float){tx2, tz2};
 				if (tz1 < nearz)
 				{
 					if (i1.y > 0)
@@ -143,6 +181,16 @@ void		fill_pix(t_mapf *mapf)
 						tx2 = i2.x;
 						tz2 = i2.y;
 					}
+				}
+				if (fabs(tx2 - tx1) > fabs(tz2 - tz1))
+				{
+					u0 = (tx1 - org1.x) * 199 / (org2.x - org1.x);
+					u1 = (tx2 - org1.x) * 199 / (org2.x - org1.x);
+				}
+				else
+				{
+					u0 = (tz1 - org1.y) * 199 / (org2.y - org1.y);
+					u1 = (tz2 - org1.y) * 199 / (org2.y - org1.y);
 				}
 			}
 			float xscale1 = HFOV / tz1;
@@ -176,6 +224,7 @@ void		fill_pix(t_mapf *mapf)
 			int x = beginx;
 			while (x <= endx)
 			{
+				int	txtx = ((u0 * (x2 - x) * tz2) + (u1 * (x - x1) * tz1)) / ((x2 - x) * tz2 + (x - x1) * tz1);
 				if (x2 - x1 == 0)
 					break ;
 				int ya = ((x - x1) * (y2a - y1a)) / (x2 - x1) + y1a;
@@ -194,12 +243,12 @@ void		fill_pix(t_mapf *mapf)
 					if (x == beginx || x == endx)
 						draw(mapf, x, cya, cnya - 1, 0x000000FF);
 					else
-						draw(mapf, x, cya, cnya - 1, GREEN);
+						draw_text(mapf, ya, nya - 1, x, ytop, ybot, txtx, sect, s);
 					ytop[x] = clamp(max(cya, cnya), ytop[x], WIN_H - 1);
 					if (x == beginx || x == endx)
 						draw(mapf, x, cnyb + 1, cyb, 0x000000FF);
 					else
-						draw(mapf, x, cnyb + 1, cyb, CYAN);
+						draw_text(mapf, nyb + 1, yb, x, ytop, ybot, txtx, sect, s);
 					ybot[x] = clamp(min(cyb, cnyb), 0, ybot[x]);
 				}
 				else
@@ -208,7 +257,11 @@ void		fill_pix(t_mapf *mapf)
 					if (x == beginx || x == endx)
 					draw(mapf, x, cya, cyb, 0x000000FF);
 					else
-					draw(mapf, x, cya, cyb, WF_COL);
+					{
+				//	dprintf(1, "cya = %d cyab = %d\n", cya, cyb);
+					draw_text(mapf, ya, yb, x, ytop, ybot, txtx, sect, s);
+				//	draw(mapf, x, cya, cyb, WF_COL);
+					}
 				}
 				x++;
 			}

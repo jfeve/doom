@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   defines.h                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: hironichu <hironichu@student.le-101.fr>    +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 20:02:13 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 18:07:27 by hironichu   ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,9 @@
 # define WIN_W 1500
 # define WIN_H 1000
 # define WF_W 200
-# define WF_H 140
+# define WF_H 150
+# define TEXT_SY 5
+# define TEXT_S 1
 # define UNIT 15
 # define HUD_BEGIN 851
 # define TEXT_INPUT 1000

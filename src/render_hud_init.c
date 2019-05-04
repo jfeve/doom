@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 14:16:06 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 16:03:22 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,19 +50,25 @@ static int			init_texture(t_hud *hud, Uint32 format)
 		return (0);
 	if (!(hud->gun[6] = init_image("data/textures/noammo.bmp", format)))
 		return (0);
-	if (!(hud->ammo = init_image("data/textures/ammo.bmp", format)))
+	if (!(hud->ammoicon = init_image("data/textures/ammo.bmp", format)))
 		return (0);
-	if (!(hud->life = init_image("data/textures/life.bmp", format)))
+	if (!(hud->lifeicon = init_image("data/textures/life.bmp", format)))
 		return (0);
-	if (!(hud->key = init_image("data/textures/key.bmp", format)))
+	if (!(hud->items[0] = init_image("data/textures/key.bmp", format)))
 		return (0);
-	if (!(hud->armor = init_image("data/textures/armor.bmp", format)))
+	if (!(hud->items[1] = init_image("data/textures/armor.bmp", format)))
+		return (0);
+	if (!(hud->items[2] = init_image("data/textures/medkit.bmp", format)))
+		return (0);
+	if (!(hud->items[3] = init_image("data/textures/ammopack.bmp", format)))
+		return (0);
+	if (!(hud->enemy = init_image("data/textures/enemy.bmp", format)))
 		return (0);
 	return (1);
 }
 
 /*
-**
+** Init the font and the default ammo and life numbers
 */
 
 SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format)
@@ -117,5 +123,7 @@ int					init_hud(t_hud *hud, Uint32 format, t_player player)
 		return (free_hud(hud));
 	init_ttf(hud, player, format);
 	hud->anim = SDL_FALSE;
+	hud->has_armor = 0;
+	hud->has_key = 0;
 	return (1);
 }

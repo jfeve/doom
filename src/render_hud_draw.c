@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 14:03:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 14:17:45 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 18:00:08 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,8 +72,6 @@ void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 	int		y_index = 0;
 	Uint32	*p;
 
-	if (x + s->w < 0 || y + s->h < 0 || x >= WIN_W || y >= WIN_H || !s)
-		return ;
 	SDL_LockSurface(s);
 	p = s->pixels;
 	i = 0;
@@ -105,6 +103,50 @@ void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 }
 
 /*
+** Resize a sprite and draw it.
+** start is the starting point to draw, size is the width and height of the resized pic
+*/
+
+void		draw_sprite_resize(t_sdl *sdl, SDL_Surface *s, t_point start, t_point size)
+{
+	int		x_index;
+	int		y_index;
+	int		x_ratio;
+	int		y_ratio;
+	int		x2;
+	int		y2;
+	Uint32	*p;
+
+	SDL_LockSurface(s);
+	p = s->pixels;
+	x_ratio = (int)((s->w << 16) / size.x) + 1;
+	y_ratio = (int)((s->h << 16) / size.y) + 1;
+	if ((y_index = start.y) < 0)
+		while (y_index < 0)
+			y_index++;
+	while (y_index < start.y + size.y && y_index < WIN_H)
+	{
+		if ((x_index = start.x) < 0)
+			while (x_index < 0)
+				x_index++;
+		while (x_index < start.x + size.x && x_index < WIN_W)
+		{
+			if (x_index < WIN_W)
+			{
+				x2 = (((x_index - start.x) * x_ratio) >> 16);
+				y2 = (((y_index - start.y) * y_ratio) >> 16);
+				if (p[y2 * s->w + x2] & 0x000000ff)
+					sdl->pix[y_index * WIN_W + x_index] = p[y2 * s->w + x2];
+			}
+			x_index++;
+		}
+		y_index++;
+	}
+	s->pixels = p;
+	SDL_UnlockSurface(s);
+}
+
+/*
 ** Draws the entire hud (gun, life, ammo)
 */
 
@@ -123,9 +165,13 @@ void		draw_hud(t_sdl *sdl, t_hud *hud, int ammo)
 		hud->id = 6;
 	draw_sprite(sdl, hud->gun[hud->id], 2 * WIN_W / 3,
 	WIN_H - hud->gun[hud->id]->h);
-	draw_sprite(sdl, hud->ammo, 10, WIN_H - hud->ammo->h - 10);
-	draw_sprite(sdl, hud->life, 10, WIN_H - hud->ammo->h - hud->life->h - 20);
-	draw_sprite(sdl, hud->nblife, 20 + hud->life->w, WIN_H - hud->ammo->h - (hud->life->h / 2) - 35);
-	draw_sprite(sdl, hud->nbammo, 20 + hud->ammo->w, WIN_H - (hud->ammo->h / 2) - 25);
+	draw_sprite(sdl, hud->ammoicon, 10, WIN_H - hud->ammoicon->h - 10);
+	draw_sprite(sdl, hud->lifeicon, 10, WIN_H - hud->ammoicon->h - hud->lifeicon->h - 20);
+	draw_sprite(sdl, hud->nblife, 20 + hud->lifeicon->w, WIN_H - hud->ammoicon->h - (hud->lifeicon->h / 2) - 35);
+	draw_sprite(sdl, hud->nbammo, 20 + hud->ammoicon->w, WIN_H - (hud->ammoicon->h / 2) - 25);
+	if (hud->has_key)
+		draw_sprite(sdl, hud->items[0], 10, 10);
+	if (hud->has_armor)
+		draw_sprite(sdl, hud->items[1], 20 + hud->items[0]->w, 10);
 	draw_cross(sdl);
 }
