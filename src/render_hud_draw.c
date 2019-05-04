@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 14:03:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 19:49:22 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 13:43:00 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -128,6 +128,6 @@ void		draw_hud(t_sdl *sdl, t_hud *hud, int ammo)
 	if (hud->has_key)
 		draw_sprite(sdl, hud->items[0], 10, 10);
 	if (hud->has_armor)
-		draw_sprite_resize(sdl, hud->items[1], (t_point){20 + hud->items[0]->w, 10}, (t_point){hud->items[1]->w / 2, hud->items[1]->h / 2});
+		draw_sprite(sdl, hud->items[1], 20 + hud->items[0]->w, 10);
 	draw_cross(sdl);
 }
