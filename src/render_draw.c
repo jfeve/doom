@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:36:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/04 17:25:44 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 19:09:23 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -231,7 +231,7 @@ void		fill_pix(t_mapf *mapf)
 				int yb = ((x - x1) * (y2b - y1b)) / (x2 - x1) + y1b;
 				int cya = clamp(ya, ytop[x], ybot[x]);
 				int cyb = clamp(yb, ytop[x], ybot[x]);
-				draw(mapf, x, ytop[x], cya - 1, PURPLE);
+				draw(mapf, x, ytop[x], cya - 1, DARK_GREY);
 				draw(mapf, x, cyb + 1, ybot[x], BROWN);
 				if (neigh >= 0)
 				{

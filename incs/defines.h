@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 20:02:13 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 18:46:54 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,6 +35,7 @@
 # define RED 0xFF0058FF
 # define CYAN 0x4863B5FF
 # define SKYBLUE 0x73C2D1FF
+# define DARK_GREY 0x252525FF
 # define PURPLE 0x8820E8FF
 # define BROWN 0x673415FF
 # define GREEN 0x00A800FF
