@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 15:55:19 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 17:57:48 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 16:03:36 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,6 +55,8 @@ int			free_hud(t_hud *hud)
 		SDL_FreeSurface(hud->nbammo);
 	if (hud->nblife)
 		SDL_FreeSurface(hud->nblife);
+	if (hud->enemy)
+		SDL_FreeSurface(hud->enemy);
 	TTF_Quit();
 	return (0);
 }
