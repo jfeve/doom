@@ -91,6 +91,7 @@ typedef struct				s_vertex
 	int						y;
 	short					text;
 	int						neigh;
+	float					texx;
 	int						ps;
 }							t_vertex;
 
@@ -105,6 +106,7 @@ typedef struct				s_sector
 	t_vertex				*vert;
 	t_objs					*obj;
 	t_enemies				*enem;
+	float					texy;
 }							t_sector;
 
 typedef struct				s_mapf
@@ -126,6 +128,7 @@ typedef struct				s_mapf
 	int						rend_s[MAX_SECT];
 	short					nbrend_s;
 	t_xyz					old;
+	SDL_Surface				*wall[2];
 }							t_mapf;
 
 #endif

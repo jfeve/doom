@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/04 16:47:20 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 18:02:08 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -148,11 +148,39 @@ int		check_ps(t_mapf *mapf)
 	return (1);
 }
 
+void		fill_tex_vert(t_mapf *mapf)
+{
+	t_sector	*sec;
+	int			i;
+	int			j;
+
+	i = 0;
+	j = 0;
+	while (i < mapf->nbsect)
+	{
+		j = 0;
+		sec = &mapf->sectors[i];
+		sec->texy = (sec->ceil - sec->floor) / TEXT_SY;
+		while (j < mapf->sectors[i].nbvert)
+		{
+			if (j !=  sec->nbvert - 1)
+				sec->vert[j].texx = vector_measure(sec->vert[j].x, sec->vert[j].y,
+						sec->vert[j + 1].x, sec->vert[j + 1].y) / TEXT_S;
+			else
+				sec->vert[j].texx = vector_measure(sec->vert[j].x, sec->vert[j].y,
+						sec->vert[0].x, sec->vert[0].y) / TEXT_S;
+			j++;
+		}
+		i++;
+	}
+}
+
 void		render(char *str)
 {
 	t_mapf	mapf;
 	t_input	in;
 	t_hud	hud;
+	SDL_Surface *tmp[2];
 
 	ft_bzero(&in, sizeof(t_input));
 	ft_bzero(&mapf, sizeof(t_mapf));
@@ -164,6 +192,10 @@ void		render(char *str)
 	SDL_WarpMouseInWindow(mapf.sdl.win, WIN_W / 2, WIN_H / 2);
 	if ((SDL_SetRelativeMouseMode(SDL_ENABLE)) != 0)
 		return ;
+	tmp[0] = SDL_LoadBMP("data/textures/wall.bmp");
+	tmp[1] = SDL_LoadBMP("data/textures/wall2.bmp");
+	mapf.wall[0] = SDL_ConvertSurfaceFormat(tmp[0], SDL_PIXELFORMAT_RGBA8888, 0);
+	mapf.wall[1] = SDL_ConvertSurfaceFormat(tmp[1], SDL_PIXELFORMAT_RGBA8888, 0);
 	mapf.player.velo.x = 0;
 	mapf.player.velo.y = 0;
 	mapf.player.velo.z = 0;
@@ -176,9 +208,10 @@ void		render(char *str)
 	mapf.player.ammo = 5;
 	mapf.player.life = 100;
 	mapf.coeff = 1;
+	fill_tex_vert(&mapf);
 	if (!init_hud(&hud, mapf.sdl.form->format, mapf.player))
-		return (ft_putendl("HUD Init Error"));
-	//Mix_PlayMusic(hud.music, -1);
+		return (ft_putendl("Init SDL_Mixer Error"));
+//	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
 		in.xrel = 0;
@@ -188,7 +221,7 @@ void		render(char *str)
 		clear_tab(&mapf.sdl);
 		update_event(&in);
 		render_check_event(&mapf, &in, &hud);
-		check_ps(&mapf);
+	//	check_ps(&mapf);
 		if (mapf.player.state == jumping || mapf.player.state == falling)
 		{
 			mapf.player.where.z = mapf.sectors[mapf.player.jump_sec].floor + EYE + mapf.player.add_z;
@@ -212,8 +245,8 @@ void		render(char *str)
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix) == 0)
 			return ;
-		mapf.old = (t_xyz){mapf.player.where.x/* - mapf.player.velo.x*/, mapf.player.where.y/* - mapf.player.velo.y*/, mapf.player.where.z/* - mapf.player.velo.z*/};
-		SDL_Delay(1000 / 60);
+		mapf.old = (t_xyz){mapf.player.where.x - mapf.player.velo.x, mapf.player.where.y - mapf.player.velo.y, mapf.player.where.z - mapf.player.velo.z};
+//		SDL_Delay(1000 / 60);
 	}
 	free_sdl(&mapf.sdl, 6);
 	free_hud(&hud);

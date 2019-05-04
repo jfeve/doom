@@ -20,7 +20,7 @@ void		mouse_aim(t_mapf *mapf, t_input *in)
 	mapf->player.angle += in->xrel * 0.02f;
 	mapf->player.anglesin = sin(mapf->player.angle);
 	mapf->player.anglecos = cos(mapf->player.angle);
-	yaw = f_clamp(yaw - in->yrel * 0.04f, -5, 5);
+	yaw = f_clamp(yaw - in->yrel * 0.02f, -5, 5);
 	mapf->player.yaw -= yaw - mapf->player.velo.z * 0.5f;
 	mapf->player.yaw = f_clamp(mapf->player.yaw, -4, 3);
 }

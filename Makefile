@@ -7,6 +7,7 @@
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/18 21:26:38 by jfeve        #+#   ##    ##    #+#        #
 #    Updated: 2019/05/02 14:56:11 by flombard    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/05/02 15:14:05 by jfeve       ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -47,10 +48,10 @@ PATH_SRC_DOOM = ./src/
 PATH_OBJ_DOOM = ./obj/
 PATH_INC_DOOM = ./incs/
 FILES_DOOM = $(shell ls src | cut -d "." -f 1)
-FILES_INCS = $(shell ls incs | cut -d "." -f 1)
+INCS = $(shell ls incs | cut -d "." -f 1)
 OBJ_DOOM = $(addprefix $(PATH_OBJ_DOOM), $(addsuffix .o, $(FILES_DOOM)))
 SRC_DOOM = $(addprefix $(PATH_SRC_DOOM), $(addsuffix .c, $(FILES_DOOM)))
-INC_DOOM = $(addprefix $(PATH_INC_DOOM), $(addsuffix .h, $(FILES_INCS)))
+INC_DOOM = $(addprefix $(PATH_INC_DOOM), $(addsuffix .h, $(INCS)))
 
 #******************************************************************************#
 #----------------------------------RULES---------------------------------------#

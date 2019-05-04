@@ -67,7 +67,7 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 	return (1);
 }
 
-int						put_data(char *mapfile, int fd, t_edit *edit)
+int						put_data(int fd, t_edit *edit)
 {
 	if (putinfo_head(fd, edit))
 	{
@@ -75,14 +75,14 @@ int						put_data(char *mapfile, int fd, t_edit *edit)
 			return (1);
 		else
 		{
-			save_error(mapfile);
+			save_error();
 			close(fd);
 			return (0);
 		}
 	}
 	else
 	{
-		save_error(mapfile);
+		save_error();
 		close(fd);
 		return (0);
 	}
@@ -102,10 +102,10 @@ int						map_writer(char *mapname, t_edit *edit)
 	if ((fd = open(mapfile, O_TRUNC | O_CREAT | O_WRONLY, S_IRWXU)) != -1)
 	{
 		if (edit->nbsect != 0)
-			return (put_data(mapfile, fd, edit));
+			return (put_data(fd, edit));
 		else
 		{
-			save_error(mapfile);
+			save_error();
 			close(fd);
 			return (0);
 		}
