@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 15:48:06 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 17:22:46 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -114,6 +114,6 @@ typedef struct				s_mapf
 	float					coeff;
 	t_sdl					sdl;
 	t_xyz					old;
-	SDL_Surface				*wall;
+	SDL_Surface				*wall[2];
 }							t_mapf;
 #endif

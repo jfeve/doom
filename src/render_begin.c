@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 19:58:30 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 17:31:52 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -179,7 +179,7 @@ void		render(char *str)
 	t_mapf	mapf;
 	t_input	in;
 	t_hud	hud;
-	SDL_Surface *tmp;
+	SDL_Surface *tmp[2];
 
 	ft_bzero(&in, sizeof(t_input));
 	ft_bzero(&mapf, sizeof(t_mapf));
@@ -193,8 +193,10 @@ void		render(char *str)
 		return ;
 	if (!init_hud(&hud, mapf.sdl.form->format))
 		return (ft_putendl("Init SDL_Mixer Error"));
-	tmp = SDL_LoadBMP("wall.bmp");
-	mapf.wall = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA8888, 0);
+	tmp[0] = SDL_LoadBMP("data/textures/wall.bmp");
+	tmp[1] = SDL_LoadBMP("data/textures/wall2.bmp");
+	mapf.wall[0] = SDL_ConvertSurfaceFormat(tmp[0], SDL_PIXELFORMAT_RGBA8888, 0);
+	mapf.wall[1] = SDL_ConvertSurfaceFormat(tmp[1], SDL_PIXELFORMAT_RGBA8888, 0);
 	mapf.player.velo.x = 0;
 	mapf.player.velo.y = 0;
 	mapf.player.velo.z = 0;
@@ -216,7 +218,7 @@ void		render(char *str)
 		clear_tab(&mapf.sdl);
 		update_event(&in);
 		render_check_event(&mapf, &in, &hud);
-		check_ps(&mapf);
+	//	check_ps(&mapf);
 		if (mapf.player.state == jumping || mapf.player.state == falling)
 		{
 			mapf.player.where.z = mapf.sectors[mapf.player.jump_sec].floor + EYE + mapf.player.add_z;
