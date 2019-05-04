@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   map_reader2.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:08:27 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 14:22:33 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 15:35:37 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,6 +26,7 @@ int				read_objs_data(int fd, t_mapf *mapf, int iobjs, int i)
 	read(fd, &mapf->sectors[i].obj[iobjs].x, sizeof(int));
 	read(fd, &mapf->sectors[i].obj[iobjs].y, sizeof(int));
 	read(fd, &mapf->sectors[i].obj[iobjs].type, sizeof(short));
+	mapf->sectors[i].obj[iobjs].picked = 0;
 	return (1);
 }
 

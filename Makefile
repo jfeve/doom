@@ -6,6 +6,7 @@
 #    By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/01/18 21:26:38 by jfeve        #+#   ##    ##    #+#        #
+#    Updated: 2019/05/02 14:56:11 by flombard    ###    #+. /#+    ###.fr      #
 #    Updated: 2019/05/02 15:14:05 by jfeve       ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
@@ -60,7 +61,7 @@ INC_DOOM = $(addprefix $(PATH_INC_DOOM), $(addsuffix .h, $(INCS)))
 
 all: $(NAME)
 
-$(NAME): $(PATH_LIB)$(NAME_LIB) $(PATH_OBJ_DOOM) $(OBJ_DOOM)
+$(NAME): $(PATH_LIB)$(NAME_LIB) $(PATH_OBJ_DOOM) $(OBJ_DOOM) $(INC_DOOM)
 	@$(CC) $(CC_FLAGS) $(SDL_FLAGS) $(OBJ_DOOM) $(PATH_LIB)$(NAME_LIB) $(PATH_SDLLIB)$(NAME_SDLLIB) $(PATH_SDLLIB)$(NAME_SDLTTFLIB) $(PATH_SDLLIB)$(NAME_SDLMIXERLIB)\
 		-o $(NAME)
 	@echo "*******\nexecutable doom-nukem cree.\n*******\n"

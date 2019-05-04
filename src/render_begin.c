@@ -83,6 +83,7 @@ void		print_ps(t_mapf *mapf)
 		i++;
 	}
 }
+
 int		check_ps(t_mapf *mapf)
 {
 	t_sector *sec;
@@ -183,7 +184,7 @@ void		render(char *str)
 
 	ft_bzero(&in, sizeof(t_input));
 	ft_bzero(&mapf, sizeof(t_mapf));
-	ft_bzero(&mapf, sizeof(t_hud));
+	ft_bzero(&hud, sizeof(t_hud));
 	if (read_map(&mapf, str) == 0)
 		return ;
 	if (sdl_init(&mapf.sdl) == 0)
@@ -206,7 +207,7 @@ void		render(char *str)
 	mapf.player.add_z = 0.0f;
 	mapf.player.jump_sec = 0;
 	mapf.player.state = nmoving;
-	mapf.player.ammo = 20000;
+	mapf.player.ammo = 5;
 	mapf.player.life = 100;
 	mapf.coeff = 1;
 	fill_tex_vert(&mapf);
@@ -215,6 +216,8 @@ void		render(char *str)
 	{
 		in.xrel = 0;
 		in.yrel = 0;
+		ft_bzero(&mapf.rend_s, MAX_SECT * sizeof(int));
+		mapf.nbrend_s = 0;
 		clear_tab(&mapf.sdl);
 		update_event(&in);
 		render_check_event(&mapf, &in, &hud);
@@ -238,6 +241,7 @@ void		render(char *str)
 		else
 			mapf.player.where.z = mapf.sectors[mapf.player.sect].floor + mapf.player.eye + mapf.player.add_z;
 		fill_pix(&mapf);
+		draw_entities(&mapf, hud.items, hud.enemy);
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix) == 0)
 			return ;

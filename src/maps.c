@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   maps.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 15:57:00 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 19:23:33 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -120,12 +120,11 @@ int						save_map(t_input *in, char *mapname, t_edit *edit)
 	{
 		if (map_writer(mapname, edit))
 		{
-			write(1, "\n-------Map sauver-------\n", 27);
+			ft_putendl("\n--------Map saved--------\n\n");
 			return (1);
 		}
-		else
-		{
-			write(1, "\n--------Map not saved-------\n", 30);
+		else{
+			ft_putendl("\n--------Map not saved--------\n\n");
 			return (0);
 		}
 		in->key[SDL_SCANCODE_S] = SDL_FALSE;
