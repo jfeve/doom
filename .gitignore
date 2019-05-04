@@ -1,2 +1,8 @@
 
 \.vscode/ipch/
+
+lib/SDL2_ttf\.framework/
+
+lib/SDL2\.framework/
+
+lib/SDL2_mixer\.framework/

@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 01:48:53 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 14:30:37 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,18 +22,23 @@ int				read_entities(int fd, t_mapf *mapf, int i)
 	ienem = -1;
 	if (mapf->sectors[i].nbobjs != 0)
 	{
-		mapf->objects = (t_objs *)malloc(
+	dprintf(1, "mapf->sectors[i].nbobjs = %d\n", mapf->sectors[i].nbobjs);
+		mapf->sectors[i].obj = (t_objs *)malloc(
 			sizeof(t_objs) * mapf->sectors[i].nbobjs);
 		while (++iobjs < mapf->sectors[i].nbobjs)
-			read_objs_data(fd, mapf, iobjs);
+			read_objs_data(fd, mapf, iobjs, i);
 	}
+	else
+		mapf->sectors[i].obj = NULL;
 	if (mapf->sectors[i].nbenem != 0)
 	{
-		mapf->enemies = (t_enemies *)malloc(
+		mapf->sectors[i].enem = (t_enemies *)malloc(
 			sizeof(t_enemies) * mapf->sectors[i].nbenem);
 		while (++ienem < mapf->sectors[i].nbenem)
-			read_enem_data(fd, mapf, ienem);
+			read_enem_data(fd, mapf, ienem, i);
 	}
+	else
+		mapf->sectors[i].enem = NULL;
 	return (1);
 }
 
@@ -113,7 +118,7 @@ int				read_map(t_mapf *mapf, char *mapname)
 		mapf->sectors = (t_sector *)malloc(sizeof(t_sector) * mapf->nbsect + 1);
 		while (++i != mapf->nbsect)
 			read_sector(fd, mapf, i);
-		mapf->player.where.z = mapf->sectors[mapf->player.sect].floor + EYE;
+		mapf->player.where.z = (float)mapf->sectors[mapf->player.sect].floor + (float)EYE;
 		print_read(mapf);
 		free(mapfile);
 		close(fd);

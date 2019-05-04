@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 21:32:10 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 01:51:55 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 14:33:04 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -105,13 +105,15 @@ void			print_read(t_mapf *mapf)
 	k = 0;
 	while (i < mapf->nbsect)
 	{
-		printf( "Sector : %d\n", i);
-		printf( " Gravity : %d\n", mapf->sectors[i].gravity);
-		printf( " Floor : %d\n", mapf->sectors[i].floor);
-		printf( " Ceil : %d\n", mapf->sectors[i].ceil);
-		printf( " Nb Vertex %d\n", mapf->sectors[i].nbvert);
-		printf( " Nb Objs %d\n", mapf->sectors[i].nbobjs);
-		printf( " Nb Enem %d\n", mapf->sectors[i].nbenem);
+		dprintf(1, "OBJ = %d\n", mapf->sectors[i].nbobjs);
+		dprintf(1, "obj = %p\n", mapf->sectors[i].obj);
+		dprintf(1, "Sector : %d\n", i);
+		dprintf(1, " Gravity : %d\n", mapf->sectors[i].gravity);
+		dprintf(1, " Floor : %d\n", mapf->sectors[i].floor);
+		dprintf(1, " Ceil : %d\n", mapf->sectors[i].ceil);
+		dprintf(1, " Nb Vertex %d\n", mapf->sectors[i].nbvert);
+		dprintf(1, " Nb Objs %d\n", mapf->sectors[i].nbobjs);
+		dprintf(1, " Nb Enem %d\n", mapf->sectors[i].nbenem);
 		k = 0;
 		while (k < mapf->sectors[i].nbvert)
 		{
@@ -129,9 +131,6 @@ void			print_read(t_mapf *mapf)
 		printf( "\n-------\nList Objects\n");
 		while (i < mapf->nbobjs)
 		{
-			printf( "   X : %d\n", mapf->objects[i].x);
-			printf( "   Y : %d\n", mapf->objects[i].y);
-			printf( "   Texture : %d\n\n", mapf->objects[i].type);
 			i++;
 		}
 	}
@@ -141,9 +140,6 @@ void			print_read(t_mapf *mapf)
 		printf( "\n--------\nList Enemies\n");
 		while (i < mapf->nbenem)
 		{
-			printf( "   X : %d\n", mapf->enemies[i].x);
-			printf( "   Y : %d\n", mapf->enemies[i].y);
-			printf( "   Texture : %d\n", mapf->enemies[i].type);
 			i++;
 		}
 	}

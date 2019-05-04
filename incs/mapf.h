@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 18:53:32 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 17:18:32 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,16 +14,18 @@
 #ifndef MAPF_H
 # define MAPF_H
 
+# define MAX_SECT 128
+# define MAX_SPRITE 128
 
 /*
 ** Render Data
 */
+
 typedef struct				s_enemies
 {
 	int						x;
 	int						y;
 	int						life;
-	int						display;
 	short					type;
 	short					sec;
 }							t_enemies;
@@ -32,10 +34,20 @@ typedef struct				s_objects
 {
 	int						x;
 	int						y;
-	int						hitbox;
 	short					type;
 	short					sec;
+	short					picked;
 }							t_objs;
+
+typedef struct				s_sprite
+{
+	int						x;
+	int						y;
+	int						type;
+	float					tx;
+	float					tz;
+	int						is_enemy;
+}							t_sprite;
 
 typedef struct				s_xyz
 {
@@ -51,7 +63,8 @@ typedef enum				e_state
 	jumping,
 	falling,
 	crouching,
-	flying
+	flying,
+	running
 }							t_state;
 
 typedef struct				s_player
@@ -78,6 +91,8 @@ typedef struct				s_vertex
 	int						y;
 	short					text;
 	int						neigh;
+	float					texx;
+	int						ps;
 }							t_vertex;
 
 typedef struct				s_sector
@@ -89,6 +104,9 @@ typedef struct				s_sector
 	short					nbenem;
 	short					gravity;
 	t_vertex				*vert;
+	t_objs					*obj;
+	t_enemies				*enem;
+	float					texy;
 }							t_sector;
 
 typedef struct				s_mapf
@@ -105,8 +123,12 @@ typedef struct				s_mapf
 	int						nbenem;
 	t_sector				*sectors;
 	t_player				player;
+	float					coeff;
 	t_sdl					sdl;
-	t_objs					*objects;
-	t_enemies				*enemies;
+	int						rend_s[MAX_SECT];
+	short					nbrend_s;
+	t_xyz					old;
+	SDL_Surface				*wall[2];
 }							t_mapf;
+
 #endif

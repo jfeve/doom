@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   defines.h                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: hironichu <hironichu@student.le-101.fr>    +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 19:27:32 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 18:07:27 by hironichu   ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,9 @@
 # define WIN_W 1500
 # define WIN_H 1000
 # define WF_W 200
-# define WF_H 140
+# define WF_H 150
+# define TEXT_SY 5
+# define TEXT_S 1
 # define UNIT 15
 # define HUD_BEGIN 851
 # define TEXT_INPUT 1000
@@ -86,7 +88,7 @@
 # define VEC "vec \0"
 # define OBJ "obj \0"
 # define ENEM "enem \0"
-# define DUCK 3.5
+# define DUCK 3
 # define EYE 6
 # define KNEE 2.5
 # define HEADMARGE 1
@@ -95,4 +97,5 @@
 # define DIFICULTY "diff = \0"
 # define PLAYER_OR "pl look = \0"
 # define GRAVITY "grav = \0"
+# define YAW(y, z, yaw) (y + z * yaw)
 #endif
