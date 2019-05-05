@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 11:44:37 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 17:31:17 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,7 +98,7 @@ static int	go_through_enemies(t_sector now, t_mapf *mapf, t_sprite *drawable, in
 		if (tz <= 0)
 			continue ;
 		drawable[ret++] = (t_sprite){now.enem[j].x, now.enem[j].y, now.enem[j].type, tx, tz, 1, now.enem[j].sec};
-		//dprintf(1, "%d\n", now.enem[j].sec);
+		dprintf(1, "%d\n", now.enem[j].sec);
 	}
 	return (ret);
 }
@@ -133,7 +133,7 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[4], SDL_Surface *enemy)
 			float yscale = VFOV / drawable[j].tz;
 			int x = (drawable[j].tx * xscale) * -1 + WIN_W / 2;
 			int y = (WIN_H / 2) - (int)(YAW(now.floor - mapf->player.where.z, drawable[j].tz, mapf->player.yaw) * yscale);
-			//dprintf(1, "%d     %d  %d       %d\n", x, mapf->rend_s[drawable[j].id_rend].beginx, mapf->rend_s[drawable[j].id_rend].endx, drawable[j].id_rend);		//printf  check pour le debug
+			dprintf(1, "%d     %d  %d       %d\n", x, mapf->rend_s[drawable[j].id_rend].beginx, mapf->rend_s[drawable[j].id_rend].endx, drawable[j].id_rend);		//printf  check pour le debug
 			if (x > mapf->rend_s[drawable[j].id_rend].beginx && x < mapf->rend_s[drawable[j].id_rend].endx)
 				continue ;
 			distance = vector_measure(drawable[j].x, drawable[j].y, mapf->player.where.x, mapf->player.where.y);
@@ -148,30 +148,3 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[4], SDL_Surface *enemy)
 		}
 	}
 }
-
-/*int		i;
-	int		j;
-
-	i = mapf->nbrend_s;
-	while (--i >= 0)
-	{
-		j = -1;
-		t_sector now = mapf->sectors[mapf->rend_s[i]];
-		bubbleSort(now.obj, now.nbobjs, (t_point){mapf->player.where.x, mapf->player.where.y});
-		while (++j < now.nbobjs)
-		{
-			float vx = (float)(now.obj[j].x - mapf->player.where.x);
-			float vy = (float)(now.obj[j].y - mapf->player.where.y);
-			float tx = vx * mapf->player.anglesin - vy * mapf->player.anglecos;
-			float tz = vx * mapf->player.anglecos + vy * mapf->player.anglesin;
-			if (j == 0) dprintf(1, "%f   %d %d   %f %f\n\n", tz, now.obj[j].x,
-			now.obj[j].y, mapf->player.where.x, mapf->player.where.y);
-			if (tz <= 0)
-				continue ;
-			float xscale = HFOV / tz;
-			float yscale = VFOV / tz;
-			int x = (tx * xscale) * -1 + WIN_W / 2;
-			int y = (WIN_H / 2) - (int)(YAW(now.floor - mapf->player.where.z, tz, mapf->player.yaw) * yscale);
-			draw_sprite(&mapf->sdl, s, x - (s->w / 2), y - (s->h / 2));
-		}
-	}*/

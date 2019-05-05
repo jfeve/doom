@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 13:29:31 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 17:06:17 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,7 +39,7 @@ static int	putinfo_sector(int fd, t_edit *edit)
 	sect = edit->sect;
 	while (sect != NULL)
 	{
-		if (sect->floor == -1 || sect->ceil == -1)		//pas sur pour le ||
+		if (sect->floor == -1 || sect->ceil == -1)
 			return (unset_map(sect->id));
 		write(fd, &sect->gravity, sizeof(short));
 		write(fd, &sect->floor, sizeof(short));
@@ -61,12 +61,12 @@ static int	put_data(int fd, t_edit *edit)
 			return (1);
 		else
 		{
-			ft_putendl("There has been an error while saving the file");
+			ft_putendl("Error while saving the file ; sectors are probably not set.");
 			close(fd);
 			return (0);
 		}
 	}
-	ft_putendl("Error while saving the file ; player or ending missing.");
+	ft_putendl("Error while saving the file ; player or ending missing, and/or one sector is not set.");
 	close(fd);
 	return (0);
 }
@@ -103,17 +103,15 @@ int			save_map(t_input *in, char *mapname, t_edit *edit)
 {
 	if (in->key[SDL_SCANCODE_S])
 	{
+		in->key[SDL_SCANCODE_S] = SDL_FALSE;
+		SDL_Delay(500);
 		if (map_writer(mapname, edit))
 		{
-			ft_putendl("--------Map saved--------\n");
+			ft_putendl("--------Map saved--------");
 			return (1);
 		}
 		else
-		{
-			ft_putendl("Error saving the map.");
 			return (0);
-		}
-		in->key[SDL_SCANCODE_S] = SDL_FALSE;
 	}
 	return (0);
 }

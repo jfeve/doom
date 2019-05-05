@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   doom.h                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 13:33:10 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 16:54:38 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -264,13 +264,11 @@ int								check_mapname(char *mapname);
 int								save_map(t_input *in, char *mapname,
 									t_edit *edit);
 int								open_error(char **mapfile);
-int								save_error2(char *error, t_lis *temp);
 void							putinfo_sec(int fd, t_sec *sect);
 int								mcheck_pos(t_edit *edit);
 int								mcheck_d(t_lis *temp);
 int								mcheck_sec(t_sec *tmp);
 int								unset_map(int id);
-int								save_objs(int fd, t_lis *temp, short id_sect);
 
 /*
 ** Input Detection
@@ -399,7 +397,7 @@ int					read_map(t_mapf *mapf, char *mapname);
 int					read_enem_data(int fd, t_mapf *mapf, int ienem, int i);
 int					read_objs_data(int fd, t_mapf *mapf, int iobjs, int i);
 int					read_entities(int fd, t_mapf *mapf, int i);
-int					read_mapfhead(int fd, t_mapf *mapf, char *mapfile);
+int					read_mapfhead(int fd, t_mapf *mapf);
 int					read_sector(int fd, t_mapf *mapf, int i);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 12:16:34 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 17:23:31 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ int				read_entities(int fd, t_mapf *mapf, int i)
 	ienem = -1;
 	if (mapf->sectors[i].nbobjs != 0)
 	{
-	dprintf(1, "mapf->sectors[i].nbobjs = %d\n", mapf->sectors[i].nbobjs);
+	//dprintf(1, "mapf->sectors[i].nbobjs = %d\n", mapf->sectors[i].nbobjs);
 		mapf->sectors[i].obj = (t_objs *)malloc(
 			sizeof(t_objs) * mapf->sectors[i].nbobjs);
 		while (++iobjs < mapf->sectors[i].nbobjs)
@@ -42,14 +42,13 @@ int				read_entities(int fd, t_mapf *mapf, int i)
 	return (1);
 }
 
-int				read_mapfhead(int fd, t_mapf *mapf, char *mapfile)
+int				read_mapfhead(int fd, t_mapf *mapf)
 {
 	read(fd, &mapf->magic, 4);
 	mapf->magic[4] = '\0';
 	if (ft_strcmp(mapf->magic, "MAP2") != 0)
 	{
-		ft_putendl("Error, the map file is not valid");
-		free(mapfile);
+		ft_putendl("Error, the map file is not valid.");
 		close(fd);
 		return (0);
 	}
@@ -107,12 +106,12 @@ int				read_map(t_mapf *mapf, char *mapname)
 	i = -1;
 	if (!(mapfile = ft_strjoin(MAP_PATH, mapname)))
 	{
-		ft_putendl("Map name error");
+		ft_putendl("Map name error.");
 		return (0);
 	}
 	if ((fd = open(mapfile, O_RDONLY)) != -1)
 	{
-		if (!read_mapfhead(fd, mapf, mapfile))
+		if (!read_mapfhead(fd, mapf))
 		{
 			ft_strdel(&mapfile);
 			close(fd);
@@ -122,14 +121,12 @@ int				read_map(t_mapf *mapf, char *mapname)
 		while (++i != mapf->nbsect)
 			read_sector(fd, mapf, i);
 		mapf->player.where.z = (float)mapf->sectors[mapf->player.sect].floor + (float)EYE;
-		print_read(mapf);
-		free(mapfile);
+		//print_read(mapf);
+		ft_strdel(&mapfile);
 		close(fd);
 		return (1);
 	}
-	else
-	{
-		ft_putendl("The map does not exist.");
-		return (0);
-	}
+	ft_strdel(&mapfile);
+	ft_putendl("The map does not exist.");
+	return (0);
 }
