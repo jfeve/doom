@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:56:35 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 18:00:27 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 19:17:48 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -84,16 +84,19 @@ void			handle_res(t_edit *edit)
 	tmp = edit->hl_sec->vert;
 	if (edit->hl_sec->gravity == -1)
 	{
-		if (edit->hl_sec->gravity > 5)
-			return ;
-		else
+		if (edit->input_res > 0 && edit->input_res < 5)
 			edit->hl_sec->gravity = edit->input_res;
+	}
+	else if (edit->pl_angle == -1)
+	{
+		if (edit->input_res > 0 && edit->input_res < 361)
+			edit->pl_angle = (float)edit->input_res;
 	}
 	else if (edit->hl_sec->floor == -1)
 		edit->hl_sec->floor = edit->input_res;
 	else if (edit->hl_sec->ceil == -1)
 	{
-		if (edit->input_res > edit->hl_sec->floor)
+		if (edit->input_res >= (edit->hl_sec->floor + 10))
 		{
 			edit->hl_sec->ceil = edit->input_res;
 			edit->hl_vert = edit->hl_sec->vert;
@@ -107,3 +110,4 @@ void			handle_res(t_edit *edit)
 	else if (check_lis_input(edit->hl_sec->enem))
 		handle_enem(edit);
 }
+

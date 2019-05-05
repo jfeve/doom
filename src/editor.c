@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/19 18:18:31 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:13:10 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 19:18:19 by nzenzela    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -90,6 +90,7 @@ int				init_edit(t_edit *edit)
 	edit->player = NULL;
 	edit->finish = NULL;
 	edit->dyn_trigger = 0;
+	edit->pl_angle = -1;
 	edit->hl_sec = NULL;
 	edit->hl_vert = NULL;
 	edit->nbsect = 0;

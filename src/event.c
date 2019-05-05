@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   event.c                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: hironichu <hironichu@student.le-101.fr>    +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 19:28:40 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 18:07:17 by hironichu   ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -83,6 +83,7 @@ void			settings_event(t_edit *edit, t_input *in)
 			free_lis(&edit->finish);
 		if (edit->sect)
 			free_sec(&edit->sect);
+		set_trigger(edit, choose_set(edit), 0);
 	}
 	if (in->key[SDL_SCANCODE_ESCAPE])
 		in->quit = SDL_TRUE;
@@ -122,7 +123,7 @@ int				check_event(char *mapname, t_input *in, t_edit *edit)
 	if (in->key[SDL_SCANCODE_L])
 	{
 		in->key[SDL_SCANCODE_L] = SDL_FALSE;
-		read_map(&mapf, mapname);
+		read_map(&mapf, ft_strjoin(mapname, ".mapf"));
 	}
 	return (1);
 }

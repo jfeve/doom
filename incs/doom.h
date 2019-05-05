@@ -3,7 +3,7 @@
 /*                                                              /             */
 /*   doom.h                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
 /*   Updated: 2019/05/05 13:33:10 by flombard    ###    #+. /#+    ###.fr     */
@@ -132,6 +132,7 @@ typedef struct					s_edit
 	int							sec;
 	int							err;
 	short						diff;
+	float						pl_angle;
 	t_sec						*hl_sec;
 	t_lis						*hl_vert;
 	t_lis						*oldvert;

@@ -21,7 +21,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/doom-nukem",
-			"args": ["merde"],
+			"args": ["maphiro.mapf"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],

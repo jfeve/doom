@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   defines.h                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: hironichu <hironichu@student.le-101.fr>    +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 20:02:13 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 18:07:27 by hironichu   ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -94,8 +94,8 @@
 # define HEADMARGE 1
 # define HFOV (0.73f * WIN_H)
 # define VFOV (0.2f * WIN_H)
-# define DIFICULTY "Diff \0"
-# define PLAYER_OR "player look \0"
-# define GRAVITY "gravity \0"
+# define DIFICULTY "diff = \0"
+# define PLAYER_OR "pl look = \0"
+# define GRAVITY "grav = \0"
 # define YAW(y, z, yaw) (y + z * yaw)
 #endif

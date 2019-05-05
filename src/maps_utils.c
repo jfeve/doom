@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 13:34:28 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 13:25:25 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 13:41:49 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,13 +15,8 @@
 
 int				mcheck_pos(t_edit *edit)
 {
-	if (edit->player != NULL)
-	{
-		if (edit->finish != NULL)
+	if (edit->player != NULL && edit->finish != NULL && edit->pl_angle != -1)
 			return (1);
-		else
-			return (0);
-	}
 	return (0);
 }
 

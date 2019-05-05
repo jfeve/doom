@@ -75,6 +75,7 @@ void			print_sec(t_sec *sec)
 		dprintf(1, "obj = %p\n", tmp->obj);
 		dprintf(1, "Nb objets = %d\n", tmp->objscount);
 		dprintf(1, "Nb enems = %d\n", tmp->enemcount);
+		dprintf(1, "Gravity = %d\n", tmp->gravity);
 		print_lis(&tmp->vert);
 		dprintf(1, "\n||||||SEC END||||||\n");
 		tmp = tmp->next;

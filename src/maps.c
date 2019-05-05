@@ -15,16 +15,13 @@
 
 static int	putinfo_head(int fd, t_edit *edit)
 {
-	float	angle;
-
-	angle = 0.5;
 	if (mcheck_pos(edit) && edit->sect)
 	{
 		write(fd, "MAP2", 4);
 		write(fd, &edit->player->x, sizeof(int));
 		write(fd, &edit->player->y, sizeof(int));
 		write(fd, &edit->player->text, sizeof(short));
-		write(fd, &angle, sizeof(float));
+		write(fd, &edit->pl_angle, sizeof(float));
 		write(fd, &edit->finish->x, sizeof(int));
 		write(fd, &edit->finish->y, sizeof(int));
 		write(fd, &edit->finish->text, sizeof(short));
