@@ -6,7 +6,7 @@
 /*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/19 18:18:31 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:13:10 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 20:31:34 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,7 @@ void			level_editor(char *mapname)
 			free_all(2, &edit);
 			return ;
 		}
-		if (display_frame(edit.sdl.ren, edit.sdl.pix) == 0)
+		if (display_frame(edit.sdl.ren, edit.sdl.pix, WIN_W, WIN_H) == 0)
 		{
 			free_all(2, &edit);
 			return ;
@@ -84,7 +84,7 @@ int				init_edit(t_edit *edit)
 		return (0);
 	if (basic_contents(edit) == 0)
 		return (0);
-	if (sdl_init(&edit->sdl) == 0)
+	if (sdl_init(&edit->sdl, WIN_W, WIN_H) == 0)
 		return (free_content(edit));
 	edit->time.oldtime = 0;
 	edit->player = NULL;

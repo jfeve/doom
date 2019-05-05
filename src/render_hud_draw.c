@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 14:03:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/04 18:00:08 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 20:25:59 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,7 +28,7 @@ static void	bresenham(t_sdl *sdl, t_point a, t_point b, int color)
 	l.err = ((l.dx > l.dy) ? l.dx : -l.dy) / 2;
 	while (1)
 	{
-		sdl->pix[a.y * WIN_W + a.x] = color;
+		sdl->pix[a.y * RWIN_W + a.x] = color;
 		if (a.x == b.x && a.y == b.y)
 			break ;
 		l.err2 = l.err;
@@ -51,14 +51,14 @@ static void	bresenham(t_sdl *sdl, t_point a, t_point b, int color)
 
 static void	draw_cross(t_sdl *sdl)
 {
-	bresenham(sdl, (t_point){WIN_W / 2 - 25, WIN_H / 2},
-	(t_point){WIN_W / 2 - 10, WIN_H / 2}, 0x000000ff);
-	bresenham(sdl, (t_point){WIN_W / 2 + 25, WIN_H / 2},
-	(t_point){WIN_W / 2 + 10, WIN_H / 2}, 0x000000ff);
-	bresenham(sdl, (t_point){WIN_W / 2, WIN_H / 2 + 25},
-	(t_point){WIN_W / 2, WIN_H / 2 + 10}, 0x000000ff);
-	bresenham(sdl, (t_point){WIN_W / 2, WIN_H / 2 - 25},
-	(t_point){WIN_W / 2, WIN_H / 2 - 10}, 0x000000ff);
+	bresenham(sdl, (t_point){RWIN_W / 2 - 25, RWIN_H / 2},
+	(t_point){RWIN_W / 2 - 10, RWIN_H / 2}, 0x000000ff);
+	bresenham(sdl, (t_point){RWIN_W / 2 + 25, RWIN_H / 2},
+	(t_point){RWIN_W / 2 + 10, RWIN_H / 2}, 0x000000ff);
+	bresenham(sdl, (t_point){RWIN_W / 2, RWIN_H / 2 + 25},
+	(t_point){RWIN_W / 2, RWIN_H / 2 + 10}, 0x000000ff);
+	bresenham(sdl, (t_point){RWIN_W / 2, RWIN_H / 2 - 25},
+	(t_point){RWIN_W / 2, RWIN_H / 2 - 10}, 0x000000ff);
 }
 
 /*
@@ -81,7 +81,7 @@ void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 			y_index++;
 			i += s->w;
 		}
-	while (i < s->w * s->h - 1 && y_index < y + s->h && y_index < WIN_H)
+	while (i < s->w * s->h - 1 && y_index < y + s->h && y_index < RWIN_H)
 	{
 		if ((x_index = x) < 0)
 			while (x_index < 0)
@@ -91,8 +91,8 @@ void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 			}
 		while (x_index < x + s->w)
 		{
-			if (x_index < WIN_W && (p[i] & 0x000000ff))
-				sdl->pix[y_index * WIN_W + x_index] = p[i];
+			if (x_index < RWIN_W && (p[i] & 0x000000ff))
+				sdl->pix[y_index * RWIN_W + x_index] = p[i];
 			x_index++;
 			i++;
 		}
@@ -124,19 +124,19 @@ void		draw_sprite_resize(t_sdl *sdl, SDL_Surface *s, t_point start, t_point size
 	if ((y_index = start.y) < 0)
 		while (y_index < 0)
 			y_index++;
-	while (y_index < start.y + size.y && y_index < WIN_H)
+	while (y_index < start.y + size.y && y_index < RWIN_H)
 	{
 		if ((x_index = start.x) < 0)
 			while (x_index < 0)
 				x_index++;
-		while (x_index < start.x + size.x && x_index < WIN_W)
+		while (x_index < start.x + size.x && x_index < RWIN_W)
 		{
-			if (x_index < WIN_W)
+			if (x_index < RWIN_W)
 			{
 				x2 = (((x_index - start.x) * x_ratio) >> 16);
 				y2 = (((y_index - start.y) * y_ratio) >> 16);
 				if (p[y2 * s->w + x2] & 0x000000ff)
-					sdl->pix[y_index * WIN_W + x_index] = p[y2 * s->w + x2];
+					sdl->pix[y_index * RWIN_W + x_index] = p[y2 * s->w + x2];
 			}
 			x_index++;
 		}
@@ -163,12 +163,12 @@ void		draw_hud(t_sdl *sdl, t_hud *hud, int ammo)
 	}
 	if (hud->anim == SDL_FALSE && hud->id == 0 && ammo == 0)
 		hud->id = 6;
-	draw_sprite(sdl, hud->gun[hud->id], 2 * WIN_W / 3,
-	WIN_H - hud->gun[hud->id]->h);
-	draw_sprite(sdl, hud->ammoicon, 10, WIN_H - hud->ammoicon->h - 10);
-	draw_sprite(sdl, hud->lifeicon, 10, WIN_H - hud->ammoicon->h - hud->lifeicon->h - 20);
-	draw_sprite(sdl, hud->nblife, 20 + hud->lifeicon->w, WIN_H - hud->ammoicon->h - (hud->lifeicon->h / 2) - 35);
-	draw_sprite(sdl, hud->nbammo, 20 + hud->ammoicon->w, WIN_H - (hud->ammoicon->h / 2) - 25);
+	draw_sprite(sdl, hud->gun[hud->id], 2 * RWIN_W / 3,
+	RWIN_H - hud->gun[hud->id]->h);
+	draw_sprite(sdl, hud->ammoicon, 10, RWIN_H - hud->ammoicon->h - 10);
+	draw_sprite(sdl, hud->lifeicon, 10, RWIN_H - hud->ammoicon->h - hud->lifeicon->h - 20);
+	draw_sprite(sdl, hud->nblife, 20 + hud->lifeicon->w, RWIN_H - hud->ammoicon->h - (hud->lifeicon->h / 2) - 35);
+	draw_sprite(sdl, hud->nbammo, 20 + hud->ammoicon->w, RWIN_H - (hud->ammoicon->h / 2) - 25);
 	if (hud->has_key)
 		draw_sprite(sdl, hud->items[0], 10, 10);
 	if (hud->has_armor)

@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 15:55:21 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 20:29:48 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -164,10 +164,10 @@ int								create_finish(t_edit *edit, t_input *in);
 ** SDL
 */
 int								free_sdl(t_sdl *sdl, int flag);
-int								sdl_init(t_sdl *sdl);
+int								sdl_init(t_sdl *sdl, int w, int h);
 void							free_all(int flag, t_edit *edit);
-int								display_frame(SDL_Renderer *ren, Uint32 *pix);
-void							clear_tab(t_sdl *sdl);
+int								display_frame(SDL_Renderer *ren, Uint32 *pix, int w, int h);
+void							clear_tab(t_sdl *sdl, int w, int h);
 
 /*
 ** Bresen Functions
@@ -387,6 +387,12 @@ int					read_objs_data(int fd, t_mapf *mapf, int iobjs, int i);
 int					read_entities(int fd, t_mapf *mapf, int i);
 int					read_mapfhead(int fd, t_mapf *mapf, char *mapfile);
 int					read_sector(int fd, t_mapf *mapf, int i);
+
+/*
+** Init functions
+*/
+
+int					init_mapf(t_mapf *mapf, char *str);
 
 /*
 ** Math functions for integers

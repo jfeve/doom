@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 16:22:48 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 20:35:40 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -122,7 +122,7 @@ void			draw_back(t_edit *edit)
 
 int				get_update(t_edit *edit, t_input *in, char *mapname)
 {
-	clear_tab(&edit->sdl);
+	clear_tab(&edit->sdl, WIN_W, WIN_H);
 	update_event(in);
 	if (check_event(mapname, in, edit) == 0)
 		return (0);

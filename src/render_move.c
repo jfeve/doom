@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:32:13 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 18:32:10 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 21:54:53 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,8 +60,8 @@ void		slide_wall(t_mapf *mapf, int i)
 		proj.y = ((mapf->player.velo.x * (b.x - px) +
 				mapf->player.velo.y * (b.y - py)) / vector_measure(px, py, b.x, b.y) *
 				vector_measure(px, py, b.x, b.y) * (b.y - py));
-		mapf->player.where.x += proj.x;
-		mapf->player.where.y += proj.y;
+		mapf->player.where.x += proj.x / 4;
+		mapf->player.where.y += proj.y / 4;
 	}
 }
 
@@ -95,7 +95,9 @@ int			check_port(t_mapf *mapf, int i, t_sector *sect)
 		{
 			if (mapf->player.state == flying)
 				mapf->player.add_z -= mapf->sectors[sect->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
+			mapf->sectors[mapf->player.sect].lum = 0;
 			mapf->player.sect = sect->vert[i].neigh;
+			mapf->sectors[mapf->player.sect].lum = 1;
 			if (mapf->player.state != jumping && mapf->player.state != flying && mapf->player.state != crouching)
 				mapf->player.state = falling;
 			return (0);
@@ -108,52 +110,51 @@ int			check_port(t_mapf *mapf, int i, t_sector *sect)
 	return (0);
 }
 
+t_float		vmp_compute(t_sector *sect, t_float p, t_float d, t_point i)
+{
+	t_float	vmp;
+
+	vmp.x = vector_measure(sect->vert[i.x].x, sect->vert[i.x].y, p.x, p.y) +
+			vector_measure(sect->vert[i.y].x, sect->vert[i.y].y, p.x, p.y);
+	vmp.y = vector_measure(sect->vert[i.x].x, sect->vert[i.x].y, p.x + d.x, p.y + d.y ) +
+			vector_measure(sect->vert[i.y].x, sect->vert[i.y].y, p.x + d.x, p.y + d.y);
+	return (vmp);
+}
+
 int			vm_check(t_mapf *mapf, int i, t_sector *sect)
 {
-	float	px = mapf->player.where.x;
-	float	py = mapf->player.where.y;
-	float	dx = mapf->player.velo.x;
-	float	dy = mapf->player.velo.y;
-	float	vmp;
-	float	vmp2;
+	t_float	p;
+	t_float	d;
+	t_float	vmp;
 	float	vmw;
 
+	p = (t_float){mapf->player.where.x, mapf->player.where.y};
+	d = (t_float){mapf->player.velo.x, mapf->player.velo.y};
 	if (i < sect->nbvert - 1)
 	{
 		vmw = vector_measure(sect->vert[i].x, sect->vert[i].y, sect->vert[i + 1].x, sect->vert[i + 1].y);
-		vmp = vector_measure(sect->vert[i].x, sect->vert[i].y, px, py) +
-			vector_measure(sect->vert[i + 1].x, sect->vert[i + 1].y, px, py);
-		vmp2 = vector_measure(sect->vert[i].x, sect->vert[i].y, px + dx, py + dy ) +
-			vector_measure(sect->vert[i + 1].x, sect->vert[i + 1].y, px + dx, py + dy);
+		vmp = vmp_compute(sect, p, d, (t_point){i, i + 1});
 	}
 	else
 	{
 		vmw = vector_measure(sect->vert[i].x, sect->vert[i].y, sect->vert[0].x, sect->vert[0].y);
-		vmp = vector_measure(sect->vert[i].x, sect->vert[i].y, px, py) +
-			vector_measure(sect->vert[0].x, sect->vert[0].y, px, py);
-		vmp2 = vector_measure(sect->vert[i].x, sect->vert[i].y, px + dx, py + dy ) +
-			vector_measure(sect->vert[0].x, sect->vert[0].y, px + dx, py + dy);
+		vmp = vmp_compute(sect, p, d, (t_point){i, 0});
 	}
-	return (vmp > vmp2 && vmp2 <= vmw + 0.1);
+	return (vmp.x > vmp.y && vmp.y <= vmw + 0.1);
 }
 
 int			check_near_edge(t_mapf *mapf, int i, t_sector *sect)
 {
-	float	px = mapf->player.where.x;
-	float	py = mapf->player.where.y;
+	t_float	p;
 	float	vmfi;
 	float	vmse;
 
+	p = (t_float){mapf->player.where.x, mapf->player.where.y};
+	vmfi = vector_measure(sect->vert[i].x, sect->vert[i].y, p.x, p.y);
 	if (i < sect->nbvert - 1)
-	{
-		vmfi = vector_measure(sect->vert[i].x, sect->vert[i].y, px, py);
-		vmse = vector_measure(sect->vert[i + 1].x, sect->vert[i + 1].y, px, py);
-	}
+		vmse = vector_measure(sect->vert[i + 1].x, sect->vert[i + 1].y, p.x, p.y);
 	else
-	{
-		vmfi = vector_measure(sect->vert[i].x, sect->vert[i].y, px, py);
-		vmse = vector_measure(sect->vert[0].x, sect->vert[0].y, px, py);
-	}
+		vmse = vector_measure(sect->vert[0].x, sect->vert[0].y, p.x, p.y);
 	if (vmfi < 1)
 		return (1);
 	else if (vmse < 1)
