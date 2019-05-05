@@ -1,48 +1,44 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   maps_bis.c                                       .::    .:/ .      .::   */
+/*   maps_sect.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:07:42 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 15:56:41 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 13:35:13 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-int						save_d(int fd, t_lis *temp)
+static void	save_d(int fd, t_lis *verts)
+{
+	t_lis	*lst;
+
+	lst = verts;
+	while (lst != NULL)
+	{
+		write(fd, &lst->x, sizeof(int));
+		write(fd, &lst->y, sizeof(int));
+		write(fd, &lst->text, sizeof(short));
+		write(fd, &lst->neigh, sizeof(int));
+		lst = lst->next;
+	}
+}
+
+int						save_objs(int fd, t_lis *temp, short id_sect)
 {
 	while (temp != NULL)
 	{
 		write(fd, &temp->x, sizeof(int));
 		write(fd, &temp->y, sizeof(int));
-		write(fd, &temp->text, sizeof(short));
-		write(fd, &temp->neigh, sizeof(int));
+		write(fd, &temp->text, sizeof(short));(void)id_sect;
+		//write(fd, &id_sect, sizeof(short));
 		temp = temp->next;
 	}
 	return (1);
-}
-
-int						save_objs(int fd, t_lis *temp)
-{
-	while (temp != NULL)
-	{
-		write(fd, &temp->x, sizeof(int));
-		write(fd, &temp->y, sizeof(int));
-		write(fd, &temp->text, sizeof(short));
-		temp = temp->next;
-	}
-	return (1);
-}
-
-int						save_error(void)
-{
-	ft_putendl("There has been an error while saving the file");
-//	free(&mapfile);
-	return (0);
 }
 
 int						save_error2(char *error, t_lis *temp)
@@ -52,17 +48,19 @@ int						save_error2(char *error, t_lis *temp)
 	return (0);
 }
 
-void					putinfo_sec(int fd, t_lis *temp, t_sec *tmp)
+void					putinfo_sec(int fd, t_sec *sect)
 {
-	save_d(fd, temp);
-	if (tmp->obj != NULL && tmp->objscount != 0)
+	t_lis	*temp;
+
+	save_d(fd, sect->vert);
+	if (sect->obj != NULL && sect->objscount != 0)
 	{
-		temp = tmp->obj;
-		save_objs(fd, temp);
+		temp = sect->obj;
+		save_objs(fd, temp, sect->id);
 	}
-	if (tmp->enem != NULL && tmp->enemcount != 0)
+	if (sect->enem != NULL && sect->enemcount != 0)
 	{
-		temp = tmp->enem;
-		save_objs(fd, temp);
+		temp = sect->enem;
+		save_objs(fd, temp, sect->id);
 	}
 }

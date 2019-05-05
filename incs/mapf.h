@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/04 17:18:32 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 20:10:29 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,6 +47,7 @@ typedef struct				s_sprite
 	float					tx;
 	float					tz;
 	int						is_enemy;
+	short					id_rend;
 }							t_sprite;
 
 typedef struct				s_xyz
@@ -109,6 +110,13 @@ typedef struct				s_sector
 	float					texy;
 }							t_sector;
 
+typedef struct				s_rendu
+{
+	int						id;
+	int						beginx;
+	int						endx;
+}							t_rendu;
+
 typedef struct				s_mapf
 {
 	char					magic[5];
@@ -125,8 +133,8 @@ typedef struct				s_mapf
 	t_player				player;
 	float					coeff;
 	t_sdl					sdl;
-	int						rend_s[MAX_SECT];
-	short					nbrend_s;
+	t_rendu					rend_s[MAX_SECT];
+	short					nbrend_s; 
 	t_xyz					old;
 	SDL_Surface				*wall[2];
 }							t_mapf;

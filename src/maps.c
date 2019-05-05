@@ -6,68 +6,57 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 19:23:33 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 13:29:31 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-static	int				putinfo_head(int fd, t_edit *edit)
+static int	putinfo_head(int fd, t_edit *edit)
 {
-	float			angle;
+	float	angle;
 
 	angle = 0.5;
-	if (fd == -1)
-		return (0);
-	if (edit->nbsect != 0 && mcheck_pos(edit))
+	if (mcheck_pos(edit) && edit->sect)
 	{
-		if (edit->sect)
-		{
-			write(fd, "MAP2", 4);
-			write(fd, &edit->player->x, sizeof(int));
-			write(fd, &edit->player->y, sizeof(int));
-			write(fd, &edit->player->text, sizeof(short));
-			write(fd, &angle, sizeof(float));
-			write(fd, &edit->finish->x, sizeof(int));
-			write(fd, &edit->finish->y, sizeof(int));
-			write(fd, &edit->finish->text, sizeof(short));
-			write(fd, &edit->nbsect, sizeof(int));
-			write(fd, &edit->diff, sizeof(short));
-		}
+		write(fd, "MAP2", 4);
+		write(fd, &edit->player->x, sizeof(int));
+		write(fd, &edit->player->y, sizeof(int));
+		write(fd, &edit->player->text, sizeof(short));
+		write(fd, &angle, sizeof(float));
+		write(fd, &edit->finish->x, sizeof(int));
+		write(fd, &edit->finish->y, sizeof(int));
+		write(fd, &edit->finish->text, sizeof(short));
+		write(fd, &edit->nbsect, sizeof(int));
+		write(fd, &edit->diff, sizeof(short));
 		return (1);
 	}
-	else
-		return (0);
+	return (0);
 }
 
-static	int				putinfo_sector(int fd, t_edit *edit)
+static int	putinfo_sector(int fd, t_edit *edit)
 {
-	t_sec				*tmp;
-	t_lis				*temp;
+	t_sec	*sect;
 
-	if (fd == -1)
-		return (0);
-	tmp = edit->sect;
-	while (tmp != NULL)
+	sect = edit->sect;
+	while (sect != NULL)
 	{
-		if (tmp->floor == -1 && tmp->ceil == -1)
-			return (err_map("A sector has some unset data", temp));
-		temp = tmp->vert;
-		write(fd, &tmp->gravity, sizeof(short));
-		write(fd, &tmp->floor, sizeof(short));
-		write(fd, &tmp->ceil, sizeof(short));
-		write(fd, &tmp->nbvert, sizeof(int));
-		write(fd, &tmp->objscount, sizeof(int));
-		write(fd, &tmp->enemcount, sizeof(int));
-		putinfo_sec(fd, temp, tmp);
-		tmp = tmp->next;
+		if (sect->floor == -1 || sect->ceil == -1)		//pas sur pour le ||
+			return (unset_map(sect->id));
+		write(fd, &sect->gravity, sizeof(short));
+		write(fd, &sect->floor, sizeof(short));
+		write(fd, &sect->ceil, sizeof(short));
+		write(fd, &sect->nbvert, sizeof(int));
+		write(fd, &sect->objscount, sizeof(int));
+		write(fd, &sect->enemcount, sizeof(int));
+		putinfo_sec(fd, sect);
+		sect = sect->next;
 	}
-	free(tmp);
 	return (1);
 }
 
-int						put_data(int fd, t_edit *edit)
+static int	put_data(int fd, t_edit *edit)
 {
 	if (putinfo_head(fd, edit))
 	{
@@ -75,56 +64,56 @@ int						put_data(int fd, t_edit *edit)
 			return (1);
 		else
 		{
-			save_error();
+			ft_putendl("There has been an error while saving the file");
 			close(fd);
 			return (0);
 		}
 	}
-	else
+	ft_putendl("Error while saving the file ; player or ending missing.");
+	close(fd);
+	return (0);
+}
+
+static int	map_writer(char *mapname, t_edit *edit)
+{
+	int		fd;
+	char	*mapfile;
+
+	if (!(mapfile = ft_strjoin(MAP_PATH, mapname)))
 	{
-		save_error();
-		close(fd);
+		ft_putendl("Map name error");
 		return (0);
 	}
-	close(fd);
-	return (1);
-}
-
-int						map_writer(char *mapname, t_edit *edit)
-{
-	int					fd;
-	char				*mapfile;
-
-//	mapfile = (char*)malloc(sizeof(char) *
-//		(int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
-//	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
-	mapfile = ft_strjoin(MAP_PATH, mapname);
-	if ((fd = open(mapfile, O_TRUNC | O_CREAT | O_WRONLY, S_IRWXU)) != -1)
+	if ((fd = open(mapfile, O_TRUNC | O_CREAT | O_WRONLY, S_IRWXU)) == -1)
+		return (open_error(&mapfile));
+	if (edit->nbsect != 0)
 	{
-		if (edit->nbsect != 0)
-			return (put_data(fd, edit));
+		if (put_data(fd, edit))
+			return (1);
 		else
 		{
-			save_error();
-			close(fd);
+			ft_strdel(&mapfile);
 			return (0);
 		}
 	}
-	else
-		return (open_error(&mapfile));
+	close(fd);
+	ft_strdel(&mapfile);
+	ft_putendl("Error while saving the file ; no sector was drawn.");
+	return (0);
 }
 
-int						save_map(t_input *in, char *mapname, t_edit *edit)
+int			save_map(t_input *in, char *mapname, t_edit *edit)
 {
 	if (in->key[SDL_SCANCODE_S])
 	{
 		if (map_writer(mapname, edit))
 		{
-			ft_putendl("\n--------Map saved--------\n\n");
+			ft_putendl("--------Map saved--------\n");
 			return (1);
 		}
-		else{
-			ft_putendl("\n--------Map not saved--------\n\n");
+		else
+		{
+			ft_putendl("Error saving the map.");
 			return (0);
 		}
 		in->key[SDL_SCANCODE_S] = SDL_FALSE;

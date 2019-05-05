@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   maps_3.c                                         .::    .:/ .      .::   */
+/*   maps_utils.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 13:34:28 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 15:55:25 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 13:25:25 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,8 +22,7 @@ int				mcheck_pos(t_edit *edit)
 		else
 			return (0);
 	}
-	else
-		return (0);
+	return (0);
 }
 
 int				mcheck_d(t_lis *temp)
@@ -42,19 +41,10 @@ int				mcheck_sec(t_sec *tmp)
 		return (0);
 }
 
-int				err_map(char *msg, t_lis *temp)
+int				unset_map(int id)
 {
-	if (ft_strlen(msg))
-	{
-	//	if (temp != NULL)
-	//		free(&temp);
-		ft_putendl(msg);
-		return (0);
-	}
-	else
-	{
-		if (temp != NULL)
-			free(temp);
-		return (0);
-	}
+	ft_putstr("Sector number ");
+	ft_putnbr(id);
+	ft_putendl(" has unset floor or ceiling heights");
+	return (0);
 }

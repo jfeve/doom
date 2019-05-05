@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:36:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/04 17:25:44 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 19:44:15 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -110,7 +110,10 @@ void		fill_pix(t_mapf *mapf)
 			continue ;
 		rendersect[now.sect]++;
 		t_sector	*sect = &mapf->sectors[now.sect];
-		mapf->rend_s[mapf->nbrend_s++] = now.sect;
+		mapf->rend_s[mapf->nbrend_s].id = now.sect;
+		mapf->rend_s[mapf->nbrend_s].beginx = now.sx1;
+		mapf->rend_s[mapf->nbrend_s].endx = now.sx2;
+		mapf->nbrend_s++;
 		int s = 0;
 		while (s < sect->nbvert)
 		{

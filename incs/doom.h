@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 15:55:21 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 13:33:10 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,7 +48,7 @@ typedef struct					s_lis
 
 typedef struct					s_sec
 {
-	unsigned short				id;
+	short						id;
 	short						floor;
 	short						ceil;
 	short						gravity;
@@ -150,6 +150,7 @@ typedef	struct					s_bresen
 /*
 ** Event
 */
+
 void							cancels(t_edit *edit, t_input *in);
 int								check_input(t_edit *edit, t_input *in);
 int								new_vert(t_edit *edit, t_input *in);
@@ -163,6 +164,7 @@ int								create_finish(t_edit *edit, t_input *in);
 /*
 ** SDL
 */
+
 int								free_sdl(t_sdl *sdl, int flag);
 int								sdl_init(t_sdl *sdl);
 void							free_all(int flag, t_edit *edit);
@@ -172,6 +174,7 @@ void							clear_tab(t_sdl *sdl);
 /*
 ** Bresen Functions
 */
+
 void							bresen(t_lis a, t_lis b, t_sdl *sdl);
 void							do_1(t_bresen *brs);
 void							do_2(t_bresen *brs);
@@ -180,6 +183,7 @@ void							do_4(t_bresen *brs);
 /*
 ** Vertex
 */
+
 int								parse_data(int x, int y, t_edit
 									*edit, t_lis *vert);
 void							cancel_last(t_lis **vert);
@@ -195,6 +199,7 @@ void							put_vert(t_edit *edit, t_lis *vert);
 /*
 ** Vector
 */
+
 void							draw_vec(t_edit *edit, t_input in);
 void							portals(t_edit *edit, t_input *in);
 int								put_new_vert(t_edit *edit, t_input *in);
@@ -207,18 +212,21 @@ int								check_on_vec(t_point *in, t_sec *sec);
 /*
 ** Highlight
 */
+
 void							hl_vec(t_edit *edit, t_input *in);
 void							hl_mode(t_input *in, t_edit *edit);
 
 /*
 ** Sectors
 */
+
 void							set_sect(t_edit *edit);
 void							draw_sec(t_edit *edit);
 
 /*
 ** Print // A DELETE PLUS TARD
 */
+
 void							print_info(t_edit *edit, t_input *in);
 void							print_content(t_edit *edit);
 void							print_lis(t_lis **vert);
@@ -227,6 +235,7 @@ void							print_read(t_mapf *mapf);
 /*
 ** HUD
 */
+
 int								choose_set(t_edit *edit);
 void							set_trigger(t_edit *edit, int choice, int trig);
 void							draw_wf(int x, int y, t_edit *edit);
@@ -238,6 +247,7 @@ void							hud(t_edit *edit);
 /*
 ** Draw Object-Enemy
 */
+
 void							handle_obj(t_edit *edit);
 void							handle_enem(t_edit *edit);
 void							draw_obj_enem(t_edit *edit);
@@ -248,24 +258,23 @@ int								check_lis_input(t_lis *vert);
 /*
 ** Map Saver
 */
+
 int								check_mapname(char *mapname);
-int								map_writer(char *mapname, t_edit *edit);
 int								save_map(t_input *in, char *mapname,
 									t_edit *edit);
 int								open_error(char **mapfile);
-int								save_error(void);
 int								save_error2(char *error, t_lis *temp);
-void							putinfo_sec(int fd, t_lis *temp, t_sec *tmp);
-int								save_d(int fd, t_lis *temp);
+void							putinfo_sec(int fd, t_sec *sect);
 int								mcheck_pos(t_edit *edit);
 int								mcheck_d(t_lis *temp);
 int								mcheck_sec(t_sec *tmp);
-int								err_map(char *msg, t_lis *temp);
-int								save_objs(int fd, t_lis *temp);
+int								unset_map(int id);
+int								save_objs(int fd, t_lis *temp, short id_sect);
 
 /*
 ** Input Detection
 */
+
 void							put_zer_flag(t_edit *edit);
 void							handle_res(t_edit *edit);
 void							edit_mode(t_input *in, t_edit *edit);
@@ -273,6 +282,7 @@ void							edit_mode(t_input *in, t_edit *edit);
 /*
 ** Drawer
 */
+
 char							*check_spe(int num);
 char							*check_num(int num);
 char							*check_alpha1(int num);
@@ -302,6 +312,7 @@ int								add_content(t_edit *edit, char *cont,
 /*
 ** Live Input
 */
+
 void							edit_input(t_edit *edit);
 void							get_string(t_edit *edit, t_draw *draw);
 char							*get_content_char(int num);
@@ -315,9 +326,11 @@ void							hud_hl(t_edit *edit);
 /*
 ** Free
 */
+
 void							free_lis(t_lis **vert);
 void							free_sec(t_sec **sec);
 int								free_content(t_edit *edit);
+
 /*
 **-------------------------------------|
 ** ------------ Render ----------------|

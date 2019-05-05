@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   map_reader.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 14:30:37 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 12:16:34 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -105,14 +105,17 @@ int				read_map(t_mapf *mapf, char *mapname)
 	int			i;
 
 	i = -1;
-	mapfile = ft_strjoin(MAP_PATH, mapname);
-	dprintf(1, "%s\n", mapfile);
+	if (!(mapfile = ft_strjoin(MAP_PATH, mapname)))
+	{
+		ft_putendl("Map name error");
+		return (0);
+	}
 	if ((fd = open(mapfile, O_RDONLY)) != -1)
 	{
 		if (!read_mapfhead(fd, mapf, mapfile))
 		{
-			free (&mapfile);
-			close (fd);
+			ft_strdel(&mapfile);
+			close(fd);
 			return (0);
 		}
 		mapf->sectors = (t_sector *)malloc(sizeof(t_sector) * mapf->nbsect + 1);
@@ -126,7 +129,7 @@ int				read_map(t_mapf *mapf, char *mapname)
 	}
 	else
 	{
-		dprintf(1, "\nThe map does not exist\n");
+		ft_putendl("The map does not exist.");
 		return (0);
 	}
 }
