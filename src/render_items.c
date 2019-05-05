@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 17:31:17 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 17:34:45 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -107,7 +107,7 @@ static int	go_through_enemies(t_sector now, t_mapf *mapf, t_sprite *drawable, in
 ** Draw the entities' sprites
 */
 
-void		draw_entities(t_mapf *mapf, SDL_Surface *items[4], SDL_Surface *enemy)
+void		draw_entities(t_mapf *mapf, SDL_Surface *items[4], SDL_Surface *enemy)		//ou la valeur de sec dans chaque objet et ennemi est elle changee
 {
 	int			i;
 	int			j;
