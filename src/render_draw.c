@@ -6,24 +6,12 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:36:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 13:31:27 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 21:30:33 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
-
-float		fvector_measure(float x1, float y1, float x2, float y2)
-{
-	float dx;
-	float dy;
-	float res;
-
-	dx = x2 - x1;
-	dy = y2 - y1;
-	res = sqrtf(dx * dx + dy * dy);
-	return (res);
-}
 
 t_float		create_float(float a, float b)
 {
