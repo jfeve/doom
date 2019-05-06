@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 21:06:32 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 21:15:39 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -139,6 +139,6 @@ int					init_hud(t_hud *hud, Uint32 format, t_player player)
 	hud->anim = SDL_FALSE;
 	hud->has_armor = 0;
 	hud->has_key = 0;
-	hud->timer = 150;
+	hud->timer = 50;
 	return (1);
 }
