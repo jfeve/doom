@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 17:16:04 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 21:06:32 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -83,12 +83,12 @@ static int			init_texture(t_hud *hud, Uint32 format)
 ** Init the font and the default ammo and life numbers
 */
 
-SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format)
+SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format, SDL_Color color)
 {
 	SDL_Surface	*tmp;
 	SDL_Surface	*ret;
 
-	if (!(tmp = TTF_RenderText_Solid(font, str, (SDL_Color){0, 0, 0, 255})))
+	if (!(tmp = TTF_RenderText_Solid(font, str, color)))
 		return (NULL);
 	if (!(ret = SDL_ConvertSurfaceFormat(tmp, format, 0)))
 	{
@@ -109,9 +109,11 @@ static int			init_ttf(t_hud *hud, t_player player, Uint32 format)
 		return (0);
 	if (!(hud->arial = TTF_OpenFont("/Library/Fonts/Arial.ttf", 25)))
 		return (0);
-	if (!(hud->nbammo = init_text(hud->arial, ft_itoa(player.ammo), format)))
+	if (!(hud->nbammo = init_text(hud->arial, ft_itoa(player.ammo), format, (SDL_Color){0, 0, 0, 255})))
 		return (0);
-	if (!(hud->nblife = init_text(hud->arial, ft_itoa(player.life), format)))
+	if (!(hud->nblife = init_text(hud->arial, ft_itoa(player.life), format, (SDL_Color){0, 0, 0, 255})))
+		return (0);
+	if (!(hud->begin = init_text(hud->arial, "Start !", format, (SDL_Color){255, 255, 255, 255})))
 		return (0);
 	return (1);
 }
@@ -137,5 +139,6 @@ int					init_hud(t_hud *hud, Uint32 format, t_player player)
 	hud->anim = SDL_FALSE;
 	hud->has_armor = 0;
 	hud->has_key = 0;
+	hud->timer = 150;
 	return (1);
 }

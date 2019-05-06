@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 17:03:51 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 21:04:02 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -332,6 +332,7 @@ int								free_content(t_edit *edit);
 ** gun: gun animation frames, ammoicon & lifeicon: well
 ** has_armor & has_key: 0 if item not picked, 1 if picked
 ** items: sprites of items ; 1: key, 2: armor, 3:life kit, 4: ammo pack
+** 5: back key, 6: back armor, 7: back life kit, 8: back ammo pack, 9: flag
 */
 
 typedef struct		s_hud
@@ -351,6 +352,8 @@ typedef struct		s_hud
 	TTF_Font		*arial;
 	SDL_Surface		*nbammo;
 	SDL_Surface		*nblife;
+	SDL_Surface		*begin;
+	int				timer;
 }					t_hud;
 
 typedef	struct		s_line
@@ -426,14 +429,14 @@ void				render(char *str);
 */
 
 int					init_hud(t_hud *hud, Uint32 format, t_player player);
-SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format);
+SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format, SDL_Color color);
 void				draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
 void				draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y);
 void				draw_sprite_resize(t_sdl *sdl, SDL_Surface *s, t_point start, t_point size);
 int					free_hud(t_hud *hud);
 
-
 void				draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2]);
 void				pick_items(t_mapf *mapf, t_hud *hud);
+void				enemy_ia(t_mapf *mapf);
 
 #endif

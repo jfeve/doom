@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 18:36:18 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 20:14:09 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -73,15 +73,6 @@ static int	go_through_items(t_sector now, t_mapf *mapf, t_sprite *drawable, int 
 			continue ;
 		drawable[ret++] = (t_sprite){now.obj[j].x, now.obj[j].y, now.obj[j].type, tx, tz, 0};
 	}
-	if (ret < MAX_SPRITE - 1)
-	{
-		float vx = (float)(mapf->finish_x - mapf->player.where.x);
-		float vy = (float)(mapf->finish_y - mapf->player.where.y);
-		float tx = vx * mapf->player.anglesin - vy * mapf->player.anglecos;
-		float tz = vx * mapf->player.anglecos + vy * mapf->player.anglesin;
-		if (tz > 0)
-			drawable[ret++] = (t_sprite){mapf->finish_x, mapf->finish_y, 9, tx, tz, 0};
-	}
 	return (ret);
 }
 
@@ -132,6 +123,15 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2])
 		nbdraw = 0;
 		nbdraw = go_through_items(now, mapf, drawable, nbdraw);
 		nbdraw = go_through_enemies(now, mapf->player, drawable, nbdraw);
+		if (mapf->rend_s[i].id == mapf->finish_sec && nbdraw < MAX_SPRITE - 1)
+		{
+			float vx = (float)(mapf->finish_x - mapf->player.where.x);
+			float vy = (float)(mapf->finish_y - mapf->player.where.y);
+			float tx = vx * mapf->player.anglesin - vy * mapf->player.anglecos;
+			float tz = vx * mapf->player.anglecos + vy * mapf->player.anglesin;
+			if (tz > 0)
+				drawable[nbdraw++] = (t_sprite){mapf->finish_x, mapf->finish_y, 9, tx, tz, 0};
+		}
 		bubbleSort(drawable, nbdraw, (t_point){mapf->player.where.x, mapf->player.where.y});
 		j = -1;
 		while (++j < nbdraw && j < MAX_SPRITE)
@@ -145,12 +145,13 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2])
 			int y = (RWIN_H / 2) - (int)(YAW(now.floor - mapf->player.where.z, drawable[j].tz, mapf->player.yaw) * yscale);
 			if (x > mapf->rend_s[i].endx || x < mapf->rend_s[i].beginx)
 				continue ;
+			if (type == 8 && (x > mapf->rend_s[mapf->finish_sec].endx || x < mapf->rend_s[mapf->finish_sec].beginx))
+				continue ;
 			float distance = vector_measure(drawable[j].x, drawable[j].y, mapf->player.where.x, mapf->player.where.y);
 			if (distance == 0.0f)
 				distance = 0.0001f;
-			//dprintf(1, "y: %d      y possible: %f\n", y - (enemy[type]->h / 2), (y - (enemy[type]->h / 2)) * (0.1 / distance));
 			if (drawable[j].is_enemy == 1)
-				draw_sprite_resize(&mapf->sdl, enemy[type], (t_point){x - (enemy[type]->w / 2), y - (enemy[type]->h / 2)},
+				draw_sprite_resize(&mapf->sdl, enemy[type], (t_point){x - (enemy[type]->w / 2), y - (enemy[type]->h / 2) - (1300.0f / distance)},
 				(t_point){(int)((float)enemy[type]->w * (32 / (distance))), (int)((float)enemy[type]->h * (32 / (distance)))});
 			else
 				draw_sprite_resize(&mapf->sdl, items[type], (t_point){x - (items[type]->w / 2), y - (items[type]->h / 2)},
