@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 17:03:51 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 19:29:21 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -332,6 +332,7 @@ int								free_content(t_edit *edit);
 ** gun: gun animation frames, ammoicon & lifeicon: well
 ** has_armor & has_key: 0 if item not picked, 1 if picked
 ** items: sprites of items ; 1: key, 2: armor, 3:life kit, 4: ammo pack
+** 5: back key, 6: back armor, 7: back life kit, 8: back ammo pack, 9: flag
 */
 
 typedef struct		s_hud

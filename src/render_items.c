@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 17:18:32 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 19:30:03 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -143,20 +143,20 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2])
 			float yscale = VFOV / drawable[j].tz;
 			int x = (drawable[j].tx * xscale) * -1 + RWIN_W / 2;
 			int y = (RWIN_H / 2) - (int)(YAW(now.floor - mapf->player.where.z, drawable[j].tz, mapf->player.yaw) * yscale);
+			if (type == 8) dprintf(1, "x: %d, beginx: %d, endx: %d\n", x, mapf->rend_s[i].beginx, mapf->rend_s[i].endx);
 			if (x > mapf->rend_s[i].endx || x < mapf->rend_s[i].beginx)
+				continue ;
+			if (type == 8 && (x > mapf->rend_s[mapf->finish_sec].endx || x < mapf->rend_s[mapf->finish_sec].beginx))
 				continue ;
 			float distance = vector_measure(drawable[j].x, drawable[j].y, mapf->player.where.x, mapf->player.where.y);
 			if (distance == 0.0f)
 				distance = 0.0001f;
-			//dprintf(1, "y: %d      y possible: %f\n", y - (enemy[type]->h / 2), (y - (enemy[type]->h / 2)) * (0.1 / distance));
-			dprintf(1, "type: %d\n", type);
 			if (drawable[j].is_enemy == 1)
-				draw_sprite_resize(&mapf->sdl, enemy[type], (t_point){x - (enemy[type]->w / 2), y - (enemy[type]->h / 2)},
+				draw_sprite_resize(&mapf->sdl, enemy[type], (t_point){x - (enemy[type]->w / 2), y - (enemy[type]->h / 2) - (1300.0f / distance)},
 				(t_point){(int)((float)enemy[type]->w * (32 / (distance))), (int)((float)enemy[type]->h * (32 / (distance)))});
 			else
 				draw_sprite_resize(&mapf->sdl, items[type], (t_point){x - (items[type]->w / 2), y - (items[type]->h / 2)},
 				(t_point){(int)((float)items[type]->w * (16 / (distance))), (int)((float)items[type]->h * (16 / (distance)))});
 		}
 	}
-	dprintf(1, "\n");
 }
