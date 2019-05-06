@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 16:41:48 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 17:18:32 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -80,7 +80,7 @@ static int	go_through_items(t_sector now, t_mapf *mapf, t_sprite *drawable, int 
 		float tx = vx * mapf->player.anglesin - vy * mapf->player.anglecos;
 		float tz = vx * mapf->player.anglecos + vy * mapf->player.anglesin;
 		if (tz > 0)
-			drawable[ret++] = (t_sprite){mapf->finish_x, mapf->finish_y, 0, tx, tz, 2};
+			drawable[ret++] = (t_sprite){mapf->finish_x, mapf->finish_y, 9, tx, tz, 0};
 	}
 	return (ret);
 }
@@ -116,7 +116,7 @@ static int	go_through_enemies(t_sector now, t_player player, t_sprite *drawable,
 ** Draw the entities' sprites
 */
 
-void		draw_entities(t_mapf *mapf, SDL_Surface *items[4], SDL_Surface *enemy[2], SDL_Surface *flag)
+void		draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2])
 {
 	int			i;
 	int			j;
@@ -137,7 +137,7 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[4], SDL_Surface *enemy[2], 
 		while (++j < nbdraw && j < MAX_SPRITE)
 		{
 			int type = drawable[j].type - 1;
-			if (fmodf(mapf->player.angle, 2 * M_PI) > M_PI && fmodf(mapf->player.angle, 2 * M_PI) <= (2 * M_PI))
+			if (drawable[j].is_enemy == 0 && type < 8 && fmodf(mapf->player.angle, 2 * M_PI) >= M_PI && fmodf(mapf->player.angle, 2 * M_PI) <= (2 * M_PI))
 				type += 4;
 			float xscale = HFOV / drawable[j].tz;
 			float yscale = VFOV / drawable[j].tz;
@@ -149,16 +149,14 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[4], SDL_Surface *enemy[2], 
 			if (distance == 0.0f)
 				distance = 0.0001f;
 			//dprintf(1, "y: %d      y possible: %f\n", y - (enemy[type]->h / 2), (y - (enemy[type]->h / 2)) * (0.1 / distance));
+			dprintf(1, "type: %d\n", type);
 			if (drawable[j].is_enemy == 1)
 				draw_sprite_resize(&mapf->sdl, enemy[type], (t_point){x - (enemy[type]->w / 2), y - (enemy[type]->h / 2)},
 				(t_point){(int)((float)enemy[type]->w * (32 / (distance))), (int)((float)enemy[type]->h * (32 / (distance)))});
-			/*else if (drawable[j].is_enemy == 2)
-				draw_sprite_resize(&mapf->sdl, flag, (t_point){x - (flag->w / 2), y - (flag->h / 2)},
-				(t_point){(int)((float)flag->w * (32 / (distance))), (int)((float)flag->h * (32 / (distance)))});*/
 			else
 				draw_sprite_resize(&mapf->sdl, items[type], (t_point){x - (items[type]->w / 2), y - (items[type]->h / 2)},
 				(t_point){(int)((float)items[type]->w * (16 / (distance))), (int)((float)items[type]->h * (16 / (distance)))});
 		}
 	}
-	//dprintf(1, "\n");
+	dprintf(1, "\n");
 }

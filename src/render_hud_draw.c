@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 14:03:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 16:27:06 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 17:16:07 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -121,7 +121,6 @@ void		draw_sprite_resize(t_sdl *sdl, SDL_Surface *s, t_point start, t_point size
 
 	if (SDL_MUSTLOCK(s))
 		SDL_LockSurface(s);
-	dprintf(1, "%p\n", s);
 	p = s->pixels;
 	x_ratio = (int)((s->w << 16) / size.x) + 1;
 	y_ratio = (int)((s->h << 16) / size.y) + 1;
