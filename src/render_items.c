@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 20:27:07 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 17:18:32 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,7 +54,7 @@ static void	bubbleSort(t_sprite arr[], int n, t_point player)
 ** Go through every items in the now sector, and stock in drawable the ones that will be drawn
 */
 
-static int	go_through_items(t_sector now, t_player player, t_sprite *drawable, int nbdraw)
+static int	go_through_items(t_sector now, t_mapf *mapf, t_sprite *drawable, int nbdraw)
 {
 	int		j;
 	int		ret;
@@ -65,13 +65,22 @@ static int	go_through_items(t_sector now, t_player player, t_sprite *drawable, i
 	{
 		if (now.obj[j].picked == 1)
 			continue;
-		float vx = (float)(now.obj[j].x - player.where.x);
-		float vy = (float)(now.obj[j].y - player.where.y);
-		float tx = vx * player.anglesin - vy * player.anglecos;
-		float tz = vx * player.anglecos + vy * player.anglesin;
+		float vx = (float)(now.obj[j].x - mapf->player.where.x);
+		float vy = (float)(now.obj[j].y - mapf->player.where.y);
+		float tx = vx * mapf->player.anglesin - vy * mapf->player.anglecos;
+		float tz = vx * mapf->player.anglecos + vy * mapf->player.anglesin;
 		if (tz <= 0)
 			continue ;
 		drawable[ret++] = (t_sprite){now.obj[j].x, now.obj[j].y, now.obj[j].type, tx, tz, 0};
+	}
+	if (ret < MAX_SPRITE - 1)
+	{
+		float vx = (float)(mapf->finish_x - mapf->player.where.x);
+		float vy = (float)(mapf->finish_y - mapf->player.where.y);
+		float tx = vx * mapf->player.anglesin - vy * mapf->player.anglecos;
+		float tz = vx * mapf->player.anglecos + vy * mapf->player.anglesin;
+		if (tz > 0)
+			drawable[ret++] = (t_sprite){mapf->finish_x, mapf->finish_y, 9, tx, tz, 0};
 	}
 	return (ret);
 }
@@ -99,6 +108,7 @@ static int	go_through_enemies(t_sector now, t_player player, t_sprite *drawable,
 			continue ;
 		drawable[ret++] = (t_sprite){now.enem[j].x, now.enem[j].y, now.enem[j].type, tx, tz, 1};
 	}
+	
 	return (ret);
 }
 
@@ -106,7 +116,7 @@ static int	go_through_enemies(t_sector now, t_player player, t_sprite *drawable,
 ** Draw the entities' sprites
 */
 
-void		draw_entities(t_mapf *mapf, SDL_Surface *items[4], SDL_Surface *enemy)
+void		draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2])
 {
 	int			i;
 	int			j;
@@ -117,56 +127,36 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[4], SDL_Surface *enemy)
 		i = MAX_SECT;
 	while (--i >= 0)
 	{
-		t_sector now = mapf->sectors[mapf->rend_s[i]];
+		t_sector now = mapf->sectors[mapf->rend_s[i].id];
 		ft_bzero(drawable, MAX_SPRITE * sizeof(t_sprite));
 		nbdraw = 0;
-		nbdraw = go_through_items(now, mapf->player, drawable, nbdraw);
+		nbdraw = go_through_items(now, mapf, drawable, nbdraw);
 		nbdraw = go_through_enemies(now, mapf->player, drawable, nbdraw);
 		bubbleSort(drawable, nbdraw, (t_point){mapf->player.where.x, mapf->player.where.y});
 		j = -1;
 		while (++j < nbdraw && j < MAX_SPRITE)
 		{
 			int type = drawable[j].type - 1;
+			if (drawable[j].is_enemy == 0 && type < 8 && fmodf(mapf->player.angle, 2 * M_PI) >= M_PI && fmodf(mapf->player.angle, 2 * M_PI) <= (2 * M_PI))
+				type += 4;
 			float xscale = HFOV / drawable[j].tz;
 			float yscale = VFOV / drawable[j].tz;
 			int x = (drawable[j].tx * xscale) * -1 + RWIN_W / 2;
 			int y = (RWIN_H / 2) - (int)(YAW(now.floor - mapf->player.where.z, drawable[j].tz, mapf->player.yaw) * yscale);
+			if (x > mapf->rend_s[i].endx || x < mapf->rend_s[i].beginx)
+				continue ;
 			float distance = vector_measure(drawable[j].x, drawable[j].y, mapf->player.where.x, mapf->player.where.y);
 			if (distance == 0.0f)
 				distance = 0.0001f;
-			if (drawable[j].is_enemy)
-				draw_sprite_resize(&mapf->sdl, enemy, (t_point){x - (enemy->w / 2), y - (1.3f * enemy->h)},
-				(t_point){(int)((float)enemy->w * (32 / (distance))), (int)((float)enemy->h * (32 / (distance)))});
+			//dprintf(1, "y: %d      y possible: %f\n", y - (enemy[type]->h / 2), (y - (enemy[type]->h / 2)) * (0.1 / distance));
+			dprintf(1, "type: %d\n", type);
+			if (drawable[j].is_enemy == 1)
+				draw_sprite_resize(&mapf->sdl, enemy[type], (t_point){x - (enemy[type]->w / 2), y - (enemy[type]->h / 2)},
+				(t_point){(int)((float)enemy[type]->w * (32 / (distance))), (int)((float)enemy[type]->h * (32 / (distance)))});
 			else
 				draw_sprite_resize(&mapf->sdl, items[type], (t_point){x - (items[type]->w / 2), y - (items[type]->h / 2)},
 				(t_point){(int)((float)items[type]->w * (16 / (distance))), (int)((float)items[type]->h * (16 / (distance)))});
 		}
 	}
+	dprintf(1, "\n");
 }
-
-/*int		i;
-	int		j;
-
-	i = mapf->nbrend_s;
-	while (--i >= 0)
-	{
-		j = -1;
-		t_sector now = mapf->sectors[mapf->rend_s[i]];
-		bubbleSort(now.obj, now.nbobjs, (t_point){mapf->player.where.x, mapf->player.where.y});
-		while (++j < now.nbobjs)
-		{
-			float vx = (float)(now.obj[j].x - mapf->player.where.x);
-			float vy = (float)(now.obj[j].y - mapf->player.where.y);
-			float tx = vx * mapf->player.anglesin - vy * mapf->player.anglecos;
-			float tz = vx * mapf->player.anglecos + vy * mapf->player.anglesin;
-			if (j == 0) dprintf(1, "%f   %d %d   %f %f\n\n", tz, now.obj[j].x,
-			now.obj[j].y, mapf->player.where.x, mapf->player.where.y);
-			if (tz <= 0)
-				continue ;
-			float xscale = HFOV / tz;
-			float yscale = VFOV / tz;
-			int x = (tx * xscale) * -1 + RWIN_W / 2;
-			int y = (RWIN_H / 2) - (int)(YAW(now.floor - mapf->player.where.z, tz, mapf->player.yaw) * yscale);
-			draw_sprite(&mapf->sdl, s, x - (s->w / 2), y - (s->h / 2));
-		}
-	}*/

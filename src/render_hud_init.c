@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/04 16:03:22 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 17:16:04 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,7 +62,19 @@ static int			init_texture(t_hud *hud, Uint32 format)
 		return (0);
 	if (!(hud->items[3] = init_image("data/textures/ammopack.bmp", format)))
 		return (0);
-	if (!(hud->enemy = init_image("data/textures/enemy.bmp", format)))
+	if (!(hud->items[4] = init_image("data/textures/key_back.bmp", format)))
+		return (0);
+	if (!(hud->items[5] = init_image("data/textures/armor_back.bmp", format)))
+		return (0);
+	if (!(hud->items[6] = init_image("data/textures/medkit_back.bmp", format)))
+		return (0);
+	if (!(hud->items[7] = init_image("data/textures/ammopack_back.bmp", format)))
+		return (0);
+	if (!(hud->items[8] = init_image("data/textures/flag.bmp", format)))
+		return (0);
+	if (!(hud->enemy[0] = init_image("data/textures/enemy.bmp", format)))
+		return (0);
+	if (!(hud->enemy[1] = init_image("data/textures/enemy2.bmp", format)))
 		return (0);
 	return (1);
 }

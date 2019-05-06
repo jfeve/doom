@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 20:29:48 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 17:03:51 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -343,8 +343,8 @@ typedef struct		s_hud
 	SDL_Surface		*lifeicon;
 	int				has_armor;
 	int				has_key;
-	SDL_Surface		*items[4];
-	SDL_Surface		*enemy;
+	SDL_Surface		*items[9];
+	SDL_Surface		*enemy[2];
 	Mix_Music		*music;
 	Mix_Chunk		*gunshot;
 	Mix_Chunk		*empty;
@@ -433,7 +433,7 @@ void				draw_sprite_resize(t_sdl *sdl, SDL_Surface *s, t_point start, t_point si
 int					free_hud(t_hud *hud);
 
 
-void				draw_entities(t_mapf *mapf, SDL_Surface *items[4], SDL_Surface *enemy);
+void				draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2]);
 void				pick_items(t_mapf *mapf, t_hud *hud);
 
 #endif
