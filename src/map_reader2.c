@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:08:27 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 13:20:46 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 21:37:19 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,8 +15,13 @@
 
 int				read_enem_data(int fd, t_mapf *mapf, int ienem, int i)
 {
-	read(fd, &mapf->sectors[i].enem[ienem].x, sizeof(int));
-	read(fd, &mapf->sectors[i].enem[ienem].y, sizeof(int));
+	int		plx;
+	int		ply;
+
+	read(fd, &plx, sizeof(int));
+	mapf->sectors[i].enem[ienem].x = (float)plx;
+	read(fd, &ply, sizeof(int));
+	mapf->sectors[i].enem[ienem].y = (float)ply;
 	read(fd, &mapf->sectors[i].enem[ienem].type, sizeof(short));
 	mapf->sectors[i].enem[ienem].sec = i;
 	return (1);
