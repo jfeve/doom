@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 16:50:48 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 18:58:29 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,7 +61,10 @@ void		fly(t_mapf *mapf, t_input *in)
 	if (in->key[SDL_SCANCODE_F])
 	{
 		if (mapf->player.state == flying)
+		{
+			mapf->player.add_z = mapf->player.where.z - mapf->player.eye - mapf->sectors[mapf->player.sect].floor;
 			mapf->player.state = falling;
+		}
 		else
 			mapf->player.state = flying;
 		in->key[SDL_SCANCODE_F] = SDL_FALSE;

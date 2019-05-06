@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 17:18:32 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 18:36:18 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -149,7 +149,6 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2])
 			if (distance == 0.0f)
 				distance = 0.0001f;
 			//dprintf(1, "y: %d      y possible: %f\n", y - (enemy[type]->h / 2), (y - (enemy[type]->h / 2)) * (0.1 / distance));
-			dprintf(1, "type: %d\n", type);
 			if (drawable[j].is_enemy == 1)
 				draw_sprite_resize(&mapf->sdl, enemy[type], (t_point){x - (enemy[type]->w / 2), y - (enemy[type]->h / 2)},
 				(t_point){(int)((float)enemy[type]->w * (32 / (distance))), (int)((float)enemy[type]->h * (32 / (distance)))});
@@ -158,5 +157,4 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2])
 				(t_point){(int)((float)items[type]->w * (16 / (distance))), (int)((float)items[type]->h * (16 / (distance)))});
 		}
 	}
-	dprintf(1, "\n");
 }

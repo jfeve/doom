@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 17:04:10 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 19:25:34 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,7 +54,7 @@ int		check_ps(t_mapf *mapf)
 						mapf->sectors[mapf->player.sect].lum = 0;
 						mapf->player.sect = sec->vert[i].neigh;
 						mapf->sectors[mapf->player.sect].lum = 1;
-						if (mapf->player.state != jumping && mapf->player.state != flying && mapf->player.state != crouching)
+						if (mapf->player.state != jumping && mapf->player.state != flying)
 							mapf->player.state = falling;
 						return (0);
 					}
@@ -101,11 +101,13 @@ void		check_state(t_mapf *mapf)
 {
 	if (mapf->player.state == jumping || mapf->player.state == falling)
 	{
-		mapf->player.where.z = mapf->sectors[mapf->player.jump_sec].floor + EYE + mapf->player.add_z;
+		dprintf(1, "zz = %f\n", mapf->player.where.z);
+		mapf->player.where.z = mapf->sectors[mapf->player.sect].floor + EYE + mapf->player.add_z;
+		dprintf(1, "sect = %d\n", mapf->player.sect);
 		if (mapf->player.where.z < mapf->sectors[mapf->player.sect].floor + EYE)
 		{
 			mapf->player.where.z = mapf->sectors[mapf->player.sect].floor + EYE;
-			mapf->player.state = nmoving;
+			mapf->player.state = moving;
 			mapf->player.add_z = 0;
 		}
 	}
@@ -137,7 +139,10 @@ void		render(char *str)
 //	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
+		dprintf(1, "sect = %d\n", mapf.player.sect);
 		dprintf(1, "state = %d\n", mapf.player.state);
+		dprintf(1, "flying = %d, crouching = %d, jumping = %d, falling = %d\n", flying, crouching, jumping, falling);
+		dprintf(1, "z = %f\n", mapf.player.where.z);
 		in.xrel = 0;
 		in.yrel = 0;
 		update_event(&in);
@@ -145,6 +150,7 @@ void		render(char *str)
 		check_ps(&mapf);
 		ft_bzero(&mapf.rend_s, MAX_SECT * sizeof(int));
 		mapf.nbrend_s = 0;
+		dprintf(1, "zzz = %f\n", mapf.player.where.z);
 		check_state(&mapf);
 		clear_tab(&mapf.sdl, RWIN_W, RWIN_H);
 		fill_pix(&mapf);
