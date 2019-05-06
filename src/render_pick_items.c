@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/03 16:35:10 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 20:27:32 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 21:04:36 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,7 +41,7 @@ void	pick_items(t_mapf *mapf, t_hud *hud)
 				else
 					mapf->player.life = 100;
 				SDL_FreeSurface(hud->nblife);
-				if (!(hud->nblife = init_text(hud->arial, ft_itoa(mapf->player.life), mapf->sdl.form->format)))
+				if (!(hud->nblife = init_text(hud->arial, ft_itoa(mapf->player.life), mapf->sdl.form->format, (SDL_Color){0, 0, 0, 255})))
 				{
 					free_hud(hud);
 					return ;
@@ -51,7 +51,7 @@ void	pick_items(t_mapf *mapf, t_hud *hud)
 			{
 				mapf->player.ammo += 10;
 				SDL_FreeSurface(hud->nbammo);
-				if (!(hud->nbammo = init_text(hud->arial, ft_itoa(mapf->player.ammo), mapf->sdl.form->format)))
+				if (!(hud->nbammo = init_text(hud->arial, ft_itoa(mapf->player.ammo), mapf->sdl.form->format, (SDL_Color){0, 0, 0, 255})))
 				{
 					free_hud(hud);
 					return ;

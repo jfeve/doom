@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 19:29:21 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 21:04:02 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -352,6 +352,8 @@ typedef struct		s_hud
 	TTF_Font		*arial;
 	SDL_Surface		*nbammo;
 	SDL_Surface		*nblife;
+	SDL_Surface		*begin;
+	int				timer;
 }					t_hud;
 
 typedef	struct		s_line
@@ -427,14 +429,14 @@ void				render(char *str);
 */
 
 int					init_hud(t_hud *hud, Uint32 format, t_player player);
-SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format);
+SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format, SDL_Color color);
 void				draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
 void				draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y);
 void				draw_sprite_resize(t_sdl *sdl, SDL_Surface *s, t_point start, t_point size);
 int					free_hud(t_hud *hud);
 
-
 void				draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2]);
 void				pick_items(t_mapf *mapf, t_hud *hud);
+void				enemy_ia(t_mapf *mapf);
 
 #endif
