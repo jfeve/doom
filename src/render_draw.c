@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:36:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/04 17:25:44 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 22:12:44 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,22 +34,51 @@ t_float		create_float(float a, float b)
 	return (x);
 }
 
-void		draw(t_mapf *mapf, int x, int y1, int y2, int color)
+Uint32		add_light(Uint32 color)
+{
+	Uint8	r;
+	Uint8	g;
+	Uint8	b;
+	Uint8	a;
+
+	r = color >> 24;
+	g = color >> 16;
+	b = color >> 8;
+	a = color;
+	if (r * 1.8 < 255)
+		r *= 1.8;
+	else
+		r = 255;
+	if (g * 1.8 < 255)
+		g *= 1.8;
+	else
+		g = 255;
+	if (b * 1.8 < 255)
+		b *= 1.8;
+	else
+		b = 255;
+	return ((r << 24) + (g << 16) + (b << 8) + a);
+}
+
+void		draw(t_mapf *mapf, int x, int y1, int y2, int color, t_sector *sect)
 {
 	int		y;
 
 	y = 0;
-	y1 = clamp(y1, 0, WIN_H - 1);
-	y2 = clamp(y2, 0, WIN_H - 1);
+	y1 = clamp(y1, 0, RWIN_H - 1);
+	y2 = clamp(y2, 0, RWIN_H - 1);
 	if (y2 == y1)
-		mapf->sdl.pix[y1 * WIN_W + x] = color;
+		mapf->sdl.pix[y1 * RWIN_W + x] = color;
 	else if (y2 > y1)
 	{
 		y = y1 + 1;
-		mapf->sdl.pix[y1 * WIN_W + x] = 0x000000FF;
+		mapf->sdl.pix[y1 * RWIN_W + x] = 0x000000FF;
 		while (y <= y2)
 		{
-			mapf->sdl.pix[y * WIN_W + x] = color;
+			if (sect->lum == 1 )
+				mapf->sdl.pix[y * RWIN_W + x] = add_light(color);
+			else
+				mapf->sdl.pix[y * RWIN_W + x] = color;
 			y++;
 		}
 	}
@@ -58,21 +87,22 @@ void		draw(t_mapf *mapf, int x, int y1, int y2, int color)
 void		draw_text(t_mapf *mapf, int ya, int yb, int x, int *ytop, int *ybot, int txtx, t_sector *sect, int s)
 {
 	Uint32	*p;
-	int		y = ya;
+	int		y = clamp(ya, ytop[x], ybot[x]);
+	int		cyb = clamp(yb, ytop[x], ybot[x]);
 	float	tey;
 	int		ty;
 	int		ind = sect->vert[s].text - 1;
 
 	SDL_LockSurface(mapf->wall[ind]);
 	p = mapf->wall[ind]->pixels;
-	while (y < yb)
+	while (y < cyb)
 	{
 		tey = (float)((float)y - (float)ya) / (float)((float)yb - (float)ya);
 		ty = mapf->wall[ind]->h * tey;
-		if (y < ybot[x] && y > ytop[x])
-		{
-			mapf->sdl.pix[y * WIN_W + x] = p[txtx % 199 + ty * mapf->wall[ind]->w];
-		}
+		if (sect->lum == 1 )
+			mapf->sdl.pix[y * RWIN_W + x] = add_light(p[txtx % 199 + ty * mapf->wall[ind]->w]);
+		else
+			mapf->sdl.pix[y * RWIN_W + x] = p[txtx % 199 + ty * mapf->wall[ind]->w];
 		y++;
 	}
 }
@@ -83,22 +113,22 @@ void		fill_pix(t_mapf *mapf)
 	t_queue	queue[maxq];
 	t_queue	*head = queue;
 	t_queue	*tail = queue;
-	int		ytop[WIN_W];
-	int		ybot[WIN_W];
+	int		ytop[RWIN_W];
+	int		ybot[RWIN_W];
 	int		rendersect[mapf->nbsect];
 	int		i = 0;
 
-	while (i < WIN_W)
-		ybot[i++] = WIN_H - 1;
+	while (i < RWIN_W)
+		ybot[i++] = RWIN_H - 1;
 	i = 0;
-	while (i < WIN_W)
+	while (i < RWIN_W)
 		ytop[i++] = 0;
 	i = 0;
 	while (i < mapf->nbsect)
 		rendersect[i++] = 0;
 	head->sect = mapf->player.sect;
 	head->sx1 = 0;
-	head->sx2 = WIN_W - 1;
+	head->sx2 = RWIN_W - 1;
 	if (++head == queue + maxq)
 		head = queue;
 	while (head != tail)
@@ -140,6 +170,11 @@ void		fill_pix(t_mapf *mapf)
 			float tz2 = vx2 * pcos + vy2 * psin;
 			int	u0 = 0;
 			int u1 = 199;
+			if (tz1 < 0 && tz2 < 0)
+			{
+				s++;
+				continue ;
+			}
 			if (tz1 <= 0 || tz2 <= 0)
 			{
 				float nearz = 0.0001f;
@@ -195,12 +230,15 @@ void		fill_pix(t_mapf *mapf)
 			}
 			float xscale1 = HFOV / tz1;
 			float yscale1 = VFOV / tz1;
-			int x1 = (tx1 * xscale1) * -1 + WIN_W / 2;
+			int x1 = (tx1 * xscale1) * -1 + RWIN_W / 2;
 			float xscale2 = HFOV / tz2;
 			float yscale2 = VFOV / tz2;
-			int x2 = WIN_W / 2 - (int)(tx2 * xscale2);
-	//		if (x1 >= x2 || x2 < now.sx2 || x1 > now.sx1)
-	//			break ;
+			int x2 = RWIN_W / 2 - (int)(tx2 * xscale2);
+			if (x1 >= x2 || x2 < now.sx1 || x1 > now.sx2)
+			{
+				s++;
+				continue ;
+			}
 			float yceil = sect->ceil - mapf->player.where.z;
 			float yfloor = sect->floor - mapf->player.where.z;
 			int neigh = sect->vert[s].neigh;
@@ -211,28 +249,28 @@ void		fill_pix(t_mapf *mapf)
 				nyceil = mapf->sectors[neigh].ceil - mapf->player.where.z;
 				nyfloor = mapf->sectors[neigh].floor - mapf->player.where.z;
 			}
-			int y1a = WIN_H / 2 - (int)(YAW(yceil, tz1, mapf->player.yaw) * yscale1); 
-			int y1b = WIN_H / 2 - (int)(YAW(yfloor, tz1, mapf->player.yaw) * yscale1); 
-			int y2a = WIN_H / 2 - (int)(YAW(yceil, tz2, mapf->player.yaw) * yscale2); 
-			int y2b = WIN_H / 2 - (int)(YAW(yfloor, tz2, mapf->player.yaw) * yscale2); 
-			int ny1a = WIN_H / 2 - (int)((nyceil + tz1 * mapf->player.yaw) * yscale1);
-			int ny1b = WIN_H / 2 - (int)((nyfloor + tz1 * mapf->player.yaw) * yscale1);
-			int ny2a = WIN_H / 2 - (int)((nyceil + tz2 * mapf->player.yaw) * yscale2);
-			int ny2b = WIN_H / 2 - (int)((nyfloor + tz2 * mapf->player.yaw) * yscale2);
+			int y1a = RWIN_H / 2 - (int)(YAW(yceil, tz1, mapf->player.yaw) * yscale1); 
+			int y1b = RWIN_H / 2 - (int)(YAW(yfloor, tz1, mapf->player.yaw) * yscale1); 
+			int y2a = RWIN_H / 2 - (int)(YAW(yceil, tz2, mapf->player.yaw) * yscale2); 
+			int y2b = RWIN_H / 2 - (int)(YAW(yfloor, tz2, mapf->player.yaw) * yscale2); 
+			int ny1a = RWIN_H / 2 - (int)((nyceil + tz1 * mapf->player.yaw) * yscale1);
+			int ny1b = RWIN_H / 2 - (int)((nyfloor + tz1 * mapf->player.yaw) * yscale1);
+			int ny2a = RWIN_H / 2 - (int)((nyceil + tz2 * mapf->player.yaw) * yscale2);
+			int ny2b = RWIN_H / 2 - (int)((nyfloor + tz2 * mapf->player.yaw) * yscale2);
 			int beginx = max(x1, now.sx1);
 			int	endx = min(x2, now.sx2);
 			int x = beginx;
 			while (x <= endx)
 			{
-				int	txtx = ((u0 * (x2 - x) * tz2) + (u1 * (x - x1) * tz1)) / ((x2 - x) * tz2 + (x - x1) * tz1);
 				if (x2 - x1 == 0)
 					break ;
+				int	txtx = ((u0 * (x2 - x) * tz2) + (u1 * (x - x1) * tz1)) / ((x2 - x) * tz2 + (x - x1) * tz1);
 				int ya = ((x - x1) * (y2a - y1a)) / (x2 - x1) + y1a;
 				int yb = ((x - x1) * (y2b - y1b)) / (x2 - x1) + y1b;
 				int cya = clamp(ya, ytop[x], ybot[x]);
 				int cyb = clamp(yb, ytop[x], ybot[x]);
-				draw(mapf, x, ytop[x], cya - 1, PURPLE);
-				draw(mapf, x, cyb + 1, ybot[x], BROWN);
+				draw(mapf, x, ytop[x], cya - 1, DARK_GREY, sect);
+				draw(mapf, x, cyb + 1, ybot[x], BROWN, sect);
 				if (neigh >= 0)
 				{
 					int nya = (x - x1) * (ny2a - ny1a) / (x2 - x1) + ny1a;
@@ -241,12 +279,12 @@ void		fill_pix(t_mapf *mapf)
 					int cnyb = clamp(nyb, ytop[x], ybot[x]);
 					//unsigned r1 = 0x010101 * (255 - z), r2 = 0x040003 * (31 - z /8);
 					if (x == beginx || x == endx)
-						draw(mapf, x, cya, cnya - 1, 0x000000FF);
+						draw(mapf, x, cya, cnya - 1, 0x000000FF, sect);
 					else
 						draw_text(mapf, ya, nya - 1, x, ytop, ybot, txtx, sect, s);
-					ytop[x] = clamp(max(cya, cnya), ytop[x], WIN_H - 1);
+					ytop[x] = clamp(max(cya, cnya), ytop[x], RWIN_H - 1);
 					if (x == beginx || x == endx)
-						draw(mapf, x, cnyb + 1, cyb, 0x000000FF);
+						draw(mapf, x, cnyb + 1, cyb, 0x000000FF, sect);
 					else
 						draw_text(mapf, nyb + 1, yb, x, ytop, ybot, txtx, sect, s);
 					ybot[x] = clamp(min(cyb, cnyb), 0, ybot[x]);
@@ -255,7 +293,7 @@ void		fill_pix(t_mapf *mapf)
 				{
 					//unsigned r = 0x010101 * (255 - z);
 					if (x == beginx || x == endx)
-					draw(mapf, x, cya, cyb, 0x000000FF);
+					draw(mapf, x, cya, cyb, 0x000000FF, sect);
 					else
 					{
 				//	dprintf(1, "cya = %d cyab = %d\n", cya, cyb);

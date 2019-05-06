@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 17:37:42 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 16:36:21 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -136,21 +136,8 @@ void		render_check_event(t_mapf *mapf, t_input *in, t_hud *hud)
 	crouch(mapf, in);
 	if (in->key[SDL_SCANCODE_ESCAPE])
 		in->quit = SDL_TRUE;
-	if (in->key[SDL_SCANCODE_H])
-	{
-		if (mapf->player.sect == mapf->nbsect - 1)
-			mapf->player.sect = 0;
-		else
-			mapf->player.sect++;
-		in->key[SDL_SCANCODE_H] = SDL_FALSE;
-	}
 	if (in->key[SDL_SCANCODE_J])
 	{
-		if (mapf->player.sect == 0)
-			mapf->player.sect = mapf->nbsect - 1;
-		else
-			mapf->player.sect--;
-		in->key[SDL_SCANCODE_J] = SDL_FALSE;
 	}
 	if (in->mouse[SDL_BUTTON_LEFT])
 	{

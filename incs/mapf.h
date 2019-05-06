@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/04 17:18:32 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 15:26:44 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -107,6 +107,7 @@ typedef struct				s_sector
 	t_objs					*obj;
 	t_enemies				*enem;
 	float					texy;
+	int						lum;
 }							t_sector;
 
 typedef struct				s_mapf
@@ -128,7 +129,7 @@ typedef struct				s_mapf
 	int						rend_s[MAX_SECT];
 	short					nbrend_s;
 	t_xyz					old;
-	SDL_Surface				*wall[2];
+	SDL_Surface				*wall[4];
 }							t_mapf;
 
 #endif

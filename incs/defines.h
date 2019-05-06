@@ -6,18 +6,20 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 20:02:13 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 20:36:58 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
+# define RWIN_W 1280
+# define RWIN_H 720
 # define WIN_W 1500
 # define WIN_H 1000
 # define WF_W 200
 # define WF_H 150
-# define TEXT_SY 5
+# define TEXT_SY 20
 # define TEXT_S 1
 # define UNIT 15
 # define HUD_BEGIN 851
@@ -35,6 +37,7 @@
 # define RED 0xFF0058FF
 # define CYAN 0x4863B5FF
 # define SKYBLUE 0x73C2D1FF
+# define DARK_GREY 0x252525FF
 # define PURPLE 0x8820E8FF
 # define BROWN 0x673415FF
 # define GREEN 0x00A800FF
