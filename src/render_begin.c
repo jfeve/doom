@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 20:30:21 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 17:08:57 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -83,7 +83,7 @@ int		check_ps(t_mapf *mapf)
 						mapf->sectors[mapf->player.sect].lum = 0;
 						mapf->player.sect = sec->vert[i].neigh;
 						mapf->sectors[mapf->player.sect].lum = 1;
-						if (mapf->player.state != jumping && mapf->player.state != flying && mapf->player.state != crouching)
+						if (mapf->player.state != jumping && mapf->player.state != flying)
 							mapf->player.state = falling;
 						return (0);
 					}
@@ -137,6 +137,7 @@ void		render(char *str)
 //	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
+		dprintf(1, "state = %d\n", mapf.player.state);
 		in.xrel = 0;
 		in.yrel = 0;
 		update_event(&in);

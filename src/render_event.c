@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 16:36:21 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 17:36:24 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,9 +40,7 @@ void		jump(t_mapf *mapf, t_input *in)
 		else if (mapf->player.add_z >= 4 && mapf->player.add_z < 5)
 			mapf->player.add_z += 0.25;
 		else
-		{
 			mapf->player.state = falling;
-		}
 	}
 	else if (mapf->player.state == falling)
 	{
@@ -89,8 +87,8 @@ void		crouch(t_mapf *mapf, t_input *in)
 	{
 		in->key[SDL_SCANCODE_LCTRL] = SDL_FALSE;
 		if (mapf->player.state == crouching)
-			mapf->player.state = nmoving;
-		else if (mapf->player.state == nmoving || mapf->player.state == moving)
+			mapf->player.state = moving;
+		else if (mapf->player.state == nmoving || mapf->player.state == moving || mapf->player.state == running)
 			mapf->player.state = crouching;
 	}
 	if (mapf->player.state == crouching)
