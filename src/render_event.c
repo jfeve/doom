@@ -40,9 +40,7 @@ void		jump(t_mapf *mapf, t_input *in)
 		else if (mapf->player.add_z >= 4 && mapf->player.add_z < 5)
 			mapf->player.add_z += 0.25;
 		else
-		{
 			mapf->player.state = falling;
-		}
 	}
 	else if (mapf->player.state == falling)
 	{
@@ -63,7 +61,10 @@ void		fly(t_mapf *mapf, t_input *in)
 	if (in->key[SDL_SCANCODE_F])
 	{
 		if (mapf->player.state == flying)
+		{
+			mapf->player.add_z = mapf->player.where.z - mapf->player.eye - mapf->sectors[mapf->player.sect].floor;
 			mapf->player.state = falling;
+		}
 		else
 			mapf->player.state = flying;
 		in->key[SDL_SCANCODE_F] = SDL_FALSE;
@@ -89,8 +90,8 @@ void		crouch(t_mapf *mapf, t_input *in)
 	{
 		in->key[SDL_SCANCODE_LCTRL] = SDL_FALSE;
 		if (mapf->player.state == crouching)
-			mapf->player.state = nmoving;
-		else if (mapf->player.state == nmoving || mapf->player.state == moving)
+			mapf->player.state = moving;
+		else if (mapf->player.state == nmoving || mapf->player.state == moving || mapf->player.state == running)
 			mapf->player.state = crouching;
 	}
 	if (mapf->player.state == crouching)

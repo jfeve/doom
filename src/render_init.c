@@ -6,7 +6,7 @@
 /*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/05 20:13:49 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 20:32:24 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 17:34:59 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -80,7 +80,7 @@ void		fill_settings(t_mapf *mapf)
 	mapf->player.eye = EYE;
 	mapf->player.add_z = 0.0f;
 	mapf->player.jump_sec = 0;
-	mapf->player.state = nmoving;
+	mapf->player.state = moving;
 	mapf->player.ammo = 5;
 	mapf->player.life = 100;
 	mapf->coeff = 1;

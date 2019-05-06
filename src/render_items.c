@@ -150,6 +150,7 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2])
 			float distance = vector_measure(drawable[j].x, drawable[j].y, mapf->player.where.x, mapf->player.where.y);
 			if (distance == 0.0f)
 				distance = 0.0001f;
+			//dprintf(1, "y: %d      y possible: %f\n", y - (enemy[type]->h / 2), (y - (enemy[type]->h / 2)) * (0.1 / distance));
 			if (drawable[j].is_enemy == 1)
 				draw_sprite_resize(&mapf->sdl, enemy[type], (t_point){x - (enemy[type]->w / 2), y - (enemy[type]->h / 2) - (1300.0f / distance)},
 				(t_point){(int)((float)enemy[type]->w * (32 / (distance))), (int)((float)enemy[type]->h * (32 / (distance)))});
