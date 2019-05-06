@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 20:30:21 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 14:44:15 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -147,7 +147,7 @@ void		render(char *str)
 		check_state(&mapf);
 		clear_tab(&mapf.sdl, RWIN_W, RWIN_H);
 		fill_pix(&mapf);
-		draw_entities(&mapf, hud.items, hud.enemy);
+		draw_entities(&mapf, hud.items, hud.enemy, hud.flag);
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix, RWIN_W, RWIN_H) == 0)
 			return ;

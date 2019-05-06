@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/04 16:03:22 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 16:36:58 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,32 +38,64 @@ static int			init_texture(t_hud *hud, Uint32 format)
 {
 	if (!(hud->gun[0] = init_image("data/textures/idle.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->gun[0]);
 	if (!(hud->gun[1] = init_image("data/textures/shoot1.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->gun[1]);
 	if (!(hud->gun[2] = init_image("data/textures/shoot2.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->gun[2]);
 	if (!(hud->gun[3] = init_image("data/textures/recoil1.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->gun[3]);
 	if (!(hud->gun[4] = init_image("data/textures/recoil2.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->gun[4]);
 	if (!(hud->gun[5] = init_image("data/textures/recoil3.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->gun[5]);
 	if (!(hud->gun[6] = init_image("data/textures/noammo.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->gun[6]);
 	if (!(hud->ammoicon = init_image("data/textures/ammo.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->ammoicon);
 	if (!(hud->lifeicon = init_image("data/textures/life.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->lifeicon);
 	if (!(hud->items[0] = init_image("data/textures/key.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->items[0]);
 	if (!(hud->items[1] = init_image("data/textures/armor.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->items[1]);
 	if (!(hud->items[2] = init_image("data/textures/medkit.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->items[2]);
 	if (!(hud->items[3] = init_image("data/textures/ammopack.bmp", format)))
 		return (0);
-	if (!(hud->enemy = init_image("data/textures/enemy.bmp", format)))
+	dprintf(1, "%p\n", hud->items[3]);
+	if (!(hud->items[4] = init_image("data/textures/key_back.bmp", format)))
 		return (0);
+	dprintf(1, "%p\n", hud->items[4]);
+	if (!(hud->items[5] = init_image("data/textures/armor_back.bmp", format)))
+		return (0);
+	dprintf(1, "%p\n", hud->items[5]);
+	if (!(hud->items[6] = init_image("data/textures/medkit_back.bmp", format)))
+		return (0);
+	dprintf(1, "%p\n", hud->items[6]);
+	if (!(hud->items[7] = init_image("data/textures/ammopack_back.bmp", format)))
+		return (0);
+	dprintf(1, "%p\n", hud->items[7]);
+	if (!(hud->enemy[0] = init_image("data/textures/enemy.bmp", format)))
+		return (0);
+	dprintf(1, "%p\n", hud->enemy[0]);
+	if (!(hud->enemy[1] = init_image("data/textures/enemy2.bmp", format)))
+		return (0);
+	dprintf(1, "%p\n", hud->enemy[1]);
+	if (!(hud->flag = init_image("data/textures/flag.bmp", format)))
+		return (0);
+	dprintf(1, "%p\n\n", hud->flag);
 	return (1);
 }
 
@@ -99,8 +131,10 @@ static int			init_ttf(t_hud *hud, t_player player, Uint32 format)
 		return (0);
 	if (!(hud->nbammo = init_text(hud->arial, ft_itoa(player.ammo), format)))
 		return (0);
+	dprintf(1, "%p\n", hud->nbammo);
 	if (!(hud->nblife = init_text(hud->arial, ft_itoa(player.life), format)))
 		return (0);
+	dprintf(1, "%p\n\n", hud->nblife);
 	return (1);
 }
 

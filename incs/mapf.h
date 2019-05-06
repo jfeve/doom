@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 15:26:44 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 13:24:01 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -110,6 +110,13 @@ typedef struct				s_sector
 	int						lum;
 }							t_sector;
 
+typedef struct				s_rendu
+{
+	int						id;
+	int						beginx;
+	int						endx;
+}							t_rendu;
+
 typedef struct				s_mapf
 {
 	char					magic[5];
@@ -126,7 +133,7 @@ typedef struct				s_mapf
 	t_player				player;
 	float					coeff;
 	t_sdl					sdl;
-	int						rend_s[MAX_SECT];
+	t_rendu					rend_s[MAX_SECT];
 	short					nbrend_s;
 	t_xyz					old;
 	SDL_Surface				*wall[4];
