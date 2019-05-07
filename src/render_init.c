@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   render_init.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/05 20:13:49 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 06:43:02 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 16:30:20 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -81,7 +81,7 @@ void		fill_settings(t_mapf *mapf)
 	mapf->player.add_z = 0.0f;
 	mapf->player.jump_sec = 0;
 	mapf->player.state = moving;
-	mapf->player.ammo = 1000;
+	mapf->player.ammo = 10;
 	mapf->player.life = 100;
 	mapf->coeff = 1;
 }

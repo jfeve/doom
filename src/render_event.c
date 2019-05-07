@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 13:17:08 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 16:28:30 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -152,9 +152,9 @@ void		render_check_event(t_mapf *mapf, t_input *in, t_hud *hud)
 				free_hud(hud);
 				return ;
 			}
-			//Mix_PlayChannel(1, hud->gunshot, 0);
+			Mix_PlayChannel(1, hud->gunshot, 0);
 		}
-		/*else if (hud->id == 6)
-			Mix_PlayChannel(1, hud->empty, 0);*/
+		else if (hud->id == 6)
+			Mix_PlayChannel(1, hud->empty, 0);
 	}
 }

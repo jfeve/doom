@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 15:30:17 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 16:28:17 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -135,7 +135,7 @@ void		render(char *str)
 	}
 	if (!init_hud(&hud, mapf.sdl.form->format, mapf.player))
 		return (ft_putendl("Init SDL_Mixer Error"));
-	//	Mix_PlayMusic(hud.music, -1);
+	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
 		in.xrel = 0;

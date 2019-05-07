@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 16:11:37 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 16:40:02 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -106,6 +106,11 @@ int				read_map(t_mapf *mapf, char *mapname)
 	pid_t	child;
 	char	*args[3];
 
+	if (access("map.tar", F_OK) == -1)
+	{
+		ft_putendl("The map archive doesn't exist");
+		return (0);
+	}
 	args[0] = "/usr/bin/tar";
 	args[1] = "map.tar";
 	args[2] = NULL;
