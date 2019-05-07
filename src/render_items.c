@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 06:56:27 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 09:22:03 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -118,7 +118,6 @@ int			check_middle_in(t_sprite sprite, SDL_Surface *enemy[2], int x, int y, floa
 	j = x;
 	nw = enemy[sprite.type - 1]->w * (32 / distance);
 	nh = enemy[sprite.type - 1]->h * (32 / distance);
-	dprintf(1, "w sprite = %d h sprite = %d\n", nw, nh);
 	while (i < y + nh)
 	{
 		if (i - y < nh / 5)

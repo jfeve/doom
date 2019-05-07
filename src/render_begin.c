@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 06:43:22 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 09:11:48 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -49,8 +49,8 @@ int		check_ps(t_mapf *mapf)
 					if (mapf->player.where.z - mapf->player.eye + KNEE > mapf->sectors[sec->vert[i].neigh].floor &&
 							mapf->player.where.z < mapf->sectors[sec->vert[i].neigh].ceil)
 					{
-						if (mapf->player.state == flying)
-							mapf->player.add_z -= mapf->sectors[sec->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
+						if (mapf->player.state != jumping && mapf->player.state != flying && mapf->player.state != crouching)
+							mapf->player.state = falling;
 						mapf->sectors[mapf->player.sect].lum = 0;
 						mapf->player.sect = sec->vert[i].neigh;
 						mapf->sectors[mapf->player.sect].lum = 1;
@@ -78,8 +78,8 @@ int		check_ps(t_mapf *mapf)
 					if (mapf->player.where.z - mapf->player.eye + KNEE > mapf->sectors[sec->vert[i].neigh].floor &&
 							mapf->player.where.z < mapf->sectors[sec->vert[i].neigh].ceil)
 					{
-						if (mapf->player.state == flying)
-							mapf->player.add_z -= mapf->sectors[sec->vert[i].neigh].floor - mapf->sectors[mapf->player.sect].floor;
+						if (mapf->player.state != jumping && mapf->player.state != flying && mapf->player.state != crouching)
+							mapf->player.state = falling;
 						mapf->sectors[mapf->player.sect].lum = 0;
 						mapf->player.sect = sec->vert[i].neigh;
 						mapf->sectors[mapf->player.sect].lum = 1;
