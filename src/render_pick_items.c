@@ -6,12 +6,17 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/03 16:35:10 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 19:35:09 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 22:23:53 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+/*
+** Compute whether or not an item in the player sector is picked
+** 1: key, 2: armor, 3:life kit, 4: ammo pack
+*/
 
 static int	tests(t_mapf *mapf, t_hud *hud, t_sector now, int i)
 {
@@ -41,11 +46,6 @@ static int	tests(t_mapf *mapf, t_hud *hud, t_sector now, int i)
 	mapf->sectors[mapf->player.sect].obj[i].picked = 1;
 	return (1);
 }
-
-/*
-** Compute whether or not an item in the player sector is picked
-** 1: key, 2: armor, 3:life kit, 4: ammo pack
-*/
 
 int			pick_items(t_mapf *mapf, t_hud *hud)
 {

@@ -6,14 +6,14 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 18:21:59 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 18:05:48 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 20:19:50 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			check_newline(t_draw *draw, t_content *temp, t_draw *cnt)
+static void	check_newline(t_draw *draw, t_content *temp, t_draw *cnt)
 {
 	if (draw->input[draw->i] == '\n')
 	{
@@ -24,7 +24,7 @@ void			check_newline(t_draw *draw, t_content *temp, t_draw *cnt)
 	}
 }
 
-void			cursor(t_draw *cnt, t_draw *draw, t_edit *edit, t_content *temp)
+static void	cursor(t_draw *cnt, t_draw *draw, t_edit *edit, t_content *temp)
 {
 	char *tmp;
 
@@ -41,7 +41,7 @@ void			cursor(t_draw *cnt, t_draw *draw, t_edit *edit, t_content *temp)
 	}
 }
 
-void			draw_content(t_edit *edit, t_content *temp, t_draw *draw)
+void		draw_content(t_edit *edit, t_content *temp, t_draw *draw)
 {
 	t_draw		cnt;
 	char		*tmp;
@@ -65,50 +65,4 @@ void			draw_content(t_edit *edit, t_content *temp, t_draw *draw)
 		draw->i += 1;
 	}
 	cursor(&cnt, draw, edit, temp);
-}
-
-void			norm_string(t_content *tmp, t_draw *draw)
-{
-	ft_strcat(draw->input, tmp->c_title);
-	ft_strcat(draw->input, tmp->c_content);
-	draw->x = tmp->x;
-	draw->y = tmp->y;
-}
-
-void			get_string(t_edit *edit, t_draw *draw)
-{
-	t_content	*tmp;
-	int			len;
-
-	tmp = edit->con;
-	draw->input = NULL;
-	if (ft_strlen(tmp->c_title) == 0 && ft_strlen(tmp->c_content) == 0)
-		return ;
-	while (tmp != NULL)
-	{
-		if (tmp->trigger == 1)
-		{
-			len = (ft_strlen(tmp->c_title) + ft_strlen(tmp->c_content) + 2);
-			if ((draw->input = (char *)
-					malloc(sizeof(char) * (len + 1))) == NULL)
-				return ;
-			draw->input[0] = '\0';
-			norm_string(tmp, draw);
-			len = 0;
-			draw_content(edit, tmp, draw);
-			if (draw->input != NULL)
-				free(draw->input);
-		}
-		tmp = tmp->next;
-	}
-}
-
-void			prepare_draw(t_edit *edit)
-{
-	t_draw		draw;
-
-	draw.y_s = 3;
-	draw.x_s = 2;
-	draw.color = WHITE;
-	get_string(edit, &draw);
 }

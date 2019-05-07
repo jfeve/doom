@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:56:35 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 18:26:57 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 21:07:14 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,6 +70,35 @@ static void	handle_vec(t_edit *edit)
 	}
 	else
 		handle_after_vec(edit);
+}
+
+static void	handle_obj(t_edit *edit)
+{
+	t_lis		*tmp;
+
+	tmp = edit->hl_sec->obj;
+	while (tmp->next && tmp->text != -1)
+		tmp = tmp->next;
+	if (edit->input_res > 4)
+		return ;
+	tmp->text = edit->input_res;
+	if (tmp->next)
+	{
+		tmp->next->oldcol = tmp->next->col;
+		tmp->next->col = tmp->col;
+		tmp->col = tmp->oldcol;
+	}
+	else
+	{
+		if (edit->hl_sec->enem)
+		{
+			edit->hl_sec->enem->oldcol = edit->hl_sec->enem->col;
+			edit->hl_sec->enem->col = BROWN;
+		}
+		else
+			edit->dyn_trigger = 0;
+		tmp->col = tmp->oldcol;
+	}
 }
 
 void		handle_res(t_edit *edit)

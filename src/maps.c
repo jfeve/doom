@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 19:43:15 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 21:20:07 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,7 +67,7 @@ static int	putinfo_sector(int fd, t_edit *edit)
 	return (1);
 }
 
-int			put_data(int fd, t_edit *edit)
+static int	put_data(int fd, t_edit *edit)
 {
 	if (putinfo_head(fd, edit))
 	{
@@ -90,7 +90,7 @@ int			put_data(int fd, t_edit *edit)
 	return (1);
 }
 
-int			map_writer(char *mapname, t_edit *edit)
+static int	map_writer(char *mapname, t_edit *edit)
 {
 	int					fd;
 	char				*mapfile;
@@ -113,32 +113,12 @@ int			map_writer(char *mapname, t_edit *edit)
 
 int			save_map(t_input *in, char *mapname, t_edit *edit)
 {
-	pid_t	child;
-	int		tmp;
-	char	*args[5];
-
 	if (in->key[SDL_SCANCODE_S])
 	{
 		if (map_writer(mapname, edit))
 		{
-			args[0] = "/usr/bin/tar";
-			args[1] = "-cf";
-			args[2] = "map.tar";
-			args[3] = "data/";
-			args[4] = NULL;
-			if ((child = fork()) == -1)
-			{
+			if (!tar())
 				ft_putendl("fork() error");
-				return (0);
-			}
-			if (child == 0)
-			{
-				execve("/usr/bin/tar", args, NULL);
-				exit(EXIT_SUCCESS);
-			}
-			else
-				while (wait(&tmp) != child)
-					;
 			ft_putendl("\n--------Map saved--------\n\n");
 			return (1);
 		}

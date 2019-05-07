@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 19:36:19 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 21:46:55 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -231,7 +231,6 @@ void							print_read(t_mapf *mapf);
 
 int								choose_set(t_edit *edit);
 void							set_trigger(t_edit *edit, int choice, int trig);
-void							draw_wf(int x, int y, t_edit *edit);
 void							wf_mode(t_input *in, t_edit *edit);
 void							set_grid(t_edit *edit);
 void							fill_wf(t_edit *edit);
@@ -241,9 +240,7 @@ void							hud(t_edit *edit);
 ** Draw Object-Enemy
 */
 
-void							handle_obj(t_edit *edit);
 void							handle_enem(t_edit *edit);
-void							draw_obj_enem(t_edit *edit);
 int								obj(t_edit *edit, t_input *in);
 int								enem(t_edit *edit, t_input *in);
 int								check_lis_input(t_lis *vert);
@@ -253,11 +250,10 @@ int								check_lis_input(t_lis *vert);
 */
 
 int								check_mapname(char *mapname);
-int								map_writer(char *mapname, t_edit *edit);
 int								save_map(t_input *in, char *mapname,
 									t_edit *edit);
+int								tar(void);
 int								open_error(char **mapfile);
-int								save_error2(char *error, t_lis *temp);
 void							putinfo_sec(int fd, t_lis *temp, t_sec *tmp);
 int								save_d(int fd, t_lis *temp);
 int								mcheck_pos(t_edit *edit);
@@ -284,6 +280,8 @@ char							*check_alpha2(int num);
 char							*check_alpha3(int num);
 void							draw_square(t_edit *edit, t_draw *draw);
 void							prepare_draw(t_edit *edit);
+void							draw_content(t_edit *edit, t_content *temp,
+																t_draw *draw);
 t_draw							init_draw(int x, int y, int disp);
 void							draw_norm(t_draw *cnt, t_draw *draw,
 										t_edit *ed, char *tmp);
@@ -293,10 +291,7 @@ void							draw_checks(char c, t_draw *cnt, t_draw *draw);
 ** Contents
 */
 
-void							dyn_enter(t_edit *edit,
-									t_input *in, t_content *tmp);
-void							check_keyboard(t_input *in, t_content *tmp);
-void							get_title(t_edit *edit, t_content **con);
+void							get_title(t_edit *edit, t_content *con);
 void							free_dyn_content(t_content **con);
 void							dyn_input(t_edit *edit, t_input *in);
 void							fill_str_content(int size,
@@ -310,7 +305,6 @@ int								add_content(t_edit *edit, char *cont,
 */
 
 void							edit_input(t_edit *edit);
-void							get_string(t_edit *edit, t_draw *draw);
 char							*get_content_char(int num);
 void							level_editor(char *mapname);
 int								init_edit(t_edit *edit);
@@ -396,12 +390,7 @@ float							vector_measure(float x1, float y1, float x2,
 																	float y2);
 void							move_chara(t_mapf *mapf, t_input *in);
 int								read_map(t_mapf *mapf, char *mapname);
-int								read_enem_data(int fd, t_mapf *mapf, int ienem,
-																		int i);
-int								read_objs_data(int fd, t_mapf *mapf, int iobjs,
-																		int i);
 int								read_entities(int fd, t_mapf *mapf, int i);
-int								read_mapfhead(int fd, t_mapf *mapf);
 int								read_sector(int fd, t_mapf *mapf, int i);
 
 /*

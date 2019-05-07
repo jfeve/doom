@@ -6,14 +6,14 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 19:37:12 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 20:13:19 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-float		vector_measure(float x1, float y1, float x2, float y2)
+float	vector_measure(float x1, float y1, float x2, float y2)
 {
 	float dx;
 	float dy;
@@ -97,7 +97,7 @@ int		check_ps(t_mapf *mapf)
 	return (1);
 }
 
-void		check_state(t_mapf *mapf)
+void	check_state(t_mapf *mapf)
 {
 	if (mapf->player.state == jumping || mapf->player.state == falling)
 	{
@@ -119,7 +119,7 @@ void		check_state(t_mapf *mapf)
 		mapf->player.where.z = mapf->sectors[mapf->player.sect].floor + mapf->player.eye + mapf->player.add_z;
 }
 
-void		render(char *str)
+void	render(char *str)
 {
 	t_mapf	mapf;
 	t_input	in;
@@ -131,10 +131,14 @@ void		render(char *str)
 	if (init_mapf(&mapf, str) == 0)
 	{
 		free_sdl(&mapf.sdl, 6);
-		return (ft_putendl("Init Mapf Error"));
+		ft_putendl("Init Mapf Error");
+		return ;
 	}
 	if (!init_hud(&hud, mapf.sdl.form->format, mapf.player))
-		return (ft_putendl("Init SDL_Mixer Error"));
+	{
+		ft_putendl("Init SDL_Mixer Error");
+		return ;
+	}
 	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
@@ -145,7 +149,8 @@ void		render(char *str)
 		{
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
-			return (ft_putendl("Internal error"));
+			ft_putendl("Internal error");
+			return ;
 		}
 		check_ps(&mapf);
 		ft_bzero(&mapf.rend_s, MAX_SECT * sizeof(int));
@@ -159,7 +164,8 @@ void		render(char *str)
 		{
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
-			return (ft_putendl("Internal error"));
+			ft_putendl("Internal error");
+			return ;
 		}
 		draw_entities(&mapf, hud.items, hud.enemy, &in);
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
@@ -167,7 +173,8 @@ void		render(char *str)
 		{
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
-			return (ft_putendl("Internal error"));
+			ft_putendl("Internal error");
+			return ;
 		}
 		mapf.old = (t_xyz){mapf.player.where.x - mapf.player.velo.x, mapf.player.where.y - mapf.player.velo.y, mapf.player.where.z - mapf.player.velo.z};
 	}
