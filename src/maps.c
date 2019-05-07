@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 19:23:33 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 16:12:09 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -116,14 +116,36 @@ int						map_writer(char *mapname, t_edit *edit)
 
 int						save_map(t_input *in, char *mapname, t_edit *edit)
 {
+	pid_t	child;
+	int		tmp;
+	char	*args[5];
+
 	if (in->key[SDL_SCANCODE_S])
 	{
 		if (map_writer(mapname, edit))
 		{
+			args[0] = "/usr/bin/tar";
+			args[1] = "-cf";
+			args[2] = "map.tar";
+			args[3] = "data/";
+			args[4] = NULL;
+			if ((child = fork()) == -1)
+			{
+				ft_putendl("fork() error");
+				return (0);
+			}
+			if (child == 0)
+			{
+				execve("/usr/bin/tar", args, NULL);
+				exit(EXIT_SUCCESS);
+			}
+			else
+				while (wait(&tmp) != child) ;
 			ft_putendl("\n--------Map saved--------\n\n");
 			return (1);
 		}
-		else{
+		else
+		{
 			ft_putendl("\n--------Map not saved--------\n\n");
 			return (0);
 		}

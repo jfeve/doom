@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 15:34:38 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 16:11:37 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,10 +100,27 @@ int				read_sector(int fd, t_mapf *mapf, int i)
 
 int				read_map(t_mapf *mapf, char *mapname)
 {
-	int			fd;
-	char		*mapfile;
-	int			i;
+	int		fd;
+	char	*mapfile;
+	int		i;
+	pid_t	child;
+	char	*args[3];
 
+	args[0] = "/usr/bin/tar";
+	args[1] = "map.tar";
+	args[2] = NULL;
+	if ((child = fork()) == -1)
+	{
+		ft_putendl("fork() error");
+		return (0);
+	}
+	if (child == 0)
+	{
+		execve("/usr/bin/tar", args, NULL);
+		exit(EXIT_SUCCESS);
+	}
+	else
+		while (wait(&i) != child) ;
 	i = -1;
 	mapfile = ft_strjoin(MAP_PATH, mapname);
 	dprintf(1, "%s\n", mapfile);

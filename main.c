@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/07 04:45:53 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 12:45:37 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 15:59:04 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,17 +15,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int		main(int argc, char **argv)
+int		main(void)
 {
 	pid_t child;
 		pid_t waiting;
-	char	*new_arg[] = {argv[1], NULL};
+	char	*new_arg[] = {"/bin/ls", "-la", NULL};
 
 	child = fork();
 	if (child == 0)
 	{
 		dprintf(1, "test  %ld\n", (long)child);
-		execve(argv[1], new_arg, NULL);
+		execve("/bin/ls", new_arg, NULL);
 		exit(0);
 	}
 	else
