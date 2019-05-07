@@ -6,14 +6,14 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 19:03:46 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 14:05:06 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 15:31:07 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void	enemy_ia(t_mapf *mapf, t_hud *hud)
+int		enemy_ia(t_mapf *mapf, t_hud *hud)
 {
 	short	i;
 	short	j;
@@ -29,10 +29,10 @@ void	enemy_ia(t_mapf *mapf, t_hud *hud)
 		t_sector	now = mapf->sectors[mapf->rend_s[i].id];
 		while (++j < now.nbenem && j < MAX_SPRITE)
 		{
-			if ((res = vector_measure(now.enem[j].x, 
+			if ((res = vector_measure(now.enem[j].x,
 			now.enem[j].y, mapf->player.where.x,
-			mapf->player.where.y)) > 1.5f && res < 15 &&
-			now.enem[j].life != 0)
+			mapf->player.where.y)) > 1.5f && res < 15
+			&& now.enem[j].life != 0)
 			{
 					now.enem[j].x += (0.05f / res) * (mapf->player.where.x - now.enem[j].x);
 					now.enem[j].y += (0.05f / res) * (mapf->player.where.y - now.enem[j].y);
@@ -47,7 +47,7 @@ void	enemy_ia(t_mapf *mapf, t_hud *hud)
 					if (!(hud->text = init_text(hud->arial, "Game Over !", mapf->sdl.form->format, (SDL_Color){255, 255, 255, 255})))
 					{
 						free_hud(hud);
-						return ;
+						return (0);
 					}
 				}
 				else if (mapf->player.life != 0)
@@ -64,7 +64,34 @@ void	enemy_ia(t_mapf *mapf, t_hud *hud)
 		if (!(hud->nblife = init_text(hud->arial, ft_itoa(mapf->player.life), mapf->sdl.form->format, (SDL_Color){0, 0, 0, 255})))
 		{
 			free_hud(hud);
-			return ;
+			return (0);
 		}
+	}
+	return (1);
+}
+
+int		check_finish(t_mapf *mapf, int hud_has_key)
+{
+	if (mapf->player.sect == mapf->finish_sec
+	&& vector_measure(mapf->player.where.x, mapf->player.where.y,
+	mapf->finish_x, mapf->finish_y) < 1.0f)
+		if (mapf->has_key == 0 || (mapf->has_key == 1 && hud_has_key == 1))
+			return (1);
+	return (0);
+}
+
+void	check_key(t_mapf *mapf)
+{
+	short	i;
+	short	j;
+
+	i = -1;
+	mapf->has_key = 0;
+	while (++i < mapf->nbsect)
+	{
+		j = -1;
+		while (++j < mapf->sectors[i].nbobjs)
+			if (mapf->sectors[i].obj[j].type == 1)
+				mapf->has_key = 1;
 	}
 }

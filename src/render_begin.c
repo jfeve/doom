@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 13:17:20 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 15:30:17 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -135,7 +135,7 @@ void		render(char *str)
 	}
 	if (!init_hud(&hud, mapf.sdl.form->format, mapf.player))
 		return (ft_putendl("Init SDL_Mixer Error"));
-//	Mix_PlayMusic(hud.music, -1);
+	//	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
 		in.xrel = 0;
@@ -146,9 +146,17 @@ void		render(char *str)
 		ft_bzero(&mapf.rend_s, MAX_SECT * sizeof(int));
 		mapf.nbrend_s = 0;
 		check_state(&mapf);
+		if (check_finish(&mapf, hud.has_key))
+			break ;
 		clear_tab(&mapf.sdl, RWIN_W, RWIN_H);
 		fill_pix(&mapf);
-		enemy_ia(&mapf, &hud);
+		if (!enemy_ia(&mapf, &hud))
+		{
+			free_sdl(&mapf.sdl, 6);
+			free_hud(&hud);
+			ft_putendl("Internal error");
+			exit(EXIT_FAILURE);
+		}
 		draw_entities(&mapf, hud.items, hud.enemy, &in);
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix, RWIN_W, RWIN_H) == 0)

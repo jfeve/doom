@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   map_reader.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 14:30:37 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 15:34:38 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,15 +42,15 @@ int				read_entities(int fd, t_mapf *mapf, int i)
 	return (1);
 }
 
-int				read_mapfhead(int fd, t_mapf *mapf, char *mapfile)
+int				read_mapfhead(int fd, t_mapf *mapf)
 {
 	read(fd, &mapf->magic, 4);
 	mapf->magic[4] = '\0';
 	if (ft_strcmp(mapf->magic, "MAP2") != 0)
 	{
 		ft_putendl("Error, the map file is not valid");
-		free(mapfile);
-		close(fd);
+		//free(mapfile);
+		//close(fd);
 		return (0);
 	}
 	read(fd, &mapf->pl_x, sizeof(int));
@@ -109,9 +109,9 @@ int				read_map(t_mapf *mapf, char *mapname)
 	dprintf(1, "%s\n", mapfile);
 	if ((fd = open(mapfile, O_RDONLY)) != -1)
 	{
-		if (!read_mapfhead(fd, mapf, mapfile))
+		if (!read_mapfhead(fd, mapf))
 		{
-			free (&mapfile);
+			ft_strdel(&mapfile);
 			close (fd);
 			return (0);
 		}
