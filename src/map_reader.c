@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 16:40:02 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 17:45:01 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -111,14 +111,14 @@ int				read_map(t_mapf *mapf, char *mapname)
 		ft_putendl("The map archive doesn't exist");
 		return (0);
 	}
-	args[0] = "/usr/bin/tar";
-	args[1] = "map.tar";
-	args[2] = NULL;
 	if ((child = fork()) == -1)
 	{
 		ft_putendl("fork() error");
 		return (0);
 	}
+	args[0] = "/usr/bin/tar";
+	args[1] = "map.tar";
+	args[2] = NULL;
 	if (child == 0)
 	{
 		execve("/usr/bin/tar", args, NULL);
@@ -148,7 +148,7 @@ int				read_map(t_mapf *mapf, char *mapname)
 	}
 	else
 	{
-		dprintf(1, "\nThe map does not exist\n");
+		ft_putendl("The map file does not exist");
 		return (0);
 	}
 }

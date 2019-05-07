@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 15:34:25 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:12:40 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # include "defines.h"
 # include "def_rend.h"
+# include "mapf.h"
 # include <math.h>
 # include "../lib/SDL2.framework/Versions/Current/Headers/SDL.h"
 # include "../lib/SDL2_ttf.framework/Headers/SDL_ttf.h"
@@ -83,8 +84,6 @@ typedef struct					s_sdl
 	SDL_PixelFormat				*form;
 }								t_sdl;
 
-# include "mapf.h"
-
 typedef	struct					s_draw
 {
 	char						*input;
@@ -150,6 +149,7 @@ typedef	struct					s_bresen
 /*
 ** Event
 */
+
 void							cancels(t_edit *edit, t_input *in);
 int								check_input(t_edit *edit, t_input *in);
 int								new_vert(t_edit *edit, t_input *in);
@@ -159,27 +159,31 @@ int								check_event(char *mapname,
 int								create_player(t_edit *edit, t_input *in);
 int								create_finish(t_edit *edit, t_input *in);
 
-
 /*
 ** SDL
 */
+
 int								free_sdl(t_sdl *sdl, int flag);
 int								sdl_init(t_sdl *sdl, int w, int h);
 void							free_all(int flag, t_edit *edit);
-int								display_frame(SDL_Renderer *ren, Uint32 *pix, int w, int h);
+int								display_frame(SDL_Renderer *ren, Uint32 *pix,
+																int w, int h);
 void							clear_tab(t_sdl *sdl, int w, int h);
 
 /*
 ** Bresen Functions
 */
+
 void							bresen(t_lis a, t_lis b, t_sdl *sdl);
 void							do_1(t_bresen *brs);
 void							do_2(t_bresen *brs);
 void							do_3(t_bresen *brs);
 void							do_4(t_bresen *brs);
+
 /*
 ** Vertex
 */
+
 int								parse_data(int x, int y, t_edit
 									*edit, t_lis *vert);
 void							cancel_last(t_lis **vert);
@@ -195,6 +199,7 @@ void							put_vert(t_edit *edit, t_lis *vert);
 /*
 ** Vector
 */
+
 void							draw_vec(t_edit *edit, t_input in);
 void							portals(t_edit *edit, t_input *in);
 int								put_new_vert(t_edit *edit, t_input *in);
@@ -207,26 +212,31 @@ int								check_on_vec(t_point *in, t_sec *sec);
 /*
 ** Highlight
 */
+
 void							hl_vec(t_edit *edit, t_input *in);
 void							hl_mode(t_input *in, t_edit *edit);
 
 /*
 ** Sectors
 */
+
 void							set_sect(t_edit *edit);
 void							draw_sec(t_edit *edit);
 
 /*
 ** Print // A DELETE PLUS TARD
 */
+
 void							print_info(t_edit *edit, t_input *in);
 void							print_content(t_edit *edit);
 void							print_lis(t_lis **vert);
 void							print_sec(t_sec *sec);
 void							print_read(t_mapf *mapf);
+
 /*
 ** HUD
 */
+
 int								choose_set(t_edit *edit);
 void							set_trigger(t_edit *edit, int choice, int trig);
 void							draw_wf(int x, int y, t_edit *edit);
@@ -238,6 +248,7 @@ void							hud(t_edit *edit);
 /*
 ** Draw Object-Enemy
 */
+
 void							handle_obj(t_edit *edit);
 void							handle_enem(t_edit *edit);
 void							draw_obj_enem(t_edit *edit);
@@ -248,6 +259,7 @@ int								check_lis_input(t_lis *vert);
 /*
 ** Map Saver
 */
+
 int								check_mapname(char *mapname);
 int								map_writer(char *mapname, t_edit *edit);
 int								save_map(t_input *in, char *mapname,
@@ -266,6 +278,7 @@ int								save_objs(int fd, t_lis *temp);
 /*
 ** Input Detection
 */
+
 void							put_zer_flag(t_edit *edit);
 void							handle_res(t_edit *edit);
 void							edit_mode(t_input *in, t_edit *edit);
@@ -273,6 +286,7 @@ void							edit_mode(t_input *in, t_edit *edit);
 /*
 ** Drawer
 */
+
 char							*check_spe(int num);
 char							*check_num(int num);
 char							*check_alpha1(int num);
@@ -288,6 +302,7 @@ void							draw_checks(char c, t_draw *cnt, t_draw *draw);
 /*
 ** Contents
 */
+
 void							dyn_enter(t_edit *edit,
 									t_input *in, t_content *tmp);
 void							check_keyboard(t_input *in, t_content *tmp);
@@ -299,9 +314,11 @@ void							fill_str_content(int size,
 t_content						*create_content(void);
 int								add_content(t_edit *edit, char *cont,
 										char *title, t_draw draw);
+
 /*
 ** Live Input
 */
+
 void							edit_input(t_edit *edit);
 void							get_string(t_edit *edit, t_draw *draw);
 char							*get_content_char(int num);
@@ -315,9 +332,11 @@ void							hud_hl(t_edit *edit);
 /*
 ** Free
 */
+
 void							free_lis(t_lis **vert);
 void							free_sec(t_sec **sec);
 int								free_content(t_edit *edit);
+
 /*
 **-------------------------------------|
 ** ------------ Render ----------------|
@@ -335,110 +354,122 @@ int								free_content(t_edit *edit);
 ** 5: back key, 6: back armor, 7: back life kit, 8: back ammo pack, 9: flag
 */
 
-typedef struct		s_hud
+typedef struct					s_hud
 {
-	int				id;
-	SDL_Surface		*gun[7];
-	SDL_bool		anim;
-	SDL_Surface		*ammoicon;
-	SDL_Surface		*lifeicon;
-	int				has_armor;
-	int				has_key;
-	SDL_Surface		*items[9];
-	SDL_Surface		*enemy[2];
-	Mix_Music		*music;
-	Mix_Chunk		*gunshot;
-	Mix_Chunk		*empty;
-	TTF_Font		*arial;
-	SDL_Surface		*nbammo;
-	SDL_Surface		*nblife;
-	SDL_Surface		*text;
-	int				timer;
-}					t_hud;
+	int							id;
+	SDL_Surface					*gun[7];
+	SDL_bool					anim;
+	SDL_Surface					*ammoicon;
+	SDL_Surface					*lifeicon;
+	int							has_armor;
+	int							has_key;
+	SDL_Surface					*items[9];
+	SDL_Surface					*enemy[2];
+	Mix_Music					*music;
+	Mix_Chunk					*gunshot;
+	Mix_Chunk					*empty;
+	TTF_Font					*arial;
+	SDL_Surface					*nbammo;
+	SDL_Surface					*nblife;
+	SDL_Surface					*text;
+	int							timer;
+}								t_hud;
 
-typedef	struct		s_line
+typedef	struct					s_line
 {
-	int				dx;
-	int				dy;
-	int				sx;
-	int				sy;
-	int				err;
-	int				err2;
-}					t_line;
+	int							dx;
+	int							dy;
+	int							sx;
+	int							sy;
+	int							err;
+	int							err2;
+}								t_line;
 
-typedef struct		s_queue
+typedef struct					s_queue
 {
-	int				sect;
-	int				sx1;
-	int				sx2;
-}					t_queue;
+	int							sect;
+	int							sx1;
+	int							sx2;
+}								t_queue;
 
 /*
 ** Map Reader Functions
 */
 
-void				print_ps(t_mapf *mapf);
-void				slide_wall(t_mapf *mapf, int i);
-void				get_ps(t_mapf *mapf);
-void				fill_pix(t_mapf *mapf);
-void				render_check_event(t_mapf *mapf, t_input *in, t_hud *hud);
-float				vector_measure(float x1, float y1, float x2, float y2);
-void				move_chara(t_mapf *mapf, t_input *in);
-int					read_map(t_mapf *mapf, char *mapname);
-int					read_enem_data(int fd, t_mapf *mapf, int ienem, int i);
-int					read_objs_data(int fd, t_mapf *mapf, int iobjs, int i);
-int					read_entities(int fd, t_mapf *mapf, int i);
-int					read_mapfhead(int fd, t_mapf *mapf);
-int					read_sector(int fd, t_mapf *mapf, int i);
+void							print_ps(t_mapf *mapf);
+void							slide_wall(t_mapf *mapf, int i);
+void							get_ps(t_mapf *mapf);
+void							fill_pix(t_mapf *mapf);
+void							render_check_event(t_mapf *mapf, t_input *in,
+																	t_hud *hud);
+float							vector_measure(float x1, float y1, float x2,
+																	float y2);
+void							move_chara(t_mapf *mapf, t_input *in);
+int								read_map(t_mapf *mapf, char *mapname);
+int								read_enem_data(int fd, t_mapf *mapf, int ienem,
+																		int i);
+int								read_objs_data(int fd, t_mapf *mapf, int iobjs,
+																		int i);
+int								read_entities(int fd, t_mapf *mapf, int i);
+int								read_mapfhead(int fd, t_mapf *mapf);
+int								read_sector(int fd, t_mapf *mapf, int i);
 
 /*
 ** Init functions
 */
 
-int					init_mapf(t_mapf *mapf, char *str);
+int								init_mapf(t_mapf *mapf, char *str);
 
 /*
 ** Math functions for integers
 */
 
-int					min(int a, int b);
-int					max(int a, int b);
-int					clamp(int a, int mi, int ma);
-int					vxs(int ax, int ay, int bx, int by);
-int					overlap(t_point a, t_point b);
-int					intersectbox(t_point a, t_point b, t_point c, t_point d);
-int					pointside(t_point p, t_point a, t_point b);
+int								min(int a, int b);
+int								max(int a, int b);
+int								clamp(int a, int mi, int ma);
+int								vxs(int ax, int ay, int bx, int by);
+int								overlap(t_point a, t_point b);
+int								intersectbox(t_point a, t_point b, t_point c,
+																	t_point d);
+int								pointside(t_point p, t_point a, t_point b);
 
 /*
 ** Math functions for floating point numbers
 */
 
-float				f_max(float a, float b);
-float				f_min(float a, float b);
-float				f_clamp(float a, float mi, float ma);
-float				f_vxs(float ax, float ay, float bx, float by);
-int					f_overlap(t_float a, t_float b);
-int					f_intersectbox(t_float a, t_float b, t_float c, t_float d);
-float				f_pointside(t_float p, t_float a, t_float b);
-t_float				f_intersect(t_float a, t_float b, t_float c, t_float d);
+float							f_max(float a, float b);
+float							f_min(float a, float b);
+float							f_clamp(float a, float mi, float ma);
+float							f_vxs(float ax, float ay, float bx, float by);
+int								f_overlap(t_float a, t_float b);
+int								f_intersectbox(t_float a, t_float b, t_float c,
+																	t_float d);
+float							f_pointside(t_float p, t_float a, t_float b);
+t_float							f_intersect(t_float a, t_float b, t_float c,
+																	t_float d);
 
-void				render(char *str);
+void							render(char *str);
 
 /*
 ** HUD related functions
 */
 
-int					init_hud(t_hud *hud, Uint32 format, t_player player);
-SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format, SDL_Color color);
-void				draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
-void				draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y);
-void				draw_sprite_resize(t_sdl *sdl, SDL_Surface *s, t_point start, t_point size);
-int					free_hud(t_hud *hud);
-
-void				draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2], t_input *in);
-void				pick_items(t_mapf *mapf, t_hud *hud);
-int					go_through_enemies(t_sector now, t_player player, t_sprite *drawable, int nbdraw);
-int					enemy_ia(t_mapf *mapf, t_hud *hud);
-int					check_finish(t_mapf *mapf, int hud_has_key);
+int								init_hud(t_hud *hud, Uint32 format,
+															t_player player);
+SDL_Surface						*init_text(TTF_Font *font, char *str,
+												Uint32 format, SDL_Color color);
+void							draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
+void							draw_sprite(t_sdl *sdl, SDL_Surface *s, int x,
+																		int y);
+void							draw_sprite_resize(t_sdl *sdl, SDL_Surface *s,
+												t_point start, t_point size);
+int								free_hud(t_hud *hud);
+void							draw_entities(t_mapf *mapf,
+					SDL_Surface *items[9], SDL_Surface *enemy[2], t_input *in);
+void							pick_items(t_mapf *mapf, t_hud *hud);
+int								go_through_enemies(t_sector now,
+							t_player player, t_sprite *drawable, int nbdraw);
+int								enemy_ia(t_mapf *mapf, t_hud *hud);
+int								check_finish(t_mapf *mapf, int hud_has_key);
 
 #endif

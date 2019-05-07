@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 16:22:48 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 17:49:07 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -75,14 +75,14 @@ int						put_data(int fd, t_edit *edit)
 			return (1);
 		else
 		{
-			save_error();
+			ft_putendl("One or several sectors are unset");
 			close(fd);
 			return (0);
 		}
 	}
 	else
 	{
-		save_error();
+		ft_putendl("Player and/or finish are unset");
 		close(fd);
 		return (0);
 	}
@@ -105,7 +105,7 @@ int						map_writer(char *mapname, t_edit *edit)
 			return (put_data(fd, edit));
 		else
 		{
-			save_error();
+			ft_putendl("No sectors found");
 			close(fd);
 			return (0);
 		}
