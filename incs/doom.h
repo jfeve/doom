@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 18:12:40 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 19:04:16 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -75,14 +75,6 @@ typedef struct					s_input
 	SDL_bool					quit;
 	SDL_bool					mouse[6];
 }								t_input;
-
-typedef struct					s_sdl
-{
-	SDL_Window					*win;
-	SDL_Renderer				*ren;
-	Uint32						*pix;
-	SDL_PixelFormat				*form;
-}								t_sdl;
 
 typedef	struct					s_draw
 {
@@ -265,7 +257,6 @@ int								map_writer(char *mapname, t_edit *edit);
 int								save_map(t_input *in, char *mapname,
 									t_edit *edit);
 int								open_error(char **mapfile);
-int								save_error(void);
 int								save_error2(char *error, t_lis *temp);
 void							putinfo_sec(int fd, t_lis *temp, t_sec *tmp);
 int								save_d(int fd, t_lis *temp);
@@ -279,7 +270,6 @@ int								save_objs(int fd, t_lis *temp);
 ** Input Detection
 */
 
-void							put_zer_flag(t_edit *edit);
 void							handle_res(t_edit *edit);
 void							edit_mode(t_input *in, t_edit *edit);
 
@@ -447,7 +437,7 @@ int								f_intersectbox(t_float a, t_float b, t_float c,
 float							f_pointside(t_float p, t_float a, t_float b);
 t_float							f_intersect(t_float a, t_float b, t_float c,
 																	t_float d);
-
+float							yaw(float y, float z, float yaw);
 void							render(char *str);
 
 /*
@@ -456,8 +446,9 @@ void							render(char *str);
 
 int								init_hud(t_hud *hud, Uint32 format,
 															t_player player);
+SDL_Surface						*init_image(char *path, Uint32 format);
 SDL_Surface						*init_text(TTF_Font *font, char *str,
-												Uint32 format, SDL_Color color);
+												Uint32 form, SDL_Color color);
 void							draw_hud(t_sdl *sdl, t_hud *hud, int ammo);
 void							draw_sprite(t_sdl *sdl, SDL_Surface *s, int x,
 																		int y);

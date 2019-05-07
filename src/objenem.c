@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/14 16:13:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 19:19:21 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:24:11 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,7 +37,7 @@ void			handle_obj(t_edit *edit)
 			edit->hl_sec->enem->col = BROWN;
 		}
 		else
-			put_zer_flag(edit);
+			edit->dyn_trigger = 0;
 		tmp->col = tmp->oldcol;
 	}
 }
@@ -60,7 +60,7 @@ void			handle_enem(t_edit *edit)
 	}
 	else
 	{
-		put_zer_flag(edit);
+		edit->dyn_trigger = 0;
 		tmp->col = tmp->oldcol;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   maps_bis.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:07:42 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 15:56:41 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:21:51 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,13 +36,6 @@ int						save_objs(int fd, t_lis *temp)
 		temp = temp->next;
 	}
 	return (1);
-}
-
-int						save_error(void)
-{
-	ft_putendl("There has been an error while saving the file");
-//	free(&mapfile);
-	return (0);
 }
 
 int						save_error2(char *error, t_lis *temp)

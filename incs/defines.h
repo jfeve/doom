@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 19:13:40 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:44:00 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,5 +100,4 @@
 # define DIFICULTY "Diff \0"
 # define PLAYER_OR "player look \0"
 # define GRAVITY "gravity \0"
-# define YAW(y, z, yaw) (y + z * yaw)
 #endif

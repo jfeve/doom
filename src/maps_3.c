@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   maps_3.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 13:34:28 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 15:55:25 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:22:11 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,8 +46,6 @@ int				err_map(char *msg, t_lis *temp)
 {
 	if (ft_strlen(msg))
 	{
-	//	if (temp != NULL)
-	//		free(&temp);
 		ft_putendl(msg);
 		return (0);
 	}

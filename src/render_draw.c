@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:36:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 21:30:33 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:45:46 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -240,10 +240,10 @@ void		fill_pix(t_mapf *mapf)
 				nyceil = mapf->sectors[neigh].ceil - mapf->player.where.z;
 				nyfloor = mapf->sectors[neigh].floor - mapf->player.where.z;
 			}
-			int y1a = RWIN_H / 2 - (int)(YAW(yceil, tz1, mapf->player.yaw) * yscale1); 
-			int y1b = RWIN_H / 2 - (int)(YAW(yfloor, tz1, mapf->player.yaw) * yscale1); 
-			int y2a = RWIN_H / 2 - (int)(YAW(yceil, tz2, mapf->player.yaw) * yscale2); 
-			int y2b = RWIN_H / 2 - (int)(YAW(yfloor, tz2, mapf->player.yaw) * yscale2); 
+			int y1a = RWIN_H / 2 - (int)(yaw(yceil, tz1, mapf->player.yaw) * yscale1); 
+			int y1b = RWIN_H / 2 - (int)(yaw(yfloor, tz1, mapf->player.yaw) * yscale1); 
+			int y2a = RWIN_H / 2 - (int)(yaw(yceil, tz2, mapf->player.yaw) * yscale2); 
+			int y2b = RWIN_H / 2 - (int)(yaw(yfloor, tz2, mapf->player.yaw) * yscale2); 
 			int ny1a = RWIN_H / 2 - (int)((nyceil + tz1 * mapf->player.yaw) * yscale1);
 			int ny1b = RWIN_H / 2 - (int)((nyfloor + tz1 * mapf->player.yaw) * yscale1);
 			int ny2a = RWIN_H / 2 - (int)((nyceil + tz2 * mapf->player.yaw) * yscale2);

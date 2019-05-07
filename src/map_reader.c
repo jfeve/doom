@@ -6,14 +6,14 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 17:45:01 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:42:33 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-int				read_entities(int fd, t_mapf *mapf, int i)
+int		read_entities(int fd, t_mapf *mapf, int i)
 {
 	int			ienem;
 	int			iobjs;
@@ -22,7 +22,6 @@ int				read_entities(int fd, t_mapf *mapf, int i)
 	ienem = -1;
 	if (mapf->sectors[i].nbobjs != 0)
 	{
-	dprintf(1, "mapf->sectors[i].nbobjs = %d\n", mapf->sectors[i].nbobjs);
 		mapf->sectors[i].obj = (t_objs *)malloc(
 			sizeof(t_objs) * mapf->sectors[i].nbobjs);
 		while (++iobjs < mapf->sectors[i].nbobjs)
@@ -42,15 +41,13 @@ int				read_entities(int fd, t_mapf *mapf, int i)
 	return (1);
 }
 
-int				read_mapfhead(int fd, t_mapf *mapf)
+int		read_mapfhead(int fd, t_mapf *mapf)
 {
 	read(fd, &mapf->magic, 4);
 	mapf->magic[4] = '\0';
 	if (ft_strcmp(mapf->magic, "MAP2") != 0)
 	{
 		ft_putendl("Error, the map file is not valid");
-		//free(mapfile);
-		//close(fd);
 		return (0);
 	}
 	read(fd, &mapf->pl_x, sizeof(int));
@@ -69,7 +66,7 @@ int				read_mapfhead(int fd, t_mapf *mapf)
 	return (1);
 }
 
-int				read_sector(int fd, t_mapf *mapf, int i)
+int		read_sector(int fd, t_mapf *mapf, int i)
 {
 	int		k;
 
@@ -98,7 +95,7 @@ int				read_sector(int fd, t_mapf *mapf, int i)
 	return (1);
 }
 
-int				read_map(t_mapf *mapf, char *mapname)
+int		read_map(t_mapf *mapf, char *mapname)
 {
 	int		fd;
 	char	*mapfile;
@@ -125,22 +122,23 @@ int				read_map(t_mapf *mapf, char *mapname)
 		exit(EXIT_SUCCESS);
 	}
 	else
-		while (wait(&i) != child) ;
+		while (wait(&i) != child)
+			;
 	i = -1;
 	mapfile = ft_strjoin(MAP_PATH, mapname);
-	dprintf(1, "%s\n", mapfile);
 	if ((fd = open(mapfile, O_RDONLY)) != -1)
 	{
 		if (!read_mapfhead(fd, mapf))
 		{
 			ft_strdel(&mapfile);
-			close (fd);
+			close(fd);
 			return (0);
 		}
 		mapf->sectors = (t_sector *)malloc(sizeof(t_sector) * mapf->nbsect + 1);
 		while (++i != mapf->nbsect)
 			read_sector(fd, mapf, i);
-		mapf->player.where.z = (float)mapf->sectors[mapf->player.sect].floor + (float)EYE;
+		mapf->player.where.z = (float)mapf->sectors[mapf->player.sect].floor
+		+ (float)EYE;
 		print_read(mapf);
 		free(mapfile);
 		close(fd);

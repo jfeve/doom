@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 13:53:46 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:45:30 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -208,7 +208,7 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2], 
 			float xscale = HFOV / drawable[j].tz;
 			float yscale = VFOV / drawable[j].tz;
 			int x = (drawable[j].tx * xscale) * -1 + RWIN_W / 2;
-			int y = (RWIN_H / 2) - (int)(YAW(now->floor - mapf->player.where.z, drawable[j].tz, mapf->player.yaw) * yscale);
+			int y = (RWIN_H / 2) - (int)(yaw(now->floor - mapf->player.where.z, drawable[j].tz, mapf->player.yaw) * yscale);
 			if (x > mapf->rend_s[i].endx || x < mapf->rend_s[i].beginx)
 				continue ;
 			/*if (type == 8 && (x > mapf->rend_s[mapf->finish_sec].endx || x < mapf->rend_s[mapf->finish_sec].beginx))

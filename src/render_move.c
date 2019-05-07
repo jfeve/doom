@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   render_move.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:32:13 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 19:40:50 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:18:36 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -241,4 +241,3 @@ void		move_chara(t_mapf *mapf, t_input *in)
 		mapf->player.where.y += mapf->player.velo.y * mapf->coeff;
 	}
 }
-

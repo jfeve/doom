@@ -3,17 +3,17 @@
 /*                                                              /             */
 /*   dyn.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/21 22:03:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 18:33:23 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:39:59 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			add_equal(t_content **temp, int j)
+void	add_equal(t_content **temp, int j)
 {
 	t_content	*cont;
 
@@ -23,7 +23,7 @@ void			add_equal(t_content **temp, int j)
 	cont->c_title[j++] = ' ';
 }
 
-void			get_lis_num(t_content **con, t_lis *vert)
+void	get_lis_num(t_content **con, t_lis *vert)
 {
 	t_content	*temp;
 	t_lis		*tmp;
@@ -52,7 +52,7 @@ void			get_lis_num(t_content **con, t_lis *vert)
 	ft_strdel(&str);
 }
 
-void			get_title(t_edit *edit, t_content **con)
+void	get_title(t_edit *edit, t_content **con)
 {
 	t_sec		*hl;
 	t_content	*tmp;
@@ -82,7 +82,7 @@ void			get_title(t_edit *edit, t_content **con)
 	}
 }
 
-void			check_keyboard(t_input *in, t_content *tmp)
+void	check_keyboard(t_input *in, t_content *tmp)
 {
 	int			i;
 	int			j;
@@ -109,7 +109,7 @@ void			check_keyboard(t_input *in, t_content *tmp)
 	}
 }
 
-void			dyn_enter(t_edit *edit, t_input *in, t_content *tmp)
+void	dyn_enter(t_edit *edit, t_input *in, t_content *tmp)
 {
 	if (in->key[SDL_SCANCODE_KP_ENTER] || in->key[SDL_SCANCODE_RETURN])
 	{

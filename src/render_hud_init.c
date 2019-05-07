@@ -6,27 +6,33 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 12:24:06 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 19:04:56 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-static SDL_Surface	*init_image(char *path, Uint32 format)
+static int	init_texture2(t_hud *hud, Uint32 format)
 {
-	SDL_Surface	*tmp;
-	SDL_Surface	*ret;
-
-	if (!(tmp = SDL_LoadBMP(path)))
-		return (NULL);
-	if (!(ret = SDL_ConvertSurfaceFormat(tmp, format, 0)))
-	{
-		SDL_FreeSurface(tmp);
-		return (NULL);
-	}
-	SDL_FreeSurface(tmp);
-	return (ret);
+	if (!(hud->items[3] = init_image("data/textures/ammopack.bmp", format)))
+		return (0);
+	if (!(hud->items[4] = init_image("data/textures/key_back.bmp", format)))
+		return (0);
+	if (!(hud->items[5] = init_image("data/textures/armor_back.bmp", format)))
+		return (0);
+	if (!(hud->items[6] = init_image("data/textures/medkit_back.bmp", format)))
+		return (0);
+	if (!(hud->items[7] = init_image("data/textures/ammopack_back.bmp",
+	format)))
+		return (0);
+	if (!(hud->items[8] = init_image("data/textures/flag.bmp", format)))
+		return (0);
+	if (!(hud->enemy[0] = init_image("data/textures/enemy.bmp", format)))
+		return (0);
+	if (!(hud->enemy[1] = init_image("data/textures/enemy2.bmp", format)))
+		return (0);
+	return (1);
 }
 
 /*
@@ -34,7 +40,7 @@ static SDL_Surface	*init_image(char *path, Uint32 format)
 ** tmp is here to change the format of the textures, to match the screen's.
 */
 
-static int			init_texture(t_hud *hud, Uint32 format)
+static int	init_texture(t_hud *hud, Uint32 format)
 {
 	if (!(hud->gun[0] = init_image("data/textures/idle.bmp", format)))
 		return (0);
@@ -60,37 +66,21 @@ static int			init_texture(t_hud *hud, Uint32 format)
 		return (0);
 	if (!(hud->items[2] = init_image("data/textures/medkit.bmp", format)))
 		return (0);
-	if (!(hud->items[3] = init_image("data/textures/ammopack.bmp", format)))
-		return (0);
-	if (!(hud->items[4] = init_image("data/textures/key_back.bmp", format)))
-		return (0);
-	if (!(hud->items[5] = init_image("data/textures/armor_back.bmp", format)))
-		return (0);
-	if (!(hud->items[6] = init_image("data/textures/medkit_back.bmp", format)))
-		return (0);
-	if (!(hud->items[7] = init_image("data/textures/ammopack_back.bmp", format)))
-		return (0);
-	if (!(hud->items[8] = init_image("data/textures/flag.bmp", format)))
-		return (0);
-	if (!(hud->enemy[0] = init_image("data/textures/enemy.bmp", format)))
-		return (0);
-	if (!(hud->enemy[1] = init_image("data/textures/enemy2.bmp", format)))
-		return (0);
-	return (1);
+	return (init_texture2(hud, format));
 }
 
 /*
 ** Init the font and the default ammo and life numbers
 */
 
-SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format, SDL_Color color)
+SDL_Surface	*init_text(TTF_Font *font, char *str, Uint32 form, SDL_Color color)
 {
 	SDL_Surface	*tmp;
 	SDL_Surface	*ret;
 
 	if (!(tmp = TTF_RenderText_Solid(font, str, color)))
 		return (NULL);
-	if (!(ret = SDL_ConvertSurfaceFormat(tmp, format, 0)))
+	if (!(ret = SDL_ConvertSurfaceFormat(tmp, form, 0)))
 	{
 		SDL_FreeSurface(tmp);
 		return (NULL);
@@ -103,17 +93,20 @@ SDL_Surface			*init_text(TTF_Font *font, char *str, Uint32 format, SDL_Color col
 ** Initialize the fonts and texts
 */
 
-static int			init_ttf(t_hud *hud, t_player player, Uint32 format)
+static int	init_ttf(t_hud *hud, t_player player, Uint32 format)
 {
-	if(TTF_Init() == -1)
+	if (TTF_Init() == -1)
 		return (0);
 	if (!(hud->arial = TTF_OpenFont("/Library/Fonts/Arial.ttf", 25)))
 		return (0);
-	if (!(hud->nbammo = init_text(hud->arial, ft_itoa(player.ammo), format, (SDL_Color){0, 0, 0, 255})))
+	if (!(hud->nbammo = init_text(hud->arial, ft_itoa(player.ammo), format,
+	(SDL_Color){0, 0, 0, 255})))
 		return (0);
-	if (!(hud->nblife = init_text(hud->arial, ft_itoa(player.life), format, (SDL_Color){0, 0, 0, 255})))
+	if (!(hud->nblife = init_text(hud->arial, ft_itoa(player.life), format,
+	(SDL_Color){0, 0, 0, 255})))
 		return (0);
-	if (!(hud->text = init_text(hud->arial, "Start !", format, (SDL_Color){255, 255, 255, 255})))
+	if (!(hud->text = init_text(hud->arial, "Start !", format,
+	(SDL_Color){255, 255, 255, 255})))
 		return (0);
 	return (1);
 }
@@ -122,7 +115,7 @@ static int			init_ttf(t_hud *hud, t_player player, Uint32 format)
 ** Initialize the textures and sounds of the hud
 */
 
-int					init_hud(t_hud *hud, Uint32 format, t_player player)
+int			init_hud(t_hud *hud, Uint32 format, t_player player)
 {
 	if (!init_texture(hud, format))
 		return (free_hud(hud));

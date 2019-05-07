@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   vert.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:21:04 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 11:11:51 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:20:21 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,10 +55,10 @@ int				add_vert(int x, int y, t_edit *edit, t_lis *vert)
 	if (!(point = (t_lis*)malloc(sizeof(t_lis))))
 		return (-1);
 	point->x = arr(x);
+	point->y = arr(y);
 	point->neigh = -1;
 	point->port = 0;
 	point->text = -1;
-	point->y = arr(y);
 	point->col = WHITE;
 	point->oldcol = RED;
 	point->next = NULL;
