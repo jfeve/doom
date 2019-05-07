@@ -6,14 +6,14 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 16:28:30 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 19:31:49 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void		mouse_aim(t_mapf *mapf, t_input *in)
+void	mouse_aim(t_mapf *mapf, t_input *in)
 {
 	float yaw = 0;
 
@@ -25,7 +25,7 @@ void		mouse_aim(t_mapf *mapf, t_input *in)
 	mapf->player.yaw = f_clamp(mapf->player.yaw, -4, 3);
 }
 
-void		jump(t_mapf *mapf, t_input *in)
+void	jump(t_mapf *mapf, t_input *in)
 {
 	if (in->key[SDL_SCANCODE_SPACE] && (mapf->player.state != flying && mapf->player.state != jumping && mapf->player.state != falling))
 	{
@@ -56,7 +56,7 @@ void		jump(t_mapf *mapf, t_input *in)
 	}
 }
 
-void		fly(t_mapf *mapf, t_input *in)
+void	fly(t_mapf *mapf, t_input *in)
 {
 	if (in->key[SDL_SCANCODE_F])
 	{
@@ -84,7 +84,7 @@ void		fly(t_mapf *mapf, t_input *in)
 	}
 }
 
-void		crouch(t_mapf *mapf, t_input *in)
+void	crouch(t_mapf *mapf, t_input *in)
 {
 	if (in->key[SDL_SCANCODE_LCTRL] && mapf->player.state != flying)
 	{
@@ -107,7 +107,7 @@ void		crouch(t_mapf *mapf, t_input *in)
 	}
 }
 
-void		plrunning(t_mapf *mapf, t_input *in)
+void	plrunning(t_mapf *mapf, t_input *in)
 {
 	if (in->key[SDL_SCANCODE_LSHIFT])
 	{
@@ -126,10 +126,11 @@ void		plrunning(t_mapf *mapf, t_input *in)
 	}
 }
 
-void		render_check_event(t_mapf *mapf, t_input *in, t_hud *hud)
+int		render_check_event(t_mapf *mapf, t_input *in, t_hud *hud)
 {
 	move_chara(mapf, in);
-	pick_items(mapf, hud);
+	if (!pick_items(mapf, hud))
+		return (0);
 	mouse_aim(mapf, in);
 	jump(mapf, in);
 	fly(mapf, in);
@@ -150,11 +151,12 @@ void		render_check_event(t_mapf *mapf, t_input *in, t_hud *hud)
 			if (!(hud->nbammo = init_text(hud->arial, ft_itoa(mapf->player.ammo), mapf->sdl.form->format, (SDL_Color){0, 0, 0, 255})))
 			{
 				free_hud(hud);
-				return ;
+				return (0);
 			}
 			Mix_PlayChannel(1, hud->gunshot, 0);
 		}
 		else if (hud->id == 6)
 			Mix_PlayChannel(1, hud->empty, 0);
 	}
+	return (1);
 }

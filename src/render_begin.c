@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 16:28:17 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 19:37:12 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -141,7 +141,12 @@ void		render(char *str)
 		in.xrel = 0;
 		in.yrel = 0;
 		update_event(&in);
-		render_check_event(&mapf, &in, &hud);
+		if (!render_check_event(&mapf, &in, &hud))
+		{
+			free_sdl(&mapf.sdl, 6);
+			free_hud(&hud);
+			return (ft_putendl("Internal error"));
+		}
 		check_ps(&mapf);
 		ft_bzero(&mapf.rend_s, MAX_SECT * sizeof(int));
 		mapf.nbrend_s = 0;
@@ -154,15 +159,17 @@ void		render(char *str)
 		{
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
-			ft_putendl("Internal error");
-			exit(EXIT_FAILURE);
+			return (ft_putendl("Internal error"));
 		}
 		draw_entities(&mapf, hud.items, hud.enemy, &in);
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix, RWIN_W, RWIN_H) == 0)
-			return ;
+		{
+			free_sdl(&mapf.sdl, 6);
+			free_hud(&hud);
+			return (ft_putendl("Internal error"));
+		}
 		mapf.old = (t_xyz){mapf.player.where.x - mapf.player.velo.x, mapf.player.where.y - mapf.player.velo.y, mapf.player.where.z - mapf.player.velo.z};
-//		SDL_Delay(1000 / 60);
 	}
 	free_sdl(&mapf.sdl, 6);
 	free_hud(&hud);

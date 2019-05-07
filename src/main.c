@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 20:35:40 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 19:41:26 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,7 +35,7 @@ int				init_content(t_edit *edit)
 	return (1);
 }
 
-int				choose_set(t_edit*edit)
+int				choose_set(t_edit *edit)
 {
 	if (edit->hl_sec_temp)
 	{
@@ -77,7 +77,6 @@ void			draw_wf(int x, int y, t_edit *edit)
 	int			i;
 	int			j;
 
-	i = x;
 	j = y;
 	if (edit->dyn_trigger == 1)
 	{
