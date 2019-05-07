@@ -6,14 +6,14 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 19:03:46 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 21:38:23 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 06:59:52 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void	enemy_ia(t_mapf *mapf)
+void	enemy_ia(t_mapf *mapf, t_hud *hud)
 {
 	short	i;
 	short	j;
@@ -27,10 +27,33 @@ void	enemy_ia(t_mapf *mapf)
 		{
 			if ((res = vector_measure(mapf->sectors[i].enem[j].x, 
 			mapf->sectors[i].enem[j].y, mapf->player.where.x,
-			mapf->player.where.y)) > 1.5f)
+			mapf->player.where.y)) > 1.5f && res < 20 &&
+					mapf->sectors[i].enem[j].life != 0)
 			{
-				mapf->sectors[i].enem[j].x += (0.1f / res) * (mapf->player.where.x - mapf->sectors[i].enem[j].x);
-				mapf->sectors[i].enem[j].y += (0.1f / res) * (mapf->player.where.y - mapf->sectors[i].enem[j].y);
+					mapf->sectors[i].enem[j].x += (0.1f / res) * (mapf->player.where.x - mapf->sectors[i].enem[j].x);
+					mapf->sectors[i].enem[j].y += (0.1f / res) * (mapf->player.where.y - mapf->sectors[i].enem[j].y);
+			}
+			else if (vector_measure(mapf->sectors[i].enem[j].x, 
+			mapf->sectors[i].enem[j].y, mapf->player.where.x,
+			mapf->player.where.y) <= 2.0f && mapf->sectors[i].enem[j].life != 0)
+			{
+				if (mapf->player.life == 0)
+				{
+					hud->timer = -1;
+					if (!(hud->begin = init_text(hud->arial, "Game Over !", mapf->sdl.form->format, (SDL_Color){255, 255, 255, 255})))
+					{
+						free_hud(hud);
+						return ;
+					}
+				}
+				else if (mapf->player.life != 0)
+					mapf->player.life--;
+				SDL_FreeSurface(hud->nblife);
+				if (!(hud->nblife = init_text(hud->arial, ft_itoa(mapf->player.life), mapf->sdl.form->format, (SDL_Color){0, 0, 0, 255})))
+				{
+					free_hud(hud);
+					return ;
+				}
 			}
 		}
 	}
