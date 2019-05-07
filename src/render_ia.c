@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 19:03:46 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 15:31:07 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 23:01:23 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,11 +43,14 @@ int		enemy_ia(t_mapf *mapf, t_hud *hud)
 			{
 				if (mapf->player.life == 0)
 				{
-					hud->timer = -1;
-					if (!(hud->text = init_text(hud->arial, "Game Over !", mapf->sdl.form->format, (SDL_Color){255, 255, 255, 255})))
+					if (hud->timer == 0)
 					{
-						free_hud(hud);
-						return (0);
+						hud->timer = -50;
+						if (!(hud->text = init_text(hud->arial, "Game Over !", mapf->sdl.form->format, (SDL_Color){255, 255, 255, 255})))
+						{
+							free_hud(hud);
+							return (0);
+						}
 					}
 				}
 				else if (mapf->player.life != 0)
@@ -60,6 +63,8 @@ int		enemy_ia(t_mapf *mapf, t_hud *hud)
 		if (hud->has_armor == 1 && taken_dmg > 1)
 			taken_dmg = 2 * taken_dmg / 3;
 		mapf->player.life -= taken_dmg;
+		if (mapf->player.life < 0)
+			mapf->player.life = 0;
 		SDL_FreeSurface(hud->nblife);
 		if (!(hud->nblife = init_text(hud->arial, ft_itoa(mapf->player.life), mapf->sdl.form->format, (SDL_Color){0, 0, 0, 255})))
 		{

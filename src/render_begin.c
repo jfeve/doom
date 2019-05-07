@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 20:13:19 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 23:06:59 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -177,6 +177,12 @@ void	render(char *str)
 			return ;
 		}
 		mapf.old = (t_xyz){mapf.player.where.x - mapf.player.velo.x, mapf.player.where.y - mapf.player.velo.y, mapf.player.where.z - mapf.player.velo.z};
+		if (hud.timer == -1)
+		{
+			free_sdl(&mapf.sdl, 6);
+			free_hud(&hud);
+			return ;
+		}
 	}
 	free_sdl(&mapf.sdl, 6);
 	free_hud(&hud);
