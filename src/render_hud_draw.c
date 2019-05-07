@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 14:03:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 21:10:45 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 03:01:42 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -178,6 +178,8 @@ void		draw_hud(t_sdl *sdl, t_hud *hud, int ammo)
 		hud->timer--;
 		draw_sprite(sdl, hud->begin, RWIN_W / 2 - 40, RWIN_H / 2 - 12);
 	}
+	else if (hud->timer == -1)
+		draw_sprite(sdl, hud->begin, RWIN_W / 2 - 70, RWIN_H / 2 - 12);
 	if (hud->has_key)
 		draw_sprite(sdl, hud->items[0], 10, 10);
 	if (hud->has_armor)
