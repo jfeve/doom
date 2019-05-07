@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 13:49:08 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 13:51:21 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -146,22 +146,6 @@ int			check_middle_in(t_sprite sprite, SDL_Surface *enemy[2], int x, int y, floa
 	return (0);
 }
 
-/*
-** Put enemy life to zero
-*/
-
-void		put_zerohp(t_sector *sec, t_sprite sprite)
-{
-	int		i;
-
-	i = 0;
-	while (i < sec->nbenem)
-	{
-		if ((int)sec->enem[i].x == sprite.x && (int)sec->enem[i].y == sprite.y)
-			sec->enem[i].life = 0;
-		i++;
-	}
-}
 
 /*
 ** Pick the enemy to kill and delete him
