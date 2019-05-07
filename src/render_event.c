@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 23:09:47 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 13:17:08 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -135,7 +135,6 @@ void		render_check_event(t_mapf *mapf, t_input *in, t_hud *hud)
 	fly(mapf, in);
 	plrunning(mapf, in);
 	crouch(mapf, in);
-	enemy_ia(mapf, hud);
 	if (in->key[SDL_SCANCODE_ESCAPE])
 		in->quit = SDL_TRUE;
 	if (in->key[SDL_SCANCODE_J])

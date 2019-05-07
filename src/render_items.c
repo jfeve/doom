@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 09:22:03 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 13:49:08 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,7 +54,7 @@ static void	bubbleSort(t_sprite arr[], int n, t_point player)
 ** Go through every items in the now sector, and stock in drawable the ones that will be drawn
 */
 
-static int	go_through_items(t_sector now, t_mapf *mapf, t_sprite *drawable, int nbdraw)
+static int	go_through_items(t_sector now, t_player player, t_sprite *drawable, int nbdraw)
 {
 	int		j;
 	int		ret;
@@ -65,10 +65,10 @@ static int	go_through_items(t_sector now, t_mapf *mapf, t_sprite *drawable, int 
 	{
 		if (now.obj[j].picked == 1)
 			continue;
-		float vx = (float)(now.obj[j].x - mapf->player.where.x);
-		float vy = (float)(now.obj[j].y - mapf->player.where.y);
-		float tx = vx * mapf->player.anglesin - vy * mapf->player.anglecos;
-		float tz = vx * mapf->player.anglecos + vy * mapf->player.anglesin;
+		float vx = (float)(now.obj[j].x - player.where.x);
+		float vy = (float)(now.obj[j].y - player.where.y);
+		float tx = vx * player.anglesin - vy * player.anglecos;
+		float tz = vx * player.anglecos + vy * player.anglesin;
 		if (tz <= 0)
 			continue ;
 		drawable[ret++] = (t_sprite){now.obj[j].x, now.obj[j].y, now.obj[j].type, tx, tz, 0};
@@ -80,7 +80,7 @@ static int	go_through_items(t_sector now, t_mapf *mapf, t_sprite *drawable, int 
 ** Go through every enemies in the now sector, and stock in drawable the ones that will be drawn
 */
 
-static int	go_through_enemies(t_sector now, t_player player, t_sprite *drawable, int nbdraw)
+int			go_through_enemies(t_sector now, t_player player, t_sprite *drawable, int nbdraw)
 {
 	int		j;
 	int		ret;
@@ -167,11 +167,19 @@ void		put_zerohp(t_sector *sec, t_sprite sprite)
 ** Pick the enemy to kill and delete him
 */
 
-int			kill_enemies(t_sector *sec, t_sprite drawable, SDL_Surface *enemy[2], int x, int y, float distance)
+int			kill_enemies(t_sector *sec, t_sprite sprite, SDL_Surface *enemy[2], int x, int y, float distance)
 {
-	if (drawable.is_enemy && check_middle_in(drawable, enemy, x - (enemy[drawable.type - 1]->w / 2), y - (enemy[drawable.type - 1]->h / 2) - (1300.0f / distance), distance))
+	int		i;
+
+	if (sprite.is_enemy && check_middle_in(sprite, enemy, x - (enemy[sprite.type - 1]->w / 2), y - (enemy[sprite.type - 1]->h / 2) - (1300.0f / distance), distance))
 	{
-		put_zerohp(sec, drawable);
+		i = 0;
+		while (i < sec->nbenem)
+	{
+		if ((int)sec->enem[i].x == sprite.x && (int)sec->enem[i].y == sprite.y)
+			sec->enem[i].life = 0;
+		i++;
+	}
 		return (1);
 	}
 	return (0);
@@ -195,7 +203,7 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2], 
 		t_sector *now = &mapf->sectors[mapf->rend_s[i].id];
 		ft_bzero(drawable, MAX_SPRITE * sizeof(t_sprite));
 		nbdraw = 0;
-		nbdraw = go_through_items(*now, mapf, drawable, nbdraw);
+		nbdraw = go_through_items(*now, mapf->player, drawable, nbdraw);
 		nbdraw = go_through_enemies(*now, mapf->player, drawable, nbdraw);
 		if (mapf->rend_s[i].id == mapf->finish_sec && nbdraw < MAX_SPRITE - 1)
 		{

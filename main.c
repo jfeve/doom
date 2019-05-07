@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   main.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/07 04:45:53 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 05:25:58 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 12:45:37 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,18 +17,23 @@
 
 int		main(int argc, char **argv)
 {
-//	pid_t pid;
-
-//	pid = fork();
-//	if (pid == -1)
-//		ft_putendl("error");
-//	else if (pid == 0)
-//	{		
-//	}
+	pid_t child;
+		pid_t waiting;
 	char	*new_arg[] = {argv[1], NULL};
 
-	(void)argc;
-	if (execve(argv[1], new_arg, NULL) != 1)
-		dprintf(1, "done\n");
+	child = fork();
+	if (child == 0)
+	{
+		dprintf(1, "test  %ld\n", (long)child);
+		execve(argv[1], new_arg, NULL);
+		exit(0);
+	}
+	else
+	{
+		int status;
+		while ((waiting = wait(&status)) != child) ;
+		dprintf(1, "%d done\n", waiting);
+	}
+	dprintf(1, "test  %ld  %ld\n", (long)child, (long)waiting);
 	return (0);
 }

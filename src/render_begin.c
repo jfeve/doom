@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 09:11:48 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 13:17:20 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -118,6 +118,7 @@ void		check_state(t_mapf *mapf)
 	else
 		mapf->player.where.z = mapf->sectors[mapf->player.sect].floor + mapf->player.eye + mapf->player.add_z;
 }
+
 void		render(char *str)
 {
 	t_mapf	mapf;
@@ -147,6 +148,7 @@ void		render(char *str)
 		check_state(&mapf);
 		clear_tab(&mapf.sdl, RWIN_W, RWIN_H);
 		fill_pix(&mapf);
+		enemy_ia(&mapf, &hud);
 		draw_entities(&mapf, hud.items, hud.enemy, &in);
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix, RWIN_W, RWIN_H) == 0)

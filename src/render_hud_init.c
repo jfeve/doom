@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 06:53:48 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 12:24:06 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -113,7 +113,7 @@ static int			init_ttf(t_hud *hud, t_player player, Uint32 format)
 		return (0);
 	if (!(hud->nblife = init_text(hud->arial, ft_itoa(player.life), format, (SDL_Color){0, 0, 0, 255})))
 		return (0);
-	if (!(hud->begin = init_text(hud->arial, "Start !", format, (SDL_Color){255, 255, 255, 255})))
+	if (!(hud->text = init_text(hud->arial, "Start !", format, (SDL_Color){255, 255, 255, 255})))
 		return (0);
 	return (1);
 }

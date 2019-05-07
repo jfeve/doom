@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 02:27:32 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 13:03:45 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -352,7 +352,7 @@ typedef struct		s_hud
 	TTF_Font		*arial;
 	SDL_Surface		*nbammo;
 	SDL_Surface		*nblife;
-	SDL_Surface		*begin;
+	SDL_Surface		*text;
 	int				timer;
 }					t_hud;
 
@@ -437,6 +437,7 @@ int					free_hud(t_hud *hud);
 
 void				draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2], t_input *in);
 void				pick_items(t_mapf *mapf, t_hud *hud);
+int					go_through_enemies(t_sector now, t_player player, t_sprite *drawable, int nbdraw);
 void				enemy_ia(t_mapf *mapf, t_hud *hud);
 
 #endif
