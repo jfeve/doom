@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 19:03:46 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 22:02:51 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 22:21:56 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,7 +27,6 @@ static int	compute_takendmg(t_mapf *mapf, t_hud *hud, int taken_dmg)
 		SDL_FreeSurface(hud->nblife);
 		if (!(tmp = ft_itoa(mapf->player.life)))
 			return (0);
-		ft_strdel(&tmp);
 		if (!(hud->nblife = init_text(hud->arial, tmp, mapf->sdl.form->format,
 		SDL_BLACK)))
 		{
