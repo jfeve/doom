@@ -72,6 +72,7 @@ void		render(char *str)
 	t_mapf	mapf;
 	t_input	in;
 	t_hud	hud;
+	int		tmp;
 
 	if (!init_render(&mapf, &hud, &in, str))
 		return ;
