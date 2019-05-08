@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 21:52:52 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:03:44 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,28 +38,36 @@ static int	read_mapfhead(int fd, t_mapf *mapf)
 	return (1);
 }
 
-static int	untar(int *tmp)
+static int	check_access(void)
 {
-	pid_t	child;
-	char	*args[3];
-
 	if (access("map.tar", F_OK) == -1)
 	{
 		ft_putendl("The map archive doesn't exist");
 		return (0);
 	}
+	return (1);
+}
+
+int			untar(int *tmp)
+{
+	pid_t	child;
+	char	*args[4];
+
+	if (!check_access())
+		return (0);
+	args[0] = "/usr/bin/tar";
+	args[1] = "-xf";
+	args[2] = "./map.tar";
+	args[3] = NULL;
 	if ((child = fork()) == -1)
 	{
 		ft_putendl("fork() error");
 		return (0);
 	}
-	args[0] = "/usr/bin/tar";
-	args[1] = "map.tar";
-	args[2] = NULL;
 	if (child == 0)
 	{
 		execve("/usr/bin/tar", args, NULL);
-		exit(EXIT_SUCCESS);
+		exit(EXIT_FAILURE);
 	}
 	else
 		while (wait(tmp) != child)
@@ -71,8 +79,6 @@ static int	opened(t_mapf *mapf, int fd)
 {
 	int		i;
 
-	if (!untar(&i))
-		return (0);
 	i = -1;
 	if (!read_mapfhead(fd, mapf))
 		return (0);
@@ -103,13 +109,13 @@ int			read_map(t_mapf *mapf, char *mapname)
 		}
 		mapf->player.where.z = (float)mapf->sectors[mapf->player.sect].floor
 		+ (float)EYE;
-		print_read(mapf);
-		free(mapfile);
+		ft_strdel(&mapfile);
 		close(fd);
 		return (1);
 	}
 	else
 	{
+		ft_strdel(&mapfile);
 		ft_putendl("The map file does not exist");
 		return (0);
 	}

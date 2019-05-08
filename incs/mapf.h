@@ -44,6 +44,14 @@ typedef struct					s_queue
 	int							sx2;
 }								t_queue;
 
+typedef struct				s_cport
+{
+	float					ps;
+	float					ps2;
+	t_float					p;
+	t_float					d;
+}							t_cport;
+
 typedef struct				s_sdl
 {
 	SDL_Window				*win;
@@ -141,6 +149,14 @@ typedef struct				s_sector
 	int						lum;
 }							t_sector;
 
+typedef struct				s_cps
+{
+	t_sector				*sec;
+	int						i;
+	float					ps;
+	int						cpt;
+}							t_cps;
+
 typedef struct				s_x
 {
 	int						tx;
@@ -222,5 +238,21 @@ typedef struct				s_mapf
 	SDL_Surface				*wall[4];
 	short					has_key;
 }							t_mapf;
+
+typedef struct				s_norm
+{
+	t_sprite				drawable[MAX_SPRITE];
+	int						nbdraw;
+	int						i;
+	int						j;
+	int						type;
+	float					xscale;
+	float					yscale;
+	float					distance;
+	int						x;
+	int						y;
+	t_point					p;
+	t_sector				*now;
+}							t_norm;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 11:17:31 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 15:12:49 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -120,7 +120,6 @@ int			check_event(char *mapname, t_input *in, t_edit *edit)
 		edit->err = 2;
 		in->key[SDL_SCANCODE_K] = SDL_FALSE;
 	}
-	print_info(edit, in);
 	settings_event(edit, in);
 	cancels(edit, in);
 	if (!check_event2(in, edit))
