@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 11:28:00 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 22:01:51 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -95,16 +95,28 @@ SDL_Surface	*init_text(TTF_Font *font, char *str, Uint32 form, SDL_Color color)
 
 static int	init_ttf(t_hud *hud, t_player player, Uint32 format)
 {
+	char	*tmp;
+
 	if (TTF_Init() == -1)
 		return (0);
 	if (!(hud->arial = TTF_OpenFont("/Library/Fonts/Arial.ttf", 25)))
 		return (0);
-	if (!(hud->nbammo = init_text(hud->arial, ft_itoa(player.ammo), format,
-	SDL_BLACK)))
+	if (!(tmp = ft_itoa(player.ammo)))
 		return (0);
-	if (!(hud->nblife = init_text(hud->arial, ft_itoa(player.life), format,
-	SDL_BLACK)))
+	if (!(hud->nbammo = init_text(hud->arial, tmp, format, SDL_BLACK)))
+	{
+		ft_strdel(&tmp);
 		return (0);
+	}
+	ft_strdel(&tmp);
+	if (!(tmp = ft_itoa(player.life)))
+		return (0);
+	if (!(hud->nblife = init_text(hud->arial, tmp, format, SDL_BLACK)))
+	{
+		ft_strdel(&tmp);
+		return (0);
+	}
+	ft_strdel(&tmp);
 	if (!(hud->text = init_text(hud->arial, "Start !", format, SDL_WHITE)))
 		return (0);
 	return (1);

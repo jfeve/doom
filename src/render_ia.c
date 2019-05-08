@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 19:03:46 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 20:51:56 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 22:02:51 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,6 +15,8 @@
 
 static int	compute_takendmg(t_mapf *mapf, t_hud *hud, int taken_dmg)
 {
+	char	*tmp;
+
 	if (taken_dmg > 0)
 	{
 		if (hud->has_armor == 1 && taken_dmg > 1)
@@ -23,9 +25,16 @@ static int	compute_takendmg(t_mapf *mapf, t_hud *hud, int taken_dmg)
 		if (mapf->player.life < 0)
 			mapf->player.life = 0;
 		SDL_FreeSurface(hud->nblife);
-		if (!(hud->nblife = init_text(hud->arial, ft_itoa(mapf->player.life),
-		mapf->sdl.form->format, SDL_BLACK)))
+		if (!(tmp = ft_itoa(mapf->player.life)))
 			return (0);
+		ft_strdel(&tmp);
+		if (!(hud->nblife = init_text(hud->arial, tmp, mapf->sdl.form->format,
+		SDL_BLACK)))
+		{
+			ft_strdel(&tmp);
+			return (0);
+		}
+		ft_strdel(&tmp);
 	}
 	return (1);
 }

@@ -78,13 +78,11 @@ void		set_trigger(t_edit *edit, int choice, int trig)
 
 int			main(int argc, char **argv)
 {
-//	sleep(15);
 	if (argc == 3 && ft_strcmp(argv[1], "edit") == 0)
 		level_editor(argv[2]);
 	else if (argc == 2)
 		render(argv[1]);
 	else
 		return (usage());
-//	sleep(1000);
 	return (0);
 }
