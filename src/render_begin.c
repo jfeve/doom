@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 22:19:44 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 22:19:45 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -85,7 +85,7 @@ void		render(char *str)
 			free_mapf(&mapf);
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
-			ft_putendl("Events error");
+			ft_putendl("Event error");
 			return ;
 		}
 		check_ps(&mapf);
