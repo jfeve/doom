@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 15:12:49 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 22:02:02 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -65,7 +65,7 @@ static int	click_vert(t_input *in, t_edit *edit)
 
 static void	settings_event(t_edit *edit, t_input *in)
 {
-	if (in->key[SDL_SCANCODE_R])
+	if (in->key[SDL_SCANCODE_R] && edit->dyn_trigger == 0)
 	{
 		edit->nbsect = 0;
 		edit->err = 0;
