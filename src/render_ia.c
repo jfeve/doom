@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 19:03:46 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 22:21:56 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 22:22:00 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -92,7 +92,10 @@ int			enemy_ia(t_mapf *mapf, t_hud *hud)
 				return (0);
 	}
 	if (!compute_takendmg(mapf, hud, taken_dmg))
+	{
+		dprintf(1, "1\n");
 		return (0);
+	}
 	return (1);
 }
 
