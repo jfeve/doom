@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 20:14:22 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 21:00:44 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,7 +72,6 @@ void		render(char *str)
 	t_mapf	mapf;
 	t_input	in;
 	t_hud	hud;
-	int		tmp;
 
 	if (!init_render(&mapf, &hud, &in, str))
 		return ;
