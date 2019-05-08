@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 15:31:38 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 21:57:39 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -84,18 +84,23 @@ static void	plrunning(t_mapf *mapf, t_input *in)
 
 static int	click(t_mapf *mapf, t_hud *hud)
 {
+	char	*tmp;
+
 	hud->anim = SDL_TRUE;
 	if (hud->id == 0 && mapf->player.ammo > 0)
 	{
 		mapf->player.ammo--;
 		SDL_FreeSurface(hud->nbammo);
-		if (!(hud->nbammo = init_text(hud->arial,
-		ft_itoa(mapf->player.ammo), mapf->sdl.form->format, SDL_BLACK)))
+		if (!(tmp = ft_itoa(mapf->player.ammo)))
+			return (0);
+		if (!(hud->nbammo = init_text(hud->arial, tmp, mapf->sdl.form->format,
+		SDL_BLACK)))
 		{
-			free_hud(hud);
+			ft_strdel(&tmp);
 			return (0);
 		}
 		Mix_PlayChannel(1, hud->gunshot, 0);
+		ft_strdel(&tmp);
 	}
 	else if (hud->id == 6)
 		Mix_PlayChannel(1, hud->empty, 0);
