@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:36:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 18:55:00 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 21:45:51 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,7 +89,10 @@ void			draw_sect(t_mapf *mapf, t_ren *ren, int *rendersect)
 		return ;
 	rendersect[ren->now.sect]++;
 	sect = &mapf->sectors[ren->now.sect];
-	fill_rends(mapf, ren->now);
+	mapf->rend_s[mapf->nbrend_s].id = ren->now.sect;
+	mapf->rend_s[mapf->nbrend_s].beginx = ren->now.sx1;
+	mapf->rend_s[mapf->nbrend_s].endx = ren->now.sx2;
+	mapf->nbrend_s++;
 	while (s < sect->nbvert)
 	{
 		draw_vector(ren, s, sect, mapf);

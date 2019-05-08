@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:08:27 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 21:53:32 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 21:43:01 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,6 +24,7 @@ static void	read_enem_data(int fd, t_mapf *mapf, int ienem, int i)
 	mapf->sectors[i].enem[ienem].y = (float)ply;
 	read(fd, &mapf->sectors[i].enem[ienem].type, sizeof(short));
 	mapf->sectors[i].enem[ienem].sec = i;
+	mapf->sectors[i].enem[ienem].life = 100;
 }
 
 static void	read_objs_data(int fd, t_mapf *mapf, int iobjs, int i)

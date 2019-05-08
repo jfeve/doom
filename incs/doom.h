@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 20:21:10 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 21:46:30 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -418,7 +418,6 @@ void							get_yny(t_ren *ren, t_mapf *mapf, t_sector *sect, int s);
 void							get_ycy(t_ren *ren, int x);
 void							get_t1t2(t_ren *ren);
 int								get_x(t_float t);
-void							fill_rends(t_mapf *mapf, t_queue now);
 void							clip_t1t2(t_ren *ren);
 void							draw(t_mapf *mapf, t_point xx, t_point yy, t_sector *sect);
 void							draw_text(t_mapf *mapf, t_ren *ren, t_quad qu, t_sector *sect);

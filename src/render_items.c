@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 15:07:29 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 21:42:45 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,16 +71,20 @@ static void	norm2(t_norm *n, SDL_Surface *items[9], SDL_Surface *enemy[2],
 t_mapf *mapf)
 {
 	if (n->drawable[n->j].is_enemy == 1)
+	{
 		draw_sprite_resize(&mapf->sdl, enemy[n->type], (t_point){n->x
 		- (enemy[n->type]->w / 2), n->y - (enemy[n->type]->h / 2) - (1300.0f
 		/ n->distance)}, (t_point){(int)((float)enemy[n->type]->w * (32
 		/ (n->distance))), (int)((float)enemy[n->type]->h * (32
 		/ (n->distance)))});
+	}
 	else
+	{
 		draw_sprite_resize(&mapf->sdl, items[n->type], (t_point){n->x
 		- (items[n->type]->w / 2), n->y - (items[n->type]->h / 2)},
 		(t_point){(int)((float)items[n->type]->w * (16 / (n->distance))),
 		(int)((float)items[n->type]->h * (16 / (n->distance)))});
+	}
 }
 
 void		draw_entities(t_mapf *mapf, SDL_Surface *items[9],
