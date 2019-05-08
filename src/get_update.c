@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/07 20:24:06 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 21:10:07 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:09:39 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -97,7 +97,8 @@ int			get_update(t_edit *edit, t_input *in, char *mapname)
 		draw_wf(WIN_W - WF_W, WIN_H - WF_H, edit);
 	if (edit->dyn_trigger == 1)
 		draw_back(edit);
-	prepare_draw(edit);
+	if (prepare_draw(edit) == 0)
+		return (0);
 	return (1);
 }
 
