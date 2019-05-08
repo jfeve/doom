@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 15:37:33 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 19:04:56 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 11:28:00 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,13 +100,12 @@ static int	init_ttf(t_hud *hud, t_player player, Uint32 format)
 	if (!(hud->arial = TTF_OpenFont("/Library/Fonts/Arial.ttf", 25)))
 		return (0);
 	if (!(hud->nbammo = init_text(hud->arial, ft_itoa(player.ammo), format,
-	(SDL_Color){0, 0, 0, 255})))
+	SDL_BLACK)))
 		return (0);
 	if (!(hud->nblife = init_text(hud->arial, ft_itoa(player.life), format,
-	(SDL_Color){0, 0, 0, 255})))
+	SDL_BLACK)))
 		return (0);
-	if (!(hud->text = init_text(hud->arial, "Start !", format,
-	(SDL_Color){255, 255, 255, 255})))
+	if (!(hud->text = init_text(hud->arial, "Start !", format, SDL_WHITE)))
 		return (0);
 	return (1);
 }

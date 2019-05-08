@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/03 16:35:10 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 22:23:53 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 12:08:51 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,7 +32,7 @@ static int	tests(t_mapf *mapf, t_hud *hud, t_sector now, int i)
 			mapf->player.life = 100;
 		SDL_FreeSurface(hud->nblife);
 		if (!(hud->nblife = init_text(hud->arial, ft_itoa(mapf->player.life),
-		mapf->sdl.form->format, (SDL_Color){0, 0, 0, 255})))
+		mapf->sdl.form->format, SDL_BLACK)))
 			return (0);
 	}
 	else if (now.obj[i].type == 4)
@@ -40,7 +40,7 @@ static int	tests(t_mapf *mapf, t_hud *hud, t_sector now, int i)
 		mapf->player.ammo += 10;
 		SDL_FreeSurface(hud->nbammo);
 		if (!(hud->nbammo = init_text(hud->arial, ft_itoa(mapf->player.ammo),
-		mapf->sdl.form->format, (SDL_Color){0, 0, 0, 255})))
+		mapf->sdl.form->format, SDL_BLACK)))
 			return (0);
 	}
 	mapf->sectors[mapf->player.sect].obj[i].picked = 1;
@@ -60,4 +60,20 @@ int			pick_items(t_mapf *mapf, t_hud *hud)
 			if (!tests(mapf, hud, now, i))
 				return (0);
 	return (1);
+}
+
+void		check_key(t_mapf *mapf)
+{
+	short	i;
+	short	j;
+
+	i = -1;
+	mapf->has_key = 0;
+	while (++i < mapf->nbsect)
+	{
+		j = -1;
+		while (++j < mapf->sectors[i].nbobjs)
+			if (mapf->sectors[i].obj[j].type == 1)
+				mapf->has_key = 1;
+	}
 }
