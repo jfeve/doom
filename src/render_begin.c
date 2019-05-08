@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 18:31:35 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:50:08 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,10 @@ void		render(char *str)
 	t_mapf	mapf;
 	t_input	in;
 	t_hud	hud;
+	int		tmp;
 
+	if (!untar(&tmp))
+		return ;
 	ft_bzero(&in, sizeof(t_input));
 	ft_bzero(&mapf, sizeof(t_mapf));
 	ft_bzero(&hud, sizeof(t_hud));

@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 17:14:25 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:49:15 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,7 +48,7 @@ static int	check_access(void)
 	return (1);
 }
 
-static int	untar(int *tmp)
+int		untar(int *tmp)
 {
 	pid_t	child;
 	char	*args[4];
@@ -98,8 +98,6 @@ int			read_map(t_mapf *mapf, char *mapname)
 	int		fd;
 	char	*mapfile;
 
-	if (!untar(&fd))
-		return (0);
 	mapfile = ft_strjoin(MAP_PATH, mapname);
 	if ((fd = open(mapfile, O_RDONLY)) != -1)
 	{
@@ -111,12 +109,13 @@ int			read_map(t_mapf *mapf, char *mapname)
 		}
 		mapf->player.where.z = (float)mapf->sectors[mapf->player.sect].floor
 		+ (float)EYE;
-		free(mapfile);
+		ft_strdel(&mapfile);
 		close(fd);
 		return (1);
 	}
 	else
 	{
+		ft_strdel(&mapfile);
 		ft_putendl("The map file does not exist");
 		return (0);
 	}

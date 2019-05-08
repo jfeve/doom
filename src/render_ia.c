@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 19:03:46 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 19:01:03 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:51:56 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,7 +58,7 @@ static int	norm2(t_mapf *mapf, t_hud *hud, t_enemies *enem, int *taken_dmg)
 		enem->y += (0.05f / res) * (mapf->player.where.y - enem->y);
 	}
 	else if (vector_measure(enem->x, enem->y, mapf->player.where.x,
-	mapf->player.where.y) <= 2.0f && enem->life != 0 && enem->life
+	mapf->player.where.y) <= 2.0f && enem->life != 0 && enem->sec
 	== mapf->player.sect)
 		if (!player_dmg(mapf, hud, taken_dmg))
 			return (0);
