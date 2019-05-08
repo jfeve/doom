@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 12:36:28 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 12:52:09 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -151,7 +151,7 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2], 
 				distance = 0.0001f;
 			if (in->mouse[SDL_BUTTON_LEFT] && mapf->player.ammo != 0)
 			{
-				if (kill_enemies(now, drawable[j], enemy, (t_point){x, y}, distance))
+				if (kill_enemies(now, drawable[j], enemy, (t_xyz){(float)x, (float)y, distance}))
 				{
 					in->mouse[SDL_BUTTON_LEFT] = SDL_FALSE;
 					j++;

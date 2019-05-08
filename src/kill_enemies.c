@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/08 12:27:18 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 12:41:10 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 12:52:46 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -49,16 +49,17 @@ float distance)
 
 /*
 ** Pick the enemy to kill and delete him
+** t_xyz p is here for the norm, x and y are ints and z is the distance
 */
 
 int			kill_enemies(t_sector *sec, t_sprite sprite, SDL_Surface *enemy[2],
-t_point p, float distance)
+t_xyz p)
 {
 	int		i;
 
-	if (sprite.is_enemy && check_middle_in(sprite, enemy, (t_point){p.x
-	- (enemy[sprite.type - 1]->w / 2), p.y - (enemy[sprite.type - 1]->h / 2)
-	- (1300.0f / distance)}, distance))
+	if (sprite.is_enemy && check_middle_in(sprite, enemy, (t_point){(int)p.x
+	- (enemy[sprite.type - 1]->w / 2), (int)p.y - (enemy[sprite.type
+	- 1]->h / 2) - (1300.0f / p.z)}, p.z))
 	{
 		i = 0;
 		while (i < sec->nbenem)
