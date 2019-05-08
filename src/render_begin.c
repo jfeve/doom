@@ -6,14 +6,14 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 23:19:53 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 23:22:07 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-static void	check_state(t_mapf *mapf)
+static void		check_state(t_mapf *mapf)
 {
 	if (mapf->player.state == jumping || mapf->player.state == falling)
 	{
@@ -39,9 +39,9 @@ static void	check_state(t_mapf *mapf)
 		+ mapf->player.eye + mapf->player.add_z;
 }
 
-static int	init_render(t_mapf *mapf, t_hud *hud, t_input *in, char *str)
+static int		init_render(t_mapf *mapf, t_hud *hud, t_input *in, char *str)
 {
-	int		tmp;
+	int			tmp;
 
 	if (!untar(&tmp))
 		return (0);
@@ -67,7 +67,7 @@ static int	init_render(t_mapf *mapf, t_hud *hud, t_input *in, char *str)
 	return (1);
 }
 
-static void	update(t_mapf *mapf, t_hud *hud, t_input *in)
+static void		update(t_mapf *mapf, t_hud *hud, t_input *in)
 {
 	check_ps(mapf);
 	ft_bzero(&mapf->rend_s, MAX_SECT * sizeof(int));
@@ -88,11 +88,11 @@ static void	update(t_mapf *mapf, t_hud *hud, t_input *in)
 		return (free_rall(mapf, hud, 1));
 }
 
-void		render(char *str)
+void			render(char *str)
 {
-	t_mapf	mapf;
-	t_input	in;
-	t_hud	hud;
+	t_mapf		mapf;
+	t_input		in;
+	t_hud		hud;
 
 	if (!init_render(&mapf, &hud, &in, str))
 		return ;
