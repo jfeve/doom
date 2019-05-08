@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 21:35:18 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 21:51:00 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,18 +77,12 @@ void		render(char *str)
 		return ;
 	while (!in.quit)
 	{
-		int i = 0;
-		while (i < mapf.nbsect)
-		{
-	//		dprintf(1, "enem[%d] = %p\tnbenem = %d\n", i, mapf.sectors[i].enem, mapf.sectors[i].nbenem);
-			i++;
-		}
 		in.xrel = 0;
 		in.yrel = 0;
 		update_event(&in);
 		if (!render_check_event(&mapf, &in, &hud))
 		{
-//			free_mapf(&mapf);
+			free_mapf(&mapf);
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
 			ft_putendl("Internal error");
@@ -104,7 +98,7 @@ void		render(char *str)
 		fill_pix(&mapf);
 		if (!enemy_ia(&mapf, &hud))
 		{
-//			free_mapf(&mapf);
+			free_mapf(&mapf);
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
 			ft_putendl("Internal error");
@@ -114,7 +108,7 @@ void		render(char *str)
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix, RWIN_W, RWIN_H) == 0)
 		{
-//			free_mapf(&mapf);
+			free_mapf(&mapf);
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
 			ft_putendl("Internal error");
@@ -123,13 +117,13 @@ void		render(char *str)
 		mapf.old = (t_xyz){mapf.player.where.x - mapf.player.velo.x, mapf.player.where.y - mapf.player.velo.y, mapf.player.where.z - mapf.player.velo.z};
 		if (hud.timer == -1)
 		{
-	//		free_mapf(&mapf);
+			free_mapf(&mapf);
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
 			return ;
 		}
 	}
-//	free_mapf(&mapf);
+	free_mapf(&mapf);
 	free_sdl(&mapf.sdl, 6);
 	free_hud(&hud);
 }
