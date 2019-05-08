@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 20:08:34 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:21:10 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -261,7 +261,7 @@ char							*check_alpha2(int num);
 char							*check_alpha3(int num);
 void							draw_square(t_edit *edit, t_draw *draw);
 int								prepare_draw(t_edit *edit);
-void							draw_content(t_edit *edit, t_content *temp,
+int								draw_content(t_edit *edit, t_content *temp,
 																t_draw *draw);
 t_draw							init_draw(int x, int y, int disp);
 void							draw_norm(t_draw *cnt, t_draw *draw,

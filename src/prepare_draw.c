@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/07 20:19:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 20:11:15 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:25:50 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,7 +41,8 @@ static int	get_string(t_edit *edit, t_draw *draw)
 			draw->input[0] = '\0';
 			norm_string(tmp, draw);
 			len = 0;
-			draw_content(edit, tmp, draw);
+			if (draw_content(edit, tmp, draw) == 0)
+				return (0);
 			free(draw->input);
 		}
 		tmp = tmp->next;
