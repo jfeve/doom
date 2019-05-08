@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 20:48:13 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:21:10 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -241,6 +241,7 @@ int								mcheck_d(t_lis *temp);
 int								mcheck_sec(t_sec *tmp);
 int								err_map(char *msg, t_lis *temp);
 int								save_objs(int fd, t_lis *temp);
+void							free_mapf(t_mapf *mapf);
 
 /*
 ** Input Detection
@@ -259,8 +260,8 @@ char							*check_alpha1(int num);
 char							*check_alpha2(int num);
 char							*check_alpha3(int num);
 void							draw_square(t_edit *edit, t_draw *draw);
-void							prepare_draw(t_edit *edit);
-void							draw_content(t_edit *edit, t_content *temp,
+int								prepare_draw(t_edit *edit);
+int								draw_content(t_edit *edit, t_content *temp,
 																t_draw *draw);
 t_draw							init_draw(int x, int y, int disp);
 void							draw_norm(t_draw *cnt, t_draw *draw,

@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 21:20:07 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:48:11 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -99,9 +99,13 @@ static int	map_writer(char *mapname, t_edit *edit)
 	if ((fd = open(mapfile, O_TRUNC | O_CREAT | O_WRONLY, S_IRWXU)) != -1)
 	{
 		if (edit->nbsect != 0)
+		{
+			ft_strdel(&mapfile);
 			return (put_data(fd, edit));
+		}
 		else
 		{
+			ft_strdel(&mapfile);
 			ft_putendl("No sectors found");
 			close(fd);
 			return (0);

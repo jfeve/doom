@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/07 20:19:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 20:20:51 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:25:50 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,7 +21,7 @@ static void	norm_string(t_content *tmp, t_draw *draw)
 	draw->y = tmp->y;
 }
 
-static void	get_string(t_edit *edit, t_draw *draw)
+static int	get_string(t_edit *edit, t_draw *draw)
 {
 	t_content	*tmp;
 	int			len;
@@ -29,7 +29,7 @@ static void	get_string(t_edit *edit, t_draw *draw)
 	tmp = edit->con;
 	draw->input = NULL;
 	if (ft_strlen(tmp->c_title) == 0 && ft_strlen(tmp->c_content) == 0)
-		return ;
+		return (0);
 	while (tmp != NULL)
 	{
 		if (tmp->trigger == 1)
@@ -37,24 +37,27 @@ static void	get_string(t_edit *edit, t_draw *draw)
 			len = (ft_strlen(tmp->c_title) + ft_strlen(tmp->c_content) + 2);
 			if ((draw->input = (char *)
 					malloc(sizeof(char) * (len + 1))) == NULL)
-				return ;
+				return (0);
 			draw->input[0] = '\0';
 			norm_string(tmp, draw);
 			len = 0;
-			draw_content(edit, tmp, draw);
-			if (draw->input != NULL)
-				free(draw->input);
+			if (draw_content(edit, tmp, draw) == 0)
+				return (0);
+			free(draw->input);
 		}
 		tmp = tmp->next;
 	}
+	return (1);
 }
 
-void		prepare_draw(t_edit *edit)
+int			prepare_draw(t_edit *edit)
 {
 	t_draw		draw;
 
 	draw.y_s = 3;
 	draw.x_s = 2;
 	draw.color = WHITE;
-	get_string(edit, &draw);
+	if (get_string(edit, &draw) == 0)
+		return (0);
+	return (1);
 }

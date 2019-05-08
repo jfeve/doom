@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 20:25:40 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:42:22 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -65,20 +65,26 @@ void		set_trigger(t_edit *edit, int choice, int trig)
 		if ((ft_strcmp(title, tmp->c_title) == 0) &&
 				(ft_strcmp(str, tmp->c_content) == 0))
 		{
+			ft_strdel(&title);
+			ft_strdel(&str);
 			tmp->trigger = trig;
 			return ;
 		}
 		tmp = tmp->next;
 	}
+	ft_strdel(&title);
+	ft_strdel(&str);
 }
 
 int			main(int argc, char **argv)
 {
+	sleep(15);
 	if (argc == 3 && ft_strcmp(argv[1], "edit") == 0)
 		level_editor(argv[2]);
 	else if (argc == 2)
 		render(argv[1]);
 	else
 		return (usage());
+	sleep(1000);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:06:11 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 20:49:15 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:46:23 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,7 +48,7 @@ static int	check_access(void)
 	return (1);
 }
 
-int		untar(int *tmp)
+int			untar(int *tmp)
 {
 	pid_t	child;
 	char	*args[4];
