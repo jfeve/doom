@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/05 20:13:49 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 19:35:47 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 21:44:02 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -84,7 +84,7 @@ void		fill_settings(t_mapf *mapf)
 	mapf->player.add_z = 0.0f;
 	mapf->player.jump_sec = 0;
 	mapf->player.state = moving;
-	mapf->player.ammo = 10;
+	mapf->player.ammo = 100;
 	mapf->player.life = 100;
 	mapf->coeff = 1;
 }

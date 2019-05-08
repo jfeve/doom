@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/08 13:13:42 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 21:36:34 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 21:42:32 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -96,10 +96,8 @@ t_sprite *drawable, int nbdraw)
 
 	ret = nbdraw;
 	j = -1;
-	dprintf(1, "nbnem: %d\n", now.nbenem);
 	while (++j < now.nbenem && j < MAX_SPRITE)
 	{
-		dprintf(1, "test\n");
 		if (now.enem[j].life == 0)
 			continue;
 		v.x = (float)(now.enem[j].x - player.where.x);
