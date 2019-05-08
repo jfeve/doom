@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 18:33:50 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 17:48:30 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,6 +24,26 @@
 /*
 ** Render Data
 */
+
+typedef struct				s_point
+{
+	int						x;
+	int						y;
+}							t_point;
+
+typedef struct				s_float
+{
+	float					x;
+	float					y;
+}							t_float;
+
+typedef struct				s_cport
+{
+	float					ps;
+	float					ps2;
+	t_float					p;
+	t_float					d;
+}							t_cport;
 
 typedef struct				s_sdl
 {
@@ -151,5 +171,21 @@ typedef struct				s_mapf
 	SDL_Surface				*wall[4];
 	short					has_key;
 }							t_mapf;
+
+typedef struct				s_norm
+{
+	t_sprite				drawable[MAX_SPRITE];
+	int						nbdraw;
+	int						i;
+	int						j;
+	int						type;
+	float					xscale;
+	float					yscale;
+	float					distance;
+	int						x;
+	int						y;
+	t_point					p;
+	t_sector				*now;
+}							t_norm;
 
 #endif

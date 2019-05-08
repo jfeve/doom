@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 12:52:22 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 17:50:27 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,18 +22,8 @@
 # include "../lib/SDL2_ttf.framework/Headers/SDL_ttf.h"
 # include "../lib/SDL2_mixer.framework/Headers/SDL_mixer.h"
 # include <stdio.h>
-
-typedef struct					s_float
-{
-	float						x;
-	float						y;
-}								t_float;
-
-typedef struct					s_point
-{
-	int							x;
-	int							y;
-}								t_point;
+# include <sys/types.h>
+# include <sys/stat.h>
 
 typedef struct					s_lis
 {
@@ -216,16 +206,6 @@ void							set_sect(t_edit *edit);
 void							draw_sec(t_edit *edit);
 
 /*
-** Print // A DELETE PLUS TARD
-*/
-
-void							print_info(t_edit *edit, t_input *in);
-void							print_content(t_edit *edit);
-void							print_lis(t_lis **vert);
-void							print_sec(t_sec *sec);
-void							print_read(t_mapf *mapf);
-
-/*
 ** HUD
 */
 
@@ -385,9 +365,13 @@ void							get_ps(t_mapf *mapf);
 void							fill_pix(t_mapf *mapf);
 int								render_check_event(t_mapf *mapf, t_input *in,
 																	t_hud *hud);
+void							jump(t_mapf *mapf, t_input *in);
+void							mouse_aim(t_mapf *mapf, t_input *in);
 float							vector_measure(float x1, float y1, float x2,
 																	float y2);
 void							move_chara(t_mapf *mapf, t_input *in);
+int								check_horcoll(t_mapf *mapf);
+int								check_port(t_mapf *mapf, int i, t_sector *sect);
 int								read_map(t_mapf *mapf, char *mapname);
 int								read_entities(int fd, t_mapf *mapf, int i);
 int								read_sector(int fd, t_mapf *mapf, int i);
@@ -444,12 +428,16 @@ void							draw_sprite_resize(t_sdl *sdl, SDL_Surface *s,
 												t_point start, t_point size);
 int								free_hud(t_hud *hud);
 void							draw_entities(t_mapf *mapf,
-					SDL_Surface *items[9], SDL_Surface *enemy[2], t_input *in);			
+					SDL_Surface *items[9], SDL_Surface *enemy[2], t_input *in);
 int								kill_enemies(t_sector *sec, t_sprite sprite,
 												SDL_Surface *enemy[2], t_xyz p);
 int								pick_items(t_mapf *mapf, t_hud *hud);
+int								go_through_items(t_sector now, t_player player,
+												t_sprite *drawable, int nbdraw);
 int								go_through_enemies(t_sector now,
 							t_player player, t_sprite *drawable, int nbdraw);
+void							bubble_sort(t_sprite arr[], int n,
+																t_point player);
 int								enemy_ia(t_mapf *mapf, t_hud *hud);
 int								check_finish(t_mapf *mapf, int hud_has_key);
 
