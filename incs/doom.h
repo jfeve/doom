@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 18:45:19 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:09:56 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -241,6 +241,7 @@ int								mcheck_d(t_lis *temp);
 int								mcheck_sec(t_sec *tmp);
 int								err_map(char *msg, t_lis *temp);
 int								save_objs(int fd, t_lis *temp);
+void							free_mapf(t_mapf *mapf);
 
 /*
 ** Input Detection
@@ -450,5 +451,6 @@ void							bubble_sort(t_sprite arr[], int n,
 																t_point player);
 int								enemy_ia(t_mapf *mapf, t_hud *hud);
 int								check_finish(t_mapf *mapf, int hud_has_key);
+int								untar(int *tmp);
 
 #endif
