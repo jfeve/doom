@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 21:04:03 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 22:49:01 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -85,7 +85,7 @@ int			check_input(t_edit *edit, t_input *in)
 {
 	t_content	*tmp;
 
-	if (in->key[SDL_SCANCODE_T] && edit->hl_sec)
+	if (in->key[SDL_SCANCODE_T] && edit->hl_sec && edit->hl_sec->floor == -1)
 	{
 		clear_hl_vec(edit->hl_sec);
 		edit->hl_vert = NULL;

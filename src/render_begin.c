@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 22:19:44 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 22:46:57 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,6 +67,15 @@ static int	init_render(t_mapf *mapf, t_hud *hud, t_input *in, char *str)
 	return (1);
 }
 
+void		free_rall(t_mapf *mapf, t_hud *hud, int flag)
+{
+	free_sdl(&mapf->sdl, 6);
+	free_mapf(mapf);
+	free_hud(hud);
+	if (flag == 0)
+		ft_putendl("Internal error");
+}
+
 void		render(char *str)
 {
 	t_mapf	mapf;
@@ -81,13 +90,7 @@ void		render(char *str)
 		in.yrel = 0;
 		update_event(&in);
 		if (!render_check_event(&mapf, &in, &hud))
-		{
-			free_mapf(&mapf);
-			free_sdl(&mapf.sdl, 6);
-			free_hud(&hud);
-			ft_putendl("Events error");
-			return ;
-		}
+			return (free_rall(&mapf, &hud, 0));
 		check_ps(&mapf);
 		ft_bzero(&mapf.rend_s, MAX_SECT * sizeof(int));
 		mapf.nbrend_s = 0;
@@ -97,31 +100,14 @@ void		render(char *str)
 		clear_tab(&mapf.sdl, RWIN_W, RWIN_H);
 		fill_pix(&mapf);
 		if (!enemy_ia(&mapf, &hud))
-		{
-			free_mapf(&mapf);
-			free_sdl(&mapf.sdl, 6);
-			free_hud(&hud);
-			ft_putendl("IA error");
-			return ;
-		}
+			return (free_rall(&mapf, &hud, 0));
 		draw_entities(&mapf, hud.items, hud.enemy, &in);
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix, RWIN_W, RWIN_H) == 0)
-		{
-			free_mapf(&mapf);
-			free_sdl(&mapf.sdl, 6);
-			free_hud(&hud);
-			ft_putendl("Display error");
-			return ;
-		}
+			return (free_rall(&mapf, &hud, 0));
 		mapf.old = (t_xyz){mapf.player.where.x - mapf.player.velo.x, mapf.player.where.y - mapf.player.velo.y, mapf.player.where.z - mapf.player.velo.z};
 		if (hud.timer == -1)
-		{
-			free_mapf(&mapf);
-			free_sdl(&mapf.sdl, 6);
-			free_hud(&hud);
-			return ;
-		}
+			return (free_rall(&mapf, &hud, 1));
 	}
 	free_mapf(&mapf);
 	free_sdl(&mapf.sdl, 6);
