@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 21:46:38 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 23:17:53 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -430,6 +430,7 @@ void							draw_text(t_mapf *mapf, t_ren *ren,
 ** HUD related functions
 */
 
+void							free_rall(t_mapf *mapf, t_hud *hud, int flag);
 int								init_hud(t_hud *hud, Uint32 format,
 															t_player player);
 SDL_Surface						*init_image(char *path, Uint32 format);

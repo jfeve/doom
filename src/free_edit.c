@@ -6,12 +6,21 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:13:18 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 20:13:48 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 23:18:27 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
+
+void	free_rall(t_mapf *mapf, t_hud *hud, int flag)
+{
+	free_sdl(&mapf->sdl, 6);
+	free_mapf(mapf);
+	free_hud(hud);
+	if (flag == 0)
+		ft_putendl("Internal error");
+}
 
 void	free_lis(t_lis **vert)
 {
