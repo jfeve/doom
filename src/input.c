@@ -3,17 +3,59 @@
 /*                                                              /             */
 /*   input.c                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/10 16:32:55 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 05:24:00 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 21:04:03 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			dyn_input(t_edit *edit, t_input *in)
+static void	check_keyboard(t_input *in, t_content *tmp)
+{
+	int			i;
+	int			j;
+	int			maxkey;
+	char		c;
+
+	i = 48;
+	maxkey = 98;
+	while (i <= maxkey && tmp->cursor < 4)
+	{
+		if (in->key[i])
+		{
+			if (i != 98)
+				j = i - 88;
+			else
+				j = 0;
+			c = j + '0';
+			j = 0;
+			tmp->c_content[tmp->cursor] = c;
+			tmp->cursor++;
+			in->key[i] = SDL_FALSE;
+		}
+		i++;
+	}
+}
+
+static void	dyn_enter(t_edit *edit, t_input *in, t_content *tmp)
+{
+	if (in->key[SDL_SCANCODE_KP_ENTER] || in->key[SDL_SCANCODE_RETURN])
+	{
+		edit->input_res = ft_atoi(tmp->c_content);
+		if (edit->input_res != 0)
+			handle_res(edit);
+		while (tmp->cursor > 0)
+			tmp->c_content[--tmp->cursor] = '\0';
+		tmp->c_content[0] = '\0';
+		in->key[(in->key[SDL_SCANCODE_RETURN] ? SDL_SCANCODE_RETURN
+				: SDL_SCANCODE_KP_ENTER)] = SDL_FALSE;
+	}
+}
+
+void		dyn_input(t_edit *edit, t_input *in)
 {
 	t_content	*tmp;
 
@@ -24,7 +66,7 @@ void			dyn_input(t_edit *edit, t_input *in)
 		free_dyn_content(&edit->con);
 	if (edit->dyn_trigger == 1 && tmp->display == 1)
 	{
-		get_title(edit, &tmp);
+		get_title(edit, tmp);
 		if (in->key[SDL_SCANCODE_BACKSPACE])
 		{
 			if (tmp->cursor != 0)
@@ -39,7 +81,7 @@ void			dyn_input(t_edit *edit, t_input *in)
 	}
 }
 
-int				check_input(t_edit *edit, t_input *in)
+int			check_input(t_edit *edit, t_input *in)
 {
 	t_content	*tmp;
 

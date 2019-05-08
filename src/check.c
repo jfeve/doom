@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   check.c                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 15:25:45 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 18:21:32 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:37:29 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,12 +25,7 @@ int			check_mapname(char *mapname)
 	if (c >= 4)
 	{
 		while (mapname[i])
-		{
-			if (ft_isalpha(mapname[i++]))
-				j++;
-			else
-				j--;
-		}
+			ft_isalpha(mapname[i++]) ? j++ : j--;
 		if (j != i)
 			return (0);
 		if (i != ((int)ft_strlen(mapname)))

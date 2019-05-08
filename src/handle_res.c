@@ -3,22 +3,17 @@
 /*                                                              /             */
 /*   handle_res.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:56:35 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 18:00:27 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 21:07:14 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			put_zer_flag(t_edit *edit)
-{
-	edit->dyn_trigger = 0;
-}
-
-int				check_lis_input(t_lis *vert)
+int			check_lis_input(t_lis *vert)
 {
 	t_lis		*tmp;
 
@@ -30,7 +25,7 @@ int				check_lis_input(t_lis *vert)
 	return (1);
 }
 
-void			handle_after_vec(t_edit *edit)
+static void	handle_after_vec(t_edit *edit)
 {
 	if (edit->hl_sec->obj)
 	{
@@ -43,12 +38,12 @@ void			handle_after_vec(t_edit *edit)
 		edit->hl_sec->enem->col = BROWN;
 	}
 	else
-		put_zer_flag(edit);
+		edit->dyn_trigger = 0;
 	edit->hl_sec->vert->col = edit->hl_sec->vert->oldcol;
 	edit->hl_vert = NULL;
 }
 
-void			handle_vec(t_edit *edit)
+static void	handle_vec(t_edit *edit)
 {
 	t_lis		*tmp;
 
@@ -77,7 +72,36 @@ void			handle_vec(t_edit *edit)
 		handle_after_vec(edit);
 }
 
-void			handle_res(t_edit *edit)
+static void	handle_obj(t_edit *edit)
+{
+	t_lis		*tmp;
+
+	tmp = edit->hl_sec->obj;
+	while (tmp->next && tmp->text != -1)
+		tmp = tmp->next;
+	if (edit->input_res > 4)
+		return ;
+	tmp->text = edit->input_res;
+	if (tmp->next)
+	{
+		tmp->next->oldcol = tmp->next->col;
+		tmp->next->col = tmp->col;
+		tmp->col = tmp->oldcol;
+	}
+	else
+	{
+		if (edit->hl_sec->enem)
+		{
+			edit->hl_sec->enem->oldcol = edit->hl_sec->enem->col;
+			edit->hl_sec->enem->col = BROWN;
+		}
+		else
+			edit->dyn_trigger = 0;
+		tmp->col = tmp->oldcol;
+	}
+}
+
+void		handle_res(t_edit *edit)
 {
 	t_lis		*tmp;
 
@@ -91,14 +115,11 @@ void			handle_res(t_edit *edit)
 	}
 	else if (edit->hl_sec->floor == -1)
 		edit->hl_sec->floor = edit->input_res;
-	else if (edit->hl_sec->ceil == -1)
+	else if (edit->hl_sec->ceil == -1 && edit->input_res > edit->hl_sec->floor)
 	{
-		if (edit->input_res > edit->hl_sec->floor)
-		{
-			edit->hl_sec->ceil = edit->input_res;
-			edit->hl_vert = edit->hl_sec->vert;
-			edit->hl_vert->next->col = GREEN;
-		}
+		edit->hl_sec->ceil = edit->input_res;
+		edit->hl_vert = edit->hl_sec->vert;
+		edit->hl_vert->next->col = GREEN;
 	}
 	else if (check_lis_input(tmp))
 		handle_vec(edit);

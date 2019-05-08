@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 15:55:19 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 20:50:04 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 19:01:10 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,10 +29,10 @@ static void	free_audio(t_hud *hud)
 }
 
 /*
-** Frees all the hud ressources (textures, music, sound)
+** Frees all the textures
 */
 
-int			free_hud(t_hud *hud)
+static void	free_tex(t_hud *hud)
 {
 	int		i;
 
@@ -52,15 +52,45 @@ int			free_hud(t_hud *hud)
 		SDL_FreeSurface(hud->ammoicon);
 	if (hud->lifeicon)
 		SDL_FreeSurface(hud->lifeicon);
+}
+
+/*
+** Frees all the hud ressources (textures, music, sound)
+*/
+
+int			free_hud(t_hud *hud)
+{
 	free_audio(hud);
+	free_tex(hud);
 	if (hud->arial)
 		TTF_CloseFont(hud->arial);
 	if (hud->nbammo)
 		SDL_FreeSurface(hud->nbammo);
 	if (hud->nblife)
 		SDL_FreeSurface(hud->nblife);
-	if (hud->begin)
-		SDL_FreeSurface(hud->begin);
+	if (hud->text)
+		SDL_FreeSurface(hud->text);
 	TTF_Quit();
 	return (0);
+}
+
+/*
+** Load a bmp located at path and convert it to the given format
+** Placed here because of the norm
+*/
+
+SDL_Surface	*init_image(char *path, Uint32 format)
+{
+	SDL_Surface	*tmp;
+	SDL_Surface	*ret;
+
+	if (!(tmp = SDL_LoadBMP(path)))
+		return (NULL);
+	if (!(ret = SDL_ConvertSurfaceFormat(tmp, format, 0)))
+	{
+		SDL_FreeSurface(tmp);
+		return (NULL);
+	}
+	SDL_FreeSurface(tmp);
+	return (ret);
 }

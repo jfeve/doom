@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   sec.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 16:22:44 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 19:38:31 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:40:30 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,10 +61,8 @@ void			set_sect(t_edit *edit)
 		add_sec(edit);
 	tmp = edit->sect;
 	if (tmp->next)
-	{
 		while (tmp->next)
 			tmp = tmp->next;
-	}
 	tmp->vert = edit->vert;
 	tmp->nbvert = count_vert(edit->vert);
 	tmp->id = edit->nbsect;

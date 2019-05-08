@@ -6,16 +6,16 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/06 15:14:10 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 19:23:33 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 21:20:07 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-static	int				putinfo_head(int fd, t_edit *edit)
+static int	putinfo_head(int fd, t_edit *edit)
 {
-	float			angle;
+	float	angle;
 
 	angle = 0.5;
 	if (fd == -1)
@@ -41,10 +41,10 @@ static	int				putinfo_head(int fd, t_edit *edit)
 		return (0);
 }
 
-static	int				putinfo_sector(int fd, t_edit *edit)
+static int	putinfo_sector(int fd, t_edit *edit)
 {
-	t_sec				*tmp;
-	t_lis				*temp;
+	t_sec	*tmp;
+	t_lis	*temp;
 
 	if (fd == -1)
 		return (0);
@@ -67,7 +67,7 @@ static	int				putinfo_sector(int fd, t_edit *edit)
 	return (1);
 }
 
-int						put_data(int fd, t_edit *edit)
+static int	put_data(int fd, t_edit *edit)
 {
 	if (putinfo_head(fd, edit))
 	{
@@ -75,14 +75,14 @@ int						put_data(int fd, t_edit *edit)
 			return (1);
 		else
 		{
-			save_error();
+			ft_putendl("One or several sectors are unset");
 			close(fd);
 			return (0);
 		}
 	}
 	else
 	{
-		save_error();
+		ft_putendl("Player and/or finish are unset");
 		close(fd);
 		return (0);
 	}
@@ -90,14 +90,11 @@ int						put_data(int fd, t_edit *edit)
 	return (1);
 }
 
-int						map_writer(char *mapname, t_edit *edit)
+static int	map_writer(char *mapname, t_edit *edit)
 {
 	int					fd;
 	char				*mapfile;
 
-//	mapfile = (char*)malloc(sizeof(char) *
-//		(int)ft_strlen(MAP_PATH) + (int)ft_strlen(mapname) + 2);
-//	ft_strcat(ft_strcat(ft_strcat(mapfile, MAP_PATH), mapname), ".mapf");
 	mapfile = ft_strjoin(MAP_PATH, mapname);
 	if ((fd = open(mapfile, O_TRUNC | O_CREAT | O_WRONLY, S_IRWXU)) != -1)
 	{
@@ -105,7 +102,7 @@ int						map_writer(char *mapname, t_edit *edit)
 			return (put_data(fd, edit));
 		else
 		{
-			save_error();
+			ft_putendl("No sectors found");
 			close(fd);
 			return (0);
 		}
@@ -114,16 +111,19 @@ int						map_writer(char *mapname, t_edit *edit)
 		return (open_error(&mapfile));
 }
 
-int						save_map(t_input *in, char *mapname, t_edit *edit)
+int			save_map(t_input *in, char *mapname, t_edit *edit)
 {
 	if (in->key[SDL_SCANCODE_S])
 	{
 		if (map_writer(mapname, edit))
 		{
+			if (!tar())
+				ft_putendl("fork() error");
 			ft_putendl("\n--------Map saved--------\n\n");
 			return (1);
 		}
-		else{
+		else
+		{
 			ft_putendl("\n--------Map not saved--------\n\n");
 			return (0);
 		}

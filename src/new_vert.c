@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   new_vert.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 13:40:20 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/24 18:16:38 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 12:17:53 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,5 +89,20 @@ int				new_vert(t_edit *edit, t_input *in)
 			edit->oldvert = NULL;
 		in->key[SDL_SCANCODE_A] = SDL_FALSE;
 	}
+	return (1);
+}
+
+int				parse_data(int x, int y, t_edit *edit, t_lis *vert)
+{
+	t_lis		*tmp;
+
+	tmp = vert;
+	if (tmp->x == arr(x) && tmp->y == arr(y))
+	{
+		if (tmp->next)
+			edit->oldvert = tmp;
+		return (0);
+	}
+	edit->oldvert = NULL;
 	return (1);
 }

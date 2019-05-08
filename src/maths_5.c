@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   maths_5.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jfeve <marvin@le-101.fr>                   +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/05/07 04:45:53 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 05:25:58 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Created: 2019/05/07 20:21:59 by flombard     #+#   ##    ##    #+#       */
+/*   Updated: 2019/05/07 20:22:27 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include "../incs/doom.h"
 
-int		main(int argc, char **argv)
+float	arr_float(float x)
 {
-//	pid_t pid;
+	if ((int)x % UNIT >= UNIT / 2)
+		x += UNIT / 2 + 1;
+	return (x / UNIT);
+}
 
-//	pid = fork();
-//	if (pid == -1)
-//		ft_putendl("error");
-//	else if (pid == 0)
-//	{		
-//	}
-	char	*new_arg[] = {argv[1], NULL};
-
-	(void)argc;
-	if (execve(argv[1], new_arg, NULL) != 1)
-		dprintf(1, "done\n");
-	return (0);
+int		arr(int x)
+{
+	if (x % UNIT >= UNIT / 2)
+		x += UNIT / 2 + 1;
+	return (x / UNIT);
 }

@@ -6,83 +6,14 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/14 16:13:31 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 19:19:21 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 21:09:58 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			handle_obj(t_edit *edit)
-{
-	t_lis		*tmp;
-
-	tmp = edit->hl_sec->obj;
-	while (tmp->next && tmp->text != -1)
-		tmp = tmp->next;
-	if (edit->input_res > 4)
-		return ;
-	tmp->text = edit->input_res;
-	if (tmp->next)
-	{
-		tmp->next->oldcol = tmp->next->col;
-		tmp->next->col = tmp->col;
-		tmp->col = tmp->oldcol;
-	}
-	else
-	{
-		if (edit->hl_sec->enem)
-		{
-			edit->hl_sec->enem->oldcol = edit->hl_sec->enem->col;
-			edit->hl_sec->enem->col = BROWN;
-		}
-		else
-			put_zer_flag(edit);
-		tmp->col = tmp->oldcol;
-	}
-}
-
-void			handle_enem(t_edit *edit)
-{
-	t_lis		*tmp;
-
-	tmp = edit->hl_sec->enem;
-	while (tmp->next && tmp->text != -1)
-		tmp = tmp->next;
-	if (edit->input_res > 4)
-		return ;
-	tmp->text = edit->input_res;
-	if (tmp->next)
-	{
-		tmp->next->oldcol = tmp->next->col;
-		tmp->next->col = tmp->col;
-		tmp->col = tmp->oldcol;
-	}
-	else
-	{
-		put_zer_flag(edit);
-		tmp->col = tmp->oldcol;
-	}
-}
-
-void			draw_obj_enem(t_edit *edit)
-{
-	t_sec		*temp;
-
-	if (edit->sect == NULL)
-		return ;
-	temp = edit->sect;
-	while (temp)
-	{
-		if (temp->obj)
-			put_vert(edit, temp->obj);
-		if (temp->enem)
-			put_vert(edit, temp->enem);
-		temp = temp->next;
-	}
-}
-
-static	int		count_lis(t_lis *lst)
+static int	count_lis(t_lis *lst)
 {
 	t_lis	*tmp;
 	int		count;
@@ -99,7 +30,7 @@ static	int		count_lis(t_lis *lst)
 	return (count);
 }
 
-static	void	check_objs(t_edit *edit)
+static void	check_objs(t_edit *edit)
 {
 	if (edit->hl_sec->obj != NULL && (edit->hl_sec->objscount + 1) > 10)
 	{
@@ -108,7 +39,7 @@ static	void	check_objs(t_edit *edit)
 	}
 }
 
-int				obj(t_edit *edit, t_input *in)
+int			obj(t_edit *edit, t_input *in)
 {
 	t_lis *tmp;
 
@@ -136,7 +67,7 @@ int				obj(t_edit *edit, t_input *in)
 	return (1);
 }
 
-static	void	check_enem(t_edit *edit)
+static void	check_enem(t_edit *edit)
 {
 	if (edit->hl_sec->enem != NULL && (edit->hl_sec->enemcount + 1) > 10)
 	{
@@ -145,7 +76,7 @@ static	void	check_enem(t_edit *edit)
 	}
 }
 
-int				enem(t_edit *edit, t_input *in)
+int			enem(t_edit *edit, t_input *in)
 {
 	t_lis		*tmp;
 

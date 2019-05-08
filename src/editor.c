@@ -3,65 +3,17 @@
 /*                                                              /             */
 /*   editor.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/19 18:18:31 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 20:31:34 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 11:13:17 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			level_editor(char *mapname)
-{
-	t_edit		edit;
-	t_input		in;
-
-	ft_bzero(&in, sizeof(t_input));
-	ft_bzero(&edit, sizeof(t_edit));
-	if (init_edit(&edit) == 0)
-		return (ft_putendl("Init Edit Error"));
-	if (!check_mapname(mapname))
-	{
-		free_all(2, &edit);
-		return (ft_putendl("Map name not valid"));
-	}
-	while (!in.quit)
-	{
-		if (get_update(&edit, &in, mapname) == 0)
-		{
-			free_all(2, &edit);
-			return ;
-		}
-		if (display_frame(edit.sdl.ren, edit.sdl.pix, WIN_W, WIN_H) == 0)
-		{
-			free_all(2, &edit);
-			return ;
-		}
-		SDL_Delay(1000 / 60);
-	}
-	free_all(2, &edit);
-	return ;
-}
-
-int				free_content(t_edit *edit)
-{
-	t_content	*curr;
-	t_content	*tmp;
-
-	curr = edit->con;
-	while (curr != NULL)
-	{
-		tmp = curr->next;
-		free(curr);
-		curr = tmp;
-	}
-	edit->con = NULL;
-	return (0);
-}
-
-int				basic_contents(t_edit *edit)
+static int	basic_contents(t_edit *edit)
 {
 	if (add_content(edit, TUTO, "create : \n", init_draw(10, 930, 1)) == 0)
 		return (free_content(edit));
@@ -71,14 +23,16 @@ int				basic_contents(t_edit *edit)
 	if (add_content(edit, HL_TUTO, "highlight : \n",
 					init_draw(10, 930, 0)) == 0)
 		return (free_content(edit));
-	if (add_content(edit, "set", NULL, init_draw(WIN_W - WF_W + 75, WIN_H - (WF_H / 2) - 15, 0)) == 0)
+	if (add_content(edit, "set", NULL, init_draw(WIN_W - WF_W + 75, WIN_H
+	- (WF_H / 2) - 15, 0)) == 0)
 		return (free_content(edit));
-	if (add_content(edit, "not set", NULL, init_draw(WIN_W - WF_W + 40, WIN_H - (WF_H / 2) - 15, 0)) == 0)
+	if (add_content(edit, "not set", NULL, init_draw(WIN_W - WF_W + 40, WIN_H
+	- (WF_H / 2) - 15, 0)) == 0)
 		return (free_content(edit));
 	return (1);
 }
 
-int				init_edit(t_edit *edit)
+static int	init_edit(t_edit *edit)
 {
 	if (init_content(edit) == 0)
 		return (0);
@@ -99,4 +53,48 @@ int				init_edit(t_edit *edit)
 	edit->vert = NULL;
 	edit->sect = NULL;
 	return (1);
+}
+
+void		level_editor(char *mapname)
+{
+	t_edit		edit;
+	t_input		in;
+
+	ft_bzero(&in, sizeof(t_input));
+	ft_bzero(&edit, sizeof(t_edit));
+	if (init_edit(&edit) == 0)
+		return (ft_putendl("Init Edit Error"));
+	if (!check_mapname(mapname))
+	{
+		free_all(2, &edit);
+		return (ft_putendl("Map name not valid"));
+	}
+	while (!in.quit)
+	{
+		if (get_update(&edit, &in, mapname) == 0
+		|| display_frame(edit.sdl.ren, edit.sdl.pix, WIN_W, WIN_H) == 0)
+		{
+			free_all(2, &edit);
+			return ;
+		}
+		SDL_Delay(1000 / 60);
+	}
+	free_all(2, &edit);
+	return ;
+}
+
+int			free_content(t_edit *edit)
+{
+	t_content	*curr;
+	t_content	*tmp;
+
+	curr = edit->con;
+	while (curr != NULL)
+	{
+		tmp = curr->next;
+		free(curr);
+		curr = tmp;
+	}
+	edit->con = NULL;
+	return (0);
 }

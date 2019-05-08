@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:40:34 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 20:37:19 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:18:15 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,7 +36,7 @@ int				sdl_init(t_sdl *sdl, int w, int h)
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		return (free_sdl(sdl, 1));
 	sdl->win = SDL_CreateWindow("Doom-Nukem", 100, 100, w, h,
-			SDL_WINDOW_ALWAYS_ON_TOP); 
+			SDL_WINDOW_ALWAYS_ON_TOP);
 	if (sdl->win == NULL)
 		return (free_sdl(sdl, 1));
 	sdl->ren = SDL_CreateRenderer(sdl->win, -1, SDL_RENDERER_PRESENTVSYNC);

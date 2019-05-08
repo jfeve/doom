@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 21:32:24 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 18:33:50 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,9 +17,21 @@
 # define MAX_SECT 128
 # define MAX_SPRITE 128
 
+# include "../lib/SDL2.framework/Versions/Current/Headers/SDL.h"
+# include "../lib/SDL2_ttf.framework/Headers/SDL_ttf.h"
+# include "../lib/SDL2_mixer.framework/Headers/SDL_mixer.h"
+
 /*
 ** Render Data
 */
+
+typedef struct				s_sdl
+{
+	SDL_Window				*win;
+	SDL_Renderer			*ren;
+	Uint32					*pix;
+	SDL_PixelFormat			*form;
+}							t_sdl;
 
 typedef struct				s_enemies
 {
@@ -137,6 +149,7 @@ typedef struct				s_mapf
 	short					nbrend_s;
 	t_xyz					old;
 	SDL_Surface				*wall[4];
+	short					has_key;
 }							t_mapf;
 
 #endif
