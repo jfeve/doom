@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/07 21:37:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 21:53:50 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 21:34:23 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,6 +32,7 @@ int			read_sector(int fd, t_mapf *mapf, int i)
 	read_sect_data(mapf, fd, i);
 	mapf->nbobjs += mapf->sectors[i].nbobjs;
 	mapf->nbenem += mapf->sectors[i].nbenem;
+	//dprintf(1, "")
 	if (!(mapf->sectors[i].vert = malloc(sizeof(t_vertex)
 	* mapf->sectors[i].nbvert)))
 		return (0);
