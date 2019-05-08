@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:40:55 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 11:26:52 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 14:01:40 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -102,4 +102,5 @@
 # define GRAVITY "gravity \0"
 # define SDL_WHITE (SDL_Color){255, 255, 255, 255}
 # define SDL_BLACK (SDL_Color){0, 0, 0, 255}
+# define MAXQ 32
 #endif

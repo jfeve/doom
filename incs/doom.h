@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 18:32:21 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 18:45:19 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -348,13 +348,6 @@ typedef	struct					s_line
 	int							err2;
 }								t_line;
 
-typedef struct					s_queue
-{
-	int							sect;
-	int							sx1;
-	int							sx2;
-}								t_queue;
-
 /*
 ** Map Reader Functions
 */
@@ -381,6 +374,8 @@ int								read_sector(int fd, t_mapf *mapf, int i);
 */
 
 int								init_mapf(t_mapf *mapf, char *str);
+void							init_ren(t_mapf *mapf, t_ren *ren);
+void							init_v1v2(t_ren *ren, int s, t_sector *sect, t_mapf *mapf);
 
 /*
 ** Math functions for integers
@@ -412,6 +407,20 @@ t_float							f_intersect(t_float a, t_float b, t_float c,
 float							yaw(float y, float z, float yaw);
 void							render(char *str);
 int								check_ps(t_mapf *mapf);
+
+/*
+** Draw functions
+*/
+
+void							fill_head(t_ren *ren, int beginx, int endx);
+void							get_yny(t_ren *ren, t_mapf *mapf, t_sector *sect, int s);
+void							get_ycy(t_ren *ren, int x);
+void							get_t1t2(t_ren *ren);
+int								get_x(t_float t);
+void							fill_rends(t_mapf *mapf, t_queue now);
+void							clip_t1t2(t_ren *ren);
+void							draw(t_mapf *mapf, t_point xx, t_point yy, t_sector *sect);
+void							draw_text(t_mapf *mapf, t_ren *ren, t_quad qu, t_sector *sect);
 
 /*
 ** HUD related functions

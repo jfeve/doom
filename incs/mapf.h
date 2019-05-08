@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 18:40:56 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 18:41:47 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,17 +25,24 @@
 ** Render Data
 */
 
-typedef struct				s_point
+typedef struct					s_float
 {
-	int						x;
-	int						y;
-}							t_point;
+	float						x;
+	float						y;
+}								t_float;
 
-typedef struct				s_float
+typedef struct					s_point
 {
-	float					x;
-	float					y;
-}							t_float;
+	int							x;
+	int							y;
+}								t_point;
+
+typedef struct					s_queue
+{
+	int							sect;
+	int							sx1;
+	int							sx2;
+}								t_queue;
 
 typedef struct				s_cport
 {
@@ -149,6 +156,58 @@ typedef struct				s_cps
 	float					ps;
 	int						cpt;
 }							t_cps;
+
+typedef struct				s_x
+{
+	int						tx;
+	int						ya;
+	int						yb;
+	int						cya;
+	int						cyb;
+	int						nya;
+	int						nyb;
+	int						cnya;
+	int						cnyb;
+}							t_x;
+
+typedef struct				s_quad
+{
+	int						x;
+	int						s;
+	int						ya;
+	int						yb;
+}							t_quad;
+
+typedef struct				s_ren
+{
+	t_x						xx;
+	t_queue					queue[MAXQ];
+	t_queue					*head;
+	t_queue					*tail;
+	t_queue					now;
+	int						ytop[RWIN_W];
+	int						ybot[RWIN_W];
+	int						u0;
+	int						u1;
+	t_float					v1;
+	t_float					v2;
+	t_float					t1;
+	t_float					t2;
+	int						x1;
+	int						x2;
+	t_point					y1;
+	t_point					y2;
+	t_point					ny1;
+	t_point					ny2;
+	t_float					org1;
+	t_float					org2;
+	t_point					u;
+	float					yceil;
+	float					yfloor;
+	int						neigh;
+	float					pcos;
+	float					psin;
+}							t_ren;
 
 typedef struct				s_rendu
 {
