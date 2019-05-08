@@ -6,14 +6,14 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:16:42 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 19:28:40 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 11:17:31 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			update_event(t_input *in)
+void		update_event(t_input *in)
 {
 	while (SDL_PollEvent(&in->event))
 	{
@@ -42,7 +42,7 @@ void			update_event(t_input *in)
 	}
 }
 
-int				click_vert(t_input *in, t_edit *edit)
+static int	click_vert(t_input *in, t_edit *edit)
 {
 	if (in->mouse[SDL_BUTTON_LEFT] && in->y < HUD_BEGIN && edit->hl == 0)
 	{
@@ -63,7 +63,7 @@ int				click_vert(t_input *in, t_edit *edit)
 	return (1);
 }
 
-void			settings_event(t_edit *edit, t_input *in)
+static void	settings_event(t_edit *edit, t_input *in)
 {
 	if (in->key[SDL_SCANCODE_R])
 	{
@@ -88,18 +88,8 @@ void			settings_event(t_edit *edit, t_input *in)
 		in->quit = SDL_TRUE;
 }
 
-int				check_event(char *mapname, t_input *in, t_edit *edit)
+static int	check_event2(t_input *in, t_edit *edit)
 {
-	t_mapf		mapf;
-
-	if (in->key[SDL_SCANCODE_K] && edit->hl_sec && edit->dyn_trigger != 1)
-	{
-		edit->err = 2;
-		in->key[SDL_SCANCODE_K] = SDL_FALSE;
-	}
-	print_info(edit, in);
-	settings_event(edit, in);
-	cancels(edit, in);
 	if (click_vert(in, edit) == 0)
 		return (0);
 	hl_mode(in, edit);
@@ -117,6 +107,23 @@ int				check_event(char *mapname, t_input *in, t_edit *edit)
 	if (create_player(edit, in) == 0)
 		return (0);
 	if (create_finish(edit, in) == 0)
+		return (0);
+	return (1);
+}
+
+int			check_event(char *mapname, t_input *in, t_edit *edit)
+{
+	t_mapf		mapf;
+
+	if (in->key[SDL_SCANCODE_K] && edit->hl_sec && edit->dyn_trigger != 1)
+	{
+		edit->err = 2;
+		in->key[SDL_SCANCODE_K] = SDL_FALSE;
+	}
+	print_info(edit, in);
+	settings_event(edit, in);
+	cancels(edit, in);
+	if (!check_event2(in, edit))
 		return (0);
 	save_map(in, mapname, edit);
 	if (in->key[SDL_SCANCODE_L])

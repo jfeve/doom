@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 23:03:12 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 11:11:53 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -307,7 +307,6 @@ int								add_content(t_edit *edit, char *cont,
 void							edit_input(t_edit *edit);
 char							*get_content_char(int num);
 void							level_editor(char *mapname);
-int								init_edit(t_edit *edit);
 int								get_update(t_edit *edit,
 									t_input *in, char *mapname);
 int								init_content(t_edit *edit);

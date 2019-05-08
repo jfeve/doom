@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 09:35:16 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 19:31:49 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 11:28:15 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -148,7 +148,7 @@ int		render_check_event(t_mapf *mapf, t_input *in, t_hud *hud)
 		{
 			mapf->player.ammo--;
 			SDL_FreeSurface(hud->nbammo);
-			if (!(hud->nbammo = init_text(hud->arial, ft_itoa(mapf->player.ammo), mapf->sdl.form->format, (SDL_Color){0, 0, 0, 255})))
+			if (!(hud->nbammo = init_text(hud->arial, ft_itoa(mapf->player.ammo), mapf->sdl.form->format, SDL_BLACK)))
 			{
 				free_hud(hud);
 				return (0);

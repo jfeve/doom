@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/07 21:59:52 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 22:32:06 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 11:08:11 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,12 +19,21 @@
 
 static void	init_index(int *dest, int src, int *i, int incr)
 {
-	if ((*dest = src) < 0)
-		while (*dest < 0)
-		{
-			(*dest)++;
-			*i += incr;
-		}
+	if (i != NULL)
+	{
+		if ((*dest = src) < 0)
+			while (*dest < 0)
+			{
+				(*dest)++;
+				*i += incr;
+			}
+	}
+	else
+	{
+		if ((*dest = src) < 0)
+			while (*dest < 0)
+				(*dest)++;
+	}
 }
 
 void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
@@ -61,13 +70,17 @@ void		draw_sprite(t_sdl *sdl, SDL_Surface *s, int x, int y)
 ** size is the width and height of the resized pic
 */
 
+static void	fill_pixels(t_sdl *sdl, SDL_Surface *s, Uint32 *p, t_line norm)
+{
+	if (p[norm.dy * s->w + norm.dx] & 0x000000ff)
+		sdl->pix[norm.sy * RWIN_W + norm.sx] = p[norm.dy * s->w + norm.dx];
+}
+
 void		draw_sprite_resize(t_sdl *sdl, SDL_Surface *s,
 t_point start, t_point size)
 {
 	t_point	index;
 	t_point	ratio;
-	int		x2;
-	int		y2;
 	Uint32	*p;
 
 	if (SDL_MUSTLOCK(s))
@@ -75,25 +88,15 @@ t_point start, t_point size)
 	p = s->pixels;
 	ratio.x = (int)((s->w << 16) / size.x) + 1;
 	ratio.y = (int)((s->h << 16) / size.y) + 1;
-	if ((index.y = start.y) < 0)
-		while (index.y < 0)
-			index.y++;
+	init_index(&index.y, start.y, NULL, 0);
 	while (index.y < start.y + size.y && index.y < RWIN_H)
 	{
-		if ((index.x = start.x) < 0)
-			while (index.x < 0)
-				index.x++;
-		while (index.x < start.x + size.x && index.x < RWIN_W)
-		{
+		init_index(&index.x, start.x - 1, NULL, 0);
+		while (++index.x < start.x + size.x && index.x < RWIN_W)
 			if (index.x < RWIN_W)
-			{
-				x2 = (((index.x - start.x) * ratio.x) >> 16);
-				y2 = (((index.y - start.y) * ratio.y) >> 16);
-				if (p[y2 * s->w + x2] & 0x000000ff)
-					sdl->pix[index.y * RWIN_W + index.x] = p[y2 * s->w + x2];
-			}
-			index.x++;
-		}
+				fill_pixels(sdl, s, p, (t_line){.dx = (((index.x - start.x)
+				* ratio.x) >> 16), .dy = (((index.y - start.y) * ratio.y)
+				>> 16), .sx = index.x, .sy = index.y});
 		index.y++;
 	}
 	s->pixels = p;
