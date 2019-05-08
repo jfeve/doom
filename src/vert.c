@@ -6,14 +6,14 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/05 18:21:04 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 18:20:21 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 12:19:51 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-t_lis			*create_vert(int x, int y)
+t_lis		*create_vert(int x, int y)
 {
 	t_lis		*vert;
 
@@ -30,30 +30,8 @@ t_lis			*create_vert(int x, int y)
 	return (vert);
 }
 
-int				parse_data(int x, int y, t_edit *edit, t_lis *vert)
+static void	init_point(t_lis *point, int x, int y)
 {
-	t_lis		*tmp;
-
-	tmp = vert;
-	if (tmp->x == arr(x) && tmp->y == arr(y))
-	{
-		if (tmp->next)
-			edit->oldvert = tmp;
-		return (0);
-	}
-	edit->oldvert = NULL;
-	return (1);
-}
-
-int				add_vert(int x, int y, t_edit *edit, t_lis *vert)
-{
-	t_lis		*point;
-	t_lis		*tmp;
-
-	if (parse_data(x, y, edit, vert) == 0)
-		return (0);
-	if (!(point = (t_lis*)malloc(sizeof(t_lis))))
-		return (-1);
 	point->x = arr(x);
 	point->y = arr(y);
 	point->neigh = -1;
@@ -62,6 +40,18 @@ int				add_vert(int x, int y, t_edit *edit, t_lis *vert)
 	point->col = WHITE;
 	point->oldcol = RED;
 	point->next = NULL;
+}
+
+int			add_vert(int x, int y, t_edit *edit, t_lis *vert)
+{
+	t_lis		*point;
+	t_lis		*tmp;
+
+	if (parse_data(x, y, edit, vert) == 0)
+		return (0);
+	if (!(point = (t_lis*)malloc(sizeof(t_lis))))
+		return (-1);
+	init_point(point, x, y);
 	tmp = vert;
 	while (tmp->next != NULL)
 	{
@@ -76,7 +66,7 @@ int				add_vert(int x, int y, t_edit *edit, t_lis *vert)
 	return (1);
 }
 
-void			draw_vert(t_lis *tmp, t_edit *edit)
+void		draw_vert(t_lis *tmp, t_edit *edit)
 {
 	int x;
 	int y;
@@ -98,7 +88,7 @@ void			draw_vert(t_lis *tmp, t_edit *edit)
 	edit->sdl.pix[tmp->y * UNIT * WIN_W + (tmp->x * UNIT)] = tmp->col;
 }
 
-void			put_vert(t_edit *edit, t_lis *vert)
+void		put_vert(t_edit *edit, t_lis *vert)
 {
 	t_lis		*tmp;
 	int			co;
