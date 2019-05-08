@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 21:51:00 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 22:19:45 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -85,7 +85,7 @@ void		render(char *str)
 			free_mapf(&mapf);
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
-			ft_putendl("Internal error");
+			ft_putendl("Event error");
 			return ;
 		}
 		check_ps(&mapf);
@@ -101,7 +101,7 @@ void		render(char *str)
 			free_mapf(&mapf);
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
-			ft_putendl("Internal error");
+			ft_putendl("IA error");
 			return ;
 		}
 		draw_entities(&mapf, hud.items, hud.enemy, &in);
@@ -111,7 +111,7 @@ void		render(char *str)
 			free_mapf(&mapf);
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
-			ft_putendl("Internal error");
+			ft_putendl("Display error");
 			return ;
 		}
 		mapf.old = (t_xyz){mapf.player.where.x - mapf.player.velo.x, mapf.player.where.y - mapf.player.velo.y, mapf.player.where.z - mapf.player.velo.z};

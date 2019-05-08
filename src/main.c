@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 16:08:32 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 21:59:27 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 22:25:01 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -80,6 +80,8 @@ int			main(int argc, char **argv)
 {
 	if (argc == 3 && ft_strcmp(argv[1], "edit") == 0)
 		level_editor(argv[2]);
+	else if (argc == 2 && ft_strcmp(argv[1], "edit") == 0)
+		return (usage());
 	else if (argc == 2)
 		render(argv[1]);
 	else
