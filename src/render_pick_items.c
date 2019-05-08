@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/03 16:35:10 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 22:04:59 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 23:14:56 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,44 +18,60 @@
 ** 1: key, 2: armor, 3:life kit, 4: ammo pack
 */
 
-static int	tests(t_mapf *mapf, t_hud *hud, t_sector now, int i)
+static int	test1(t_mapf *mapf, t_hud *hud)
 {
 	char	*tmp;
 
+	if (mapf->player.life <= 60)
+		mapf->player.life += 40;
+	else
+		mapf->player.life = 100;
+	SDL_FreeSurface(hud->nblife);
+	if (!(tmp = ft_itoa(mapf->player.life)))
+		return (0);
+	if (!(hud->nblife = init_text(hud->arial, tmp, mapf->sdl.form->format,
+	SDL_BLACK)))
+	{
+		ft_strdel(&tmp);
+		return (0);
+	}
+	ft_strdel(&tmp);
+	return (1);
+}
+
+static int	test2(t_mapf *mapf, t_hud *hud)
+{
+	char	*tmp;
+
+	mapf->player.ammo += 10;
+	SDL_FreeSurface(hud->nbammo);
+	if (!(tmp = ft_itoa(mapf->player.ammo)))
+		return (0);
+	if (!(hud->nbammo = init_text(hud->arial, tmp, mapf->sdl.form->format,
+	SDL_BLACK)))
+	{
+		ft_strdel(&tmp);
+		return (0);
+	}
+	ft_strdel(&tmp);
+	return (1);
+}
+
+static int	tests(t_mapf *mapf, t_hud *hud, t_sector now, int i)
+{
 	if (now.obj[i].type == 1)
 		hud->has_key = 1;
 	else if (now.obj[i].type == 2)
 		hud->has_armor = 1;
 	else if (now.obj[i].type == 3)
 	{
-		if (mapf->player.life <= 60)
-			mapf->player.life += 40;
-		else
-			mapf->player.life = 100;
-		SDL_FreeSurface(hud->nblife);
-		if (!(tmp = ft_itoa(mapf->player.life)))
+		if (!test1(mapf, hud))
 			return (0);
-		if (!(hud->nblife = init_text(hud->arial, tmp, mapf->sdl.form->format,
-		SDL_BLACK)))
-		{
-			ft_strdel(&tmp);
-			return (0);
-		}
-		ft_strdel(&tmp);
 	}
 	else if (now.obj[i].type == 4)
 	{
-		mapf->player.ammo += 10;
-		SDL_FreeSurface(hud->nbammo);
-		if (!(tmp = ft_itoa(mapf->player.ammo)))
+		if (!test2(mapf, hud))
 			return (0);
-		if (!(hud->nbammo = init_text(hud->arial, tmp, mapf->sdl.form->format,
-		SDL_BLACK)))
-		{
-			ft_strdel(&tmp);
-			return (0);
-		}
-		ft_strdel(&tmp);
 	}
 	mapf->sectors[mapf->player.sect].obj[i].picked = 1;
 	return (1);
