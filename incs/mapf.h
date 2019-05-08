@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 18:41:47 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 21:26:29 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,24 +25,24 @@
 ** Render Data
 */
 
-typedef struct					s_float
+typedef struct				s_float
 {
-	float						x;
-	float						y;
-}								t_float;
+	float					x;
+	float					y;
+}							t_float;
 
-typedef struct					s_point
+typedef struct				s_point
 {
-	int							x;
-	int							y;
-}								t_point;
+	int						x;
+	int						y;
+}							t_point;
 
-typedef struct					s_queue
+typedef struct				s_queue
 {
-	int							sect;
-	int							sx1;
-	int							sx2;
-}								t_queue;
+	int						sect;
+	int						sx1;
+	int						sx2;
+}							t_queue;
 
 typedef struct				s_cport
 {
