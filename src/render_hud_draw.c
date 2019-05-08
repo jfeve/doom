@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/28 14:03:40 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 10:48:39 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 12:48:07 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -80,7 +80,10 @@ static void	draw_main_hud(t_sdl *sdl, t_hud *hud)
 	{
 		draw_sprite(sdl, hud->text, RWIN_W / 2 - 40, RWIN_H / 2 - 12);
 		if (hud->timer == 1 && hud->text)
+		{
 			SDL_FreeSurface(hud->text);
+			hud->text = NULL;
+		}
 		hud->timer--;
 	}
 	else if (hud->timer < -1)

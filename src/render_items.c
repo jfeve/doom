@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 17:39:25 by flombard     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 18:45:30 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 12:36:28 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -103,73 +103,6 @@ int			go_through_enemies(t_sector now, t_player player, t_sprite *drawable, int 
 }
 
 /*
-** Check if the enemy is on the middle of the screen
-*/
-
-int			check_middle_in(t_sprite sprite, SDL_Surface *enemy[2], int x, int y, float distance)
-{
-	int		i;
-	int		j;
-	int		nw;
-	int		nnw;
-	int		nh;
-
-	i = y;
-	j = x;
-	nw = enemy[sprite.type - 1]->w * (32 / distance);
-	nh = enemy[sprite.type - 1]->h * (32 / distance);
-	while (i < y + nh)
-	{
-		if (i - y < nh / 5)
-		{
-			j = x + 2 * nw / 5;
-			nnw = 4 * nw / 5;
-		}
-		else
-		{
-			j = x;
-			nnw = nw;
-		}
-		while (j < x + nnw)
-		{
-			if (i == RWIN_H / 2)
-			{
-				if (j == RWIN_W / 2)
-				{
-					return (1);
-				}
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
-
-/*
-** Pick the enemy to kill and delete him
-*/
-
-int			kill_enemies(t_sector *sec, t_sprite sprite, SDL_Surface *enemy[2], int x, int y, float distance)
-{
-	int		i;
-
-	if (sprite.is_enemy && check_middle_in(sprite, enemy, x - (enemy[sprite.type - 1]->w / 2), y - (enemy[sprite.type - 1]->h / 2) - (1300.0f / distance), distance))
-	{
-		i = 0;
-		while (i < sec->nbenem)
-	{
-		if ((int)sec->enem[i].x == sprite.x && (int)sec->enem[i].y == sprite.y)
-			sec->enem[i].life = 0;
-		i++;
-	}
-		return (1);
-	}
-	return (0);
-}
-
-/*
 ** Draw the entities' sprites
 */
 
@@ -218,7 +151,7 @@ void		draw_entities(t_mapf *mapf, SDL_Surface *items[9], SDL_Surface *enemy[2], 
 				distance = 0.0001f;
 			if (in->mouse[SDL_BUTTON_LEFT] && mapf->player.ammo != 0)
 			{
-				if (kill_enemies(now, drawable[j], enemy, x, y, distance))
+				if (kill_enemies(now, drawable[j], enemy, (t_point){x, y}, distance))
 				{
 					in->mouse[SDL_BUTTON_LEFT] = SDL_FALSE;
 					j++;

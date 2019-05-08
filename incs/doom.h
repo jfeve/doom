@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 11:11:53 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 12:29:21 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -444,7 +444,9 @@ void							draw_sprite_resize(t_sdl *sdl, SDL_Surface *s,
 												t_point start, t_point size);
 int								free_hud(t_hud *hud);
 void							draw_entities(t_mapf *mapf,
-					SDL_Surface *items[9], SDL_Surface *enemy[2], t_input *in);
+					SDL_Surface *items[9], SDL_Surface *enemy[2], t_input *in);			
+int								kill_enemies(t_sector *sec, t_sprite sprite,
+							SDL_Surface *enemy[2], t_point p, float distance);
 int								pick_items(t_mapf *mapf, t_hud *hud);
 int								go_through_enemies(t_sector now,
 							t_player player, t_sprite *drawable, int nbdraw);
