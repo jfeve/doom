@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 23:17:53 by jfeve       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 23:24:05 by jfeve       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,6 @@
 # define DOOM_H
 # include "../libft/libft.h"
 # include "defines.h"
-# include "def_rend.h"
 # include "mapf.h"
 # include <math.h>
 # include "../lib/SDL2.framework/Versions/Current/Headers/SDL.h"
