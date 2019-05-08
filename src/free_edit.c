@@ -3,17 +3,17 @@
 /*                                                              /             */
 /*   free_edit.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: nzenzela <nzenzela@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/27 18:13:18 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:13:29 by nzenzela    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:13:48 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../incs/doom.h"
 
-void			free_lis(t_lis **vert)
+void	free_lis(t_lis **vert)
 {
 	t_lis		*curr;
 	t_lis		*tmp;
@@ -28,7 +28,7 @@ void			free_lis(t_lis **vert)
 	*vert = NULL;
 }
 
-void			free_sec(t_sec **sec)
+void	free_sec(t_sec **sec)
 {
 	t_sec		*curr;
 	t_sec		*tmp;
@@ -49,7 +49,7 @@ void			free_sec(t_sec **sec)
 	*sec = NULL;
 }
 
-void			free_all(int flag, t_edit *edit)
+void	free_all(int flag, t_edit *edit)
 {
 	if (flag >= 1)
 		free_content(edit);
@@ -67,4 +67,26 @@ void			free_all(int flag, t_edit *edit)
 	edit->hl_vert = NULL;
 	edit->oldvert = NULL;
 	edit->hl_sec_temp = NULL;
+}
+
+void	free_mapf(t_mapf *mapf)
+{
+	int		i;
+
+	i = -1;
+	while (++i < 4)
+		if (mapf->wall[i])
+			SDL_FreeSurface(mapf->wall[i]);
+	i = -1;
+	while (++i < mapf->nbsect)
+	{
+		if (mapf->sectors[i].vert)
+			free(mapf->sectors[i].vert);
+		if (mapf->sectors[i].enem)
+			free(mapf->sectors[i].enem);
+		if (mapf->sectors[i].obj)
+			free(mapf->sectors[i].obj);
+	}
+	if (mapf->sectors)
+		free(mapf->sectors);
 }

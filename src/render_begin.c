@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 17:18:21 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 18:31:35 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 20:14:22 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,27 +39,42 @@ static void	check_state(t_mapf *mapf)
 		+ mapf->player.eye + mapf->player.add_z;
 }
 
+static int	init_render(t_mapf *mapf, t_hud *hud, t_input *in, char *str)
+{
+	int		tmp;
+
+	if (!untar(&tmp))
+		return (0);
+	ft_bzero(in, sizeof(t_input));
+	ft_bzero(mapf, sizeof(t_mapf));
+	ft_bzero(hud, sizeof(t_hud));
+	if (init_mapf(mapf, str) == 0)
+	{
+		free_mapf(mapf);
+		free_sdl(&mapf->sdl, 6);
+		ft_putendl("Init Mapf Error");
+		return (0);
+	}
+	if (!init_hud(hud, mapf->sdl.form->format, mapf->player))
+	{
+		free_mapf(mapf);
+		free_hud(hud);
+		free_sdl(&mapf->sdl, 6);
+		ft_putendl("HUD Init Error");
+		return (0);
+	}
+	Mix_PlayMusic(hud->music, -1);
+	return (1);
+}
+
 void		render(char *str)
 {
 	t_mapf	mapf;
 	t_input	in;
 	t_hud	hud;
 
-	ft_bzero(&in, sizeof(t_input));
-	ft_bzero(&mapf, sizeof(t_mapf));
-	ft_bzero(&hud, sizeof(t_hud));
-	if (init_mapf(&mapf, str) == 0)
-	{
-		free_sdl(&mapf.sdl, 6);
-		ft_putendl("Init Mapf Error");
+	if (!init_render(&mapf, &hud, &in, str))
 		return ;
-	}
-	if (!init_hud(&hud, mapf.sdl.form->format, mapf.player))
-	{
-		ft_putendl("Init SDL_Mixer Error");
-		return ;
-	}
-	Mix_PlayMusic(hud.music, -1);
 	while (!in.quit)
 	{
 		in.xrel = 0;
@@ -67,6 +82,7 @@ void		render(char *str)
 		update_event(&in);
 		if (!render_check_event(&mapf, &in, &hud))
 		{
+			free_mapf(&mapf);
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
 			ft_putendl("Internal error");
@@ -82,6 +98,7 @@ void		render(char *str)
 		fill_pix(&mapf);
 		if (!enemy_ia(&mapf, &hud))
 		{
+			free_mapf(&mapf);
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
 			ft_putendl("Internal error");
@@ -91,6 +108,7 @@ void		render(char *str)
 		draw_hud(&mapf.sdl, &hud, mapf.player.ammo);
 		if (display_frame(mapf.sdl.ren, mapf.sdl.pix, RWIN_W, RWIN_H) == 0)
 		{
+			free_mapf(&mapf);
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
 			ft_putendl("Internal error");
@@ -99,11 +117,13 @@ void		render(char *str)
 		mapf.old = (t_xyz){mapf.player.where.x - mapf.player.velo.x, mapf.player.where.y - mapf.player.velo.y, mapf.player.where.z - mapf.player.velo.z};
 		if (hud.timer == -1)
 		{
+			free_mapf(&mapf);
 			free_sdl(&mapf.sdl, 6);
 			free_hud(&hud);
 			return ;
 		}
 	}
+	free_mapf(&mapf);
 	free_sdl(&mapf.sdl, 6);
 	free_hud(&hud);
 }
