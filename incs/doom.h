@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/04 19:41:06 by jfeve        #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 17:50:27 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 18:32:21 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -411,6 +411,7 @@ t_float							f_intersect(t_float a, t_float b, t_float c,
 																	t_float d);
 float							yaw(float y, float z, float yaw);
 void							render(char *str);
+int								check_ps(t_mapf *mapf);
 
 /*
 ** HUD related functions

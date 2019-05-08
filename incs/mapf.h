@@ -6,7 +6,7 @@
 /*   By: flombard <flombard@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/24 15:40:08 by nzenzela     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 17:48:30 by flombard    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 18:40:56 by flombard    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -141,6 +141,14 @@ typedef struct				s_sector
 	float					texy;
 	int						lum;
 }							t_sector;
+
+typedef struct				s_cps
+{
+	t_sector				*sec;
+	int						i;
+	float					ps;
+	int						cpt;
+}							t_cps;
 
 typedef struct				s_rendu
 {
