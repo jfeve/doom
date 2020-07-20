@@ -1,3 +1,3 @@
 # doom
 C projects doom using SDL2,
-Need Update
+Need Update and not working.
